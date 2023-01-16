@@ -1,5 +1,6 @@
 package mypack.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,10 +16,18 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import mypack.config.oauth2.OAuth2LoginSuccessHandler;
+import mypack.service.CustomOAuth2UserService;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
+	@Autowired
+	private CustomOAuth2UserService oAuth2UserService;
+	@Autowired
+	private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+
 	@Bean
 	protected BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -47,11 +56,16 @@ public class WebSecurityConfig {
 				.antMatchers("/api/login", "/api/register", "/api/employer/sendpasswordresetcode",
 						"/api/employer/resetpassword", "/api/user/sendpasswordresetcode", "/api/user/resetpassword",
 						"/api/employer/infomation/**", "/api/employer/reset-password", "/api/user/reset-password",
-						"/api/employer/confirm-email", "/api/user/confirm-email","api/user/list-company")
+						"/api/employer/confirm-email", "/api/user/confirm-email", "api/user/list-company")
 				.permitAll().and().authorizeRequests().antMatchers("/api/admin/**").hasRole("ADMIN").and()
 				.authorizeRequests().antMatchers("/api/user/**").hasRole("USER").and().authorizeRequests()
 				.antMatchers("/api/employer/**").hasRole("EMPLOYER").and().authorizeRequests().antMatchers("/**")
-				.permitAll();
+				.permitAll().and()
+				.oauth2Login()
+				.userInfoEndpoint()
+				.userService(oAuth2UserService)
+				.and().successHandler(oAuth2LoginSuccessHandler);
+		;
 
 		http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 		return http.build();

@@ -62,13 +62,15 @@ public class AdminPostService {
 
 		postRepository.save(post);
 		// Add message here for employer
-		notificationService.addNotification(post.getAuthor().getId(), "Admin has accepted your post !", post);
+		notificationService.addNotification(post.getAuthor().getId(),
+				"Admin has accepted your post - " + post.getTitle() + " !", post);
 		if (post.getAuthor().getEmailConfirm())
 			sendEmailService.sendMailForNotification(new String[] { post.getAuthor().getEmail() },
 					String.format(contentAccept, post.getTitle()));
 		// Send notification for list user followed
 		List<Long> listUserId = followUserRepository.getIdFollowers(post.getAuthor().getId());
-		notificationService.addNotificationForListUser(listUserId, "Your followed company has posted a new job !",
+		notificationService.addNotificationForListUser(listUserId,
+				"Your followed company has posted a new job - " + post.getTitle() + " !",
 				post);
 		// send email
 		String[] listUserEmail = userRepo.getListEmailUser(listUserId);
@@ -88,7 +90,8 @@ public class AdminPostService {
 		postRepository.save(post);
 
 		// Add message here for employer
-		notificationService.addNotification(post.getAuthor().getId(), "Admin has Delete your post !", post);
+		notificationService.addNotification(post.getAuthor().getId(),
+				"Admin has Delete your post - " + post.getTitle() + " !", post);
 		if (post.getAuthor().getEmailConfirm())
 			sendEmailService.sendMailForNotification(new String[] { post.getAuthor().getEmail() },
 					String.format(contentUnaccept, post.getTitle()));

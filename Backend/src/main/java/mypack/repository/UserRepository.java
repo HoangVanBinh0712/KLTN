@@ -1,5 +1,6 @@
 package mypack.repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,4 +40,7 @@ public interface UserRepository extends JpaRepository<User, Long>, UserSerachCus
 
 	@Query(value = "Select new mypack.payload.statistic.StatisticForCount(Month(c.createDate) as month, count(c) as value)  from User c where YEAR(c.createDate) = :year group by Month(c.createDate) order by Month(c.createDate) asc")
 	List<StatisticForCount> getCountNewUsers(@Param("year") Integer year);
+
+	@Query(value = "select * from user where user.service_expiration_date >= :start and user.service_expiration_date <= :end and role = 1", nativeQuery = true)
+	List<User> getEmployerNearToEndService(@Param("start") Date start, @Param("end") Date end);
 }
