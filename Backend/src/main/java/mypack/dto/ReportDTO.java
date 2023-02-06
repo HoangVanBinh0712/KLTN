@@ -18,7 +18,7 @@ public class ReportDTO {
 
     private String email;
 
-    private String reportContet;
+    private String reportContent;
 
     private Boolean handle;
 

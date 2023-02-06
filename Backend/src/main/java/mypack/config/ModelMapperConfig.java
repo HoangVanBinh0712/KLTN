@@ -1,5 +1,7 @@
 package mypack.config;
 
+import java.util.Base64;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
@@ -9,12 +11,14 @@ import mypack.dto.AchievementDTO;
 import mypack.dto.BannerDTO;
 import mypack.dto.CVSubmitDTO;
 import mypack.dto.IndustryDTO;
+import mypack.dto.ListImagesDTO;
 import mypack.dto.ProfileDTO;
 import mypack.dto.UserDTO;
 import mypack.model.Achievement;
 import mypack.model.Banner;
 import mypack.model.CVSubmit;
 import mypack.model.Industry;
+import mypack.model.ListImages;
 import mypack.model.Profile;
 import mypack.model.User;
 
@@ -31,8 +35,7 @@ public class ModelMapperConfig {
 
 		});
 		modelMapper.createTypeMap(User.class, UserDTO.class).addMappings(mapper -> {
-			// mapper.map(src -> src.getAvatar().getUrl(), (dst, value) ->
-			// dst.setUrlAvatar((String) value));
+			mapper.map(src -> src.getAvatar().getUrl(), (dst, value) -> dst.setUrlAvatar((String) value));
 
 		});
 		modelMapper.createTypeMap(Profile.class, ProfileDTO.class).addMappings(mapper -> {
@@ -49,6 +52,7 @@ public class ModelMapperConfig {
 		modelMapper.createTypeMap(Banner.class, BannerDTO.class).addMappings(mapper -> {
 			mapper.map(src -> src.getImage().getUrl(), (dst, value) -> dst.setUrl((String) value));
 		});
+
 		return modelMapper;
 	}
 }

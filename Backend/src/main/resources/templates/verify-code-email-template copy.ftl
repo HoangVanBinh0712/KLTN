@@ -25,7 +25,7 @@
           opacity: 0;
           overflow: hidden;
         "
-        >Hi Hoang Van Binh, you're nearly there! Click below to
+        >You're nearly there! Click below to
         <span class="il">verify</span> that we got the right email for
         you.</span
       >

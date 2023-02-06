@@ -1,6 +1,5 @@
 package mypack.service;
 
-import java.lang.StackWalker.Option;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,63 +25,63 @@ import mypack.utility.datatype.EStatus;
 @Service
 public class FollowService {
 
-    @Autowired
-    UserRepository userRepo;
-    @Autowired
-    FollowRepository followRepo;
+	@Autowired
+	UserRepository userRepo;
+	@Autowired
+	FollowRepository followRepo;
 
-    @Autowired
-    PostRepository postRepository;
+	@Autowired
+	PostRepository postRepository;
 
-    @Autowired
-    ModelMapper modelMapper;
+	@Autowired
+	ModelMapper modelMapper;
 
-    public BaseResponse followPost(String jobseekerEmail, Long postId, Boolean follow) {
+	public BaseResponse followPost(String jobseekerEmail, Long postId, Boolean follow) {
 
-        if (follow) {
-            // Follow
-            Optional<User> user = userRepo.findByEmailAndRole(jobseekerEmail, ERole.ROLE_USER);
-            if (user.isEmpty())
-                throw new CommonRuntimeException("User not found with email: " + jobseekerEmail);
-            Optional<Post> post = postRepository.findById(postId);
-            if (post.isEmpty() || post.get().getStatus() != EStatus.ACTIVE)
-                throw new CommonRuntimeException("Post not found with Id: " + postId);
+		if (follow) {
+			// Follow
+			Optional<User> user = userRepo.findByEmailAndRole(jobseekerEmail, ERole.ROLE_USER);
+			if (user.isEmpty())
+				throw new CommonRuntimeException("User not found with email: " + jobseekerEmail);
+			Optional<Post> post = postRepository.findById(postId);
+			if (post.isEmpty() || post.get().getStatus() != EStatus.ACTIVE)
+				throw new CommonRuntimeException("Post not found with Id: " + postId);
 
-            Follow fl = new Follow(new FollowPK(user.get().getId(), post.get().getId()), post.get(), user.get(),
-                    new Date());
+			Follow fl = new Follow(new FollowPK(user.get().getId(), post.get().getId()), post.get(), user.get(),
+					new Date());
 
-            followRepo.save(fl);
+			followRepo.save(fl);
 
-            return new BaseResponse(true, "Follow post successfully !");
-        } else {
-            // unfollow
-            Optional<User> user = userRepo.findByEmailAndRole(jobseekerEmail, ERole.ROLE_USER);
-            if (user.isEmpty())
-                throw new CommonRuntimeException("User not found with email: " + jobseekerEmail);
-            Optional<Post> post = postRepository.findById(postId);
-            if (post.isEmpty() || post.get().getStatus() != EStatus.ACTIVE)
-                throw new CommonRuntimeException("Post not found with Id: " + postId);
+			return new BaseResponse(true, "Follow post successfully !");
+		} else {
+			// unfollow
+			Optional<User> user = userRepo.findByEmailAndRole(jobseekerEmail, ERole.ROLE_USER);
+			if (user.isEmpty())
+				throw new CommonRuntimeException("User not found with email: " + jobseekerEmail);
+			Optional<Post> post = postRepository.findById(postId);
+			if (post.isEmpty() || post.get().getStatus() != EStatus.ACTIVE)
+				throw new CommonRuntimeException("Post not found with Id: " + postId);
 
-            FollowPK pk = new FollowPK(user.get().getId(), post.get().getId());
+			FollowPK pk = new FollowPK(user.get().getId(), post.get().getId());
 
-            followRepo.deleteById(pk);
+			followRepo.deleteById(pk);
 
-            return new BaseResponse(true, "UnFollow post successfully !");
-        }
-    }
+			return new BaseResponse(true, "UnFollow post successfully !");
+		}
+	}
 
-    public ListResponse<PostDTO> getListPostFollowed(String jobseekerEmail) {
-        Optional<User> user = userRepo.findByEmailAndRole(jobseekerEmail, ERole.ROLE_USER);
-        if (user.isEmpty())
-            throw new CommonRuntimeException("User not found with email: " + jobseekerEmail);
-        List<Long> lstPost = followRepo.getListPostIdFollow(user.get().getId());
+	public ListResponse<PostDTO> getListPostFollowed(String jobseekerEmail) {
+		Optional<User> user = userRepo.findByEmailAndRole(jobseekerEmail, ERole.ROLE_USER);
+		if (user.isEmpty())
+			throw new CommonRuntimeException("User not found with email: " + jobseekerEmail);
+		List<Long> lstPost = followRepo.getListPostIdFollow(user.get().getId());
 
-        if (lstPost.isEmpty())
-            throw new CommonRuntimeException("Your did not follow to any post !");
-        List<PostDTO> posts = postRepository.findAllById(lstPost).stream().map(p -> modelMapper.map(p, PostDTO.class))
-                .toList();
-        if (posts.isEmpty())
-            throw new CommonRuntimeException("Your did not follow to any post or post is not available to view !");
-        return new ListResponse<>(posts);
-    }
+		if (lstPost.isEmpty())
+			throw new CommonRuntimeException("Your did not follow to any post !");
+		List<PostDTO> posts = postRepository.findAllById(lstPost).stream().map(p -> modelMapper.map(p, PostDTO.class))
+				.toList();
+		if (posts.isEmpty())
+			throw new CommonRuntimeException("Your did not follow to any post or post is not available to view !");
+		return new ListResponse<>(posts);
+	}
 }

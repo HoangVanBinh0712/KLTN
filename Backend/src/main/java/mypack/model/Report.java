@@ -49,7 +49,7 @@ public class Report {
 
     @Column
     @NotBlank
-    private String reportContet;
+    private String reportContent;
 
     @Column(columnDefinition = "boolean default false")
     private Boolean handle;

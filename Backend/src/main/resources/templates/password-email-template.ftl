@@ -24,7 +24,11 @@
           max-width: 0px;
           opacity: 0;
           overflow: hidden;
-        "    >You have a message !</span      >
+        "
+        >You're nearly there! Click below to
+        <span class="il">verify</span> that we got the right email for
+        you.</span
+      >
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tbody>
           <tr>
@@ -149,23 +153,9 @@
                       margin-top: 12px;
                     "
                   >
-                    ${content}
+                    We have create your account for our website. We are glad to infor you your password for the account <b>${email}</b>: ${content}
                   </p>
-                  <p
-                    style="
-                      font-family: -apple-system, BlinkMacSystemFont, Segoe UI,
-                        Roboto, Oxygen, Ubuntu, Fira Sans, Droid Sans,
-                        Helvetica Neue, sans-serif;
-                      font-size: 14px;
-                      font-weight: 400;
-                      letter-spacing: -0.005em;
-                      color: #091e42;
-                      line-height: 20px;
-                    "
-                  >
-                    Best regards,
-                  </p>
-
+          
                   <hr
                     style="
                       margin-top: 24px;

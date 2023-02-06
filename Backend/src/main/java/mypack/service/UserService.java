@@ -1,6 +1,10 @@
 package mypack.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,11 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import mypack.controller.exception.CommonRuntimeException;
 import mypack.dto.JwtResponse;
+import mypack.dto.ListImagesDTO;
 import mypack.dto.LoginRequest;
 import mypack.dto.ProfileDTO;
 import mypack.dto.UserDTO;
 import mypack.model.City;
 import mypack.model.Industry;
+import mypack.model.ListImages;
 import mypack.model.MediaResource;
 import mypack.model.Profile;
 import mypack.model.User;
@@ -44,6 +50,7 @@ import mypack.repository.CVViewedRepository;
 import mypack.repository.CityRepository;
 import mypack.repository.FollowUserRepository;
 import mypack.repository.IndustryRepository;
+import mypack.repository.ListImagesRepository;
 import mypack.repository.ProfileRepository;
 import mypack.repository.UserRepository;
 import mypack.repository.ViewPageRepository;
@@ -94,6 +101,12 @@ public class UserService {
 
 	@Autowired
 	NotificationService notificationService;
+
+	@Autowired
+	SendEmailService sendEmailService;
+
+	@Autowired
+	ListImagesRepository listImagesRepository;
 
 	public BaseResponse jobseekerRegister(JobseekerRegisterRequest request) {
 		try {
@@ -237,6 +250,41 @@ public class UserService {
 
 	}
 
+	@Transactional
+	public BaseResponse employerAddImage(MultipartFile[] files, Long empId) throws IOException {
+		User us = userRepo.findById(empId).orElseThrow(() -> new CommonRuntimeException("User not found !"));
+		List<ListImages> lstImg = new ArrayList<>();
+		for (int i = 0; i < files.length; i++) {
+			MultipartFile f = files[i];
+			ListImages img = new ListImages();
+			img.setImage(f.getBytes());
+			img.setUser(us);
+			lstImg.add(img);
+		}
+
+		listImagesRepository.saveAll(lstImg);
+
+		return new BaseResponse(true, "Success");
+	}
+
+	public List<ListImagesDTO> employerGetImages(Long empId) {
+		User us = userRepo.findById(empId).orElseThrow(() -> new CommonRuntimeException("User not found !"));
+		List<ListImages> a = listImagesRepository.findByUser(us);
+		List<ListImagesDTO> res = a.stream().map(x -> mapper.map(x, ListImagesDTO.class)).toList();
+		return res;
+	}
+
+	@Transactional
+	public BaseResponse employerDeleteImages(Long imgId) {
+		try {
+			listImagesRepository.deleteById(imgId);
+			return new BaseResponse(true, "success");
+		} catch (Exception ex) {
+			return new BaseResponse(true, "Image not found !");
+
+		}
+	}
+
 	public UserDTO getUserProfile(String email) {
 		Optional<User> optUser = userRepo.findByEmailAndRole(email, ERole.ROLE_USER);
 		if (optUser.isEmpty())
@@ -280,8 +328,7 @@ public class UserService {
 		if (passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
 			user.setPassword(passwordEncoder.encode(request.getNewPassword()));
 			userRepo.save(user);
-			notificationService.addNotification(user.getId(), "You have changed your password !",
-					null);
+			notificationService.addNotification(user.getId(), "You have changed your password !", null);
 			return new BaseResponse(true, "Change password successfully !");
 		}
 		return new BaseResponse(false, "Old password is not valid !");
@@ -418,6 +465,16 @@ public class UserService {
 		User us = user.get();
 		us.setActive(status);
 		userRepo.save(us);
+		// send mail
+		if (us.getEmailConfirm()) {
+			String message = "";
+			if (status) {
+				message = "Your account have been unlocked by admin !";
+			} else {
+				message = "Your account have been locked by admin. Contact Our provided email for more information !";
+			}
+			sendEmailService.sendMailForNotification(new String[] { us.getEmail() }, message);
+		}
 		return new BaseResponse(true, "Success !");
 	}
 

@@ -16,9 +16,6 @@ import lombok.Setter;
 @Setter
 public class EmployerProfileUpdateRequest {
 
-	@NotNull
-	private Long id;
-
 	@Schema(type = "string", format = "email")
 	@Email
 	@NotBlank
