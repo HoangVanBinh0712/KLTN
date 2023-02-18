@@ -27,12 +27,9 @@ public class ModelMapperConfig {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		modelMapper.createTypeMap(Industry.class, IndustryDTO.class).addMappings(mapper -> {
 
-			mapper.map(src -> src.getParent().getId(), (dst, value) -> dst.setParentId((Long) value));
-
 		});
 		modelMapper.createTypeMap(User.class, UserDTO.class).addMappings(mapper -> {
-			// mapper.map(src -> src.getAvatar().getUrl(), (dst, value) ->
-			// dst.setUrlAvatar((String) value));
+			mapper.map(src -> src.getAvatar().getUrl(), (dst, value) -> dst.setUrlAvatar((String) value));
 
 		});
 		modelMapper.createTypeMap(Profile.class, ProfileDTO.class).addMappings(mapper -> {
@@ -49,6 +46,7 @@ public class ModelMapperConfig {
 		modelMapper.createTypeMap(Banner.class, BannerDTO.class).addMappings(mapper -> {
 			mapper.map(src -> src.getImage().getUrl(), (dst, value) -> dst.setUrl((String) value));
 		});
+
 		return modelMapper;
 	}
 }

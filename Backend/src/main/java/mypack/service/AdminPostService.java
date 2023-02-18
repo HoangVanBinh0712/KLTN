@@ -74,7 +74,8 @@ public class AdminPostService {
 				post);
 		// send email
 		String[] listUserEmail = userRepo.getListEmailUser(listUserId);
-		sendEmailService.sendMailForNotification(listUserEmail, String.format(content, post.getTitle()));
+		if (listUserEmail.length > 0)
+			sendEmailService.sendMailForNotification(listUserEmail, String.format(content, post.getTitle()));
 		return new BaseResponse(true, "Accept susscessfully post with id: " + postId);
 	}
 

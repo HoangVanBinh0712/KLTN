@@ -37,11 +37,13 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
+
 		// Data google send back
 		CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 		String email = oAuth2User.getEmail();
 		String name = oAuth2User.getFullName();
 		String code = "";
+
 		// only allow buyer login with google
 		String jwt = "";
 		String refresh = "";
@@ -60,21 +62,15 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 			code = RandomString.get(10);
 			user.setCode(code);
 			userRepository.save(user);
-			jwt = jwtUtils.generateJwtToken(email);
-			refresh = jwtUtils.generateJwtRefreshToken(email);
-		} else {
-			if (optionalUser.get().getActive()) {
-				jwt = jwtUtils.generateJwtToken(optionalUser.get().getEmail());
-				refresh = jwtUtils.generateJwtRefreshToken(email);
-			}
 		}
+		jwt = jwtUtils.generateJwtToken(email);
+		refresh = jwtUtils.generateJwtRefreshToken(email);
 
-		request.setAttribute("token", jwt);
-		request.setAttribute("refresh-token", refresh);
 		String url = redirectUrl + jwt + "&refresh=" + refresh;
+
 		if (code.length() != 0)
 			url += "&code=" + code;
 		getRedirectStrategy().sendRedirect(request, response, url);
-		super.onAuthenticationSuccess(request, response, authentication);
+		// super.onAuthenticationSuccess(request, response, authentication);
 	}
 }

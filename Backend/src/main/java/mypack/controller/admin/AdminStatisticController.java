@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import mypack.service.AdminStatisticService;
+import mypack.service.ReportService;
 import mypack.utility.datatype.EROrderStatus;
 
 @RestController
@@ -16,6 +17,9 @@ public class AdminStatisticController {
     @Autowired
     AdminStatisticService service;
 
+    @Autowired
+    ReportService reportService;
+    
     @GetMapping("cv-submit")
     public ResponseEntity<?> getCVSubmitStatistic(@RequestParam(name = "year", required = true) Integer year) {
 
@@ -49,6 +53,12 @@ public class AdminStatisticController {
             @RequestParam(name = "status", required = true) EROrderStatus status) {
 
         return ResponseEntity.ok(service.getTotalOrder(year, status));
+    }
+    
+    @GetMapping("report")
+    public ResponseEntity<?> getReport(@RequestParam(name = "year", required = true) Integer year,
+            @RequestParam(name = "handle", required = false) Boolean handle) {
 
+        return ResponseEntity.ok(reportService.getStatisticReportByStatus(year,handle));
     }
 }

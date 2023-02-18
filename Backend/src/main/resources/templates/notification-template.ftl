@@ -24,7 +24,7 @@
           max-width: 0px;
           opacity: 0;
           overflow: hidden;
-        "    >Hi Hoang Van Binh, you have a message !</span      >
+        "    >You have a message !</span      >
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tbody>
           <tr>

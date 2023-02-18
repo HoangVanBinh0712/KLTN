@@ -24,34 +24,34 @@ import mypack.service.ReportService;
 @RequestMapping("api")
 public class ReportController {
 
-    @Autowired
-    private ReportService reportService;
+	@Autowired
+	private ReportService reportService;
 
-    @PostMapping("report")
-    public ResponseEntity<?> submit(@RequestBody @Valid ReportRequest request) {
-        return ResponseEntity.ok(reportService.create(request));
-    }
+	@PostMapping("report")
+	public ResponseEntity<?> submit(@RequestBody @Valid ReportRequest request) {
+		return ResponseEntity.ok(reportService.create(request));
+	}
 
-    @GetMapping("admin/report")
-    public ResponseEntity<?> get(@RequestParam(name = "postId", required = false) Long postId,
-            @RequestParam(name = "handle", required = false) Boolean handle,
+	@GetMapping("admin/report")
+	public ResponseEntity<?> get(@RequestParam(name = "postId", required = false) Long postId,
+			@RequestParam(name = "handle", required = false) Boolean handle,
+			@RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+			@RequestParam(name = "handleDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date handleDate,
+			@RequestParam(name = "page", required = false) Integer page,
+			@RequestParam(name = "limit", required = false) Integer limit,
+			@RequestParam(required = false) Integer sortBy, @RequestParam(required = false) Boolean sortDescending) {
+		return ResponseEntity
+				.ok(reportService.searchReport(postId, handle, date, handleDate, page, limit, sortBy, sortDescending));
+	}
 
-            @RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
-            @RequestParam(name = "page", required = false) Integer page,
-            @RequestParam(name = "limit", required = false) Integer limit,
-            @RequestParam(required = false) Integer sortBy,
-            @RequestParam(required = false) Boolean sortDescending) {
-        return ResponseEntity.ok(reportService.searchReport(postId, handle, date, page, limit, sortBy, sortDescending));
-    }
+	@PutMapping("admin/report")
+	public ResponseEntity<?> get(@RequestParam(name = "reportId", required = true) Long reportId,
+			@RequestParam(name = "handle", required = true) Boolean handle) {
+		return ResponseEntity.ok(reportService.updateStatus(reportId, handle));
+	}
 
-    @PutMapping("admin/report")
-    public ResponseEntity<?> get(@RequestParam(name = "reportId", required = true) Long reportId,
-            @RequestParam(name = "handle", required = true) Boolean handle) {
-        return ResponseEntity.ok(reportService.updateStatus(reportId, handle));
-    }
-
-    @DeleteMapping("admin/report/{reportId}")
-    public ResponseEntity<?> get(@PathVariable("reportId") Long reportId) {
-        return ResponseEntity.ok(reportService.deleteReport(reportId));
-    }
+	@DeleteMapping("admin/report/{reportId}")
+	public ResponseEntity<?> get(@PathVariable("reportId") Long reportId) {
+		return ResponseEntity.ok(reportService.deleteReport(reportId));
+	}
 }

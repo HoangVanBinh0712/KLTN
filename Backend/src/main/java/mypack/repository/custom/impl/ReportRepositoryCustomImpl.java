@@ -26,7 +26,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom {
     EntityManager em;
 
     @Override
-    public Long countBeforeSearchReport(Long postId, Boolean handle, Date date) {
+    public Long countBeforeSearchReport(Long postId, Boolean handle, Date date, Date handleDate) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<Report> root = cq.from(Report.class);
@@ -38,7 +38,10 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom {
 
         if (date != null)
             lstPredicate.add(cb.greaterThanOrEqualTo(root.get(Report_.date), date));
-
+        
+        if (handleDate != null)
+            lstPredicate.add(cb.greaterThanOrEqualTo(root.get(Report_.date), handleDate));
+        
         Predicate predicate = cb.and(lstPredicate.toArray(new Predicate[0]));
 
         cq.select(cb.count(root)).where(predicate);
@@ -49,7 +52,7 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom {
     }
 
     @Override
-    public List<Report> searchReport(Long postId, Boolean handle, Date date, Page page) {
+    public List<Report> searchReport(Long postId, Boolean handle, Date date,Date handleDate, Page page) {
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Report> cq = cb.createQuery(Report.class);
@@ -62,6 +65,8 @@ public class ReportRepositoryCustomImpl implements ReportRepositoryCustom {
 
         if (date != null)
             lstPredicate.add(cb.greaterThanOrEqualTo(root.get(Report_.date), date));
+        if (handleDate != null)
+            lstPredicate.add(cb.greaterThanOrEqualTo(root.get(Report_.date), handleDate));
         if (page.getSort() != null) {
             cq.orderBy(QueryUtils.toOrders(page.getSort(), root, cb));
         }
