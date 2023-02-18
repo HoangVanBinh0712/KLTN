@@ -51,10 +51,8 @@ public class Report {
 	@NotBlank
 	private String reportContent;
 
-
 	@Column
 	private Date date;
-	
 
 	@Column(columnDefinition = "boolean default false")
 	private Boolean handle;

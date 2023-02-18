@@ -85,5 +85,4 @@ public class ReportService {
 		return reportRepo.getToTalReport(year);
 
 	}
-
 }

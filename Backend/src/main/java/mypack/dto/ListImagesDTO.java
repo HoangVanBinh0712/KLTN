@@ -13,3 +13,4 @@ public class ListImagesDTO {
 	
 	 private byte[] image;
 }
+
