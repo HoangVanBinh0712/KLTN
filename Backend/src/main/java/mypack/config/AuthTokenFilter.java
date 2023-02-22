@@ -1,6 +1,8 @@
 package mypack.config;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,30 +34,36 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		if (!request.getRequestURI().contains("api/refreshtoken") && !request.getRequestURI().contains("api/post"))
-			try {
-				String token = jwtUtils.parseJwt(request);
+		List<String> urls = Arrays.asList("/api/comment", "/api/user/list-company");
+		if (request.getRequestURI().contains("api/user") || request.getRequestURI().contains("api/employer")
+				|| request.getRequestURI().contains("api/admin") || request.getRequestURI().contains("api/pay")) {
+			if (!urls.contains(request.getRequestURI())
+					&& !request.getRequestURI().contains("/api/employer/information"))
 
-				if (token != null && !jwtUtils.isTokenExpired(token)) {
-					String email = jwtUtils.getUsernameFromJwtToken(token);
-					UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-					UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-							userDetails, null, userDetails.getAuthorities());
-					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-					SecurityContextHolder.getContext().setAuthentication(authentication);
-					UserDetailsCustom us = (UserDetailsCustom) authentication.getPrincipal();
-					if (!us.isAccountNonLocked())
-						throw new CommonRuntimeException(
-								"Account is already blocked ! Contact admin to futher information .");
+				try {
+					String token = jwtUtils.parseJwt(request);
+
+					if (token != null && !jwtUtils.isTokenExpired(token)) {
+						String email = jwtUtils.getUsernameFromJwtToken(token);
+						UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+						UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+								userDetails, null, userDetails.getAuthorities());
+						authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+						SecurityContextHolder.getContext().setAuthentication(authentication);
+						UserDetailsCustom us = (UserDetailsCustom) authentication.getPrincipal();
+						if (!us.isAccountNonLocked())
+							throw new CommonRuntimeException(
+									"Account is already blocked ! Contact admin to futher information .");
+					}
+				} catch (Exception e) {
+					authenticationExceptionHandling.commence(request, response,
+							new AuthenticationException(e.getMessage(), e) {
+
+								private static final long serialVersionUID = -3315234540923774344L;
+							});
+					return;
 				}
-			} catch (Exception e) {
-				authenticationExceptionHandling.commence(request, response,
-						new AuthenticationException(e.getMessage(), e) {
-
-							private static final long serialVersionUID = -3315234540923774344L;
-						});
-				return;
-			}
+		}
 
 		filterChain.doFilter(request, response);
 	}

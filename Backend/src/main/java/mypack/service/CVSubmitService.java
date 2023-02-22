@@ -24,6 +24,7 @@ import mypack.model.pk.ProfilePK;
 import mypack.payload.BaseResponse;
 import mypack.payload.ListResponse;
 import mypack.payload.ListWithPagingResponse;
+import mypack.payload.jobseeker.CVSubmitRequest;
 import mypack.repository.CVSubmitRepository;
 import mypack.repository.PostRepository;
 import mypack.repository.ProfileRepository;
@@ -99,23 +100,23 @@ public class CVSubmitService {
 		return new ListResponse<>(posts);
 	}
 
-	public BaseResponse submitCV(Long userId, Long postId, Long mediaId) {
+	public BaseResponse submitCV(UserDetailsCustom user, CVSubmitRequest request) {
 		// Check if user submitted
-		Optional<CVSubmit> optCVSubmit = cvSubmitRepository.findByUserAndPost(userId, postId);
+		Optional<CVSubmit> optCVSubmit = cvSubmitRepository.findByUserAndPost(user.getId(), request.getPostId());
 		if (optCVSubmit.isPresent())
 			throw new CommonRuntimeException(
 					"You submitted your cv to this post. If you want to change your cv please delete and then submit again. !");
 
-		Post post = postRepository.findById(postId)
-				.orElseThrow(() -> new CommonRuntimeException("Post not found with Id: " + postId));
+		Post post = postRepository.findById(request.getPostId())
+				.orElseThrow(() -> new CommonRuntimeException("Post not found with Id: " + request.getPostId()));
 		EStatus status = post.getStatus();
 		Date today = new Date();
 		if (status != EStatus.ACTIVE || post.getExpirationDate().before(today))
 			throw new CommonRuntimeException("Post is not available to submit cv !");
 
-		Profile profile = profileRepository.getReferenceById(new ProfilePK(userId, mediaId));
+		Profile profile = profileRepository.getReferenceById(new ProfilePK(user.getId(), request.getMediaId()));
 
-		CVSubmitPK pk = new CVSubmitPK(postId, userId, mediaId);
+		CVSubmitPK pk = new CVSubmitPK(request.getPostId(), user.getId(), request.getMediaId());
 
 		CVSubmit cvSubmit = new CVSubmit();
 
@@ -123,37 +124,15 @@ public class CVSubmitService {
 		cvSubmit.setDate(new Date());
 		cvSubmit.setPost(post);
 		cvSubmit.setProfile(profile);
-		String url = profile.getMediaResource().getUrl();
-		if (!url.endsWith(".pdf"))
-			throw new CommonRuntimeException("CV is invalid ! Accept pdf only.");
-		try {
-			byte[] fileContent = IOUtils.toByteArray(new URL(url));
+		cvSubmit.setCoverLetter(request.getCoverLetter());
 
-			PDDocument document = PDDocument.load(fileContent);
-
-			// Instantiate PDFTextStripper class
-			PDFTextStripper pdfStripper = new PDFTextStripper();
-			// Retrieving text from PDF document
-			String text = pdfStripper.getText(document);
-
-			// Closing the document
-			document.close();
-
-			text = cleanResume(text);
-			String des = cleanResume(post.getDescription());
-			// Calculate the match %
-			cvSubmit.setMatchPercent((long) FuzzySearch.tokenSetRatio(des, text));
-
-			cvSubmitRepository.save(cvSubmit);
-			// add notification for employer
-			notificationService.addNotification(post.getAuthor().getId(),
-					"1 User has Submitted their CV to your post !", post);
-			if (post.getAuthor().getEmailConfirm())
-				sendEmailService.sendMailForNotification(new String[] { post.getAuthor().getEmail() },
-						String.format(content, post.getTitle()));
-		} catch (Exception e) {
-			return new BaseResponse(true, "Can not read the cv please upload other cv !");
-		}
+		cvSubmitRepository.save(cvSubmit);
+		// add notification for employer
+		notificationService.addNotification(post.getAuthor().getId(),
+				user.getName() + " has Submitted his/her CV to your post !", post);
+		if (post.getAuthor().getEmailConfirm())
+			sendEmailService.sendMailForNotification(new String[] { post.getAuthor().getEmail() },
+					String.format(content, post.getTitle()));
 
 		// Add notification and email for employer
 		return new BaseResponse(true, "Submit CV successfully !");

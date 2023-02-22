@@ -19,6 +19,8 @@ import mypack.utility.datatype.ERole;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>, UserSerachCustomRepository {
+	Optional<User> findByIdAndRole(Long Id, ERole role);
+
 	Optional<User> findByEmail(String email);
 
 	Optional<User> findByEmailAndRole(String email, ERole role);

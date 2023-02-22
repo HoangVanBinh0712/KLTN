@@ -13,11 +13,11 @@ import mypack.utility.datatype.EAchievementType;
 @AllArgsConstructor
 public class AchievementRequest {
 
-    @NotBlank
-    private String name;
+	@NotBlank
+	private String name;
 
-    @NotNull
-    private EAchievementType type;
+	@NotNull
+	private EAchievementType type;
 
-    private String url;
+	private String url;
 }

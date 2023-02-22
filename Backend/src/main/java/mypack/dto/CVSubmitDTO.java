@@ -2,6 +2,10 @@ package mypack.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,4 +21,8 @@ public class CVSubmitDTO {
 	private Long matchPercent;
 	
 	private Date date;
+	
+	@NotBlank
+	@Length(min = 5)
+	private String coverLetter;
 }

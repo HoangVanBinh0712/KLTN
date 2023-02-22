@@ -28,10 +28,6 @@ public class IndustryService {
 	public DataResponse<IndustryDTO> create(IndustryDTO request) {
 
 		Industry industry = modelMapper.map(request, Industry.class);
-		if (request.getParentId() != null) {
-			Industry parent = industryRepo.getReferenceById(request.getParentId());
-			industry.setParent(parent);
-		}
 		return new DataResponse<>(true, "Add industry successfully",
 				modelMapper.map(industryRepo.save(industry), IndustryDTO.class));
 	}
@@ -47,11 +43,7 @@ public class IndustryService {
 		Industry industry = optField.get();
 
 		industry.setName(request.getName());
-		if (request.getParentId() != null) {
-			Industry parent = industryRepo.getReferenceById(request.getParentId());
-			industry.setParent(parent);
-		}
-
+		
 		return new DataResponse<>(true, "", modelMapper.map(industryRepo.save(industry), IndustryDTO.class));
 	}
 
@@ -63,10 +55,13 @@ public class IndustryService {
 
 	@Transactional
 	public BaseResponse delete(Long id) {
-		industryRepo.updateBeforeDelete(id);
-
-		industryRepo.deleteById(id);
-		return new BaseResponse(true, "Delete successfully !");
+		try {
+			industryRepo.deleteById(id);
+			return new BaseResponse(true, "Delete successfully !");
+		
+		}catch(Exception ex) {
+			return new BaseResponse(false, "Cannot delete industry !");
+		}
 	}
 
 }
