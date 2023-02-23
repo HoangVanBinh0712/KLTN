@@ -34,12 +34,12 @@ public class AdminStatisticController {
 
     }
 
-    @GetMapping("comments")
-    public ResponseEntity<?> getCommentStatistic(@RequestParam(name = "year", required = true) Integer year) {
-
-        return ResponseEntity.ok(service.getCountComments(year));
-
-    }
+//    @GetMapping("comments")
+//    public ResponseEntity<?> getCommentStatistic(@RequestParam(name = "year", required = true) Integer year) {
+//
+//        return ResponseEntity.ok(service.getCountComments(year));
+//
+//    }
 
     @GetMapping("user")
     public ResponseEntity<?> getUserStatistic(@RequestParam(name = "year", required = true) Integer year) {

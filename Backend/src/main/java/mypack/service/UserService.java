@@ -115,6 +115,7 @@ public class UserService {
 			user.setEmailConfirm(false);
 			user.setRole(ERole.ROLE_USER);
 			user.setCreateDate(new Date());
+			user.setWrongPasswordcount(0L);
 			userRepo.save(user);
 
 			return new BaseResponse(true, "Registered successfully !");
@@ -139,7 +140,7 @@ public class UserService {
 			user.setCity(city);
 			user.setIndustry(industry);
 			user.setCreateDate(new Date());
-
+			user.setWrongPasswordcount(0L);
 			userRepo.save(user);
 
 			return new BaseResponse(true, "Registered successfully !");
@@ -149,11 +150,30 @@ public class UserService {
 	}
 
 	public JwtResponse<UserDTO> login(LoginRequest request) {
-		Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-		String token = jwtUtils.generateJwtToken(authentication);
-		String refreshToken = jwtUtils.generateJwtRefreshToken(authentication);
-		return new JwtResponse<>(token, refreshToken, null);
+		User user = userRepo.findByEmail(request.getUsername())
+				.orElseThrow(() -> new CommonRuntimeException("Email not found !"));
+		if (user.getWrongPasswordcount() != null && user.getWrongPasswordcount() >= 5) {
+			// Nhap sai qua 5 lan lien tiep
+			throw new CommonRuntimeException(
+					"You has enter wrong password over 5 times. Try other ways to Login or reset your password !");
+		}
+		try {
+			Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+			String token = jwtUtils.generateJwtToken(authentication);
+			String refreshToken = jwtUtils.generateJwtRefreshToken(authentication);
+			user.setWrongPasswordcount(0L);
+			userRepo.save(user);
+			return new JwtResponse<>(token, refreshToken, null);
+		} catch (Exception e) {
+			// wrong password
+			if (user.getWrongPasswordcount() == null)
+				user.setWrongPasswordcount(0L);
+			user.setWrongPasswordcount(user.getWrongPasswordcount() + 1);
+			userRepo.save(user);
+			throw new CommonRuntimeException("Wrong username or password !");
+
+		}
 	}
 
 	// Update profile
@@ -354,7 +374,8 @@ public class UserService {
 			profile.setMethod(request.getMethod());
 			profile.setPosition(request.getPosition());
 			profile.setLastModified(new Date());
-
+			profile.setWorkExperiences(request.getWorkExperiences());
+			profile.setSkillsAndKnowledges(request.getSkillsAndKnowledges());
 			return new DataResponse<>(true, "Upload success !",
 					mapper.map(profileRepository.save(profile), ProfileDTO.class));
 		} catch (Exception e) {
@@ -382,7 +403,8 @@ public class UserService {
 		profile.setMethod(request.getMethod());
 		profile.setPosition(request.getPosition());
 		profile.setLastModified(new Date());
-
+		profile.setWorkExperiences(request.getWorkExperiences());
+		profile.setSkillsAndKnowledges(request.getSkillsAndKnowledges());
 		return new DataResponse<>(true, "Update success !",
 				mapper.map(profileRepository.save(profile), ProfileDTO.class));
 	}
@@ -447,6 +469,7 @@ public class UserService {
 
 		user.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		user.setCode("");
+		user.setWrongPasswordcount(0L);
 		user = userRepo.save(user);
 		// add Notification
 		notificationService.addNotification(user.getId(), "You have changed your password through Reset password.",

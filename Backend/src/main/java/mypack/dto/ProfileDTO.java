@@ -11,12 +11,16 @@ import mypack.utility.datatype.EPosition;
 public class ProfileDTO {
 
 	private Long mediaId;
-	
+
 	private String url;
-	
+
 	private Boolean isPublic;
-	
+
 	private String name;
+
+	private String workExperiences;
+
+	private String skillsAndKnowledges;
 
 	private EExperience experience;
 

@@ -9,7 +9,7 @@ import mypack.controller.exception.CommonRuntimeException;
 import mypack.payload.statistic.StatisticForCount;
 import mypack.payload.statistic.SumTotalByYearMonthCurrencyStatus;
 import mypack.repository.CVSubmitRepository;
-import mypack.repository.CommentRepository;
+//import mypack.repository.CommentRepository;
 import mypack.repository.OrderRepository;
 import mypack.repository.PostRepository;
 import mypack.repository.UserRepository;
@@ -30,8 +30,8 @@ public class AdminStatisticService {
 	@Autowired
 	CVSubmitRepository cvSubmitRepository;
 
-	@Autowired
-	CommentRepository commentRepository;
+//	@Autowired
+//	CommentRepository commentRepository;
 
 	@Autowired
 	OrderRepository orderRepository;
@@ -53,17 +53,17 @@ public class AdminStatisticService {
 		return vpc;
 	}
 
-	public List<StatisticForCount> getCountComments(Integer year) {
-
-		// Count total view Page
-
-		List<StatisticForCount> vpc = commentRepository.getCountAllComments(year);
-
-		if (vpc.isEmpty())
-			throw new CommonRuntimeException("Do not have any comment in any post !");
-
-		return vpc;
-	}
+//	public List<StatisticForCount> getCountComments(Integer year) {
+//
+//		// Count total view Page
+//
+//		List<StatisticForCount> vpc = commentRepository.getCountAllComments(year);
+//
+//		if (vpc.isEmpty())
+//			throw new CommonRuntimeException("Do not have any comment in any post !");
+//
+//		return vpc;
+//	}
 
 	public List<StatisticForCount> getNewUserRegistered(Integer year) {
 		// Count total view post

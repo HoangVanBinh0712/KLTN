@@ -11,7 +11,7 @@ import mypack.model.Post;
 import mypack.model.User;
 import mypack.payload.statistic.StatisticForCount;
 import mypack.repository.CVSubmitRepository;
-import mypack.repository.CommentRepository;
+//import mypack.repository.CommentRepository;
 import mypack.repository.PostRepository;
 import mypack.repository.UserRepository;
 import mypack.repository.ViewPageRepository;
@@ -30,8 +30,8 @@ public class EmployerStatisticService {
 
     @Autowired
     CVSubmitRepository cvSubmitRepository;
-    @Autowired
-    CommentRepository commentRepository;
+//    @Autowired
+//    CommentRepository commentRepository;
 
     public List<StatisticForCount> getViewPageCountStatistc(String empEmail, Integer year) {
         Optional<User> user = userRepo.findByEmailAndRole(empEmail, ERole.ROLE_EMPLOYER);
@@ -70,20 +70,20 @@ public class EmployerStatisticService {
         return vpc;
     }
 
-    public List<StatisticForCount> getCountComments(String empEmail, Integer year) {
-
-        Optional<User> user = userRepo.findByEmailAndRole(empEmail, ERole.ROLE_EMPLOYER);
-        if (user.isEmpty())
-            throw new CommonRuntimeException("User not found with email: " + empEmail);
-        // Count total view Page
-        List<Post> lstId = postRepo.getEmpListPost(user.get().getId());
-
-        List<StatisticForCount> vpc = commentRepository.getCountComments(lstId, year);
-
-        if (vpc.isEmpty())
-            throw new CommonRuntimeException(
-                    "Not enough data to statistic . Try to post a job then try a gain later !");
-
-        return vpc;
-    }
+//    public List<StatisticForCount> getCountComments(String empEmail, Integer year) {
+//
+//        Optional<User> user = userRepo.findByEmailAndRole(empEmail, ERole.ROLE_EMPLOYER);
+//        if (user.isEmpty())
+//            throw new CommonRuntimeException("User not found with email: " + empEmail);
+//        // Count total view Page
+//        List<Post> lstId = postRepo.getEmpListPost(user.get().getId());
+//
+//        List<StatisticForCount> vpc = commentRepository.getCountComments(lstId, year);
+//
+//        if (vpc.isEmpty())
+//            throw new CommonRuntimeException(
+//                    "Not enough data to statistic . Try to post a job then try a gain later !");
+//
+//        return vpc;
+//    }
 }

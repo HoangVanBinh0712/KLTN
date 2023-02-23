@@ -32,6 +32,13 @@ public class ServiceCreateRequest {
 	@Min(1)
 	private Long postDuration;
 
+	@NotNull
 	private Boolean active;
+	
+	@NotNull
+	private Boolean canSearchCV;
+	
+	@NotNull
+	private Boolean canFilterCVSubmit;
 
 }

@@ -97,6 +97,10 @@ public class User {
 	@Column
 	private Date createDate;
 
+	
+	@Column(name = "wrong_password_count")
+	private Long wrongPasswordcount;
+	
 	// Package
 	@ManyToOne
 	@JoinColumn(name = "current_service")

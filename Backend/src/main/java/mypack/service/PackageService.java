@@ -54,16 +54,28 @@ public class PackageService {
 		Service sv = opt.get();
 		if (!StringUtils.isBlank(request.getName()))
 			sv.setName(request.getName());
+		
 		if (!StringUtils.isBlank(request.getDescription()))
 			sv.setDescription(request.getDescription());
+		
 		if (request.getPrice() != null)
 			sv.setPrice(request.getPrice());
+		
 		if (request.getCurrency() != null)
 			sv.setCurrency(request.getCurrency());
+		
 		if (request.getActive() != null)
 			sv.setActive(request.getActive());
+		
+		if (request.getCanSearchCV() != null)
+			sv.setCanSearchCV(request.getCanSearchCV());
+		
+		if (request.getCanFilterCVSubmit() != null)
+			sv.setCanFilterCVSubmit(request.getCanFilterCVSubmit());
+		
 		if (request.getType() != null)
 			sv.setType(request.getType());
+		
 		if (request.getPostDuration() != null)
 			sv.setPostDuration(request.getPostDuration());
 		sv = serviceRepository.save(sv);

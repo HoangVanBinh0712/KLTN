@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -39,6 +40,15 @@ public class Profile {
 	@Column
 	@NotEmpty
 	private String name;
+	
+	@Column(name = "work_experiences ")
+	@NotBlank
+	private String workExperiences;
+	
+
+	@Column(name = "skills_and_knowledges")
+	@NotBlank
+	private String skillsAndKnowledges;
 
 	@Column(name = "is_public", columnDefinition = "boolean default false")
 	@NotNull

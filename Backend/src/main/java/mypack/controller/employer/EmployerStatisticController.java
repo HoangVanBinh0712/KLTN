@@ -43,11 +43,11 @@ public class EmployerStatisticController {
 
     }
 
-    @GetMapping("comments")
-    public ResponseEntity<?> getCommentStatistic(@AuthenticationPrincipal UserDetailsCustom emp,
-            @RequestParam(name = "year", required = true) Integer year) {
-
-        return ResponseEntity.ok(service.getCountComments(emp.getEmail(), year));
-
-    }
+//    @GetMapping("comments")
+//    public ResponseEntity<?> getCommentStatistic(@AuthenticationPrincipal UserDetailsCustom emp,
+//            @RequestParam(name = "year", required = true) Integer year) {
+//
+//        return ResponseEntity.ok(service.getCountComments(emp.getEmail(), year));
+//
+//    }
 }

@@ -1,8 +1,5 @@
 package mypack.controller.employer;
 
-import java.util.Date;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import mypack.model.User;
 import mypack.payload.BaseResponse;
 import mypack.repository.UserRepository;
 import mypack.service.CVSearchAndViewedService;
@@ -20,7 +16,6 @@ import mypack.service.UserDetailsCustom;
 import mypack.utility.datatype.EExperience;
 import mypack.utility.datatype.EMethod;
 import mypack.utility.datatype.EPosition;
-import mypack.utility.datatype.EServiceType;
 
 @RestController
 @RequestMapping("api/employer/profile-search")
@@ -43,12 +38,10 @@ public class ProfileSearchController {
 			@RequestParam(name = "limit", required = false) Integer limit,
 			@RequestParam(required = false) Integer sortBy, @RequestParam(required = false) Boolean sortDescending,
 			@AuthenticationPrincipal UserDetailsCustom emp) {
-		Optional<User> us = userRepository.findById(emp.getId());
-		if (us.isPresent()) {
-			if (us.get().getService() != null && us.get().getService().getType() == EServiceType.PREMIUM
-					&& us.get().getServiceExpirationDate().after(new Date()))
-				return ResponseEntity.ok(cvSearchService.searchProfile(keyword, method, position, experience,
-						industryId, cityId, page, limit, sortBy, sortDescending));
+		if (cvSearchService.isEligible(emp.getId())) {
+
+			return ResponseEntity.ok(cvSearchService.searchProfile(keyword, method, position, experience, industryId,
+					cityId, page, limit, sortBy, sortDescending));
 		}
 		return ResponseEntity
 				.ok(new BaseResponse(false, "Your current package is not posible to access this feature !"));

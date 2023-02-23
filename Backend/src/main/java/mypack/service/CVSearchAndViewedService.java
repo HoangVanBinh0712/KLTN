@@ -31,51 +31,59 @@ import mypack.utility.datatype.ERole;
 @Service
 public class CVSearchAndViewedService {
 
-    @Autowired
-    ProfileRepository profileRepo;
+	@Autowired
+	ProfileRepository profileRepo;
 
-    @Autowired
-    UserRepository userRepo;
+	@Autowired
+	UserRepository userRepo;
 
-    @Autowired
-    CVViewedRepository cvViewedRepository;
+	@Autowired
+	CVViewedRepository cvViewedRepository;
 
-    @Autowired
-    ModelMapper mapper;
+	@Autowired
+	ModelMapper mapper;
 
-    public ListWithPagingResponse<ProfileDTO> searchProfile(String keyword, EMethod method, EPosition position,
-            EExperience experience,
-            Long industryId, Long cityId, Integer pageNumber, Integer limit, Integer sortBy, Boolean sortDescending) {
-        Long c = profileRepo.profileCountBeforeSearch(keyword, method, position, experience, industryId, cityId);
+	public Boolean isEligible(Long empId) {
+		User us = userRepo.findById(empId).orElseThrow(() -> new CommonRuntimeException("Employer not found !"));
+		if (us.getService() != null && us.getService().getCanSearchCV() != null
+				&& us.getService().getCanSearchCV() == true && us.getServiceExpirationDate().after(new Date()))
+			return true;
+		return false;
+	}
 
-        Page page = new Page(pageNumber, limit, c.intValue(), ModelSorting.getProfileSort(sortBy, sortDescending));
-        return profileRepo.profileSearch(keyword, method, position, experience, industryId, cityId, page);
-    }
+	public ListWithPagingResponse<ProfileDTO> searchProfile(String keyword, EMethod method, EPosition position,
+			EExperience experience, Long industryId, Long cityId, Integer pageNumber, Integer limit, Integer sortBy,
+			Boolean sortDescending) {
+		Long c = profileRepo.profileCountBeforeSearch(keyword, method, position, experience, industryId, cityId);
 
-    public BaseResponse addViewed(String empEmail, Long mediaId, Long userId) {
-        Optional<User> emp = userRepo.findByEmailAndRole(empEmail, ERole.ROLE_EMPLOYER);
-        if (emp.isEmpty())
-            throw new CommonRuntimeException("User not found with email: " + empEmail);
-        Optional<Profile> pro = profileRepo.findById(new ProfilePK(userId, mediaId));
-        if (pro.isEmpty())
-            throw new CommonRuntimeException("Profile not found !");
-        CVViewedPK pk = new CVViewedPK(emp.get().getId(), userId, mediaId);
-        CVViewed cv = new CVViewed(pk, emp.get(), pro.get(), new Date());
-        cvViewedRepository.save(cv);
+		Page page = new Page(pageNumber, limit, c.intValue(), ModelSorting.getProfileSort(sortBy, sortDescending));
+		return profileRepo.profileSearch(keyword, method, position, experience, industryId, cityId, page);
+	}
 
-        return new BaseResponse(true, "Success");
+	public BaseResponse addViewed(String empEmail, Long mediaId, Long userId) {
+		Optional<User> emp = userRepo.findByEmailAndRole(empEmail, ERole.ROLE_EMPLOYER);
+		if (emp.isEmpty())
+			throw new CommonRuntimeException("User not found with email: " + empEmail);
+		Optional<Profile> pro = profileRepo.findById(new ProfilePK(userId, mediaId));
+		if (pro.isEmpty())
+			throw new CommonRuntimeException("Profile not found !");
+		CVViewedPK pk = new CVViewedPK(emp.get().getId(), userId, mediaId);
+		CVViewed cv = new CVViewed(pk, emp.get(), pro.get(), new Date());
+		cvViewedRepository.save(cv);
 
-    }
+		return new BaseResponse(true, "Success");
 
-    public Long getCountViewForCV(Long userId, Long mediaId) {
-        return cvViewedRepository.countViewedForCV(mediaId, userId);
-    }
+	}
 
-    public List<UserDTO> getEmployerViewedCV(Long userId, Long mediaId) {
-        List<CVViewed> lst = cvViewedRepository.getEmployerViewedCV(mediaId, userId);
-        if (lst.isEmpty())
-            throw new CommonRuntimeException("No employer has viewed your cv yet !");
-        return lst.stream().map(x -> x.getViewer()).map(x -> mapper.map(x, UserDTO.class)).toList();
+	public Long getCountViewForCV(Long userId, Long mediaId) {
+		return cvViewedRepository.countViewedForCV(mediaId, userId);
+	}
 
-    }
+	public List<UserDTO> getEmployerViewedCV(Long userId, Long mediaId) {
+		List<CVViewed> lst = cvViewedRepository.getEmployerViewedCV(mediaId, userId);
+		if (lst.isEmpty())
+			throw new CommonRuntimeException("No employer has viewed your cv yet !");
+		return lst.stream().map(x -> x.getViewer()).map(x -> mapper.map(x, UserDTO.class)).toList();
+
+	}
 }

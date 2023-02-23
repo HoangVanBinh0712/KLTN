@@ -34,12 +34,12 @@ public class Service {
 	@Column
 	@NotBlank
 	private String description;
-	
+
 	@Column(name = "type", columnDefinition = "varchar(30)")
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private EServiceType type;
-	
+
 	@Column
 	@NotNull
 	@Min(0)
@@ -49,16 +49,22 @@ public class Service {
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private ECurrency currency;
-	
+
 	@Column(name = "created_date")
 	private Date createdDate;
-	
+
 	@Column(name = "post_duration")
 	@NotNull
 	@Min(1)
 	private Long postDuration;
-	
+
 	@Column(name = "active", columnDefinition = "boolean default true")
 	private Boolean active;
+	
+	@Column(name = "can_search_cv")
+	private Boolean canSearchCV;
+	
+	@Column(name = "can_filter_cv_submit")
+	private Boolean canFilterCVSubmit;
 
 }

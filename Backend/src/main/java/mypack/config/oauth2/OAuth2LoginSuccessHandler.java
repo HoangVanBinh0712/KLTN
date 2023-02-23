@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -59,10 +58,14 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 			user.setRole(ERole.ROLE_USER);
 			user.setCreateDate(new Date());
 			user.setPassword((RandomString.get(20)));
+			user.setWrongPasswordcount(0L);
 			code = RandomString.get(10);
 			user.setCode(code);
 			userRepository.save(user);
 		}
+		User us = optionalUser.get();
+		us.setWrongPasswordcount(0L);
+		userRepository.save(us);
 		jwt = jwtUtils.generateJwtToken(email);
 		refresh = jwtUtils.generateJwtRefreshToken(email);
 
