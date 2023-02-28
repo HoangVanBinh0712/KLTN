@@ -18,6 +18,7 @@ import mypack.model.City;
 import mypack.model.Industry;
 import mypack.model.Post;
 import mypack.model.User;
+import mypack.model.ViewPost;
 import mypack.payload.BaseResponse;
 import mypack.payload.DataResponse;
 import mypack.payload.post.PostRequest;
@@ -27,6 +28,7 @@ import mypack.repository.OrderRepository;
 import mypack.repository.PostRepository;
 import mypack.repository.ServiceRepository;
 import mypack.repository.UserRepository;
+import mypack.repository.ViewPostRepository;
 import mypack.utility.datatype.ECurrency;
 import mypack.utility.datatype.EStatus;
 
@@ -52,7 +54,8 @@ public class EmployerPostService {
 
     @Autowired
     MediaResourceService mediaResourceService;
-    
+    @Autowired
+    ViewPostRepository viewPostRepository;
     @Autowired
     ModelMapper modelMapper;
 
@@ -270,13 +273,19 @@ public class EmployerPostService {
             throw new CommonRuntimeException("Post not available to view !");
         }
         PostDTO res = modelMapper.map(post, PostDTO.class);
+        ViewPost vp = new ViewPost();
+        vp.setDate(new Date());
+        vp.setPost(post);
         if (post.getViewCount() == null) {
             post.setViewCount(1);
         } else {
             post.setViewCount(post.getViewCount() + 1);
         }
-        //
+        //save vp and post
+        viewPostRepository.save(vp);
         postRepository.save(post);
+        
+   
         return new DataResponse<>(true, "", res);
     }
 

@@ -20,6 +20,7 @@ import mypack.utility.datatype.ECurrency;
 import mypack.utility.datatype.EExperience;
 import mypack.utility.datatype.EGender;
 import mypack.utility.datatype.EMethod;
+import mypack.utility.datatype.EMostViewType;
 import mypack.utility.datatype.EPosition;
 
 @RequestMapping("api/post")
@@ -44,6 +45,14 @@ public class PostController {
 		return ResponseEntity.ok(postSearchService.getHotJob(page, limit));
 	}
 
+	@GetMapping("most-view")
+	public ResponseEntity<?> getMostView(@RequestParam(name = "type", required = true) EMostViewType type,
+			@RequestParam(name = "page", required = true) Integer page,
+			@RequestParam(name = "limit", required = true) Integer limit) {
+
+		return ResponseEntity.ok(postSearchService.getMostView(type, page, limit));
+	}
+
 	@GetMapping
 	public ResponseEntity<?> getPost(@RequestParam(name = "keyword", required = false) String keyword,
 			@RequestParam(name = "recruit", required = false) Long recruit,
@@ -61,17 +70,15 @@ public class PostController {
 			@RequestParam(name = "serviceId", required = false) Long serviceId,
 			@RequestParam(name = "page", required = false) Integer page,
 			@RequestParam(name = "limit", required = false) Integer limit,
-			@RequestParam(required = false) Integer sortBy,
-			@RequestParam(required = false) Boolean sortDescending)
+			@RequestParam(required = false) Integer sortBy, @RequestParam(required = false) Boolean sortDescending)
 			throws ParseException {
 
 		Long count = postSearchService.getCountBeforSearch(keyword, recruit, salary, method, position, experience,
-				gender, currency, authorId, industryId, cityId, null, expirationDate, startDate,
-				serviceId);
+				gender, currency, authorId, industryId, cityId, null, expirationDate, startDate, serviceId);
 
 		return ResponseEntity.ok(postSearchService.search(keyword, recruit, salary, method, position, experience,
-				gender, currency, authorId, industryId, cityId, null, expirationDate, startDate,
-				serviceId, new Page(page, limit, count.intValue(), ModelSorting.getPostSort(sortBy, sortDescending))));
+				gender, currency, authorId, industryId, cityId, null, expirationDate, startDate, serviceId,
+				new Page(page, limit, count.intValue(), ModelSorting.getPostSort(sortBy, sortDescending))));
 	}
 
 }
