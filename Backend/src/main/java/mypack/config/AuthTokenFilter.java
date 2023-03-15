@@ -36,7 +36,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		List<String> urls = Arrays.asList("/api/comment", "/api/user/list-company");
 		if (request.getRequestURI().contains("api/user") || request.getRequestURI().contains("api/employer")
-				|| request.getRequestURI().contains("api/admin") || request.getRequestURI().contains("api/pay")) {
+				|| request.getRequestURI().contains("api/admin") || request.getRequestURI().contains("api/pay") || request.getRequestURI().contains("api/chat")) {
 			if (!urls.contains(request.getRequestURI())
 					&& !request.getRequestURI().contains("/api/employer/information"))
 

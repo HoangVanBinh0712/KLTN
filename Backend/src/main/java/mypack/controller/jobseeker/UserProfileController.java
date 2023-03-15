@@ -39,8 +39,9 @@ public class UserProfileController {
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> update(@AuthenticationPrincipal UserDetailsCustom user,
 			@RequestPart("info") @Valid JobseekerProfileUpdateRequest request,
-			@RequestPart(name = "avatar", required = false) MultipartFile avatar) {
-		return ResponseEntity.ok(userService.jobseekerUpdate(request, avatar, user.getId()));
+			@RequestPart(name = "avatar", required = false) MultipartFile avatar,
+			@RequestPart(name = "cover", required = false) MultipartFile cover) {
+		return ResponseEntity.ok(userService.jobseekerUpdate(request, avatar, cover, user.getId()));
 	}
 
 	@GetMapping

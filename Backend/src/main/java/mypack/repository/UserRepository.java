@@ -33,6 +33,11 @@ public interface UserRepository extends JpaRepository<User, Long>, UserSerachCus
 	@Transactional
 	@Query(value = "update user set avatar_id = null where id = :id", nativeQuery = true)
 	void updateBeforeDeleteImage(@Param("id") Long id);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "update user set cover_id = null where id = :id", nativeQuery = true)
+	void updateBeforeDeleteCover(@Param("id") Long id);
 
 	@Query(value = "SELECT * FROM user WHERE role = 1 ORDER BY RAND() LIMIT 10", nativeQuery = true)
 	List<User> getListCompany();
