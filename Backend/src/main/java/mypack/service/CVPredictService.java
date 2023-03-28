@@ -58,28 +58,20 @@ public class CVPredictService {
 	public CVPredictResponse<PostDTO> predict(Long mediaId, Long userId) {
 		Profile profile = profileRepository.getReferenceById(new ProfilePK(userId, mediaId));
 
-		String url = profile.getMediaResource().getUrl();
 		try {
-			byte[] fileContent = IOUtils.toByteArray(new URL(url));
-
-			PDDocument document = PDDocument.load(fileContent);
-			// Instantiate PDFTextStripper class
-			PDFTextStripper pdfStripper = new PDFTextStripper();
-			// Retrieving text from PDF document
-			String text = pdfStripper.getText(document);
-
-			// Closing the document
-			document.close();
-
-			text = cleanResume(text);
+			String resume = profile.getWorkExperiences();
+			String skill = profile.getSkillsAndKnowledges();
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+			headers.setContentType(MediaType.APPLICATION_JSON );
 
-			HttpEntity<String> entity = new HttpEntity<>(headers);
-
-			String response = restTemplate.exchange(aiUurl, HttpMethod.POST, entity, String.class, text, text)
-					.getBody();
+			JSONObject requestBody = new JSONObject();
+			requestBody.put("resume", resume);
+			requestBody.put("skill", skill);
+			
+			HttpEntity<String> entity = new HttpEntity<>(requestBody.toString(), headers);
+			String response = restTemplate.postForEntity(aiUurl, entity, String.class).getBody();
 			JSONObject jObject = new JSONObject(response); // json
 			JSONArray array = jObject.getJSONArray("results"); // get data object
 			Map<String, String> dict = new HashMap<>();
@@ -105,7 +97,7 @@ public class CVPredictService {
 
 			return new CVPredictResponse<>(page.getPageNumber() + 1, page.getTotalPage(), posts, dict, highestIndustry);
 		} catch (Exception e) {
-			throw new CommonRuntimeException("Can not predict the cv please upload other cv !");
+			throw new CommonRuntimeException("Error when predicting your resume. Upload a new resume and try again !");
 		}
 
 	}

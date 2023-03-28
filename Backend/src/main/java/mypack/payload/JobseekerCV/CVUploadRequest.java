@@ -3,6 +3,8 @@ package mypack.payload.JobseekerCV;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
 import lombok.Data;
 import mypack.utility.datatype.EExperience;
 import mypack.utility.datatype.EMethod;
@@ -18,9 +20,11 @@ public class CVUploadRequest {
 	private String name;
 
 	@NotBlank
+	@Length(min = 30)
 	private String workExperiences;
 
 	@NotBlank
+	@Length(min = 30)
 	private String skillsAndKnowledges;
 
 	@NotNull
@@ -31,4 +35,5 @@ public class CVUploadRequest {
 
 	@NotNull
 	private EMethod method;
+
 }

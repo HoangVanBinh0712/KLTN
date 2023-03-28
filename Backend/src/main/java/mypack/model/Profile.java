@@ -15,6 +15,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
 import lombok.Data;
 import mypack.model.pk.ProfilePK;
 import mypack.utility.datatype.EExperience;
@@ -40,14 +42,15 @@ public class Profile {
 	@Column
 	@NotEmpty
 	private String name;
-	
-	@Column(name = "work_experiences ")
-	@NotBlank
-	private String workExperiences;
-	
 
-	@Column(name = "skills_and_knowledges")
+	@Column(name = "work_experiences ",length = 60000, columnDefinition = "MEDIUMTEXT CHARACTER SET UTF8MB4")
 	@NotBlank
+	@Length(min = 30)
+	private String workExperiences;
+
+	@Column(name = "skills_and_knowledges",length = 60000, columnDefinition = "MEDIUMTEXT CHARACTER SET UTF8MB4")
+	@NotBlank
+	@Length(min = 30)
 	private String skillsAndKnowledges;
 
 	@Column(name = "is_public", columnDefinition = "boolean default false")
@@ -69,5 +72,4 @@ public class Profile {
 	@Column
 	@Enumerated(EnumType.STRING)
 	private EExperience experience;
-
 }
