@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Hello WebSocket</title>
+	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		td {
+			border-radius: 10px;
+			word-wrap: break-word;
+		}
+
+		.list-room {
+			border: 1px solid black;
+			background-color: salmon;
+			padding: 10px 5px;
+			border-radius: 10px;
+		}
+
+		.list-room .room {
+			margin-bottom: 20px;
+			background-color: white;
+			padding: 5px;
+			border: 1px solid gray;
+			box-shadow: 1px 1px 5px gray;
+			border-radius: 10px;
+		}
+
+		.list-room .room:hover {
+			background-color: skyblue;
+			color: white;
+			cursor: pointer;
+		}
+
+		.list-room .room[active="true"] {
+			background-color: skyblue;
+			color: white;
+		}
+
+		.float-items .square-message {
+
+			border-radius: 10px;
+		}
+
+		.float-items .square-message .messages-info {
+			border-radius: 10px;
+			background-color: skyblue;
+
+		}
+
+		.float-items .square-message .messages-info h4 {
+			text-align: center;
+			padding: 10px 0;
+			margin: 0;
+		}
+
+
+		.float-items .square-message .circle-float {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			background-color: salmon;
+			text-align: center;
+			align-items: center;
+			display: flex;
+			justify-content: center;
+
+		}
+
+		.float-items .square-message .circle-float:hover {
+			cursor: pointer;
+		}
+
+		.float-items .square-message .messages {
+			margin-bottom: 60px;
+			min-width: 300px;
+			max-height: 250px;
+			overflow-y: scroll;
+			overflow-x: hidden;
+			border: 1px solid black;
+			min-height: 200px;
+			background-color: white;
+		}
+
+		.float-items .square-message .messages::-webkit-scrollbar {
+			width: 4px;
+			background-color: white;
+		}
+
+		.float-items .square-message .messages::-webkit-scrollbar-track {
+			background-color: transparent;
+
+		}
+
+		.float-items .square-message .messages::-webkit-scrollbar-thumb {
+			background-color: #d6dee1;
+			border-radius: 20px;
+			border: 1px solid transparent;
+			background-clip: content-box;
+
+		}
+
+		.float-items .square-message .messages .room {
+			background-color: white;
+			padding: 0 5px;
+			display: flex;
+			align-items: center;
+			border-bottom: 1px solid gray;
+		}
+
+		.float-items .square-message .messages .room:last-child {
+			border-bottom: unset;
+		}
+
+		.float-items .square-message .messages .room .avatar {
+			border-radius: 50%;
+		}
+
+		.float-items .square-message .messages .room .info {
+			padding: 10px;
+			flex-grow: 1;
+		}
+
+		.float-items .square-message .messages .room .info .unread-wrapper {
+			display: flex;
+		}
+
+		.float-items .square-message .messages .room .info .unread {
+			font-weight: bold;
+			color: blue;
+		}
+
+		.float-items .square-message .messages .room .info .unread-message {
+			width: 156px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+			display: inline-block;
+
+		}
+
+		.float-items .square-message .messages .room .info .unread-time {
+			width: 60px;
+			display: inline-block;
+
+		}
+
+		.float-items .square-message .messages .room .info p {
+			padding: 0;
+			margin: 0;
+		}
+
+		.float-items .square-message .messages .room .info p.header {
+			font-weight: bold;
+		}
+
+		.float-items .square-message .messages .room:hover {
+			background-color: skyblue;
+			color: white;
+			cursor: pointer;
+		}
+
+		.float-items .square-message .messages .room[active="true"] {
+			background-color: skyblue;
+			color: white;
+		}
+
+		.float-items .chat-room {
+			width: 250px;
+			height: 350px;
+			z-index: 1;
+			border-radius: 10px;
+			display: flex;
+			flex-direction: column;
+			box-sizing: border-box;
+		}
+
+		.float-items .chat-room .header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border: 1px solid black;
+			height: 40px;
+			padding: 0 10px;
+
+		}
+
+		.float-items .chat-room .header img {
+			width: 25px;
+			height: 25px;
+			border-radius: 50%;
+		}
+
+		.float-items .chat-room .header p {
+			margin: 0;
+			padding: 0;
+		}
+
+		.float-items .chat-room .header button {
+			padding: 0 10px;
+			border: none;
+			background-color: unset;
+
+		}
+
+		.float-items .chat-room .content {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+		}
+
+		button:hover {
+			cursor: pointer;
+		}
+
+		.float-items .chat-room .content .footer {
+			display: flex;
+			box-sizing: border-box;
+			border: 1px solid black;
+			padding: 5px;
+			height: 40px;
+			box-sizing: border-box;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+		}
+
+		.float-items .chat-room .content .footer .item {
+			border-radius: 50%;
+			width: auto;
+		}
+
+		.float-items .chat-room .content .footer .item:hover {
+			background-color: salmon;
+			cursor: pointer;
+		}
+
+		.float-items .chat-room .content .footer .group-input {
+			display: flex;
+			border: 1px solid black;
+			border-radius: 20px;
+			width: 50%;
+		}
+
+		.float-items .chat-room .content .footer .group-input input,
+		button {
+			border: none;
+			background-color: unset;
+		}
+
+		.float-items .chat-room .content .footer .group-input input {
+			width: 70%;
+			padding: 0 10px;
+		}
+
+		.float-items .chat-room .content .footer .group-input input:focus {
+			outline: none;
+		}
+
+		.float-items .chat-room .content .table-chat {
+			table-layout: fixed;
+			width: 100%;
+			border-left: 1px solid black;
+			border-right: 1px solid black;
+			flex-grow: 1;
+			overflow-y: scroll;
+			max-height: 268px;
+			box-sizing: border-box;
+			padding: 1px 5px;
+
+		}
+
+		.float-items .chat-room .content .table-chat div.yours {
+			display: flex;
+			justify-content: end;
+			margin-bottom: 5px;
+		}
+
+		.float-items .chat-room .content .table-chat div.yours span {
+			/* border-radius: 20px; */
+			background-color: #1877F2;
+			/* color: white;
+			padding: 5px 10px;
+			max-width: 50%;
+			word-break: break-all; */
+		}
+
+		.float-items .chat-room .content .table-chat div {
+			display: flex;
+			margin-bottom: 5px;
+
+		}
+
+		.float-items .chat-room .content .table-chat div span {
+			border-radius: 20px;
+			background-color: #4e4f50;
+			padding: 5px 10px;
+			max-width: 50%;
+			word-break: break-all;
+			color: white;
+		}
+
+
+
+		.float-items {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			display: flex;
+			flex-direction: row-reverse;
+			align-items: end;
+		}
+
+		.float-items .square-message {
+			min-width: 75px;
+		}
+
+		.float-items .chat-wrapper {
+			width: 270px;
+			padding: 0 10px;
+		}
+
+		#messengers {
+			display: flex;
+			gap: 10px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="float-items">
+		<div class="square-message">
+			<div class="messages-info" id="messages-info">
+				<h4>Your chats !</h4>
+				<div class="messages" id="listRoom">
+
+				</div>
+			</div>
+			<div class="circle-float" id="circle-message"><i class="fa  fa-comments-o"></i></div>
+
+		</div>
+		<div id="messengers">
+
+		</div>
+
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-8">
+
+				<div class="row mt-2 ">
+					<div class="col-5">
+						<label>Role</label>
+
+						<select class="form-control" id="userRole">
+							<option value="user">Jobseeker</option>
+							<option value="employer">Employer</option>
+
+						</select>
+					</div>
+
+					<div class="col">
+						<label>JWT token</label>
+						<input type="text" class="form-control input-lg" id="token"
+							value="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aGViZXN0MTE0NDdAZ21haWwuY29tIiwiaWF0IjoxNjc3NzY1OTQ1LCJleHAiOjE2ODAzNTc5NDV9.HY8J9LpXNLzysu46snn8rbASi-I6TT0oGAEY4sqWRaZuWobLRJ2PgjZrJraWh4GS0NzFkHAoAYjoOyOIuxEtuQ">
+					</div>
+					<div class="col" style="display:contents;">
+						<button id="connect" class="btn btn-primary" type="button">Connect</button>
+					</div>
+				</div>
+				<div class="row mt-2 ">
+					<div class="col-3">
+						<label>Room id</label>
+						<input type="text" class="form-control input-lg" id="chatRoomId" disabled>
+					</div>
+					<div class="col-3">
+						<label>User id</label>
+						<input type="text" class="form-control input-lg" id="reciverId" disabled>
+					</div>
+					<div class="col-5">
+						<label>Email</label>
+						<input type="email" class="form-control input-lg" id="email" disabled>
+					</div>
+				</div>
+				<p>Sy Manh:
+					eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzeW1hbmhAZ21haWwuY29tIiwiaWF0IjoxNjc4MjAyMzc1LCJleHAiOjE2ODA3OTQzNzV9.29Wei6Qq8Mc-o3pBu9oaAh1s2iMdguiNkk7kCddEY131Q-cnJUcTk2DRyWHG_b6S7Z7e1RP52Fkirifl4ZUOvA
+				</p>
+				<p>19110170:
+					eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxOTExMDE3MEBzdHVkZW50LmhjbXV0ZS5lZHUudm4iLCJpYXQiOjE2NzgyMDQyMTgsImV4cCI6MTY4MDc5NjIxOH0.9HGgRMqShNw6FfuUfqZxUDS8kWwtsgsuPB7vasuCMxhVQDttt7N_BYZkLsCAaOwaATX7zRU1zbhfmWr_7bKEeg
+				</p>
+				<p>19110171:
+					eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxOTExMDE3MUBzdHVkZW50LmhjbXV0ZS5lZHUudm4iLCJpYXQiOjE2NzgyMDQ0MjIsImV4cCI6MTY4MDc5NjQyMn0.VZ-PxixN11ykC9C03B00ukQ6dV-JTz2eqxuoOTznzNzua3TqU-JYcsaCHUxL_ns8iwHEQ6GsaksXHzSgdzhiwA
+				</p>
+				<p>19110172:
+					eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxOTExMDE3MkBzdHVkZW50LmhjbXV0ZS5lZHUudm4iLCJpYXQiOjE2NzgyMDQ1MDYsImV4cCI6MTY4MDc5NjUwNn0.oA2HCDAHscET3JGxcfTTAv-vrTD3Uu5WmaNtCfpVb-cF7aG7rS8yJlTWWwoDqQucznXx7MKyZJalr-5ybKnysw
+				</p>
+			</div>
+		</div>
+
+
+	</div>
+	<script>
+		let view = true
+		getElementById("circle-message").addEventListener('click', function () {
+			if (!view) getElementById("messages-info").style = "display: static"
+			else getElementById("messages-info").style = "display: none"
+			view = !view
+		})
+		function caclTime(time) {
+			const date1 = new Date(time)
+			const date2 = new Date();
+
+			const diff = date2.getTime() - date1.getTime();
+			let msec = diff;
+			let yy = Math.round(msec / (86400000 * 30 * 365))
+			let mm = Math.round(msec / (86400000 * 30))
+
+			let dd = Math.round(msec / 86400000)
+
+			let hh = Math.round(msec / 1000 / 60 / 60);
+			if (hh != 0)
+				msec -= hh * 1000 * 60 * 60;
+
+
+			let mi = Math.round(msec / 1000 / 60);
+
+
+			let result
+			if (Math.floor(mi) != 0) result = mi + ' phút'
+			if (Math.floor(hh) != 0) result = hh + ' giờ'
+			if (Math.floor(dd) != 0) result = dd + ' ngày'
+			if (Math.floor(mm) != 0) result = mm + ' tháng'
+			if (Math.floor(yy) != 0) result = yy + ' năm'
+			return result ? result : " Bây giờ"
+		}
+		//Global variables
+		var page = 1;
+		var maxPage = 2;
+		var data = []
+		var stompClient = null;
+		var fetchChatUrl = "http://localhost:8081/api/chat/message/";
+
+		var email = ''
+		//Minh`
+		var currentUser
+		//Doi phuong
+		var currentRoom
+		var messengers
+		var listCurrentRoom = []
+		const maxRoom = 3
+
+
+		//Elements
+		const inputEmail = getElementById('email')
+		const inputToken = getElementById("token")
+		const inputRecieverId = getElementById("reciverId")
+		const inputChatRoomId = getElementById("chatRoomId")
+		const userRole = getElementById("userRole")
+		const listRoomElement = getElementById("listRoom")
+		var newestChatMessage = []
+		var chatRoomTable
+		function connect(token, currentUser) {
+
+			if (!email || token == "") {
+				window.alert("Fill all the fields !")
+				return
+			}
+			if (!messengers || !currentUser) {
+				window.alert("Enter in the Jwt Field first !")
+				return
+			}
+			if (stompClient)
+				stompClient.disconnect();
+
+			const socket = new SockJS('http://localhost:8081/chat');
+
+			stompClient = Stomp.over(socket);
+			const auth_headers = {
+				Authorization: 'Bearer ' + token
+			};
+
+			stompClient.connect(auth_headers, function () {
+				///${currentUser.id}/messages/${reciverId}
+				stompClient.subscribe(`/user/queue`, function (message) {
+					const obj = JSON.parse(message.body);
+					chatRoomTable = getElementById(`chat-room-${obj.chatRoomId}-table`)
+					if (chatRoomTable) {
+						chatRoomTable.innerHTML += `<div><span>  ${obj.data}  </span></div>`
+						getElementById(`chat-room-${obj.chatRoomId}-table`).scrollTo(0, getElementById(`chat-room-${obj.chatRoomId}-table`).scrollHeight);
+
+					}
+					const p = getElementById(`room-${obj.chatRoomId}-message`)
+					p.innerText = obj.data
+					const p1 = getElementById(`room-${obj.chatRoomId}-time`)
+					p1.innerText = new Date().getHours() + ":" + new Date().getMinutes()
+					//When room is openned dont need to hight light
+					if (!chatRoomTable)
+						p.className = "unread-message unread"
+					else {
+						p.className = "unread-message"
+						//Set seen to true
+						axios.put(`http://localhost:8081/api/chat/message/${obj.chatMessageId}`, {}, { headers: auth_headers })
+					}
+					//Sort message room to newest message
+					sortNewestMessage(obj.chatRoomId)
+
+
+				});
+			});
+
+		}
+
+		function sendMessage(roomId) {
+			const mess = getElementById(`${roomId}-input-message`)
+			if (!stompClient) {
+				alert("Connect -> Set User Id -> Send")
+				return
+			}
+			if (!mess.value.trim()) {
+				alert("Must type something !")
+				return
+			}
+
+			stompClient.send("/websocket/chat", {}, JSON.stringify(
+				{
+					"idReceiver": getReciever(getRoomById(roomId), currentUser).id,
+					"contentType": 0,
+					"data": mess.value,
+					"chatRoomId": roomId,
+					"time": new Date()
+				}
+			));
+			chatRoomTable.innerHTML += `<div class="yours"><span>  ${mess.value}  </span></div>`
+			const room = getElementById(`room-${roomId}-message`)
+			room.innerText = 'Bạn: ' + mess.value
+			room.className = "unread-message"
+			mess.value = ''
+			getElementById(`chat-room-${roomId}-table`).scrollTo(0, getElementById(`chat-room-${roomId}-table`).scrollHeight);
+
+
+		}
+
+		//Sort
+		function sortNewestMessage(roomId) {
+			const lstRoom = getElementById('listRoom')
+			// messengers: all users
+			//newestChatMessage is list newest chat message
+			const element = getElementById(`room-${roomId}`)
+			element.remove()
+			getElementById('listRoom').innerHTML = element.outerHTML + getElementById('listRoom').innerHTML
+		}
+
+		function keyUpMessage(e, roomId) {
+			if (e.keyCode === 13) {
+				const mess = getElementById(`${roomId}-input-message`)
+				if (!stompClient) {
+					alert("Connect -> Set User Id -> Send")
+					return
+				}
+				if (!mess.value.trim()) {
+					alert("Must type something !")
+					return
+				}
+				stompClient.send("/websocket/chat", {}, JSON.stringify(
+					{
+						"idReceiver": getReciever(getRoomById(roomId), currentUser).id,
+						"contentType": 0,
+						"data": mess.value,
+						"chatRoomId": roomId,
+						"time": new Date()
+					}
+				));
+				chatRoomTable.innerHTML += `<div class="yours"><span>  ${mess.value}  </span></div>`
+				const room = getElementById(`room-${roomId}-message`)
+				room.innerText = 'Bạn: ' + mess.value
+				room.className = "unread-message"
+				mess.value = ''
+				getElementById(`chat-room-${roomId}-table`).scrollTo(0, getElementById(`chat-room-${roomId}-table`).scrollHeight);
+			}
+		}
+
+		function loadMessage(url, roomId, token) {
+			if (!stompClient) {
+				alert("Connect -> Set User Id -> Send")
+				return
+			}
+			var auth_headers = {
+				Authorization: 'Bearer ' + token
+			};
+			axios.get(url, { headers: auth_headers })
+				.then((response) => {
+					// page = response.data.currentPage + 1;
+					maxPage = response.data.totalPage;
+					data = response.data.data
+					chatRoomTable = getElementById(`chat-room-${roomId}-table`)
+					chatRoomTable.innerHTML = null
+					for (var i = 0; i < data.length; i++) {
+						var tmp = data[i];
+						if (tmp.senderId === currentUser.id)
+							chatRoomTable.innerHTML += `<div class="yours"><span>  ${tmp.content}  </span></div>`
+						else
+							chatRoomTable.innerHTML += `<div><span>  ${tmp.content}  </span></div>`
+					}
+					getElementById(`chat-room-${roomId}-table`).scrollTo(0, getElementById(`chat-room-${roomId}-table`).scrollHeight);
+					chatRoomTable.addEventListener('scroll', function () {
+						if (chatRoomTable.scrollTop === 0 && data.length > 0) {
+							loadMoreMessage(url + "&messageId=" + data[0].id, roomId, token);
+						}
+					})
+				getElementById(`chat-room-${roomId}-table`).scrollTo(0, getElementById(`chat-room-${roomId}-table`).scrollHeight);
+
+				});
+
+		}
+		function loadMoreMessage(url, roomId, token) {
+			axios.get(url, {
+				headers: {
+					Authorization: 'Bearer ' + token
+				}
+			}).then((response) => {
+				// page = response.data.currentPage + 1;
+				maxPage = response.data.totalPage;
+				data = response.data.data
+				chatRoomTable = getElementById(`chat-room-${roomId}-table`)
+				let holder = ''
+				for (var i = 0; i < data.length; i++) {
+					var tmp = data[i];
+					if (tmp.senderId === currentUser.id)
+						holder += `<div class="yours"><span>  ${tmp.content}  </span></div>`
+					else
+						holder += `<div><span>  ${tmp.content}  </span></div>`
+				}
+				chatRoomTable.innerHTML = holder + chatRoomTable.innerHTML
+				getElementById(`chat-room-${roomId}-table`).scrollTo(0, 30);
+			});
+
+		}
+		function getReciever(room, currentUser) {
+			if (room.user1.id === currentUser.id)
+				return room.user2
+			return room.user1
+		}
+		function getRoomById(roomId) {
+			return listCurrentRoom.filter(x => x.id === roomId)[0]
+		}
+		function closeRoom(roomId) {
+			getElementById(`chat-wrapper-${roomId}`).remove()
+			listCurrentRoom = listCurrentRoom.filter(r => r.id !== roomId)
+		}
+		function openRoom(roomId) {
+			//Convert to this room
+			//We have a messengers as a list of room you have.
+			//When create new room we check if roomId is already open in listCurrentRoom
+
+			if (listCurrentRoom.filter(room => room.id === roomId).length != 0)
+				return
+
+			if (currentRoom != null && currentRoom.id === roomId)
+				return
+			//drop oldest room
+			if (listCurrentRoom.length >= maxRoom) {
+				const oldestRoom = listCurrentRoom[0]
+				listCurrentRoom = listCurrentRoom.filter(x => x.id !== oldestRoom.id)
+				//close room
+				closeRoom(oldestRoom.id)
+			}
+			inputChatRoomId.value = roomId
+			const room = messengers.filter(room => room.id === roomId)[0];
+			//push a room to current room
+			listCurrentRoom.push(room)
+			//Push recieverId to room
+			const recieverName = getReciever(room, currentUser).name
+			inputRecieverId.value = getReciever(room, currentUser).id
+			getElementById(`room-${roomId}-message`).className = "unread-message"
+			getElementById("messengers").innerHTML = `	<div class="chat-wrapper" id="chat-wrapper-${roomId}">
+				<div class="chat-room" id="chat-room-${roomId}">
+				<div class="header" id="chat-room-${roomId}-header">
+					<img class="avatar"
+						src="https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-male-1-512.png" />
+					<p id="chat-room-1-name">${recieverName}</p>
+					<button onclick="closeRoom(${roomId})">X</button>
+				</div>
+				<div class="content" id="table-${roomId}-container">
+					<div class="table-chat" id="chat-room-${roomId}-table">
+
+					</div>
+					<div class="footer">
+						<div class="item"> <i class="fa fa-file-image-o" aria-hidden="true"></i></div>
+						<div class="item"><i class="fa fa-smile-o" aria-hidden="true"></i></div>
+						<div class="item"> <i class="fa fa-gift" aria-hidden="true"></i> </div>
+
+						<div class="group-input">
+							<input type="text" id="${roomId}-input-message" onkeyup="keyUpMessage(event, ${roomId})">
+							<button id="${roomId}-send" onclick="sendMessage(${roomId})"><i class="fa fa-paper-plane-o"></i></button>
+						</div>
+					</div>
+					</div>
+				</div>
+				</div>` + getElementById("messengers").innerHTML
+			loadMessage(fetchChatUrl + roomId + "/" + getReciever(room, currentUser).id + "?page=" + page + "&limit=" + 10, roomId, inputToken.value)
+		}
+
+		function keyUpJwt(token) {
+			email = parseJwt(token).sub
+			inputEmail.value = email
+			axios.get(`http://localhost:8081/api/${userRole.value}`, {
+				headers: {
+					Authorization: 'Bearer ' + token
+				}
+			}).then(res => {
+				currentUser = res.data
+				axios.get(`http://localhost:8081/api/chat/chat-room?page=1&limit=1000`, {
+					headers: {
+						Authorization: 'Bearer ' + token
+					}
+				})
+					.then(res => {
+						listRoomElement.innerHTML = null
+						const data = res.data.data
+						messengers = data
+						const roomIds = messengers.map(x => x.id)
+						let query = ''
+						for (let id of roomIds) {
+							query += 'roomIds=' + id + '&'
+						}
+						function getNewMessage(arrMessage, roomId) {
+							const mess = arrMessage.filter(x => x.chatRoomId === roomId)[0]
+
+							if (mess) {
+
+								if (mess.senderId === currentUser.id)
+									return "Bạn: " + mess.content
+								return mess.content
+							}
+							else return ''
+						}
+						function isSeenMessage(arrMessage, roomId) {
+							const mess = arrMessage.filter(x => x.chatRoomId === roomId)[0]
+							const room = messengers.filter(room => room.id === roomId)[0]
+							if (mess && room) {
+								if (currentUser.id === mess.senderId) return true
+								if (room.user1.id !== currentUser.id) {
+									//message is not yours
+									return mess.user2Seen
+								} else
+									return mess.user1Seen
+							}
+							else return true
+						}
+						function getNewMessageTime(arrMessage, roomId) {
+							const mess = arrMessage.filter(x => x.chatRoomId === roomId)[0]
+
+							if (mess)
+								return caclTime(mess.time)
+							else return ''
+						}
+						axios.get(`http://localhost:8081/api/chat/unread?${query}`, {
+							headers: {
+								Authorization: 'Bearer ' + token
+							}
+						}).then(chats => {
+							newestChatMessage = chats.data
+							for (let i = 0; i < data.length; i++) {
+
+								let room = data[i]
+								let user = room.user1.id === currentUser.id ? room.user2 : room.user1
+								listRoomElement.innerHTML +=
+									`<div class="room" id="room-${room.id}" onclick="openRoom(${room.id})">
+											<img class="avatar"
+										src="https://cdn4.iconfinder.com/data/icons/avatars-21/512/avatar-circle-human-male-1-512.png" width="50px"
+										height="50px" />
+									<div class="info">
+										<p class="header"> ${user.id} - ${user.name}</p>
+										<div class="unread-wrapper">
+										<p id="room-${room.id}-message" class="unread-message ${!isSeenMessage(chats.data, room.id) ? 'unread' : ''}"> <span id="room-${room.id}-time">${getNewMessage(chats.data, room.id)}</span></p>
+										<p id="room-${room.id}-time" class="unread-time"> <span id="room-${room.id}-time">${getNewMessageTime(chats.data, room.id)}</span></p>
+										</div>
+									</div>
+								</div>`
+							}
+
+						})
+
+						connect(inputToken.value, currentUser);
+
+					})
+			}).catch(err => window.alert(err))
+
+		}
+		inputToken.addEventListener('keyup', function (e) {
+			if (e.keyCode === 13) {
+				keyUpJwt(e.target.value)
+			}
+		})
+
+
+		//Click button connect
+		getElementById("connect").addEventListener('click', function () {
+			keyUpJwt(inputToken.value)
+		});
+
+
+		function getElementById(id) {
+			return document.getElementById(id)
+		}
+		//Press enter in Jwt field
+
+		function parseJwt(token) {
+			var base64Url = token.split('.')[1];
+			var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+			var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+				return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+			}).join(''));
+
+			return JSON.parse(jsonPayload);
+		}
+
+
+	</script>
+</body>
+
+</html>

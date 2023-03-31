@@ -43,8 +43,9 @@ public class EmployerProfileController {
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<?> update(@AuthenticationPrincipal UserDetailsCustom employer,
 			@RequestPart("info") @Valid EmployerProfileUpdateRequest request,
-			@RequestPart(name = "avatar", required = false) MultipartFile avatar) {
-		return ResponseEntity.ok(employerService.employerUpdate(request, avatar, employer.getId()));
+			@RequestPart(name = "avatar", required = false) MultipartFile avatar,
+			@RequestPart(name = "cover", required = false) MultipartFile cover) {
+		return ResponseEntity.ok(employerService.employerUpdate(request, avatar, cover, employer.getId()));
 	}
 
 	@PostMapping(value = "images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -62,7 +63,7 @@ public class EmployerProfileController {
 	public ResponseEntity<?> getEmployerImages(@PathVariable("employerId") Long employerId) {
 		return ResponseEntity.ok(employerService.employerGetImages(employerId));
 	}
-	
+
 	@DeleteMapping(value = "images/{imgId}")
 	public ResponseEntity<?> deleteImages(@PathVariable("imgId") Long imgId) {
 		return ResponseEntity.ok(employerService.employerDeleteImages(imgId));
@@ -91,8 +92,8 @@ public class EmployerProfileController {
 	public ResponseEntity<?> getUserInformation(@AuthenticationPrincipal UserDetailsCustom employer) {
 		return ResponseEntity.ok(employerService.getEmployerProfile(employer.getEmail()));
 	}
-	
-	//Service
+
+	// Service
 	@DeleteMapping("delete-service")
 	public ResponseEntity<?> deleteCurrentPackage(@AuthenticationPrincipal UserDetailsCustom employer) {
 		return ResponseEntity.ok(employerService.deletePackage(employer.getId()));

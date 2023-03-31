@@ -1,11 +1,11 @@
 package mypack.payload.predict;
 
 import java.util.List;
-
-import mypack.payload.BaseResponse;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
+import mypack.payload.BaseResponse;
 
 @Getter
 @Setter
@@ -13,16 +13,15 @@ public class CVPredictResponse<T> extends BaseResponse {
 	private int currentPage;
 	private int totalPage;
 	private List<T> data;
-	private List<JobOptionResponse> jobOptionResponses;
+	private Map<String, String> predictResult;
 	private String currentView;
-
-	public CVPredictResponse(int currentPage, int totalPage, List<T> data, List<JobOptionResponse> jobOptionResponses,
+	public CVPredictResponse(int currentPage, int totalPage, List<T> data, Map<String, String> predictResult,
 			String currentView) {
 		super(true, "");
 		this.currentPage = currentPage;
 		this.totalPage = totalPage;
 		this.data = data;
-		this.jobOptionResponses = jobOptionResponses;
+		this.predictResult = predictResult;
 		this.currentView = currentView;
 	}
 }

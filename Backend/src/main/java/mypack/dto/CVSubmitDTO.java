@@ -17,12 +17,15 @@ public class CVSubmitDTO {
 
 	// Url for the CV
 	private String url;
-	
+
 	private Long matchPercent;
-	
+
 	private Date date;
-	
+
 	@NotBlank
 	@Length(min = 5)
 	private String coverLetter;
+
+	//User
+	private ProfileDTO profile;
 }

@@ -74,7 +74,11 @@ public class User {
 	@OneToOne
 	@JoinColumn(name = "avatar_id")
 	private MediaResource avatar;
-
+	
+	@OneToOne
+	@JoinColumn(name = "cover_id")
+	private MediaResource cover;
+	
 	@Column
 	private String address;
 

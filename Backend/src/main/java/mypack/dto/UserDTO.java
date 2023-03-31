@@ -22,6 +22,8 @@ public class UserDTO {
 	private IndustryDTO industry;
 
 	private String urlAvatar;
+	
+	private String urlCover;
 
 	private String address;
 

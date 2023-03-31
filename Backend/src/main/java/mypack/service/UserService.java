@@ -179,7 +179,7 @@ public class UserService {
 	// Update profile
 	@Transactional
 	public DataResponse<UserDTO> jobseekerUpdate(JobseekerProfileUpdateRequest request, MultipartFile avatar,
-			Long jobseekerId) {
+			MultipartFile cover, Long jobseekerId) {
 		User user = userRepo.findById(jobseekerId).get();
 
 		if (!user.getEmail().equals(request.getEmail())) {
@@ -215,7 +215,21 @@ public class UserService {
 				throw new CommonRuntimeException("Error occur when uploading new image !");
 			}
 		}
-
+		if (cover != null) {
+			// Delete old image
+			if (user.getCover() != null) {
+				userRepo.updateBeforeDeleteImage(jobseekerId);
+				if (!mediaResourceService.delete(user.getCover().getId()))
+					throw new CommonRuntimeException("Error occur when deleting old cover !");
+			}
+			// Up load new Image
+			try {
+				MediaResource cv = mediaResourceService.save(cover.getBytes());
+				user.setCover(cv);
+			} catch (IOException e) {
+				throw new CommonRuntimeException("Error occur when uploading new cover !");
+			}
+		}
 		user = userRepo.save(user);
 
 		return new DataResponse<>(true, "Update information successfully.", mapper.map(user, UserDTO.class));
@@ -224,7 +238,7 @@ public class UserService {
 
 	@Transactional
 	public DataResponse<UserDTO> employerUpdate(EmployerProfileUpdateRequest request, MultipartFile avatar,
-			Long employerId) {
+			MultipartFile cover, Long employerId) {
 		User user = userRepo.findById(employerId).get();
 
 		if (!user.getEmail().equals(request.getEmail())) {
@@ -260,7 +274,21 @@ public class UserService {
 				throw new CommonRuntimeException("Error occur when uploading new image !");
 			}
 		}
-
+		if (cover != null) {
+			// Delete old image
+			if (user.getCover() != null) {
+				userRepo.updateBeforeDeleteImage(employerId);
+				if (!mediaResourceService.delete(user.getCover().getId()))
+					throw new CommonRuntimeException("Error occur when deleting old cover !");
+			}
+			// Up load new Image
+			try {
+				MediaResource cv = mediaResourceService.save(cover.getBytes());
+				user.setCover(cv);
+			} catch (IOException e) {
+				throw new CommonRuntimeException("Error occur when uploading new cover !");
+			}
+		}
 		user = userRepo.save(user);
 
 		return new DataResponse<>(true, "Update information successfully.", mapper.map(user, UserDTO.class));
@@ -376,6 +404,7 @@ public class UserService {
 			profile.setLastModified(new Date());
 			profile.setWorkExperiences(request.getWorkExperiences());
 			profile.setSkillsAndKnowledges(request.getSkillsAndKnowledges());
+			
 			return new DataResponse<>(true, "Upload success !",
 					mapper.map(profileRepository.save(profile), ProfileDTO.class));
 		} catch (Exception e) {

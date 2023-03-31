@@ -29,4 +29,6 @@ public class ProfileDTO {
 	private EMethod method;
 
 	private Date lastModified;
+
+	private UserDTO user;
 }
