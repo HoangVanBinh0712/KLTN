@@ -38,7 +38,7 @@ const Team = () => {
     {
       field: "role",
       headerName: "Role",
-      flex: 1,
+      width: 100,
     },
     {
       field: "status",
@@ -47,7 +47,7 @@ const Team = () => {
       renderCell: ({ row: { status } }) => {
         return (
           <Box
-            width="60%"
+            width="100%"
             m="0 auto"
             p="5px"
             display="flex"

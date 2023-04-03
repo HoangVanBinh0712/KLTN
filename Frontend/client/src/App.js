@@ -1,5 +1,4 @@
 import { useState } from "react";
-import './App.css';
 import { Routes, Route } from "react-router-dom";
 import Topbar from "./admin_scenes/global/Topbar";
 import Sidebar from "./admin_scenes/global/Sidebar";
