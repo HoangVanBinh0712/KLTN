@@ -27,6 +27,10 @@ public class ModelSorting {
 
 		if (sortBy != null) {
 			if (sortDescending == null || !sortDescending.booleanValue()) { // ASC
+				if (sortBy >= 16) {
+					sort = sort.and(JpaSort.of(Post_.acceptedDate).ascending());
+					sortBy -= 16;
+				}
 				if (sortBy >= 8) {
 					sort = sort.and(JpaSort.of(Post_.viewCount).ascending());
 					sortBy -= 8;
@@ -44,6 +48,10 @@ public class ModelSorting {
 					sortBy -= 1;
 				}
 			} else { // DESC
+				if (sortBy >= 16) {
+					sort = sort.and(JpaSort.of(Post_.acceptedDate).descending());
+					sortBy -= 16;
+				}
 				if (sortBy >= 8) {
 					sort = sort.and(JpaSort.of(Post_.viewCount).descending());
 					sortBy -= 8;
