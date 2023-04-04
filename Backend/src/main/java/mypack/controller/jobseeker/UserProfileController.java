@@ -93,6 +93,11 @@ public class UserProfileController {
 		return ResponseEntity.ok(userService.getListCompany());
 	}
 
+	@GetMapping("highlight-company")
+	public ResponseEntity<?> getHighLightCompany() {
+		return ResponseEntity.ok(userService.getHighLightCompany());
+	}
+
 	@GetMapping("count-cv-viewer/{mediaId}")
 	public ResponseEntity<?> getCountViewerCV(@AuthenticationPrincipal UserDetailsCustom user,
 			@PathVariable("mediaId") Long mediaIa) {

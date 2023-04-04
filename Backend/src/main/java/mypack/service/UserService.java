@@ -470,7 +470,9 @@ public class UserService {
 	public List<UserDTO> getListCompany() {
 		return userRepo.getListCompany().stream().map(x -> mapper.map(x, UserDTO.class)).toList();
 	}
-
+	public List<UserDTO> getHighLightCompany() {
+		return userRepo.getHighLightCompany().stream().map(x -> mapper.map(x, UserDTO.class)).toList();
+	}
 	public BaseResponse emailConfirm(String email, String code) {
 		Optional<User> opt = userRepo.findByEmail(email);
 		if (opt.isEmpty())
