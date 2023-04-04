@@ -1,5 +1,7 @@
 package mypack.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -43,4 +45,7 @@ public class Achievement {
 
     @Column
     private String url;
+    
+    @Column(name = "create_date")
+    private Date createDate;
 }

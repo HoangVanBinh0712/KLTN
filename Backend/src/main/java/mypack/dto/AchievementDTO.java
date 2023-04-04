@@ -1,5 +1,7 @@
 package mypack.dto;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +22,6 @@ public class AchievementDTO {
     private EAchievementType type;
 
     private String url;
+    
+    private Date createDate;
 }

@@ -2,6 +2,7 @@ package mypack.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ public class AchievementService {
     public DataResponse<AchievementDTO> create(Long userId, AchievementRequest request, MultipartFile file) {
         Achievement ach = mapper.map(request, Achievement.class);
         ach.setUser(userRepository.getReferenceById(userId));
-
+        ach.setCreateDate(new Date());
         if (file != null) {
             // Up load new Image
             try {
