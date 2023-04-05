@@ -4,7 +4,8 @@ import { tokens } from "../theme";
 import { mockCategory } from "../data/mockData";
 import Header from "../components/charts/Header";
 import { DeleteOutline } from "@mui/icons-material";
-const Category = () => {
+
+const Industries = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
@@ -83,4 +84,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Industries;
