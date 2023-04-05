@@ -54,7 +54,9 @@ public class WebSecurityConfig {
 				.authenticationEntryPoint(authenticationExceptionHandling).and().exceptionHandling()
 				.accessDeniedHandler(customAccessDeniedHandler);
 
-		http.authorizeRequests().antMatchers("/api/comment", "/api/employer/information/**", "/api/user/list-company")
+		http.authorizeRequests()
+				.antMatchers("/api/comment", "/api/employer/information/**", "/api/user/list-company",
+						"/api/user/highlight-company")
 				.permitAll().and().authorizeRequests().antMatchers("/api/admin/**").hasRole("ADMIN").and()
 				.authorizeRequests().antMatchers("/api/user/**").hasRole("USER").and().authorizeRequests()
 				.antMatchers("/api/employer/**", "/api/pay").hasRole("EMPLOYER").and().authorizeRequests()

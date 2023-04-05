@@ -1,18 +1,15 @@
 package mypack.service;
 
-import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import me.xdrop.fuzzywuzzy.FuzzySearch;
 import mypack.controller.exception.CommonRuntimeException;
 import mypack.dto.CVSubmitDTO;
 import mypack.dto.PostDTO;
@@ -29,10 +26,7 @@ import mypack.repository.CVSubmitRepository;
 import mypack.repository.PostRepository;
 import mypack.repository.ProfileRepository;
 import mypack.repository.UserRepository;
-import mypack.service.CVSubmitService;
 import mypack.utility.datatype.EStatus;
-
-import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 @Service
 public class CVSubmitService {
@@ -125,6 +119,8 @@ public class CVSubmitService {
 		cvSubmit.setPost(post);
 		cvSubmit.setProfile(profile);
 		cvSubmit.setCoverLetter(request.getCoverLetter());
+		cvSubmit.setMatchPercent((long) FuzzySearch.tokenSetRatio(post.getDescription(),
+				profile.getSkillsAndKnowledges() + " " + profile.getWorkExperiences()));
 
 		cvSubmitRepository.save(cvSubmit);
 		// add notification for employer

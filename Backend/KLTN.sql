@@ -29,12 +29,13 @@ CREATE TABLE `achievement` (
   `url` varchar(255) DEFAULT NULL,
   `image_id` bigint DEFAULT NULL,
   `owner_id` bigint DEFAULT NULL,
+  `create_date` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKqssc8sm1lsm8qq80q7kjkeh70` (`image_id`),
   KEY `FK86x40nioyti4mcpa74y4vmowv` (`owner_id`),
   CONSTRAINT `FK86x40nioyti4mcpa74y4vmowv` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FKqssc8sm1lsm8qq80q7kjkeh70` FOREIGN KEY (`image_id`) REFERENCES `media_resource` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +44,7 @@ CREATE TABLE `achievement` (
 
 LOCK TABLES `achievement` WRITE;
 /*!40000 ALTER TABLE `achievement` DISABLE KEYS */;
-INSERT INTO `achievement` VALUES (3,'Achievement 1','ACTIVITY','https://www.youtube.com/watch?v=xypzmu5mMPY&list=RDMMZuk5zGv5Un4&index=10',NULL,1),(4,'Running Viet Race','CERTIFICATE','https://www.youtube.com/watch?v=X7sSE3yCNLI&list=RDMMZuk5zGv5Un4&index=11',23,1),(5,'string','CERTIFICATE','string',25,1);
+INSERT INTO `achievement` VALUES (3,'Achievement 1','ACTIVITY','https://www.youtube.com/watch?v=xypzmu5mMPY&list=RDMMZuk5zGv5Un4&index=10',NULL,1,NULL),(4,'Running Viet Race','CERTIFICATE','https://www.youtube.com/watch?v=X7sSE3yCNLI&list=RDMMZuk5zGv5Un4&index=11',23,1,NULL),(5,'string','CERTIFICATE','string',25,1,NULL);
 /*!40000 ALTER TABLE `achievement` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,6 +129,71 @@ CREATE TABLE `blog` (
 LOCK TABLES `blog` WRITE;
 /*!40000 ALTER TABLE `blog` DISABLE KEYS */;
 /*!40000 ALTER TABLE `blog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `chat_message`
+--
+
+DROP TABLE IF EXISTS `chat_message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `chat_message` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `content` mediumtext,
+  `time` datetime(6) DEFAULT NULL,
+  `user1_seen` tinyint(1) DEFAULT '0',
+  `user2_seen` tinyint(1) DEFAULT '0',
+  `chat_room_id` bigint NOT NULL,
+  `id_image` bigint DEFAULT NULL,
+  `sender_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKj52yap2xrm9u0721dct0tjor9` (`chat_room_id`),
+  KEY `FKbb4f67o4lylmfimmfl46j4y08` (`id_image`),
+  CONSTRAINT `FKbb4f67o4lylmfimmfl46j4y08` FOREIGN KEY (`id_image`) REFERENCES `media_resource` (`id`),
+  CONSTRAINT `FKj52yap2xrm9u0721dct0tjor9` FOREIGN KEY (`chat_room_id`) REFERENCES `chat_room` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `chat_message`
+--
+
+LOCK TABLES `chat_message` WRITE;
+/*!40000 ALTER TABLE `chat_message` DISABLE KEYS */;
+INSERT INTO `chat_message` VALUES (1,'First message','2023-03-05 11:40:41.603000',1,1,1,NULL,1),(2,'Hi','2023-03-05 11:48:18.944000',1,1,1,NULL,1),(3,'What\'sup4','2023-03-05 11:48:27.031000',1,1,1,NULL,4),(4,'Chao ban','2023-03-05 11:49:51.002000',1,1,3,NULL,4),(5,'Hello','2023-03-05 12:14:59.856000',1,1,1,NULL,4),(6,'Xin chao','2023-03-05 12:15:05.346000',1,1,1,NULL,1),(7,'Wellcome','2023-03-05 12:30:32.323000',1,1,1,NULL,4),(8,'Hi','2023-03-05 12:30:46.148000',1,1,6,NULL,3),(9,'Hi','2023-03-05 12:31:04.306000',1,1,1,NULL,4),(10,'Hello','2023-03-05 12:31:13.469000',1,1,6,NULL,3),(11,'Hja','2023-03-05 12:31:17.352000',1,1,1,NULL,4),(12,'Hello','2023-03-05 12:48:18.330000',1,1,6,NULL,1),(13,'Lo','2023-03-05 12:53:52.069000',1,1,6,NULL,1),(14,'Mem','2023-03-05 12:54:01.224000',1,1,1,NULL,1),(15,'Hii','2023-03-05 12:54:36.308000',1,1,1,NULL,4),(16,'Hl','2023-03-05 12:58:35.493000',1,1,6,NULL,3),(17,'Hi','2023-03-05 13:00:05.537000',1,1,6,NULL,3),(18,'He','2023-03-05 13:03:38.194000',1,1,1,NULL,1),(19,'Hee','2023-03-05 13:04:06.284000',1,1,6,NULL,1),(20,'What sup','2023-03-05 13:20:29.568000',1,1,6,NULL,3),(21,'Sub','2023-03-05 13:20:32.725000',1,1,6,NULL,1),(22,'Xin chao tui la Binh Hoang','2023-03-05 13:24:57.581000',1,1,6,NULL,1),(23,'Chao ban tui co the giup gi','2023-03-05 13:25:19.209000',1,1,6,NULL,3),(24,'K co gi bai bai','2023-03-05 13:25:29.005000',1,1,6,NULL,1),(25,'Hey','2023-03-05 13:26:28.552000',1,1,1,NULL,4),(26,'Ha what was that','2023-03-05 13:26:35.754000',1,1,1,NULL,1),(27,'Hey','2023-03-05 14:49:28.899000',1,1,1,NULL,4),(28,'Chao Ban','2023-03-05 14:50:45.577000',1,1,3,NULL,3),(29,'Hello.','2023-03-05 16:12:31.597000',1,1,6,NULL,3),(30,'Hi','2023-03-05 16:14:08.549000',1,1,1,NULL,1),(31,'Heyy','2023-03-05 16:16:07.055000',1,1,1,NULL,1),(32,'Hi','2023-03-05 16:18:35.871000',1,1,1,NULL,1),(33,'Em iu','2023-03-05 16:25:11.776000',1,1,1,NULL,1),(34,'Hey','2023-03-05 16:26:44.553000',1,1,1,NULL,1),(35,'Heu','2023-03-05 16:27:42.451000',1,1,1,NULL,1),(36,'Hello','2023-03-05 16:27:56.098000',1,1,1,NULL,1),(37,'Diitt','2023-03-05 16:28:37.639000',1,1,1,NULL,1),(38,'!@','2023-03-05 16:40:02.395000',1,1,1,NULL,1),(39,'!@','2023-03-05 16:40:17.860000',1,1,1,NULL,1),(40,'121','2023-03-05 16:40:46.552000',1,1,1,NULL,1),(41,'213','2023-03-05 16:42:29.333000',1,1,1,NULL,1),(42,'123','2023-03-05 16:42:51.765000',1,1,1,NULL,1),(43,'@@','2023-03-05 16:45:43.155000',1,1,1,NULL,1),(44,'1','2023-03-05 16:48:41.516000',1,1,1,NULL,1),(45,'Hello','2023-03-05 16:48:43.970000',1,1,1,NULL,1),(46,'Hello','2023-03-05 16:49:44.557000',1,1,1,NULL,1),(47,'hello','2023-03-05 16:49:48.788000',1,1,1,NULL,1),(48,'Em','2023-03-05 16:50:01.635000',1,1,1,NULL,4),(49,'sao the','2023-03-05 16:50:48.621000',1,1,1,NULL,4),(50,'K co gi anh','2023-03-05 16:50:53.522000',1,1,1,NULL,1),(51,'hello cuc cung','2023-03-07 22:40:54.290000',1,1,1,NULL,4),(52,'22','2023-03-07 22:41:41.562000',1,1,1,NULL,4),(53,'e iu','2023-03-07 22:43:12.219000',1,1,1,NULL,4),(54,'hey','2023-03-07 22:46:31.484000',1,1,1,NULL,4),(55,'sup','2023-03-07 22:47:38.124000',1,1,1,NULL,4),(56,'Yup','2023-03-07 22:49:27.941000',1,1,1,NULL,4),(57,'ha','2023-03-07 22:49:33.262000',1,1,1,NULL,1),(58,'Chafo em','2023-03-07 22:51:21.679000',1,1,6,NULL,3),(59,'Chao em luon','2023-03-07 22:51:27.110000',1,1,1,NULL,4),(60,'Yeu 2 anh','2023-03-07 22:51:31.655000',1,1,1,NULL,1),(61,'sao a','2023-03-07 22:51:37.557000',1,1,6,NULL,1),(62,'hi','2023-03-07 23:04:24.500000',1,1,8,NULL,7),(63,'22','2023-03-07 23:05:00.533000',1,1,8,NULL,7),(64,'ee','2023-03-07 23:05:23.452000',1,1,6,NULL,3),(65,'2','2023-03-07 23:06:41.574000',1,1,8,NULL,7),(66,'22','2023-03-07 23:12:03.543000',1,1,6,NULL,3),(67,'1','2023-03-07 23:12:39.023000',1,1,6,NULL,3),(68,'1','2023-03-07 23:12:52.145000',1,1,6,NULL,3),(69,'2121212121212121212121212121212121212121212121212121','2023-03-07 23:14:39.136000',1,1,6,NULL,3),(70,'Chao em','2023-03-11 13:56:53.332000',1,1,3,NULL,3),(71,'Alo','2023-03-11 13:56:57.608000',1,1,3,NULL,4),(72,'Hello','2023-03-11 14:24:32.954000',1,1,1,NULL,4),(73,'Hey','2023-03-11 14:41:20.065000',1,1,1,NULL,4),(74,'Hello','2023-03-11 14:42:56.773000',1,1,1,NULL,4),(75,'hey','2023-03-11 14:44:03.019000',1,1,1,NULL,4),(76,'alo','2023-03-11 14:44:18.639000',1,1,1,NULL,4),(77,'eee','2023-03-11 14:45:54.473000',1,1,1,NULL,4),(78,'@@','2023-03-11 14:46:28.118000',1,1,1,NULL,4),(79,'Hello','2023-03-11 15:23:52.923000',1,1,1,NULL,4),(80,'Alo alo','2023-03-11 15:24:03.423000',1,1,1,NULL,1),(81,'Khoe k','2023-03-11 15:24:08.643000',1,1,1,NULL,1),(82,'hello','2023-03-11 15:25:08.415000',1,1,8,NULL,7),(83,'Ai z','2023-03-11 15:25:18.163000',1,1,8,NULL,1),(84,'Xin chao','2023-03-12 16:09:38.159000',1,1,1,NULL,1),(85,'Sao ban','2023-03-12 16:09:47.093000',1,1,1,NULL,4),(86,'22','2023-03-12 16:11:08.930000',1,1,1,NULL,1),(87,'hello','2023-03-12 16:11:13.057000',1,1,1,NULL,1),(88,'Hey','2023-03-12 16:12:21.727000',1,1,1,NULL,1),(89,'sao em','2023-03-12 16:12:26.414000',1,1,1,NULL,4),(90,'Khong co gi','2023-03-12 16:12:59.916000',1,1,1,NULL,1),(91,'CHi mon','2023-03-12 16:13:23.354000',1,1,1,NULL,1),(92,'Chill','2023-03-12 16:16:24.663000',1,1,1,NULL,1),(93,'sao.','2023-03-12 16:16:30.760000',1,1,1,NULL,4),(94,'ha','2023-03-12 16:16:33.916000',1,1,1,NULL,1),(95,'Hello','2023-03-12 16:17:37.138000',1,1,1,NULL,4),(96,'H2','2023-03-12 16:17:44.404000',1,1,1,NULL,1),(97,'Hello','2023-03-12 16:21:06.600000',1,1,1,NULL,4),(98,'On khong ban','2023-03-12 16:33:41.663000',1,1,1,NULL,4),(99,'Khong on nha','2023-03-12 16:33:48.633000',1,1,1,NULL,1),(100,'Ok','2023-03-12 16:40:37.035000',1,1,1,NULL,4),(101,'Ban khoe khong','2023-03-12 16:40:42.462000',1,1,1,NULL,1),(102,'Khong khoe nha','2023-03-12 16:40:51.770000',1,1,1,NULL,4),(103,'Tui nef','2023-03-12 16:41:24.125000',1,1,8,NULL,7),(104,'On k','2023-03-12 16:50:26.213000',1,1,8,NULL,1),(105,'On k','2023-03-12 16:50:56.764000',1,1,8,NULL,1),(106,'On nhe','2023-03-12 16:51:44.618000',1,1,8,NULL,7),(107,'2','2023-03-12 16:52:05.453000',1,1,8,NULL,1),(108,'Khe k','2023-03-12 16:52:28.415000',1,1,1,NULL,4),(109,'Khoe nhe','2023-03-12 16:52:36.483000',1,1,1,NULL,1),(110,'Ok ban','2023-03-12 16:54:36.755000',1,1,1,NULL,4),(111,'Ok ban luon nhe','2023-03-12 16:54:49.014000',1,1,1,NULL,1),(112,'Hey','2023-03-15 11:17:34.013000',1,1,6,NULL,3),(113,'hi','2023-03-15 11:21:01.067000',1,1,6,NULL,3),(114,'hj','2023-03-15 11:22:31.620000',1,1,6,NULL,3),(115,'lo','2023-03-15 11:23:39.876000',1,1,6,NULL,3),(116,'Khoe k','2023-03-15 11:24:22.923000',1,1,1,NULL,4),(117,'Heslo','2023-03-15 11:28:23.172000',1,1,8,NULL,7),(118,'what do you mean','2023-03-15 11:28:54.435000',1,1,6,NULL,3),(119,'Up to yoi','2023-03-15 11:29:10.884000',1,1,6,NULL,1),(120,'1','2023-03-15 11:29:17.267000',1,0,6,NULL,1),(121,'Love','2023-03-15 11:29:23.126000',1,0,6,NULL,1);
+/*!40000 ALTER TABLE `chat_message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `chat_room`
+--
+
+DROP TABLE IF EXISTS `chat_room`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `chat_room` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `chat_name` varchar(255) DEFAULT NULL,
+  `last_chat` datetime(6) DEFAULT NULL,
+  `user1` bigint DEFAULT NULL,
+  `user2` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKo5odduew799nt0cna4jc99pdf` (`user1`),
+  KEY `FKl875m1de684w34ntc9br92rje` (`user2`),
+  CONSTRAINT `FKl875m1de684w34ntc9br92rje` FOREIGN KEY (`user2`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKo5odduew799nt0cna4jc99pdf` FOREIGN KEY (`user1`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `chat_room`
+--
+
+LOCK TABLES `chat_room` WRITE;
+/*!40000 ALTER TABLE `chat_room` DISABLE KEYS */;
+INSERT INTO `chat_room` VALUES (1,NULL,'2023-03-15 11:24:22.923000',1,4),(3,NULL,'2023-03-11 13:56:57.608000',3,4),(6,NULL,'2023-03-15 11:29:23.126000',1,3),(7,NULL,NULL,1,5),(8,NULL,'2023-03-15 11:28:23.172000',1,7);
+/*!40000 ALTER TABLE `chat_room` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -216,7 +282,7 @@ CREATE TABLE `cvsubmit` (
 
 LOCK TABLES `cvsubmit` WRITE;
 /*!40000 ALTER TABLE `cvsubmit` DISABLE KEYS */;
-INSERT INTO `cvsubmit` VALUES (17,2,4,NULL,'2023-01-08 12:08:19.827000',14),(19,2,1,'I love u','2023-02-08 22:15:00.382000',NULL);
+INSERT INTO `cvsubmit` VALUES (17,2,4,NULL,'2023-01-08 12:08:19.827000',14),(19,2,1,'I love u','2023-02-08 22:15:00.382000',NULL),(19,4,1,'Nothing to say !','2023-04-04 21:54:02.950000',4);
 /*!40000 ALTER TABLE `cvsubmit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +410,7 @@ CREATE TABLE `industry` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +419,7 @@ CREATE TABLE `industry` (
 
 LOCK TABLES `industry` WRITE;
 /*!40000 ALTER TABLE `industry` DISABLE KEYS */;
-INSERT INTO `industry` VALUES (1,'IT'),(2,'Sale'),(3,'Education'),(4,'Tourism'),(5,'Logistic'),(6,'Restaurant'),(7,'Construction'),(8,'Consultant'),(9,'Health'),(10,'Marketing'),(11,'Human Resource'),(12,'Architecture');
+INSERT INTO `industry` VALUES (1,'IT'),(2,'Sales'),(3,'BANKING'),(4,'CHEF'),(5,'TEACHER'),(6,'ACCOUNTANT'),(7,'FINANCE'),(8,'CONSULTANT'),(9,'DIGITAL-MEDIA'),(10,'PUBLIC-RELATIONS'),(11,'BUSINESS-DEVELOPMENT'),(12,'AVIATION'),(14,'CONSTRUCTION'),(15,'ENGINEERING'),(16,'APPAREL'),(17,'Testing'),(18,'BPO'),(19,'AGRICULTURE'),(20,'Advocate'),(21,'Health and fitness'),(22,'HR'),(23,'AUTOMOBILE');
 /*!40000 ALTER TABLE `industry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -370,7 +436,7 @@ CREATE TABLE `media_resource` (
   `resource_type` varchar(255) DEFAULT NULL,
   `url` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -379,7 +445,7 @@ CREATE TABLE `media_resource` (
 
 LOCK TABLES `media_resource` WRITE;
 /*!40000 ALTER TABLE `media_resource` DISABLE KEYS */;
-INSERT INTO `media_resource` VALUES (6,'pkamcxwnysg4qeccmbxp','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1672988934/pkamcxwnysg4qeccmbxp.jpg'),(8,'fxtpukaapclptdy5miof','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1672989053/fxtpukaapclptdy5miof.png'),(17,'qvi636rtvl7jlfhjnu5f','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673146190/qvi636rtvl7jlfhjnu5f.pdf'),(18,'kyl5s7lmduoar8sv5f2c','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673146220/kyl5s7lmduoar8sv5f2c.pdf'),(19,'rphkxbmaskwopxim45zk','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673147832/rphkxbmaskwopxim45zk.pdf'),(23,'spa99evbuz1p5nn8rqqb','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673534466/spa99evbuz1p5nn8rqqb.jpg'),(25,'b9fk8q4sxksvsnhomddk','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673535008/b9fk8q4sxksvsnhomddk.png'),(26,'hej5cj1begupj6thmros','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1677165642/hej5cj1begupj6thmros.pdf');
+INSERT INTO `media_resource` VALUES (6,'pkamcxwnysg4qeccmbxp','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1672988934/pkamcxwnysg4qeccmbxp.jpg'),(8,'fxtpukaapclptdy5miof','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1672989053/fxtpukaapclptdy5miof.png'),(17,'qvi636rtvl7jlfhjnu5f','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673146190/qvi636rtvl7jlfhjnu5f.pdf'),(18,'kyl5s7lmduoar8sv5f2c','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673146220/kyl5s7lmduoar8sv5f2c.pdf'),(19,'rphkxbmaskwopxim45zk','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673147832/rphkxbmaskwopxim45zk.pdf'),(23,'spa99evbuz1p5nn8rqqb','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673534466/spa99evbuz1p5nn8rqqb.jpg'),(25,'b9fk8q4sxksvsnhomddk','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673535008/b9fk8q4sxksvsnhomddk.png'),(26,'hej5cj1begupj6thmros','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1677165642/hej5cj1begupj6thmros.pdf'),(28,'s0qh1tuyfaxia9ljwahf','image','https://res.cloudinary.com/dh0hs3o2a/image/upload/v1678889551/s0qh1tuyfaxia9ljwahf.jpg');
 /*!40000 ALTER TABLE `media_resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -401,7 +467,7 @@ CREATE TABLE `notification` (
   KEY `FKb0yvoep4h4k92ipon31wmdf7e` (`user_id`),
   CONSTRAINT `FKb0yvoep4h4k92ipon31wmdf7e` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FKn1l10g2mvj4r1qs93k952fshe` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -410,7 +476,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (1,'2023-01-14 13:15:29.123000','Payment success with order: ',NULL,3),(2,'2023-01-14 21:09:00.670000','Your followed company has posted a new job !',14,1),(3,'2023-01-14 21:09:01.021000','Your followed company has posted a new job !',14,2),(4,'2023-01-14 21:10:35.582000','Payment success with order: PAYID-MPBLPRA43R40014UP153315M',NULL,3),(5,'2023-01-14 21:15:23.996000','1 User has Submitted their CV to your post !',4,3),(6,'2023-01-14 21:17:01.087000','Admin has accepted your post !',9,3),(7,'2023-01-14 21:17:02.604000','Admin has accepted your post !',10,3),(8,'2023-01-14 21:17:03.929000','Admin has accepted your post !',11,3),(9,'2023-01-14 21:17:05.980000','Admin has accepted your post !',12,3),(10,'2023-01-14 21:17:14.355000','Admin has Delete your post !',9,3),(11,'2023-01-14 21:17:34.573000','Admin has accepted your post !',9,3),(12,'2023-01-14 21:24:31.185000','You have changed your password through Reset password.',NULL,1),(13,'2023-01-14 21:25:12.687000','You have confirmed your email address.',NULL,1),(14,'2023-01-14 22:03:42.586000','Admin has Delete your post !',14,3),(15,'2023-01-14 22:05:36.161000','Admin has accepted your post !',14,3),(16,'2023-01-14 22:07:15.634000','Admin has Delete your post !',14,3),(17,'2023-01-14 22:19:27.935000','Your followed company has posted a new job !',15,1),(18,'2023-01-14 22:19:27.935000','Your followed company has posted a new job !',15,2),(19,'2023-01-14 22:19:27.935000','1 User has Submitted their CV to your post !',4,3),(20,'2023-01-14 22:25:30.980000','Payment success with order: PAYID-MPBMQ3I6DG11331TX434040N',NULL,3),(21,'2023-01-14 22:34:02.638000','Your followed company has posted a new job !',16,1),(23,'2023-01-14 22:38:03.065000','1 User has Submitted their CV to your post !',4,3),(24,'2023-01-14 22:40:21.162000','Admin has Delete your post !',14,3),(25,'2023-01-14 22:40:26.018000','Admin has accepted your post !',14,3),(26,'2023-01-14 22:40:43.398000','Admin has accepted your post !',14,3),(27,'2023-02-08 22:15:00.423000','Hoang Van Binh has Submitted his/her CV to your post !',2,3),(28,'2023-02-08 22:27:19.654000','Payment success with order: PAYID-MPR36PI257889335G185681K',NULL,3),(29,'2023-02-18 09:24:21.738000','Binh Company has created an appointment with you !',NULL,1),(30,'2023-02-18 09:24:21.760000','You have created an appointment with Hoang Van Binh !',NULL,3),(31,'2023-02-18 09:24:37.809000','Binh Company has created an appointment with you !',NULL,4),(32,'2023-02-18 09:24:37.822000','You have created an appointment with Thieu Sy Manh !',NULL,3),(33,'2023-02-18 09:25:42.971000','Binh Company has updated an appointment with you !',NULL,1),(34,'2023-02-18 09:25:42.980000','You have updated an appointment with Hoang Van Binh !',NULL,3),(35,'2023-02-18 09:26:01.671000','Binh Company has cancelled an appointment with you !',NULL,4),(36,'2023-02-18 09:26:01.679000','You have cancelled an appointment with Thieu Sy Manh !',NULL,3),(37,'2023-02-18 09:26:51.565000','Hoang Van Binh has denied your appointment !',NULL,3),(38,'2023-02-18 09:34:19.595000','Hoang Van Binh has denied your appointment !',NULL,3),(39,'2023-02-18 09:36:11.886000','Hoang Van Binh has denied your appointment !',NULL,3),(40,'2023-02-18 09:36:30.365000','Hoang Van Binh has denied your appointment !',NULL,3),(41,'2023-02-18 09:36:35.216000','Hoang Van Binh has denied your appointment !',NULL,3),(42,'2023-02-18 09:36:58.607000','Binh Company has created an appointment with you !',NULL,1),(43,'2023-02-18 09:36:58.615000','You have created an appointment with Hoang Van Binh !',NULL,3),(44,'2023-02-18 09:37:22.297000','Binh Company has cancelled an appointment with you !',NULL,1),(45,'2023-02-18 09:37:22.307000','You have cancelled an appointment with Hoang Van Binh !',NULL,3),(46,'2023-02-18 09:40:45.511000','Binh Company has created an appointment with you !',NULL,1),(47,'2023-02-18 09:40:45.550000','You have created an appointment with Hoang Van Binh !',NULL,3),(48,'2023-02-18 09:41:04.967000','Binh Company has updated an appointment with you !',NULL,1),(49,'2023-02-18 09:41:04.975000','You have updated an appointment with Hoang Van Binh !',NULL,3),(50,'2023-02-18 09:41:17.995000','Binh Company has cancelled an appointment with you !',NULL,1),(51,'2023-02-18 09:41:18.003000','You have cancelled an appointment with Hoang Van Binh !',NULL,3),(52,'2023-02-18 10:07:12.933000','Payment success with order: PAYID-MPYEBDY1KP49308FB894291X',NULL,5),(53,'2023-02-23 21:31:58.198000','You have changed your password through Reset password.',NULL,1);
+INSERT INTO `notification` VALUES (1,'2023-01-14 13:15:29.123000','Payment success with order: ',NULL,3),(2,'2023-01-14 21:09:00.670000','Your followed company has posted a new job !',14,1),(3,'2023-01-14 21:09:01.021000','Your followed company has posted a new job !',14,2),(4,'2023-01-14 21:10:35.582000','Payment success with order: PAYID-MPBLPRA43R40014UP153315M',NULL,3),(5,'2023-01-14 21:15:23.996000','1 User has Submitted their CV to your post !',4,3),(6,'2023-01-14 21:17:01.087000','Admin has accepted your post !',9,3),(7,'2023-01-14 21:17:02.604000','Admin has accepted your post !',10,3),(8,'2023-01-14 21:17:03.929000','Admin has accepted your post !',11,3),(9,'2023-01-14 21:17:05.980000','Admin has accepted your post !',12,3),(10,'2023-01-14 21:17:14.355000','Admin has Delete your post !',9,3),(11,'2023-01-14 21:17:34.573000','Admin has accepted your post !',9,3),(12,'2023-01-14 21:24:31.185000','You have changed your password through Reset password.',NULL,1),(13,'2023-01-14 21:25:12.687000','You have confirmed your email address.',NULL,1),(14,'2023-01-14 22:03:42.586000','Admin has Delete your post !',14,3),(15,'2023-01-14 22:05:36.161000','Admin has accepted your post !',14,3),(16,'2023-01-14 22:07:15.634000','Admin has Delete your post !',14,3),(17,'2023-01-14 22:19:27.935000','Your followed company has posted a new job !',15,1),(18,'2023-01-14 22:19:27.935000','Your followed company has posted a new job !',15,2),(19,'2023-01-14 22:19:27.935000','1 User has Submitted their CV to your post !',4,3),(20,'2023-01-14 22:25:30.980000','Payment success with order: PAYID-MPBMQ3I6DG11331TX434040N',NULL,3),(21,'2023-01-14 22:34:02.638000','Your followed company has posted a new job !',16,1),(23,'2023-01-14 22:38:03.065000','1 User has Submitted their CV to your post !',4,3),(24,'2023-01-14 22:40:21.162000','Admin has Delete your post !',14,3),(25,'2023-01-14 22:40:26.018000','Admin has accepted your post !',14,3),(26,'2023-01-14 22:40:43.398000','Admin has accepted your post !',14,3),(27,'2023-02-08 22:15:00.423000','Hoang Van Binh has Submitted his/her CV to your post !',2,3),(28,'2023-02-08 22:27:19.654000','Payment success with order: PAYID-MPR36PI257889335G185681K',NULL,3),(29,'2023-02-18 09:24:21.738000','Binh Company has created an appointment with you !',NULL,1),(30,'2023-02-18 09:24:21.760000','You have created an appointment with Hoang Van Binh !',NULL,3),(31,'2023-02-18 09:24:37.809000','Binh Company has created an appointment with you !',NULL,4),(32,'2023-02-18 09:24:37.822000','You have created an appointment with Thieu Sy Manh !',NULL,3),(33,'2023-02-18 09:25:42.971000','Binh Company has updated an appointment with you !',NULL,1),(34,'2023-02-18 09:25:42.980000','You have updated an appointment with Hoang Van Binh !',NULL,3),(35,'2023-02-18 09:26:01.671000','Binh Company has cancelled an appointment with you !',NULL,4),(36,'2023-02-18 09:26:01.679000','You have cancelled an appointment with Thieu Sy Manh !',NULL,3),(37,'2023-02-18 09:26:51.565000','Hoang Van Binh has denied your appointment !',NULL,3),(38,'2023-02-18 09:34:19.595000','Hoang Van Binh has denied your appointment !',NULL,3),(39,'2023-02-18 09:36:11.886000','Hoang Van Binh has denied your appointment !',NULL,3),(40,'2023-02-18 09:36:30.365000','Hoang Van Binh has denied your appointment !',NULL,3),(41,'2023-02-18 09:36:35.216000','Hoang Van Binh has denied your appointment !',NULL,3),(42,'2023-02-18 09:36:58.607000','Binh Company has created an appointment with you !',NULL,1),(43,'2023-02-18 09:36:58.615000','You have created an appointment with Hoang Van Binh !',NULL,3),(44,'2023-02-18 09:37:22.297000','Binh Company has cancelled an appointment with you !',NULL,1),(45,'2023-02-18 09:37:22.307000','You have cancelled an appointment with Hoang Van Binh !',NULL,3),(46,'2023-02-18 09:40:45.511000','Binh Company has created an appointment with you !',NULL,1),(47,'2023-02-18 09:40:45.550000','You have created an appointment with Hoang Van Binh !',NULL,3),(48,'2023-02-18 09:41:04.967000','Binh Company has updated an appointment with you !',NULL,1),(49,'2023-02-18 09:41:04.975000','You have updated an appointment with Hoang Van Binh !',NULL,3),(50,'2023-02-18 09:41:17.995000','Binh Company has cancelled an appointment with you !',NULL,1),(51,'2023-02-18 09:41:18.003000','You have cancelled an appointment with Hoang Van Binh !',NULL,3),(52,'2023-02-18 10:07:12.933000','Payment success with order: PAYID-MPYEBDY1KP49308FB894291X',NULL,5),(53,'2023-02-23 21:31:58.198000','You have changed your password through Reset password.',NULL,1),(54,'2023-04-04 21:54:03.002000','Hoang Van Binh has Submitted his/her CV to your post !',4,3),(55,'2023-04-04 21:58:05.114000','Admin has accepted your post - Second title !',1,3),(56,'2023-04-04 21:58:08.473000','Your followed company has posted a new job - Second title !',1,1),(57,'2023-04-04 21:58:08.473000','Your followed company has posted a new job - Second title !',1,2);
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -466,7 +532,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'2023-01-07 11:01:14.665000','Bao hiem suc khoe','MrBinh: 0337445599','2023-01-07 10:56:01.339000','AGREEMENT','Mặc áo vào thứ anh cần là nụ cười của em ?','THREE_YEAR','2023-03-06 00:00:00.000000',0,'Binh An, Di an','FULL_TIME','Manager',15,'Toeic 650+ or Ielts 6.0+',NULL,'DELETED_BY_ADMIN','Second title',NULL,2,3,1,5,3),(2,'2023-01-07 11:01:17.143000','Bao hiem suc khoe','MrBinh: 0337445596','2023-02-07 11:02:28.165000','USD','Mặc áo vào thứ anh cần là nụ cười của em ?','NONE','2023-03-07 00:00:00.000000',0,'Binh An, Di an','FULL_TIME','Staff',5,'Toeic 550+ or Ielts 5.5+',1000,'ACTIVE','First title',NULL,2,3,1,3,3),(4,'2023-01-07 11:14:08.058000','Bao hiem suc khoe','MrBinh: 0337445596','2023-03-06 16:40:59.598000','USD','Mặc áo vào thứ anh cần là nụ cười của em ?','NONE','2023-02-06 00:00:00.000000',0,'Binh An, Di an','FULL_TIME','Staff',5,'Toeic 550+ or Ielts 5.5+',1000,'ACTIVE','First title',NULL,2,3,1,3,3),(5,'2023-01-07 11:14:06.631000','Bao hiem suc khoe','MrBinh: 0337445596','2023-03-06 16:42:01.807000','USD','Mặc áo vào thứ anh cần là nụ cười của em ?','NONE','2023-03-06 00:00:00.000000',0,'Binh An, Di an','FULL_TIME','Staff',5,'Toeic 550+ or Ielts 5.5+',1000,'ACTIVE','First title',NULL,2,3,1,3,3),(8,NULL,'Bao hiem suc khoe','MrBinh: 0337445596','2023-01-06 16:45:40.870000','USD','Mặc áo vào thứ anh cần là nụ cười của em ?','NONE','2023-01-06 00:00:00.000000',0,'Binh An, Di an','FULL_TIME','Staff',5,'Toeic 550+ or Ielts 5.5+',1000,'WAIT_FOR_ACCEPT','First title',NULL,NULL,3,1,3,3),(9,'2023-01-14 21:17:34.543000','string','string','2023-01-14 21:02:28.486000','AGREEMENT','string','NONE','2023-03-14 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',1000,'ACTIVE','string',0,2,3,1,3,3),(10,'2023-01-14 21:17:02.578000','string','string','2023-01-14 21:04:40.412000','AGREEMENT','string','NONE','2023-03-14 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',1000,'ACTIVE','string',0,2,3,1,3,3),(11,'2023-01-14 21:17:03.895000','string','string','2023-01-14 21:06:51.034000','AGREEMENT','string','NONE','2023-03-14 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',1000,'ACTIVE','string',0,2,3,1,3,3),(12,'2023-01-14 21:17:05.934000','string','string','2023-01-14 21:07:12.817000','AGREEMENT','string','NONE','2023-03-14 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',1000,'ACTIVE','string',0,2,3,1,3,3),(14,'2023-01-14 22:40:43.380000','string','string','2023-01-14 21:08:52.529000','AGREEMENT','string','NONE','2023-03-14 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',1000,'ACTIVE','string',0,2,3,1,3,3),(15,NULL,'string','string','2023-01-14 22:17:01.740000','AGREEMENT','string','NONE','2023-03-14 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',NULL,'WAIT_FOR_ACCEPT','string',0,NULL,3,1,3,3),(16,NULL,'string','string','2023-01-14 22:34:02.493000','AGREEMENT','string','NONE','2023-03-14 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',NULL,'WAIT_FOR_ACCEPT','string',0,NULL,3,1,3,3);
+INSERT INTO `post` VALUES (1,'2023-04-04 21:58:05.083000','Bao hiem suc khoe','MrBinh: 0337445599','2023-01-07 10:56:01.339000','AGREEMENT','Mặc áo vào thứ anh cần là nụ cười của em ?','THREE_YEAR','2023-06-06 00:00:00.000000',0,'Binh An, Di an','FULL_TIME','Manager',15,'Toeic 650+ or Ielts 6.0+',NULL,'ACTIVE','Second title',6,2,3,1,1,3),(2,'2023-01-07 11:01:17.143000','Bao hiem suc khoe','MrBinh: 0337445596','2023-02-07 11:02:28.165000','USD','Mặc áo vào thứ anh cần là nụ cười của em ?','NONE','2023-06-06 00:00:00.000000',0,'Binh An, Di an','FULL_TIME','Staff',5,'Toeic 550+ or Ielts 5.5+',1000,'ACTIVE','First title',8,2,3,1,1,3),(4,'2023-01-07 11:14:08.058000','Bao hiem suc khoe','MrBinh: 0337445596','2023-03-06 16:40:59.598000','USD','Mặc áo vào thứ anh cần là nụ cười của em ?','NONE','2023-06-06 00:00:00.000000',0,'Binh An, Di an','FULL_TIME','Staff',5,'Toeic 550+ or Ielts 5.5+',1000,'ACTIVE','First title',0,2,3,1,3,3),(5,'2023-01-07 11:14:06.631000','Bao hiem suc khoe','MrBinh: 0337445596','2023-03-06 16:42:01.807000','USD','Mặc áo vào thứ anh cần là nụ cười của em ?','NONE','2023-06-06 00:00:00.000000',0,'Binh An, Di an','FULL_TIME','Staff',5,'Toeic 550+ or Ielts 5.5+',1000,'ACTIVE','First title',0,2,3,1,3,3),(8,'2023-01-14 21:17:34.543000','Bao hiem suc khoe','MrBinh: 0337445596','2023-01-06 16:45:40.870000','USD','Mặc áo vào thứ anh cần là nụ cười của em ?','NONE','2023-06-06 00:00:00.000000',0,'Binh An, Di an','FULL_TIME','Staff',5,'Toeic 550+ or Ielts 5.5+',1000,'WAIT_FOR_ACCEPT','First title',0,NULL,3,1,1,3),(9,'2023-01-14 21:17:34.543000','string','string','2023-01-14 21:02:28.486000','AGREEMENT','string','NONE','2023-06-06 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',1000,'ACTIVE','string',0,2,3,1,3,3),(10,'2023-01-14 21:17:02.578000','string','string','2023-01-14 21:04:40.412000','AGREEMENT','string','NONE','2023-06-06 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',1000,'ACTIVE','string',0,2,3,1,1,3),(11,'2023-01-14 21:17:03.895000','string','string','2023-01-14 21:06:51.034000','AGREEMENT','string','NONE','2023-06-06 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',1000,'ACTIVE','string',0,2,3,1,1,3),(12,'2023-01-14 21:17:05.934000','string','string','2023-01-14 21:07:12.817000','AGREEMENT','string','NONE','2023-06-06 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',1000,'ACTIVE','string',0,2,3,1,3,3),(14,'2023-01-14 22:40:43.380000','string','string','2023-01-14 21:08:52.529000','AGREEMENT','string','NONE','2023-06-06 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',1000,'ACTIVE','string',0,2,3,1,1,3),(15,NULL,'string','string','2023-01-14 22:17:01.740000','AGREEMENT','string','NONE','2023-06-06 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',NULL,'WAIT_FOR_ACCEPT','string',0,NULL,3,1,3,3),(16,NULL,'string','string','2023-01-14 22:34:02.493000','AGREEMENT','string','NONE','2023-06-06 00:00:00.000000',0,'Di An','FULL_TIME','Staff',10,'string',NULL,'WAIT_FOR_ACCEPT','string',0,NULL,3,1,3,3);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -486,8 +552,8 @@ CREATE TABLE `profile` (
   `method` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `position` varchar(255) DEFAULT NULL,
-  `skills_and_knowledges` varchar(255) DEFAULT NULL,
-  `work_experiences` varchar(255) DEFAULT NULL,
+  `skills_and_knowledges` mediumtext,
+  `work_experiences` mediumtext,
   PRIMARY KEY (`media_id`,`user_id`),
   KEY `FKawh070wpue34wqvytjqr4hj5e` (`user_id`),
   CONSTRAINT `FKawh070wpue34wqvytjqr4hj5e` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
@@ -501,7 +567,7 @@ CREATE TABLE `profile` (
 
 LOCK TABLES `profile` WRITE;
 /*!40000 ALTER TABLE `profile` DISABLE KEYS */;
-INSERT INTO `profile` VALUES (17,4,'TWO_YEAR',1,'2023-01-08 09:49:49.230000','INTERN','CV Frontend','Leader','Experience\nWork: 2 months internship at FPT software\nKnowledge of Java, C++, C#, JavaScirpt, OOP.\nDatabase: SQL Server, MySQL, MongoDB.\nTools: Git & Github, VSCode, Eclipse\nWeb: Java Spring, Java Servlet, React, NodeJs, Angular','TODO WEBSITE [ 01/11/2022 - 21/11/2022 ] Team member'),(18,4,'NONE',1,'2023-01-08 12:04:41.995000','FULL_TIME','CV Frontend','Staff','Experience\nWork: 2 months internship at FPT software\nKnowledge of Java, C++, C#, JavaScirpt, OOP.\nDatabase: SQL Server, MySQL, MongoDB.\nTools: Git & Github, VSCode, Eclipse\nWeb: Java Spring, Java Servlet, React, NodeJs, Angular','TODO WEBSITE [ 01/11/2022 - 21/11/2022 ] Team member'),(19,1,'NONE',1,'2023-01-08 10:17:13.354000','PART_TIME','CV Backend','Staff','Experience\nWork: 2 months internship at FPT software\nKnowledge of Java, C++, C#, JavaScirpt, OOP.\nDatabase: SQL Server, MySQL, MongoDB.\nTools: Git & Github, VSCode, Eclipse\nWeb: Java Spring, Java Servlet, React, NodeJs, Angular','Backend EC Website [ 04/07/2022 - 31/08/2022 ] Team leader\nTeam size: 6 members\nDescription: A Web application that helps searching and ordering\nproducts for buyers and posting products for sale with sellers.\nFrameWorks: MySql, Java Spring Boot'),(26,1,'UNDER_ONE_YEAR',1,'2023-02-23 22:21:49.832000','FULL_TIME','Binh CV','Staff','Experience\nWork: 2 months internship at FPT software\nKnowledge of Java, C++, C#, JavaScirpt, OOP.\nDatabase: SQL Server, MySQL, MongoDB.\nTools: Git & Github, VSCode, Eclipse\nWeb: Java Spring, Java Servlet, React, NodeJs, Angular','Backend EC Website [ 04/07/2022 - 31/08/2022 ] Team leader\nTeam size: 6 members\nDescription: A Web application that helps searching and ordering\nproducts for buyers and posting products for sale with sellers.\nFrameWorks: MySql, Java Spring Boot');
+INSERT INTO `profile` VALUES (17,4,'TWO_YEAR',1,'2023-01-08 09:49:49.230000','INTERN','CV Frontend','Leader','Experience\nWork: 2 months internship at FPT software\nKnowledge of Java, C++, C#, JavaScirpt, OOP.\nDatabase: SQL Server, MySQL, MongoDB.\nTools: Git & Github, VSCode, Eclipse\nWeb: Java Spring, Java Servlet, React, NodeJs, Angular','TODO WEBSITE [ 01/11/2022 - 21/11/2022 ] Team member'),(18,4,'NONE',1,'2023-01-08 12:04:41.995000','FULL_TIME','CV Frontend','Staff','Experience\nWork: 2 months internship at FPT software\nKnowledge of Java, C++, C#, JavaScirpt, OOP.\nDatabase: SQL Server, MySQL, MongoDB.\nTools: Git & Github, VSCode, Eclipse\nWeb: Java Spring, Java Servlet, React, NodeJs, Angular','TODO WEBSITE [ 01/11/2022 - 21/11/2022 ] Team member'),(19,1,'NONE',1,'2023-01-08 10:17:13.354000','PART_TIME','CV Backend','Staff','EDUCATION Bachelor of Arts Business Management Texas A&M University Central Texas 2012 - 2016 Killeen, TX SKILLS Negotiation CRM (Salesforce) Problem-solving Lead Generation (LinkedIn, email) Reporting Results-oriented Microsoft Office (Word, Excel, PowerPoint)','Sales Specialist Humana September 2018 - current San Antonio, TX · Created and delivered presentations to decision makers, leading to a 27% improvement over expected lead conversion · Recruited physicians and staff to attend local, regional, and national training programs for Humana products, resulting in $285,000 in new revenue · Supported the evaluation of new products, and provided clinical feedback to marketing and sales · Provided primary clinical training and education to customers, which improved the adoption of new products by 36% Sales Representative TQL April 2016 - September 2018 San Antonio, TX · Executed on outbound calling strategy to warm leads, leading to a close rate of 26%, which exceeded expectations by 50% · Worked closely with existing customers to understand their needs, resulting in $400,000 in retention revenue · Recorded notes in Salesforce to on-board customer service reps and account managers to customer profiles · Maintained up-to-date knowledge of sales strategies and product offerings, leading to $225,000 in up-sell revenue Assistant Manager Family Dollar June 2013 - April 2016 Killeen, TX · Served as point of contact for customer resolution, successfully deescalating 95% of issues without management involvement · Handled merchandise returns, assisted manager with ordering new merchandise, and scheduled store associates to accept deliveries and transfer to stockroom and sales floor · Trained 20+ sales associates in running the POS system, customer service practices, and opening and closing processes · Deposited cash and checks to bank, and helped the store manager maintain accurate records and time cards for payroll'),(26,1,'UNDER_ONE_YEAR',1,'2023-02-23 22:21:49.832000','FULL_TIME','Binh CV','Staff','Experience\nWork: 2 months internship at FPT software\nKnowledge of Java, C++, C#, JavaScirpt, OOP.\nDatabase: SQL Server, MySQL, MongoDB.\nTools: Git & Github, VSCode, Eclipse\nWeb: Java Spring, Java Servlet, React, NodeJs, Angular','Backend EC Website [ 04/07/2022 - 31/08/2022 ] Team leader\nTeam size: 6 members\nDescription: A Web application that helps searching and ordering\nproducts for buyers and posting products for sale with sellers.\nFrameWorks: MySql, Java Spring Boot');
 /*!40000 ALTER TABLE `profile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -597,17 +663,20 @@ CREATE TABLE `user` (
   `industry_id` bigint DEFAULT NULL,
   `current_service` bigint DEFAULT NULL,
   `wrong_password_count` bigint DEFAULT NULL,
+  `cover_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`),
   KEY `FK64ydoqa8wkadupx8aci0k4v2h` (`avatar_id`),
   KEY `FK29eqyw0gxw5r4f1ommy11nd9i` (`city_id`),
   KEY `FK5b4jwu5ti1o1mtwrhka28wmrp` (`industry_id`),
   KEY `FKiqx6maqf4rf527o7oejjoip3t` (`current_service`),
+  KEY `FK7a8x3p8wqax85sr0pvgaw021t` (`cover_id`),
   CONSTRAINT `FK29eqyw0gxw5r4f1ommy11nd9i` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`),
   CONSTRAINT `FK5b4jwu5ti1o1mtwrhka28wmrp` FOREIGN KEY (`industry_id`) REFERENCES `industry` (`id`),
   CONSTRAINT `FK64ydoqa8wkadupx8aci0k4v2h` FOREIGN KEY (`avatar_id`) REFERENCES `media_resource` (`id`),
+  CONSTRAINT `FK7a8x3p8wqax85sr0pvgaw021t` FOREIGN KEY (`cover_id`) REFERENCES `media_resource` (`id`),
   CONSTRAINT `FKiqx6maqf4rf527o7oejjoip3t` FOREIGN KEY (`current_service`) REFERENCES `service` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -616,7 +685,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,_binary '','Di An','',NULL,NULL,'thebest11447@gmail.com',_binary '','Hoang Van Binh','$2a$10$96JdF3Z2qbQTFcuawXt7sObwqTVstQk9W6XyrjmfVDdbMtmtXV9vC','0337445595','ROLE_USER',NULL,NULL,NULL,NULL,NULL,0),(2,_binary '',NULL,NULL,NULL,NULL,'binhhv@admin.com',_binary '','Binh Admin','$2a$10$JcIWLoWBJZY5JiqbhdpOT.DfdVY6ncSHg/s13cV8bLxird6jPGOF.',NULL,'ROLE_ADMIN',NULL,NULL,NULL,NULL,NULL,0),(3,_binary '','Ba Ria',NULL,'2023-01-07 00:00:00.000000','Phiên bản V583 - Lễ Hội Giáng Sinh sẽ được cập nhật vào ngày 22/12/2022 với các tính năng được mở rộng cùng trang bị mới với sức mạnh chiến đấu lớn. Nhanh tay tham gia cùng Võ Lâm Chi Mộng trải nghiệm các hoạt động mới.','19110170@student.hcmute.edu.vn',_binary '','Binh Company','$2a$10$YiXzKiBd1sYJdfiv8VLMPOgRh2nud9W20j6EgSpSdJT.rsBCQNtty','0337445596','ROLE_EMPLOYER','2024-10-07 00:00:00.000000',NULL,1,1,3,0),(4,_binary '',NULL,NULL,NULL,NULL,'symanh@gmail.com',_binary '\0','Thieu Sy Manh','$2a$10$qr2JNAH5jeicebzdE4xbku4BDxpAQEkBt1nICWp.wJgjLAWxZaWwC',NULL,'ROLE_USER',NULL,NULL,NULL,NULL,NULL,0),(5,_binary '','Ba Ria',NULL,'2023-02-07 00:00:00.000000','','19110171@student.hcmute.edu.vn',_binary '','Binh Company','$2a$10$YiXzKiBd1sYJdfiv8VLMPOgRh2nud9W20j6EgSpSdJT.rsBCQNtty','0337445597','ROLE_EMPLOYER','2023-03-18 00:00:00.000000',NULL,2,2,3,0);
+INSERT INTO `user` VALUES (1,_binary '','Di An','',NULL,NULL,'thebest11447@gmail.com',_binary '','Hoang Van Binh','$2a$10$96JdF3Z2qbQTFcuawXt7sObwqTVstQk9W6XyrjmfVDdbMtmtXV9vC','0337445595','ROLE_USER',NULL,NULL,1,3,NULL,0,28),(2,_binary '',NULL,NULL,NULL,NULL,'binhhv@admin.com',_binary '','Binh Admin','$2a$10$JcIWLoWBJZY5JiqbhdpOT.DfdVY6ncSHg/s13cV8bLxird6jPGOF.',NULL,'ROLE_ADMIN',NULL,NULL,NULL,NULL,NULL,0,NULL),(3,_binary '','Ba Ria',NULL,'2023-01-07 00:00:00.000000','Phiên bản V583 - Lễ Hội Giáng Sinh sẽ được cập nhật vào ngày 22/12/2022 với các tính năng được mở rộng cùng trang bị mới với sức mạnh chiến đấu lớn. Nhanh tay tham gia cùng Võ Lâm Chi Mộng trải nghiệm các hoạt động mới.','19110170@student.hcmute.edu.vn',_binary '','Binh Company','$2a$10$YiXzKiBd1sYJdfiv8VLMPOgRh2nud9W20j6EgSpSdJT.rsBCQNtty','0337445596','ROLE_EMPLOYER','2024-10-07 00:00:00.000000',NULL,1,1,3,0,NULL),(4,_binary '',NULL,NULL,NULL,NULL,'symanh@gmail.com',_binary '\0','Thieu Sy Manh','$2a$10$qr2JNAH5jeicebzdE4xbku4BDxpAQEkBt1nICWp.wJgjLAWxZaWwC',NULL,'ROLE_USER',NULL,NULL,NULL,NULL,NULL,0,NULL),(5,_binary '','Ba Ria',NULL,'2023-02-07 00:00:00.000000','','19110171@student.hcmute.edu.vn',_binary '','Nam Company','$2a$10$YiXzKiBd1sYJdfiv8VLMPOgRh2nud9W20j6EgSpSdJT.rsBCQNtty','0337445597','ROLE_EMPLOYER','2023-03-18 00:00:00.000000',NULL,2,2,3,0,NULL),(7,_binary '','Ba Ria',NULL,'2023-02-07 00:00:00.000000','','19110172@student.hcmute.edu.vn',_binary '','Tung Company','$2a$10$YiXzKiBd1sYJdfiv8VLMPOgRh2nud9W20j6EgSpSdJT.rsBCQNtty','0337445598','ROLE_EMPLOYER','2023-03-18 00:00:00.000000',NULL,2,2,3,0,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -675,7 +744,7 @@ CREATE TABLE `view_page` (
   KEY `FKmmbkugjryqkg496vmevrbb5wo` (`viewer_id`),
   CONSTRAINT `FKjmfpmhbyyqioqgm7fpwp0k6wk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FKmmbkugjryqkg496vmevrbb5wo` FOREIGN KEY (`viewer_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -684,8 +753,35 @@ CREATE TABLE `view_page` (
 
 LOCK TABLES `view_page` WRITE;
 /*!40000 ALTER TABLE `view_page` DISABLE KEYS */;
-INSERT INTO `view_page` VALUES (3,'2023-01-08 11:55:03.258000',3,1),(4,'2023-01-08 12:03:22.842000',3,4),(5,'2023-01-08 12:03:42.351000',5,4),(6,'2023-01-08 12:07:16.361000',5,4),(7,'2023-02-08 12:03:22.842000',3,4),(8,'2023-03-08 12:03:22.842000',3,4);
+INSERT INTO `view_page` VALUES (3,'2023-01-08 11:55:03.258000',3,1),(4,'2023-01-08 12:03:22.842000',3,4),(5,'2023-01-08 12:03:42.351000',5,4),(6,'2023-01-08 12:07:16.361000',5,4),(7,'2023-02-08 12:03:22.842000',3,4),(8,'2023-03-08 12:03:22.842000',3,4),(9,'2023-03-23 21:51:06.507000',3,1),(10,'2023-03-23 21:51:06.507000',5,1),(11,'2023-03-23 21:51:06.507000',5,1),(12,'2023-03-23 21:51:06.507000',5,1),(13,'2023-03-23 21:51:06.507000',5,1);
 /*!40000 ALTER TABLE `view_page` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `view_post`
+--
+
+DROP TABLE IF EXISTS `view_post`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `view_post` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `date` datetime(6) NOT NULL,
+  `post_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKnulxnnivljptifc2dmviu0uc4` (`post_id`),
+  CONSTRAINT `FKnulxnnivljptifc2dmviu0uc4` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `view_post`
+--
+
+LOCK TABLES `view_post` WRITE;
+/*!40000 ALTER TABLE `view_post` DISABLE KEYS */;
+INSERT INTO `view_post` VALUES (1,'2023-02-20 00:00:00.000000',1),(2,'2023-02-20 00:00:00.000000',1),(3,'2023-02-20 00:00:00.000000',1),(4,'2023-02-27 00:00:00.000000',1),(5,'2023-02-27 00:00:00.000000',1),(6,'2023-02-27 00:00:00.000000',1),(7,'2023-02-27 00:00:00.000000',2),(8,'2023-02-20 00:00:00.000000',2),(9,'2023-02-20 00:00:00.000000',2),(10,'2023-02-20 00:00:00.000000',2),(11,'2023-02-20 00:00:00.000000',2),(12,'2023-02-20 00:00:00.000000',2),(13,'2023-02-20 00:00:00.000000',2),(14,'2023-02-28 21:41:39.604000',2);
+/*!40000 ALTER TABLE `view_post` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -697,4 +793,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-23 22:25:07
+-- Dump completed on 2023-04-04 22:15:12

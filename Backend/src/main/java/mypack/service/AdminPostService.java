@@ -88,6 +88,7 @@ public class AdminPostService {
 
 		post.setStatus(EStatus.DELETED_BY_ADMIN);
 		post.setAcceptedBy(admin);
+		post.setAcceptedDate(new Date());
 		postRepository.save(post);
 
 		// Add message here for employer

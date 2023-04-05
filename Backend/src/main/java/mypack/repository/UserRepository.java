@@ -42,6 +42,9 @@ public interface UserRepository extends JpaRepository<User, Long>, UserSerachCus
 	@Query(value = "SELECT * FROM user WHERE role = 'ROLE_EMPLOYER' ORDER BY RAND() LIMIT 10", nativeQuery = true)
 	List<User> getListCompany();
 
+	@Query(value = "SELECT us.* FROM user as us, (select user_id, count(*) as view_count from view_page group by user_id) as vc WHERE us.role = 'ROLE_EMPLOYER' and vc.user_id = us.id order by vc.view_count desc limit 9", nativeQuery = true)
+	List<User> getHighLightCompany();
+	
 	@Query(value = "SELECT email FROM user WHERE id in(:listId) and email_confirm = true", nativeQuery = true)
 	String[] getListEmailUser(@Param("listId") List<Long> lstId);
 
