@@ -24,7 +24,7 @@ function App() {
     <>
     
     <AdminRoute path='/admin/dashboard /admin/account /admin/post /admin/services /admin/form /admin/bar /admin/pie /admin/line /admin/industries /admin/reports /admin/form'/>
-    <EmployeeRoute path='/user/login /user/home'/>
+    <EmployeeRoute path='/user/login '/>
     <EmployerRoute path='/employer/login '/>
     </>
   );

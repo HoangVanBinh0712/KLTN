@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import HomePage from "../employee_scenes/HomePage";
+import HomePageEmp from "../employer_scenes/HomePageEmp";
+import PageNotFound from "../components/page/PageNotFound";
 
 const EmployeeRoute = ({ ...rest }) => {
 
@@ -23,7 +25,7 @@ const EmployeeRoute = ({ ...rest }) => {
         body = (
             <Routes>
                 <Route path="/user/home" element={<HomePage />} />
-
+                
             </Routes>
 
         )
@@ -36,6 +38,18 @@ const EmployeeRoute = ({ ...rest }) => {
             <>
                 <div>You need login to access! </div>
             </>
+        )
+    }
+    else {
+        body = (
+            <Routes>
+                <Route path="/user/home" element={<HomePage />} />
+                <Route path="/employer/home" element={<HomePageEmp />} />
+                <Route path ="/*" element={<PageNotFound />} />
+
+
+            </Routes>
+
         )
     }
 

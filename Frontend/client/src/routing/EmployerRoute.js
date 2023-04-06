@@ -6,7 +6,7 @@ import LoginPage from "../employer_scenes/LoginPage";
 
 const EmployerRoute = ({ ...rest }) => {
 
-    const isEmployer = true
+    const isEmployer = false
     const location = useLocation();
     const currentUrl = location.pathname;
     console.log(rest.path)
@@ -15,6 +15,9 @@ const EmployerRoute = ({ ...rest }) => {
 
     if (currentUrl==="/"){
         return <Navigate to="/user/home"/>;
+    }
+    else if (currentUrl === "/employer") {
+        return <Navigate to="/employer/home"/>;
     }
     else if (currentUrl === "/employer/login" && !isEmployer) {
         body = (
