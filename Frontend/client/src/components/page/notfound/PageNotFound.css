@@ -58,7 +58,7 @@
     background-position: 0% 0%;
   }
 }
-.content h4{
+.title-in-notfound{
   font-size: 1.5em;
   margin-bottom: 20px;
   text-transform: uppercase;
@@ -77,7 +77,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.content p{
+.text-in-notfound {
   font-size: 1.2em;
   color: #0d0d0d;
 }

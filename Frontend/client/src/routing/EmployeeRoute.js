@@ -4,7 +4,8 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import HomePage from "../employee_scenes/HomePage";
 import HomePageEmp from "../employer_scenes/HomePageEmp";
-import PageNotFound from "../components/page/PageNotFound";
+import PageNotFound from "../components/page/notfound/PageNotFound";
+import { webUrlActivity } from "../contexts/Constants";
 
 const EmployeeRoute = ({ ...rest }) => {
 
@@ -12,7 +13,7 @@ const EmployeeRoute = ({ ...rest }) => {
     const location = useLocation();
     const currentUrl = location.pathname;
     console.log(rest.path)
-    console.log(currentUrl)
+    console.log(webUrlActivity)
     let body;
 
     if (currentUrl === "/user/login" && !isEmployee) {
@@ -40,14 +41,18 @@ const EmployeeRoute = ({ ...rest }) => {
             </>
         )
     }
+    else if (!webUrlActivity.includes(currentUrl)) {
+        body = (
+            <Routes>
+                <Route path ="/*" element={<PageNotFound />} />
+            </Routes>
+        )
+    }
     else {
         body = (
             <Routes>
                 <Route path="/user/home" element={<HomePage />} />
                 <Route path="/employer/home" element={<HomePageEmp />} />
-                <Route path ="/*" element={<PageNotFound />} />
-
-
             </Routes>
 
         )

@@ -1,4 +1,4 @@
-import "../css/PageNotFound.css";
+import "./PageNotFound.css";
 
 const PageNotFound = () => {
   return (
@@ -7,13 +7,13 @@ const PageNotFound = () => {
         <h2 class="header" data-text="404">
           404
         </h2>
-        <h4 data-text="Opps! Page not found">Opps! Page not found</h4>
-        <p>
+        <h4 className="title-in-notfound" data-text="Opps! Page not found">Opps! Page not found</h4>
+        <p className="text-in-notfound">
           Sorry, the page you're looking for doesn't exist. If you think
           something is broken, report a problem.
         </p>
         <div class="btns">
-          <a href="/dashboard">return home</a>
+          <a href="/user/home">return home</a>
           <a href="https://www.facebook.com/vanbinh0712">report problem</a>
         </div>
       </div>
