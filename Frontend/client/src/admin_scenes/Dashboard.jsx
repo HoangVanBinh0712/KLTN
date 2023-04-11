@@ -33,7 +33,7 @@ const Dashboard = () => {
           </Button>
         </Box>
       </Box>
-            
+
       {/* GRID & CHARTS */}
       <Box
         display="grid"
@@ -41,7 +41,7 @@ const Dashboard = () => {
         gridAutoRows="140px"
         gap="20px"
       >
-        
+
         {/* ROW 1 */}
         <Box
           gridColumn="span 3"
@@ -86,6 +86,7 @@ const Dashboard = () => {
           gridColumn="span 8"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
+          height="360px"
         >
           <Box
             mt="25px"
@@ -100,7 +101,7 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Number of posts created
+                Number of accounts created
               </Typography>
               <Typography
                 variant="h3"
@@ -118,9 +119,9 @@ const Dashboard = () => {
               </IconButton>
             </Box> */}
           </Box>
-          <Box height="250px" m="-20px 0 0 0">
+          <Box height="300px" m="-20px 0 0 0">
             {/*<BarChart isDashboard={true} /> error is here*/}
-            <LineChart /> 
+            <LineChart />
           </Box>
         </Box>
         <Box
@@ -128,6 +129,7 @@ const Dashboard = () => {
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
           overflow="auto"
+          height="360px"
         >
           <Box
             display="flex"
@@ -147,23 +149,51 @@ const Dashboard = () => {
               display="flex"
               justifyContent="space-between"
               alignItems="center"
-              borderBottom={`4px solid ${colors.primary[500]}`}
-              p="15px"
+              borderBottom={`2px solid ${colors.primary[500]}`}
+              p="10px"
             >
-              <Box>
+              <Box
+                overflow="hidden"
+                whiteSpace="nowrap"
+                paddingRight="2px"
+                width="20%"
+              >
                 <Typography
                   color={colors.greenAccent[500]}
+                  textOverflow="ellipsis"
                 >
                   {history.username}
                 </Typography>
-                </Box>
-                <Box>
-                <Typography color={colors.grey[100]}>
+              </Box>
+              <Box
+                overflow="hidden"
+                whiteSpace="nowrap"
+                paddingX="2px"
+                textOverflow="ellipsis"
+                width="50%"
+              >
+                <Typography
+                  color={colors.grey[100]}
+                >
                   {history.title}
                 </Typography>
               </Box>
-              <Box color={colors.grey[100]}>{history.dateCreated}</Box>
-              <Box color={colors.blueAccent[500]}>{history.category}</Box>
+              <Box
+                color={colors.grey[100]}
+                overflow="hidden"
+                whiteSpace="nowrap"
+                fontSize="12px"
+                paddingX="4px"
+                width="20%"
+              >
+                {history.dateCreated}
+              </Box>
+              <Box
+                color={colors.blueAccent[500]}
+                paddingLeft='2px'
+                width="20%"
+              >
+                {history.category}</Box>
             </Box>
           ))}
         </Box>

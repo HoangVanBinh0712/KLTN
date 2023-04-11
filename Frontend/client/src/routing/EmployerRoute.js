@@ -9,8 +9,7 @@ const EmployerRoute = ({ ...rest }) => {
     const isEmployer = false
     const location = useLocation();
     const currentUrl = location.pathname;
-    console.log(rest.path)
-    console.log(currentUrl)
+   
     let body;
 
     if (currentUrl==="/"){

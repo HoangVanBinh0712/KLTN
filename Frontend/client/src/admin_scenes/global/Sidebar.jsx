@@ -13,6 +13,8 @@ import BookIcon from '@mui/icons-material/Book';
 import UserIcon from './user.png';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -161,6 +163,20 @@ const Sidebar = () => {
               title="Reports Management"
               to="/admin/reports"
               icon={<FlagCircleIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Notifications Management"
+              to="/admin/reports"
+              icon={<CircleNotificationsIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Revenue management"
+              to="/admin/reports"
+              icon={<MonetizationOnIcon />}
               selected={selected}
               setSelected={setSelected}
             />

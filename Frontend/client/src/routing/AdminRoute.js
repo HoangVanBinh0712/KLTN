@@ -15,6 +15,9 @@ import Reports from "../admin_scenes/Reports";
 import Form from "../admin_scenes/Form";
 import Line from "../admin_scenes/Line";
 import Pie from "../admin_scenes/Pie";
+import PageNotFound from "../components/page/notfound/PageNotFound";
+import { webUrlActivity } from "../contexts/Constants";
+import LoginPageAdmin from '../admin_scenes/LoginPageAdmin';
 
 export const AdminRoute = ({ ...rest }) => {
     const [theme, colorMode] = useMode();
@@ -23,8 +26,7 @@ export const AdminRoute = ({ ...rest }) => {
     const isAdmin=true
     const location = useLocation();
     const currentUrl = location.pathname;
-    console.log(rest.path)
-    console.log(currentUrl)
+    
     let body;
 
     if (currentUrl==="/"){
@@ -35,11 +37,17 @@ export const AdminRoute = ({ ...rest }) => {
     }
     else if(currentUrl==="/admin/login"&&!isAdmin){
         body=(
-            <>
-            <div>Login page </div>
-            </>
+            <LoginPageAdmin/>
         )
-    } else if (rest.path.includes(currentUrl) && isAdmin) {
+    }
+    else if (!webUrlActivity.includes(currentUrl+" ")) {
+        body = (
+            <Routes>
+                <Route path ="/*" element={<PageNotFound />} />
+            </Routes>
+        )
+    }
+    else if (rest.path.includes(currentUrl) && isAdmin) {
         body = (
             <ColorModeContext.Provider value={colorMode}>
                 <ThemeProvider theme={theme}>

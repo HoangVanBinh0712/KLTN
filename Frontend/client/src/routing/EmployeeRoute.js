@@ -12,8 +12,7 @@ const EmployeeRoute = ({ ...rest }) => {
     const isEmployee = false
     const location = useLocation();
     const currentUrl = location.pathname;
-    console.log(rest.path)
-    console.log(webUrlActivity)
+ 
     let body;
 
     if (currentUrl === "/user/login" && !isEmployee) {
@@ -22,7 +21,11 @@ const EmployeeRoute = ({ ...rest }) => {
                 <div>Login page </div>
             </>
         )
-    } else if (rest.path.includes(currentUrl) && isEmployee) {
+    } 
+    else if (currentUrl === "/user") {
+        return <Navigate to="/user/home" />;
+    } 
+    else if (rest.path.includes(currentUrl) && isEmployee) {
         body = (
             <Routes>
                 <Route path="/user/home" element={<HomePage />} />
@@ -34,14 +37,14 @@ const EmployeeRoute = ({ ...rest }) => {
     else if (isEmployee && currentUrl === "/user/login") {
         return <Navigate to="/user/home" />;
     }
-    else if (rest.path.includes(currentUrl)) {
+    else if (rest.path.includes(currentUrl+" ")) {
         body = (
             <>
                 <div>You need login to access! </div>
             </>
         )
     }
-    else if (!webUrlActivity.includes(currentUrl)) {
+    else if (!webUrlActivity.includes(currentUrl+" ")) {
         body = (
             <Routes>
                 <Route path ="/*" element={<PageNotFound />} />
