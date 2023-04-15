@@ -6,14 +6,15 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import CategoryIcon from '@mui/icons-material/Category';
 import BookIcon from '@mui/icons-material/Book';
 import UserIcon from './user.png';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import FlagCircleIcon from '@mui/icons-material/FlagCircle';
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -117,7 +118,7 @@ const Sidebar = () => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/"
+              to="/admin/dashboard"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -132,33 +133,53 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Users management"
-              to="/account"
+              to="/admin/account"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Posts Management"
-              to="/post"
+              to="/admin/post"
               icon={<BookIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Services Management"
-              to="/category"
+              to="/admin/services"
               icon={<CategoryIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Industries Management"
-              to="/category"
-              icon={<CategoryIcon />}
+              to="/admin/industries"
+              icon={<AccountTreeIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-
+            <Item
+              title="Reports Management"
+              to="/admin/reports"
+              icon={<FlagCircleIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Notifications Management"
+              to="/admin/reports"
+              icon={<CircleNotificationsIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Revenue management"
+              to="/admin/reports"
+              icon={<MonetizationOnIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -168,14 +189,14 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="User Statistics"
-              to="/line"
+              to="/admin/line"
               icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Post Statistics"
-              to="/line"
+              to="/admin/line"
               icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

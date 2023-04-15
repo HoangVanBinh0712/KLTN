@@ -175,7 +175,7 @@ export const mockHistory = [
     id: "04x",
     username: "Recruiter 1",
     dateCreated: "2022-12-11",
-    title:"Recruiting part time sales staff",
+    title:"Recruiting part time sales staff hahgagagagag",
     category: "Maketing",
     services: "Basic",
     expiration: "2022-27-11",
@@ -201,6 +201,33 @@ export const mockCategory = [
     catName: "Life",
     dateCreated: "2022-24-05",
     description:"Chuyên mục các bài viết về cuộc sống",
+  }
+];
+
+export const mockSevices = [
+  {
+    id: 1,
+    name: "Basic Service",
+    description: "Basic service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. ",
+    type: "BASIC",
+    price: '10 USD' ,
+    currency: "USD",
+    postDuration: '1 month',
+    active: true,
+    canSearchCV: false,
+    canFilterCVSubmit: false
+  },
+  {
+    id: 2,
+    name: "Premiun Serivce",
+    description: "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
+    type: "PREMIUM",
+    price: '30 USD',
+    currency: "USD",
+    postDuration: '2 month',
+    active: true,
+    canSearchCV: true,
+    canFilterCVSubmit: true
   }
 ];
 
