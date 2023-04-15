@@ -1,4 +1,6 @@
 import React from 'react'
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,17 +11,27 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { AuthContext } from "../contexts/AuthContext";
 
 const LoginPageAdmin = () => {
-    const handleSubmit = (event) => {
+
+    const { authState: { authloading, role }, loginUser } = useContext(AuthContext)
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        try {
+            const data = new FormData(event.currentTarget);
+            const response = await loginUser(data)
+            
+            if (response.userInfo.role ==='ROLE_ADMIN') {
+                return <Navigate to ='/admin/dashboard'/>
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
-    const Copyright= (props) =>{
+
+    const Copyright = (props) => {
         return (
             <Typography variant="body2" color="text.secondary" align="center" {...props}>
                 {'Copyright © '}
@@ -56,10 +68,10 @@ const LoginPageAdmin = () => {
                             margin="normal"
                             required
                             fullWidth
-                            id="email"
+                            id="username"
                             label="Email Address"
-                            name="email"
-                            autoComplete="email"
+                            name="username"
+                            autoComplete="username"
                             autoFocus
                         />
                         <TextField

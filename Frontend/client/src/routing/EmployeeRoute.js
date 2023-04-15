@@ -12,10 +12,13 @@ const EmployeeRoute = ({ ...rest }) => {
     const isEmployee = false
     const location = useLocation();
     const currentUrl = location.pathname;
- 
+    console.log(currentUrl)
     let body;
 
-    if (currentUrl === "/user/login" && !isEmployee) {
+    if (currentUrl === "/") {
+        return <Navigate to="/user/home" />;
+    } 
+    else if (currentUrl === "/user/login" && !isEmployee) {
         body = (
             <>
                 <div>Login page </div>
