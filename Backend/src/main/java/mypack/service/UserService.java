@@ -404,7 +404,7 @@ public class UserService {
 			profile.setLastModified(new Date());
 			profile.setWorkExperiences(request.getWorkExperiences());
 			profile.setSkillsAndKnowledges(request.getSkillsAndKnowledges());
-			
+
 			return new DataResponse<>(true, "Upload success !",
 					mapper.map(profileRepository.save(profile), ProfileDTO.class));
 		} catch (Exception e) {
@@ -470,9 +470,11 @@ public class UserService {
 	public List<UserDTO> getListCompany() {
 		return userRepo.getListCompany().stream().map(x -> mapper.map(x, UserDTO.class)).toList();
 	}
+
 	public List<UserDTO> getHighLightCompany() {
 		return userRepo.getHighLightCompany().stream().map(x -> mapper.map(x, UserDTO.class)).toList();
 	}
+
 	public BaseResponse emailConfirm(String email, String code) {
 		Optional<User> opt = userRepo.findByEmail(email);
 		if (opt.isEmpty())
@@ -507,6 +509,10 @@ public class UserService {
 				null);
 		return new BaseResponse(true, "Change password successfully !");
 
+	}
+
+	public UserDTO getAdminProfile(Long userId) {
+		return mapper.map(userRepo.findById(userId).get(), UserDTO.class);
 	}
 
 	public BaseResponse accountManage(Long userId, Boolean status) {
