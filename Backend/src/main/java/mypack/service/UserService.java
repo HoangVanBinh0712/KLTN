@@ -163,8 +163,8 @@ public class UserService {
 			String token = jwtUtils.generateJwtToken(authentication);
 			String refreshToken = jwtUtils.generateJwtRefreshToken(authentication);
 			user.setWrongPasswordcount(0L);
-			userRepo.save(user);
-			return new JwtResponse<>(token, refreshToken, null);
+			user = userRepo.save(user);
+			return new JwtResponse<>(token, refreshToken, mapper.map(user, UserDTO.class));
 		} catch (Exception e) {
 			// wrong password
 			if (user.getWrongPasswordcount() == null)
