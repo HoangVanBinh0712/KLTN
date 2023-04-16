@@ -23,7 +23,7 @@ function App() {
   return (
     <>
     <AdminRoute path='/admin/dashboard /admin/account /admin/post /admin/services /admin/form /admin/bar /admin/pie /admin/line /admin/industries /admin/reports /admin/form'/>
-    <EmployeeRoute path='/user/login '/>
+    <EmployeeRoute path='/user/login /user/account /user/account/personal-info'/>
     <EmployerRoute path='/employer/login '/>
     </>
   );

@@ -43,7 +43,7 @@ export const AdminRoute = ({ ...rest }) => {
     else if (!webUrlActivity.includes(currentUrl+" ")) {
         body = (
             <Routes>
-                <Route path ="/*" element={<PageNotFound />} />
+                <Route path ="/admin/*" element={<PageNotFound />} />
             </Routes>
         )
     }
