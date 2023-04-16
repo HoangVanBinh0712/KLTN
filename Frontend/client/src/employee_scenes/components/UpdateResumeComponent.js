@@ -1,30 +1,30 @@
 const UpdateResume = () => {
   return (
-    <div class="free-space" id="free-space">
+    <div className="free-space" id="free-space">
       <h1>Update Resume</h1>
-      <div class="content-wrapper">
-        <div class="select">
-          <div class="label">Resume</div>
+      <div className="content-wrapper">
+        <div className="select">
+          <div className="label">Resume</div>
           <select name="" id="">
             <option value="">Resume 1</option>
             <option value="">Resume 2</option>
             <option value="">Resume 3</option>
           </select>
         </div>
-        <div class="input-wrapper">
-          <div class="label">Name</div>
+        <div className="input-wrapper">
+          <div className="label">Name</div>
           <input type="text"></input>
         </div>
-        <div class="double-select">
-          <div class="select">
-            <div class="label">Public</div>
+        <div className="double-select">
+          <div className="select">
+            <div className="label">Public</div>
             <select name="" id="">
               <option value="true">True</option>
               <option value="false">False</option>
             </select>
           </div>
-          <div class="select">
-            <div class="label">Experience</div>
+          <div className="select">
+            <div className="label">Experience</div>
             <select name="" id="">
               <option value="NONE">No Experience</option>
               <option value="UNDER_ONE_YEAR">Under 1 Year</option>
@@ -37,9 +37,9 @@ const UpdateResume = () => {
             </select>
           </div>
         </div>
-        <div class="double-select">
-          <div class="select">
-            <div class="label">Expected Position</div>
+        <div className="double-select">
+          <div className="select">
+            <div className="label">Expected Position</div>
             <select name="" id="">
               <option value="Staff">Staff</option>
               <option value="Leader">Leader</option>
@@ -50,8 +50,8 @@ const UpdateResume = () => {
               <option value="Branch_Manager">Branch Manager</option>
             </select>
           </div>
-          <div class="select">
-            <div class="label">Working method</div>
+          <div className="select">
+            <div className="label">Working method</div>
             <select name="" id="">
               <option value="INTERN">Intern</option>
               <option value="FULL_TIME">Full-time</option>
@@ -60,22 +60,22 @@ const UpdateResume = () => {
           </div>
         </div>
         <small>Give us more details !</small>
-        <div class="text-area-group">
-          <div class="label">Your work history</div>
+        <div className="text-area-group">
+          <div className="label">Your work history</div>
           <textarea></textarea>
         </div>
 
-        <div class="text-area-group">
-          <div class="label">Your skills</div>
+        <div className="text-area-group">
+          <div className="label">Your skills</div>
           <textarea></textarea>
         </div>
-        <div class="group-buttons">
-          <div class="button">
-            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        <div className="group-buttons">
+          <div className="button">
+            <i className="fa fa-floppy-o" aria-hidden="true"></i>
             Confirm
           </div>
-          <div class="button cancel">
-            <i class="fa fa-times" aria-hidden="true"></i>
+          <div className="button cancel">
+            <i className="fa fa-times" aria-hidden="true"></i>
             Cancel
           </div>
         </div>

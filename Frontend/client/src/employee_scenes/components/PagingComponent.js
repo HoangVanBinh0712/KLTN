@@ -3,15 +3,15 @@ import arrowRightIcon from "../../assets/picture-banner/arrow-right.png";
 
 const Paging = () => {
   return (
-    <div class="paging">
-      <div class="pagging-wrapper">
-        <img class="page-item" src={arrowLeftIcon} alt=""></img>
-        <div class="page-item">1</div>
-        <div class="page-item">2</div>
-        <div class="page-item">3</div>
-        <div class="page-item">4</div>
-        <div class="page-item">5</div>
-        <img class="page-item" src={arrowRightIcon} alt=""></img>
+    <div className="paging">
+      <div className="pagging-wrapper">
+        <img className="page-item" src={arrowLeftIcon} alt=""></img>
+        <div className="page-item">1</div>
+        <div className="page-item">2</div>
+        <div className="page-item">3</div>
+        <div className="page-item">4</div>
+        <div className="page-item">5</div>
+        <img className="page-item" src={arrowRightIcon} alt=""></img>
       </div>
     </div>
   );

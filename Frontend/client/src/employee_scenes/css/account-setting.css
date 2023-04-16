@@ -66,7 +66,7 @@ body {
 }
 
 .navbar-vertical .label i {
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
 }
 
 .navbar-vertical .actived i {
@@ -74,7 +74,6 @@ body {
 }
 
 .navbar-vertical .nav-item li {
-    padding: 0.5em 1em;
     display: flex;
     align-items: center;
     column-gap: 5px;
@@ -82,8 +81,14 @@ body {
 }
 
 .navbar-vertical .nav-item li a {
+    padding: 0.5em 1em;
     text-decoration: unset;
+    flex: 1;
+    height: 100%;
+}
 
+.navbar-vertical .nav-item li img {
+    margin-right: 0.5em;
 }
 
 .navbar-vertical .nav-item li a:visited {

@@ -2,28 +2,28 @@ import logoIcon from "../../assets/picture-banner/logo.png";
 
 const SingleUser = () => {
   return (
-    <div class="cart">
-      <img class="avatar" src={logoIcon} alt=""></img>
-      <div class="cart-info">
-        <p class="title">Tuyển Developer C#, ASP .Net lương cao</p>
-        <div class="cart-description">
+    <div className="cart">
+      <img className="avatar" src={logoIcon} alt=""></img>
+      <div className="cart-info">
+        <p className="title">Tuyển Developer C#, ASP .Net lương cao</p>
+        <div className="cart-description">
           Không yêu cầu kinh nghiệm, chỉ cần năng nổ ham học hỏi và tiếng anh
           giỏi.
         </div>
-        <div class="row-flex">
-          <div class="item">
+        <div className="row-flex">
+          <div className="item">
             <p>5 triệu</p>
           </div>
-          <div class="item">
+          <div className="item">
             <p>Tp HCM</p>
           </div>
-          <div class="item">
+          <div className="item">
             <p>1 ngày trước</p>
           </div>
-          <div class="item">
+          <div className="item">
             <p>Còn 10 ngày</p>
           </div>
-          <i class="fa fa-heart-o" aria-hidden="true"></i>
+          <i className="fa fa-heart-o" aria-hidden="true"></i>
         </div>
       </div>
     </div>

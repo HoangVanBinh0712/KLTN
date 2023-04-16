@@ -13,11 +13,11 @@ import searchIcon from "../../assets/icons/search-employee-icon.png";
 import followedIcon from "../../assets/icons/followed-icon.png";
 
 const UserAccount = () => {
-  const activeClick = (e) => {
-    if (!e.target.classList.contains("actived"))
-      e.target.classList.add("actived");
+  const activeClick = (id) => {
+    const el = document.getElementById(id);
+    if (!el.classList.contains("actived")) el.classList.add("actived");
     else {
-      e.target.classList.remove("actived");
+      el.classList.remove("actived");
     }
   };
   return (
@@ -25,94 +25,110 @@ const UserAccount = () => {
       <div className="header"></div>
       <div className="content-wrapper">
         <div className="navbar-vertical">
-          <div className="label" onClick={activeClick}>
+          <div
+            className="label"
+            id="label_1"
+            onClick={() => activeClick("label_1")}
+          >
             <i className="fa fa-chevron-down" aria-hidden="true"></i>
             Account management
           </div>
           <ul className="nav-item disabled">
             <li>
-              <img src={accountIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="personal-info">
+                <img src={accountIcon} alt="" className="nav-icon" />
                 Your account
               </Link>
             </li>
             <li>
-              <img src={certificateIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="achievement">
+                <img src={certificateIcon} alt="" className="nav-icon" />
                 Achievement
               </Link>
             </li>
 
             <li>
-              <img src={changePasswordIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="change-password">
+                <img src={changePasswordIcon} alt="" className="nav-icon"></img>
                 Change password
               </Link>
             </li>
             <li>
-              <img src={checkIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="verify-email">
+                <img src={checkIcon} alt="" className="nav-icon"></img>
                 Verify email
               </Link>
             </li>
           </ul>
 
-          <div className="label" onClick={activeClick}>
+          <div
+            className="label"
+            id="label_2"
+            onClick={() => activeClick("label_2")}
+          >
             <i className="fa fa-chevron-down" aria-hidden="true"></i>
             Records management
           </div>
           <ul className="nav-item">
             <li>
-              <img src={addPostIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="add-resume">
+                <img src={addPostIcon} alt="" className="nav-icon"></img>
                 Add new resume
               </Link>
             </li>
             <li>
-              <img src={editIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="update-resume">
+                <img src={editIcon} alt="" className="nav-icon"></img>
                 Update your resume
               </Link>
             </li>
             <li>
-              <img src={cvIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="predict-job">
+                <img src={cvIcon} alt="" className="nav-icon"></img>
                 Predict job
               </Link>
             </li>
           </ul>
-          <div className="label" onClick={activeClick}>
+          <div
+            className="label"
+            id="label_3"
+            onClick={() => activeClick("label_3")}
+          >
             <i className="fa fa-chevron-down" aria-hidden="true"></i>
             Job management
           </div>
           <ul className="nav-item">
             <li>
-              <img src={applyIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="post-submitted">
+                <img src={applyIcon} alt="" className="nav-icon"></img>
                 Job applied
               </Link>
             </li>
             <li>
-              <img src={heartIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="post-followed">
+                <img src={heartIcon} alt="" className="nav-icon"></img>
                 Saved jobs
               </Link>
             </li>
           </ul>
-          <div className="label" onClick={activeClick}>
+          <div
+            className="label"
+            id="label_4"
+            onClick={() => activeClick("label_4")}
+          >
             <i className="fa fa-chevron-down" aria-hidden="true"></i>
             Your employers
           </div>
           <ul className="nav-item">
             <li>
-              <img src={searchIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="resume-viewer">
+                <img src={searchIcon} alt="" className="nav-icon"></img>
                 Profile viewers
               </Link>
             </li>
             <li>
-              <img src={followedIcon} alt="" className="nav-icon"></img>
               <Link className="nav-text" to="recruiter-followed">
+                <img src={followedIcon} alt="" className="nav-icon"></img>
                 Followed
               </Link>
             </li>

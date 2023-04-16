@@ -1,25 +1,25 @@
 const ChangePassword = () => {
-    return       <div class="free-space" id="free-space">
-    <div class="content-wrapper">
+    return       <div className="free-space" id="free-space">
+    <div className="content-wrapper">
         <h1>Change password</h1>
 
-        <div class="input-wrapper">
-            <div class="label">Old Password</div>
+        <div className="input-wrapper">
+            <div className="label">Old Password</div>
             <input type="password"></input>
         </div>
 
-        <div class="input-wrapper">
-            <div class="label">New Password</div>
+        <div className="input-wrapper">
+            <div className="label">New Password</div>
             <input type="password"></input>
         </div>
-        <div class="input-wrapper">
-            <div class="label">Confirm password</div>
+        <div className="input-wrapper">
+            <div className="label">Confirm password</div>
             <input type="password"></input>
         </div>
-        <div class="group-buttons">
-            <div class="button">
+        <div className="group-buttons">
+            <div className="button">
                 
-                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                <i className="fa fa-floppy-o" aria-hidden="true"></i>
 
                 Confirm
             </div>

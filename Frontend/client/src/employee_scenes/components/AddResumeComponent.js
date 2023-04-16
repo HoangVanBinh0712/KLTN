@@ -1,22 +1,22 @@
 const AddResume = () => {
-    return (         <div class="free-space" id="free-space">
+    return (         <div className="free-space" id="free-space">
     <h1>Add Resume</h1>
-    <div class="content-wrapper">
+    <div className="content-wrapper">
 
-        <div class="input-wrapper">
-            <div class="label">Name</div>
+        <div className="input-wrapper">
+            <div className="label">Name</div>
             <input type="text"></input>
         </div>
-        <div class="double-select">
-            <div class="select">
-                <div class="label">Public</div>
+        <div className="double-select">
+            <div className="select">
+                <div className="label">Public</div>
                 <select name="" id="">
                     <option value="true">True</option>
                     <option value="false">False</option>
                 </select>
             </div>
-            <div class="select">
-                <div class="label">Experience</div>
+            <div className="select">
+                <div className="label">Experience</div>
                 <select name="" id="">
                     <option value="NONE">No Experience</option>
                     <option value="UNDER_ONE_YEAR">Under 1 Year</option>
@@ -29,9 +29,9 @@ const AddResume = () => {
                 </select>
             </div>
         </div>
-        <div class="double-select">
-            <div class="select">
-                <div class="label">Expected Position</div>
+        <div className="double-select">
+            <div className="select">
+                <div className="label">Expected Position</div>
                 <select name="" id="">
                     <option value="Staff">Staff</option>
                     <option value="Leader">Leader</option>
@@ -42,8 +42,8 @@ const AddResume = () => {
                     <option value="Branch_Manager">Branch Manager</option>
                 </select>
             </div>
-            <div class="select">
-                <div class="label">Working method</div>
+            <div className="select">
+                <div className="label">Working method</div>
                 <select name="" id="">
                     <option value="INTERN">Intern</option>
                     <option value="FULL_TIME">Full-time</option>
@@ -52,34 +52,34 @@ const AddResume = () => {
             </div>
         </div>
         <small>Give us more details !</small>
-        <div class="text-area-group">
-            <div class="label">Your work history</div>
+        <div className="text-area-group">
+            <div className="label">Your work history</div>
             <textarea></textarea>
         </div>
 
-        <div class="text-area-group">
-            <div class="label">Your skills</div>
+        <div className="text-area-group">
+            <div className="label">Your skills</div>
             <textarea></textarea>
         </div>
 
-        <div class="label">Resume pdf</div>
-        <div class="button">
-                                    <i class="fa fa-upload" aria-hidden="true"></i>
+        <div className="label">Resume pdf</div>
+        <div className="button">
+                                    <i className="fa fa-upload" aria-hidden="true"></i>
 
             Upload image
         </div>
         <small>Format for PDF only.</small>
 
-        <div class="group-buttons">
-            <div class="button">
+        <div className="group-buttons">
+            <div className="button">
                 
-                <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                <i className="fa fa-floppy-o" aria-hidden="true"></i>
 
                 Confirm
             </div>
-            <div class="button cancel">
+            <div className="button cancel">
                 
-                <i class="fa fa-times" aria-hidden="true"></i>
+                <i className="fa fa-times" aria-hidden="true"></i>
 
                 Cancel
             </div>
