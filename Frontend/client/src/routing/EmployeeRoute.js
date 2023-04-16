@@ -26,57 +26,6 @@ const EmployeeRoute = ({ ...rest }) => {
 
   let body;
 
-  // if (currentUrl === "/user/login" && !isEmployee) {
-  //   body = (
-  //     <>
-  //       <div>Login page </div>
-  //     </>
-  //   );
-  // } else if (currentUrl === "/user") {
-  //   return <Navigate to="/user/home" />;
-  // } else if (rest.path.includes(currentUrl) && isEmployee) {
-  //   console.log("This route");
-  //   body = (
-  //     <Routes>
-  //       <Route path="/user/home" element={<HomePage />} />
-  //       <Route path="/user/account" element={<EmployeeAccountPage />}>
-  //         <Route path="personal-info" element={<PersonalInfoComponent />} />
-  //         <Route path="achievement" element={<UserAchievement />} />
-  //         <Route path="add-resume" element={<AddResume />} />
-  //         <Route path="change-password" element={<ChangePassword />} />
-  //         <Route path="post-followed" element={<PostFollowed />} />
-  //         <Route path="post-submitted" element={<PostSubmitted />} />
-  //         <Route path="predict-job" element={<PredictJob />} />
-  //         <Route path="recruiter-followed" element={<RecruiterFollowed />} />
-  //         <Route path="resume-viewer" element={<ResumeViewer />} />
-  //         <Route path="update-resume" element={<UpdateResume />} />
-  //         <Route path="verify-email" element={<VerifyEmail />} />
-  //       </Route>
-  //       <Route path="/*" element={<PageNotFound />} />
-  //     </Routes>
-  //   );
-  // } else if (isEmployee && currentUrl === "/user/login") {
-  //   return <Navigate to="/user/home" />;
-  // } else if (rest.path.includes(currentUrl + " ")) {
-  //   body = (
-  //     <>
-  //       <div>You need login to access! </div>
-  //     </>
-  //   );
-  // } else if (!webUrlActivity.includes(currentUrl + " ")) {
-  //   body = (
-  //     <Routes>
-  //       <Route path="/*" element={<PageNotFound />} />
-  //     </Routes>
-  //   );
-  // } else {
-  //   body = (
-  //     <Routes>
-  //       <Route path="/user/home" element={<HomePage />} />
-  //       <Route path="/employer/home" element={<HomePageEmp />} />
-  //     </Routes>
-  //   );
-  // }
   if (currentUrl === "/user") {
     return <Navigate to="/user/home" />;
   }

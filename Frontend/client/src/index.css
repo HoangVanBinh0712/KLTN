@@ -34,7 +34,7 @@ body,
   background: #555;
 }
 .blogListDelete{
-  color: red;
+  color: #6c6c6c;
   cursor: pointer;
 }
 .serListDelete{
@@ -42,7 +42,7 @@ body,
   cursor: pointer;
 }
 .userListDelete{
-  color: red;
+  color: #6c6c6c;
   cursor: pointer;
 }
 
