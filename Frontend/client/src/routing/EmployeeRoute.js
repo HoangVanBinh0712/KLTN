@@ -18,6 +18,8 @@ import RecruiterFollowed from "../employee_scenes/components/RecruiterFollowedCo
 import UpdateResume from "../employee_scenes/components/UpdateResumeComponent";
 import VerifyEmail from "../employee_scenes/components/VerifyEmailComponent";
 import ResumeViewer from "../employee_scenes/components/ResumeViewerComponent";
+import Login from "../components/page/login/Login";
+import Register from "../components/page/register/Register";
 
 const EmployeeRoute = ({ ...rest }) => {
   const isEmployee = true;
@@ -26,6 +28,9 @@ const EmployeeRoute = ({ ...rest }) => {
 
   let body;
 
+  if (currentUrl === "/") {
+    return <Navigate to="/user/home" />;
+  }
   if (currentUrl === "/user") {
     return <Navigate to="/user/home" />;
   }
@@ -35,7 +40,8 @@ const EmployeeRoute = ({ ...rest }) => {
   if (isEmployee)
     body = (
       <Routes>
-        <Route path="/user/login" element={<>Login</>} />
+        <Route path="/user/login" element={<Login />} />
+        <Route path="/user/register" element={<Register />} />
         <Route path="/user/home" element={<HomePage />} />
         <Route path="/user/account" element={<EmployeeAccountPage />}>
           <Route path="personal-info" element={<PersonalInfoComponent />} />
@@ -55,8 +61,9 @@ const EmployeeRoute = ({ ...rest }) => {
     );
   else {
     <Routes>
-      <Route path="/user/login" element={<>Login</>} />
-      <Route path="/home" element={<HomePage />} />
+      <Route path="/user/login" element={<Login />} />
+      <Route path="/user/register" element={<Register />} />
+      <Route path="/user/home" element={<HomePage />} />
       <Route path="/*" element={<PageNotFound />} />
     </Routes>;
   }
