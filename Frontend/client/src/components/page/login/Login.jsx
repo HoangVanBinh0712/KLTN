@@ -11,7 +11,7 @@ import { useToast } from "../../../contexts/Toast";
 const Login = () => {
 
     const { authState: { authloading, role }, loginUser } = useContext(AuthContext)
-    const [authLoading, setAuthLoading] = useState(authloading);
+    const [waitLogin, setAuthLoading] = useState(true);
     const { warn, error, success } = useToast();
 
 
@@ -27,7 +27,7 @@ const Login = () => {
     const onChangePwd = (event) => setPwd(event.target.value)
 
     const onClickLoginBtn = async (event) => {
-        setAuthLoading(true);
+        setAuthLoading(false);
         event.preventDefault();
         try {
             const userLoginForm = {
@@ -35,14 +35,14 @@ const Login = () => {
                 password: pwd
             }
             const userLoginData = await loginUser(userLoginForm);
-            if (!userLoginData.success) {
+            if (userLoginData.success===false) {
                 warn(userLoginData.message)
             }
-            console.log(userLoginData)
+            console.log(userLoginData.success)
         } catch (error) {
             console.log(error);
         }
-        setAuthLoading(false);
+        setAuthLoading(true);
     }
 
     

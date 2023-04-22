@@ -34,12 +34,15 @@ const Baner = () => {
                         type="text"
                         name="keyword"
                         value=""
-                        placeholder="Enter jobs, skills,..." />
+                        placeholder="Enter jobs, skills,..." 
+                        onChange={''}
+                        />
                 </div>
                 <div className="mg-input-searchbar location-search-inhome">
                     <select className="input-search-homepage custom-select"
                         name="location"
-                        placeholder="All location">
+                        placeholder="All location"
+                        onChange={''}>
                         <option>All location</option>
                         <option>Ho Chi Minh City</option>
                         <option>Ha Noi City</option>

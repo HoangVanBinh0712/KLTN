@@ -8,6 +8,11 @@
     src: url("../../assets/fonts/SFUFUTURAHEAVY.TTF");
 }
 
+@font-face {
+    font-family: Roboto-regular;
+    src: url("../../assets/fonts/roboto/Roboto-Regular.ttf");
+}
+
 body {
     margin: 0;
     background-color: white;
@@ -93,7 +98,7 @@ body {
 }
 
 .signed-homepage {
-    width: 4%;
+    width: 22%;
 }
 
 .banner-top {
@@ -505,4 +510,109 @@ body {
     text-decoration: none;
     color: #0c62ad;
     
+}
+
+.dropdown-container {
+    display: block;
+    width: 20%;
+    margin-right: 30px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    z-index: 2;
+    width: 20%;
+    padding-left: 20px;
+    margin-top: -15px;
+    background-color: white;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+}
+
+.option-account {
+    display: flex;
+    justify-content: end;
+}
+
+.user-dropbox {
+    display: flex;
+    height: 80px;
+    width: 90%;
+    border-bottom: 1px solid #b7b7b7;
+    padding-bottom: 10px;
+}
+
+.avt-in-dropbox {
+    height: 60px;
+    width: 60px;
+    padding: 15px 5px 5px 5px;
+}
+
+.avt-in-dropbox img {
+    height: 100%;
+    width: auto;
+}
+
+.name-in-dropbox {
+    display: block;
+    padding: 12px 0 0 0 ;
+}
+
+.n-user-in-dropbox {
+    height: 25px;
+    font-size: 20px;
+    color: #0c62ad;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.num-user-in-dropbox {
+    height: 20px;
+    font-size: 14px;
+}
+
+.drop-text {
+    font-family: Roboto-regular;
+    font-size: 18px;
+    margin: 20px 0 10px 5px;
+}
+
+.my-account-chose {
+    width: 85%;
+}
+
+.my-account-chose::before {
+    content: url("../../assets/icons/account-icon20px.png");
+    margin-right: 10px;
+}
+
+.emp-follow-chose::before {
+    content: url("../../assets/icons/followed-icon20px.png");
+    margin-right: 10px;
+}
+
+.post-follow-chose::before {
+    content: url("../../assets/icons/list-post-icon20px.png");
+    margin-right: 10px;
+}
+
+.post-apply-chose::before {
+    content: url("../../assets/icons/apply-icon20px.png");
+    margin-right: 10px;
+}
+
+.change-pwd-chose::before {
+    content: url("../../assets/icons/change-password-icon20px.png");
+    margin-right: 10px;
+}
+
+.logout-chose {
+    border-top: 1px solid #b7b7b7;
+    width: 85%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.logout-chose::before {
+    content: url("../../assets/icons/logout-icon20px.png");
+    margin-right: 10px;
 }

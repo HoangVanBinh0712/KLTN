@@ -50,7 +50,7 @@ const AuthContextProvider = ({ children }) => {
       localStorage.removeItem(USER_ROLE);
       SetAuthToken(null);
       dispatch({
-        type: "SET_AUTH",
+        type: "REMOVE_AUTH",
         payload: {
           isAuthenticated: false,
           user: null,
@@ -126,7 +126,7 @@ const AuthContextProvider = ({ children }) => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
     localStorage.removeItem(USER_ROLE);
     dispatch({
-      type: "SET_AUTH",
+      type: "REMOVE_AUTH",
       payload: {
         isAuthenticated: false,
         user: null,
