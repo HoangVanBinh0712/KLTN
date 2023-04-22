@@ -54,10 +54,10 @@ const TopBar = () => {
                     <a href='/user/login'><img className="messbell-intopbar" src={bellIcon} alt="bell"  /></a>
                 </div>
                 <div className="signipup-homepage ">
-                    <div className="login-reg-topbar signin-blue">Sign In</div>
+                    <a href='/user/login'><div className="login-reg-topbar signin-blue">Sign In</div></a>
                 </div>
                 <div className="signipup-homepage ">
-                    <div className="login-reg-topbar signup-white">Sign up</div>
+                    <a href='/user/register'><div className="login-reg-topbar signup-white">Sign up</div></a>
                 </div>
             </div>
         )

@@ -66,7 +66,7 @@ const Login = () => {
                             <div>
                                 <p className="txt1">
                                     Don’t have an account?
-                                    <a className="link-to-register" href="/user/register" >Create Now</a>
+                                    <a className="link-to-register" href="/user/register" >{" Create now"}</a>
                                 </p>
                             </div>
                             <div >

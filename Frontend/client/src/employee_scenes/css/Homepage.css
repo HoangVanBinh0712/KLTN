@@ -71,6 +71,10 @@ body {
     width: 8%;
 }
 
+.signipup-homepage a {
+    text-decoration: none;
+}
+
 .login-reg-topbar {
     text-align: center;
     margin: 12% 10% 12% 2%;
@@ -265,7 +269,7 @@ body {
 }
 
 .logo-emp-post {
-    height: 86%;
+    height: 100%;
     padding: 2% 0 2% 2%;
 }
 
@@ -574,10 +578,12 @@ body {
     font-family: Roboto-regular;
     font-size: 18px;
     margin: 20px 0 10px 5px;
+    cursor: pointer;
 }
 
 .my-account-chose {
     width: 85%;
+
 }
 
 .my-account-chose::before {
@@ -616,3 +622,4 @@ body {
     content: url("../../assets/icons/logout-icon20px.png");
     margin-right: 10px;
 }
+

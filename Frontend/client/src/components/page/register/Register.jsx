@@ -56,15 +56,15 @@ const Register = () => {
                         <div className="flex-sb-m w-full p-t-3 p-b-32">
                             <span className="recruit">Are you recruiter?</span>
                             <div >
-                                <input type="radio" name="question" value="yes" id="yes" onClick={onClickCheck} /> Yes
+                                <input type="radio" name="question" value="yes" id="yes" onClick={onClickCheck} style={{marginLeft:"20px"}} /> Yes
                             </div>
                             <div >
-                                <input type="radio" name="question" value="no" id="no" onClick={onClickCheck}  checked /> No
+                                <input type="radio" name="question" value="no" id="no" onClick={onClickCheck}  style={{marginLeft:"20px"}} checked /> No
                             </div>
                         </div>
                         <div id="Company" style={createEMP?{display:"block"}:{display:"none"}}>
                             <label for="text" className='lb-name'>Company name</label>
-                            <input type="text" id="cname" name="cname"/>
+                            <input type="text" id="cname" name="cname" className='input-reg'/>
                         </div>
                         <div className="container-register100-form-btn">
                             <button className="register100-form-btn" onClick={""}>
