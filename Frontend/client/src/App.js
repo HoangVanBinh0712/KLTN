@@ -17,6 +17,7 @@ import EmployeeRoute from "./routing/EmployeeRoute";
 import EmployerRoute from "./routing/EmployerRoute";
 import AuthContextProvider from "./contexts/AuthContext";
 import { ToastProvider } from './contexts/ToastProvider';
+import GlobalContextProvider from "./contexts/GlobalContext";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -41,7 +42,9 @@ function App() {
     <>
       <AuthContextProvider>
         <ToastProvider>
+          <GlobalContextProvider>
           {body}
+          </GlobalContextProvider>
         </ToastProvider>
       </AuthContextProvider>
     </>

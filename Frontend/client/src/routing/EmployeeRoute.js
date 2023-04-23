@@ -61,6 +61,7 @@ const EmployeeRoute = ({ ...rest }) => {
     );
   else {
     <Routes>
+      <Route path="/login/google/:token" element={<Login />} />
       <Route path="/user/login" element={<Login />} />
       <Route path="/user/register" element={<Register />} />
       <Route path="/user/home" element={<HomePage />} />

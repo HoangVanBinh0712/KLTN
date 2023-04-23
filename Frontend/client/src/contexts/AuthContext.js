@@ -66,7 +66,7 @@ const AuthContextProvider = ({ children }) => {
 
 
   // Login user
-  const loginUser = async (userForm) => {
+  const loginUser = async (userForm, role) => {
     try {
       const response = await axios.post(`${apiUrl}/login`, userForm, {
         headers: {
@@ -75,19 +75,22 @@ const AuthContextProvider = ({ children }) => {
       });
       /* console.log(response.data) */
       if (response.status === 200) {
-        localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
-        let u_role = null
-        if (response.data.userInfo.role === 'ROLE_USER') {
-          u_role = 'user'
+        if (response.data.userInfo.role === role) {
+          localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
+          let u_role = null
+          if (role === 'ROLE_USER') {
+            u_role = 'user'
+          }
+          else if (role === 'ROLE_EMPLOYER') {
+            u_role = 'employer'
+          }
+          else if (role === 'ROLE_ADMIN') {
+            u_role = 'admin'
+          }
+          localStorage.setItem(USER_ROLE, u_role);
+          await loadUser(localStorage[USER_ROLE]);
         }
-        else if (response.data.userInfo.role === 'ROLE_EMPLOYER') {
-          u_role = 'employer'
-        }
-        else if (response.data.userInfo.role === 'ROLE_ADMIN') {
-          u_role = 'admin'
-        }
-        localStorage.setItem(USER_ROLE, u_role);
-        await loadUser(localStorage[USER_ROLE]);
+        else return { success: false, message: "Username or password is incorrect!" };
       }
       return response.data;
     } catch (error) {
@@ -99,9 +102,9 @@ const AuthContextProvider = ({ children }) => {
   // Register user
   const registerUser = async (userForm) => {
     try {
-      const response = await axios.post(`${apiUrl}/user/signup`, userForm);
-      if (response.data.success)
-        return response.data;
+      const response = await axios.post(`${apiUrl}/register-jobseeker`, userForm);
+      console.log('helo mo do phuc co')
+      return response.data;
     } catch (error) {
       if (error.response.data) {
         return error.response.data;
@@ -110,9 +113,9 @@ const AuthContextProvider = ({ children }) => {
   };
 
   // Register emp
-  const registerEmployer = async (userForm) => {
+  const registerEmployer = async (EmpForm) => {
     try {
-      const response = await axios.post(`${apiUrl}/employer/signup`, userForm);
+      const response = await axios.post(`${apiUrl}/register-employer`, EmpForm);
       if (response.data.success)
         return response.data;
     } catch (error) {
@@ -130,7 +133,7 @@ const AuthContextProvider = ({ children }) => {
       payload: {
         isAuthenticated: false,
         user: null,
-        role:null,
+        role: null,
       },
     });
   };
