@@ -7,8 +7,8 @@ export const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
     const [globalState, dispatch] = useReducer(GlobalReducer, {
-        industry: [],
-        city: []
+        industries: [],
+        cities: []
     });
 
     const getIndustry = async () => {
@@ -22,7 +22,7 @@ const GlobalContextProvider = ({ children }) => {
                 dispatch({
                     type: "SET_INDUSTRY",
                     payload: {
-                        industry: responseIndustry.data.data,
+                        industries: responseIndustry.data.data,
                     },
                   });
             }
@@ -35,16 +35,16 @@ const GlobalContextProvider = ({ children }) => {
 
     const getCity = async () => {
         try {
-            const responseIndustry = await axios.get(`${apiUrl}/city`, {
+            const resCity = await axios.get(`${apiUrl}/city`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
-            if(responseIndustry.data.success){
+            if(resCity.data.success){
                 dispatch({
                     type: "SET_CITY",
                     payload: {
-                        city: responseIndustry.data.data,
+                        cities: resCity.data.data,
                     },
                   });
             }

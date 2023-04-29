@@ -14,6 +14,7 @@ const AuthContextProvider = ({ children }) => {
     role: null,
   });
 
+
   const [showToast, setShowToast] = useState({
     show: false,
     message: "",
@@ -103,7 +104,6 @@ const AuthContextProvider = ({ children }) => {
   const registerUser = async (userForm) => {
     try {
       const response = await axios.post(`${apiUrl}/register-jobseeker`, userForm);
-      console.log('helo mo do phuc co')
       return response.data;
     } catch (error) {
       if (error.response.data) {
@@ -125,6 +125,8 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+
+
   const logoutSection = () => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
     localStorage.removeItem(USER_ROLE);
@@ -138,98 +140,166 @@ const AuthContextProvider = ({ children }) => {
     });
   };
 
-  /* const updateUserProfile = async (updateType, profile, avatar) => {
+  // auth user
+  const getUser = async (user) => {
     try {
-      var bodyFormData = new FormData();
-      bodyFormData.append("info", JSON.stringify(profile));
-      bodyFormData.append("avatar", avatar);
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
 
-      const response = await axios.put(
-        `${apiUrl}/${updateType}`,
-        bodyFormData,
-        {
+        const response = await axios.get(`${apiUrl}/${user}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        if(response.status===200)
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+  //update info user
+  const updateUserInfo = async (userInfo, avatar, cover) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      var bodyFormData = new FormData();
+      bodyFormData.append("info", JSON.stringify(userInfo));
+      bodyFormData.append("avatar", avatar);
+      bodyFormData.append("cover", cover);
+
+      if (recentToken !== undefined) {
+        console.log('henooo')
+        const response = await axios.put(`${apiUrl}/user`,bodyFormData, {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${recentToken}`,
           },
+        });
+        if(response.status===200)
+        console.log(response.data)
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  //get achive
+  const getUserAchive = async () => {
+    try {
+      
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+
+        const response = await axios.get(`${apiUrl}/user/achievements`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        if(response.status===200){
+          dispatch({
+            type: "SET_ACHIVEMENT",
+            payload: {
+              achivement:response.data,
+            },
+          });
         }
-      );
-      if (response.data.success) {
-        dispatch({
-          type: "PROFILE_LOAD_SUCCESS",
-          payload: { profile: response.data },
-        });
-      }
-      return response.data;
+        return response.data;
+      } else throw new Error("Unauthorized !");
     } catch (error) {
-      console.log(error.message);
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
     }
   };
-
-  const uploadUserCV = async (CV) => {
-    const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+  //update achive
+  const updateUserAchive = async (info,image) => {
     try {
-      const response = await axios.post(`${apiUrl}/user/cv`, CV, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${recentToken}`,
-        },
-      });
-      if (response.data.success) {
-        dispatch({
-          type: "CV_UPLOAD_SUCCESS",
-          payload: { profile: response.data },
+      var bodyFormData = new FormData();
+      bodyFormData.append("info", JSON.stringify(info));
+      bodyFormData.append("image", image);
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+
+        const response = await axios.put(`${apiUrl}/user/achievements`, bodyFormData,{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
         });
-      }
-      return response.data;
+        return response.data;
+      } else throw new Error("Unauthorized !");
     } catch (error) {
-      console.log(error.message);
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
     }
   };
 
-  const submitUserCV = async (submitForm) => {
+  //create achive
+  const createUserAchive = async (info,image) => {
     try {
-      const response = await axios.post(
-        `${apiUrl}/user/submitcv?postId=${submitForm.postId}&mediaId=${submitForm.mediaId}`
-      );
-      if (response.data.success) {
-        dispatch({
-          type: "CV_SUBMIT_SUCCESS",
-          payload: { submited: true },
+      var bodyFormData = new FormData();
+      bodyFormData.append("info", JSON.stringify(info));
+      bodyFormData.append("image", image);
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+
+        const response = await axios.post(`${apiUrl}/user/achievements`, bodyFormData,{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
         });
-      }
-      return response.data;
+        return response.data;
+      } else throw new Error("Unauthorized !");
     } catch (error) {
-      console.log(error.message);
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
     }
   };
 
-  const changePassword = async (userType, data) => {
+  //delete achive
+  const deleteUserAchive = async (id) => {
     try {
-      const response = await axios.put(`${apiUrl}/${userType}/password`, data);
-      return response.data;
-    } catch (err) {
-      return err.response.data;
+      
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+
+        const response = await axios.delete(`${apiUrl}/user/achievements/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
     }
   };
-
-  const postPredict = async (mediaId) => {
-    try {
-      const response = await axios.get(`http://localhost:8081/user/cvpredict?mediaId=${mediaId}`);
-      if (response.data.success) {
-        dispatch({ type: "POSTS_PREDICT_SUCCESS", payload: response.data })
-      }
-      return response.data;
-    } catch (err) {
-      dispatch({ type: "POSTS_PREDICT_FAIL" })
-      return err.response.data;
-    }
-  } */
+ 
   //conxtext data
   const authContextData = {
     loginUser,
     registerUser,
     registerEmployer,
     logoutSection,
+    getUser,
+    updateUserInfo,
+    getUserAchive,
+    updateUserAchive,
+    createUserAchive,
+    deleteUserAchive,
     showToast,
     setShowToast,
     authState,

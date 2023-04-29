@@ -18,6 +18,7 @@ import EmployerRoute from "./routing/EmployerRoute";
 import AuthContextProvider from "./contexts/AuthContext";
 import { ToastProvider } from './contexts/ToastProvider';
 import GlobalContextProvider from "./contexts/GlobalContext";
+import PostContextProvider from "./contexts/PostContext";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -41,11 +42,13 @@ function App() {
   return (
     <>
       <AuthContextProvider>
-        <ToastProvider>
-          <GlobalContextProvider>
-          {body}
-          </GlobalContextProvider>
-        </ToastProvider>
+        <PostContextProvider>
+          <ToastProvider>
+            <GlobalContextProvider>
+              {body}
+            </GlobalContextProvider>
+          </ToastProvider>
+        </PostContextProvider>
       </AuthContextProvider>
     </>
   );

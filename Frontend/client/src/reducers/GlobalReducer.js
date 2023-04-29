@@ -1,16 +1,16 @@
 export const GlobalReducer = (state, action) => {
-    const { type, payload: { industry, city } } = action
+    const { type, payload: { industries, cities } } = action
 
     switch (type) {
         case 'SET_INDUSTRY':
             return {
                 ...state,
-                industry
+                industries
             }
         case 'SET_CITY':
             return {
                 ...state,
-                city
+                cities
             }
         default:
             return state

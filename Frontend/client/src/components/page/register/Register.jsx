@@ -12,7 +12,7 @@ import { GlobalContext } from '../../../contexts/GlobalContext'
 const Register = () => {
 
     const { registerUser, registerEmployer } = useContext(AuthContext)
-    const { globalState: { industry, city } } = useContext(GlobalContext)
+    const { globalState: { industries, cities } } = useContext(GlobalContext)
     const { warn, success } = useToast();
 
     const [showPassword1, setShowPassword1] = useState(false);
@@ -237,7 +237,7 @@ const Register = () => {
                                 <option key={""} value="" defaultChecked>
                                     Select Industry
                                 </option>
-                                {industry.map((i) => (
+                                {industries.map((i) => (
                                     <option key={i.id} value={i.id}>
                                         {i.name}
                                     </option>
@@ -248,7 +248,7 @@ const Register = () => {
                                 <option key={""} value="" defaultChecked>
                                     Select City Location
                                 </option>
-                                {city.map((c) => (
+                                {cities.map((c) => (
                                     <option key={c.id} value={c.id}>
                                         {c.name}
                                     </option>

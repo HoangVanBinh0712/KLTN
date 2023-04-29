@@ -80,7 +80,6 @@ const Login = () => {
                 if (userLoginData.success === false) {
                     warn(userLoginData.message)
                 }
-                console.log(userLoginData.success)
             } catch (error) {
                 console.log(error);
             }

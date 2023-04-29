@@ -258,6 +258,7 @@ body {
     padding: 2% 0 0 4%;
     display: flex;
     flex-wrap: wrap;
+    align-content: start;
 }
 
 .post-item {
@@ -266,6 +267,7 @@ body {
     height: 165px;
     margin-right: 4%;
     display: flex;
+    margin-top: 10px;
 }
 
 .logo-emp-post {
@@ -339,6 +341,7 @@ body {
     display: flex;
     padding: 2%;
     justify-content: center;
+    margin-top: 25px;
 }
 
 .circle-round {
@@ -363,6 +366,8 @@ body {
     border-radius: 100%;
     margin: 5px;
     cursor: pointer;
+    background-color: #cfcfcf;
+    border: 2px solid #cfcfcf
 }
 
 .top-emp-homepage {
