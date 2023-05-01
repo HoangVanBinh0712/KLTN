@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import certificateIcon from '../../assets/icons/certificate-blue-icon.png'
 
 const SingleAchivement = ({ achive, onUpdateClick, onDeleteClick }) => {
+    
     const [isOpen, setIsOpen] = useState(false)
 
     const onMouseEnter = ()=>{

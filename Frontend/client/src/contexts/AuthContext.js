@@ -219,7 +219,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
   //update achive
-  const updateUserAchive = async (info,image) => {
+  const updateUserAchive = async (id,info,image) => {
     try {
       var bodyFormData = new FormData();
       bodyFormData.append("info", JSON.stringify(info));
@@ -227,9 +227,9 @@ const AuthContextProvider = ({ children }) => {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
 
-        const response = await axios.put(`${apiUrl}/user/achievements`, bodyFormData,{
+        const response = await axios.put(`${apiUrl}/user/achievements/${id}`, bodyFormData,{
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${recentToken}`,
           },
         });
@@ -253,7 +253,7 @@ const AuthContextProvider = ({ children }) => {
 
         const response = await axios.post(`${apiUrl}/user/achievements`, bodyFormData,{
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${recentToken}`,
           },
         });
@@ -287,6 +287,26 @@ const AuthContextProvider = ({ children }) => {
       } else return { success: false, message: error.message };
     }
   };
+
+  //chang password
+  const changPassword = async (pw) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.put(`${apiUrl}/user/password`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
  
   //conxtext data
   const authContextData = {
@@ -300,6 +320,7 @@ const AuthContextProvider = ({ children }) => {
     updateUserAchive,
     createUserAchive,
     deleteUserAchive,
+    changPassword,
     showToast,
     setShowToast,
     authState,

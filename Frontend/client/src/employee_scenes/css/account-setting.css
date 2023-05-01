@@ -857,3 +857,7 @@ small {
 .chose-delete {
     border: 1px solid red;
 }
+
+.checkbox-showpass {
+    display: flex;
+}

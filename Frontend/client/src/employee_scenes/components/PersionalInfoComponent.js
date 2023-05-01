@@ -95,7 +95,7 @@ const UserPersonalInfo = () => {
     });
     setUserinfor({
       ...userInfo,
-      urlAvatar:URL.createObjectURL(file)
+      urlAvatar: URL.createObjectURL(file)
     })
   };
 
@@ -117,7 +117,7 @@ const UserPersonalInfo = () => {
     });
     setUserinfor({
       ...userInfo,
-      urlCover:URL.createObjectURL(file)
+      urlCover: URL.createObjectURL(file)
     })
   };
 
@@ -156,7 +156,7 @@ const UserPersonalInfo = () => {
       </div>
       <div className="free-space" id="free-space">
         <div className="cover-and-avatar">
-          <div className="cover" id="avatar-user"style={urlCover !== null ? { backgroundImage: `url("${urlCover}")` }
+          <div className="cover" id="avatar-user" style={urlCover !== null ? { backgroundImage: `url("${urlCover}")` }
             : { backgroundImage: "url('http://2.bp.blogspot.com/-mIBnH7Yu8t8/T44dEX94J2I/AAAAAAAAEXE/Vzn-4Obtjis/s1600/Love+Facebook+Covers.png')" }}>
             <div className="button btn-cover background-opacity" onClick={handleChangeCoverClick}>
               <i className="fa fa-upload" aria-hidden="true"></i>
