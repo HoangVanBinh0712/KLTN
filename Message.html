@@ -462,7 +462,7 @@
 		var maxPage = 2;
 		var data = []
 		var stompClient = null;
-		var fetchChatUrl = "http://localhost:8081/api/chat/message/";
+		var fetchChatUrl = "https://career-website.herokuapp.com/api/chat/message/";
 
 		var email = ''
 		//Minh`
@@ -496,7 +496,7 @@
 			if (stompClient)
 				stompClient.disconnect();
 
-			const socket = new SockJS('http://localhost:8081/chat');
+			const socket = new SockJS('https://career-website.herokuapp.com/chat');
 
 			stompClient = Stomp.over(socket);
 			const auth_headers = {
@@ -523,7 +523,7 @@
 					else {
 						p.className = "unread-message"
 						//Set seen to true
-						axios.put(`http://localhost:8081/api/chat/message/${obj.chatMessageId}`, {}, { headers: auth_headers })
+						axios.put(`https://career-website.herokuapp.com/api/chat/message/${obj.chatMessageId}`, {}, { headers: auth_headers })
 					}
 					//Sort message room to newest message
 					sortNewestMessage(obj.chatRoomId)
@@ -727,13 +727,13 @@
 		function keyUpJwt(token) {
 			email = parseJwt(token).sub
 			inputEmail.value = email
-			axios.get(`http://localhost:8081/api/${userRole.value}`, {
+			axios.get(`https://career-website.herokuapp.com/api/${userRole.value}`, {
 				headers: {
 					Authorization: 'Bearer ' + token
 				}
 			}).then(res => {
 				currentUser = res.data
-				axios.get(`http://localhost:8081/api/chat/chat-room?page=1&limit=1000`, {
+				axios.get(`https://career-website.herokuapp.com/api/chat/chat-room?page=1&limit=1000`, {
 					headers: {
 						Authorization: 'Bearer ' + token
 					}
@@ -778,7 +778,7 @@
 								return caclTime(mess.time)
 							else return ''
 						}
-						axios.get(`http://localhost:8081/api/chat/unread?${query}`, {
+						axios.get(`https://career-website.herokuapp.com/api/chat/unread?${query}`, {
 							headers: {
 								Authorization: 'Bearer ' + token
 							}
