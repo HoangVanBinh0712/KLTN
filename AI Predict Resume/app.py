@@ -11,6 +11,18 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+import keras 
+import pandas as pd
+import nltk
+nltk.download('wordnet')
+nltk.download('omw-1.4')
+from nltk.corpus import stopwords
+import pickle
+
+
+# Ignore noise warning
+import warnings
+warnings.filterwarnings("ignore")
 
 # %%
 app = FastAPI()
@@ -38,7 +50,7 @@ encoding_to_label = pickle.load(encoding_to_label_in)
 class predictBody(BaseModel):
     resume: str
     skill: str
-class predictPersonality(BaseModel):
+class predictP(BaseModel):
     mess: str
 
 def transformation(data: str):
@@ -47,11 +59,75 @@ def transformation(data: str):
     data_padded = pad_sequences(
         data_sequence, maxlen=max_length, padding=pad_type, truncating=trunc_type)
     return np.array(data_padded)
-# %%
+
+
+@app.post('/predict')
+def predict_cv(predictBody: predictBody):
+    print(predictBody)
+    resume_padded = transformation(predictBody.resume)
+    skill_padded = transformation(predictBody.skill)
+
+    # predict
+    prediction = filterCV.predict((resume_padded, skill_padded))
+
+    # Get top 5 highest %
+    indices = np.argpartition(prediction[0], -5)[-5:]
+    indices = indices[np.argsort(prediction[0][indices])]
+    indices = list(reversed(indices))
+
+
+    # Concat data to return
+    result_data = []
+    for index in indices:
+        result_data.append({str(encoding_to_label[index]): str(
+            round(prediction[0][index]*100, 2)) + "% "})
+
+    return JSONResponse(content=jsonable_encoder({"results": result_data}))
+
+
+@app.get('')
+def get_home():
+    return {'message': 'Wellcome'}
+
+
+def clean_text(resume_text):
+    try:
+        resume_text = re.sub('http\S+\s*', ' ', resume_text)
+        resume_text = re.sub('RT|cc', ' ', resume_text)
+        resume_text = re.sub('#\S+', '', resume_text)
+        resume_text = re.sub('@\S+', '  ', resume_text)
+        resume_text = re.sub('[%s]' % re.escape(
+            """!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"""), ' ', resume_text)
+        resume_text = re.sub(r'[^\x00-\x7f]', r' ', resume_text)
+        resume_text = re.sub('\s+', ' ', resume_text)
+        resume_text = resume_text.lower()
+        resume_text_tokens = word_tokenize(resume_text)
+        filtered_text = [
+            w for w in resume_text_tokens if not w in stopwords_set]
+        return ' '.join(filtered_text)
+    except:
+        return ''
+@app.post('predict_personality')
+def predict_personality(predictP: predictP):
+    mydata = pd.DataFrame(data={'type': [''], 'posts': [predictP.mess]})
+    my_posts, dummy = pre_process_text(mydata, remove_stop_words=True, remove_mbti_profiles=True)
+    my_X_cnt = cntizer.transform(my_posts)
+    my_X_tfidf =  tfizer.transform(my_X_cnt).toarray()
+    filename = 'models_personality/models_personality_'
+    result_data = []
+    for l in range(len(personality_type)):
+        Y = list_personality[:,l]
+        # make predictions for my  data
+        model = pickle.load(open(filename + str(l) +'.pickle', 'rb'))
+        prediction = model.predict(my_X_tfidf)
+        result_data.append(prediction[0])
+    return JSONResponse(content=jsonable_encoder({"results": result_data}))
+
 # Splitting the MBTI personality into 4 letters and binarizing it
 b_Pers = {'I':0, 'E':1, 'N':0, 'S':1, 'F':0, 'T':1, 'J':0, 'P':1}
 b_Pers_list = [{0:'I', 1:'E'}, {0:'N', 1:'S'}, {0:'F', 1:'T'}, {0:'J', 1:'P'}]
-
+personality_type = [ "IE: Introversion (I) / Extroversion (E)", "NS: Intuition (N) / Sensing (S)", 
+                   "FT: Feeling (F) / Thinking (T)", "JP: Judging (J) / Perceiving (P)"  ]
 def translate_personality(personality):
     # transform mbti to binary vector
     return [b_Pers[l] for l in personality]
@@ -66,7 +142,7 @@ def translate_back(personality):
 
 list_personality_bin = np.array([translate_personality(p) for p in data.type])
 print("Binarize MBTI list: \n%s" % list_personality_bin)
-# %% Cleaning of data in the posts
+
 def pre_process_text(data, remove_stop_words=True, remove_mbti_profiles=True):
   list_personality = []
   list_posts = []
@@ -110,49 +186,6 @@ def pre_process_text(data, remove_stop_words=True, remove_mbti_profiles=True):
   list_posts = np.array(list_posts)
   list_personality = np.array(list_personality)
   return list_posts, list_personality
-
-
-@app.post('/predict')
-def predict_cv(predictPersonality: predictPersonality):
-    print(predictPersonality)
-    resume_padded = transformation(predictBody.resume)
-    skill_padded = transformation(predictBody.skill)
-
-    # predict
-    prediction = filterCV.predict((resume_padded, skill_padded))
-
-
-    # Concat data to return
-    result_data = []
-    for index in indices:
-        result_data.append({str(encoding_to_label[index]): str(
-            round(prediction[0][index]*100, 2)) + "% "})
-
-    return JSONResponse(content=jsonable_encoder({"results": result_data}))
-
-@app.get('')
-def get_home():
-    return {'message': 'Wellcome'}
-
-
-def clean_text(resume_text):
-    try:
-        resume_text = re.sub('http\S+\s*', ' ', resume_text)
-        resume_text = re.sub('RT|cc', ' ', resume_text)
-        resume_text = re.sub('#\S+', '', resume_text)
-        resume_text = re.sub('@\S+', '  ', resume_text)
-        resume_text = re.sub('[%s]' % re.escape(
-            """!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"""), ' ', resume_text)
-        resume_text = re.sub(r'[^\x00-\x7f]', r' ', resume_text)
-        resume_text = re.sub('\s+', ' ', resume_text)
-        resume_text = resume_text.lower()
-        resume_text_tokens = word_tokenize(resume_text)
-        filtered_text = [
-            w for w in resume_text_tokens if not w in stopwords_set]
-        return ' '.join(filtered_text)
-    except:
-        return ''
-
 
 if __name__ == '__main__':
     uvicorn.run(app, host='127.0.0.1', port=int(os.environ.get("PORT", 5000)))
