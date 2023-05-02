@@ -71,6 +71,10 @@ body {
     width: 8%;
 }
 
+.signipup-homepage a {
+    text-decoration: none;
+}
+
 .login-reg-topbar {
     text-align: center;
     margin: 12% 10% 12% 2%;
@@ -254,6 +258,7 @@ body {
     padding: 2% 0 0 4%;
     display: flex;
     flex-wrap: wrap;
+    align-content: start;
 }
 
 .post-item {
@@ -262,10 +267,11 @@ body {
     height: 165px;
     margin-right: 4%;
     display: flex;
+    margin-top: 10px;
 }
 
 .logo-emp-post {
-    height: 86%;
+    height: 100%;
     padding: 2% 0 2% 2%;
 }
 
@@ -335,6 +341,7 @@ body {
     display: flex;
     padding: 2%;
     justify-content: center;
+    margin-top: 25px;
 }
 
 .circle-round {
@@ -359,6 +366,8 @@ body {
     border-radius: 100%;
     margin: 5px;
     cursor: pointer;
+    background-color: #cfcfcf;
+    border: 2px solid #cfcfcf
 }
 
 .top-emp-homepage {
@@ -574,10 +583,12 @@ body {
     font-family: Roboto-regular;
     font-size: 18px;
     margin: 20px 0 10px 5px;
+    cursor: pointer;
 }
 
 .my-account-chose {
     width: 85%;
+
 }
 
 .my-account-chose::before {
@@ -616,3 +627,4 @@ body {
     content: url("../../assets/icons/logout-icon20px.png");
     margin-right: 10px;
 }
+

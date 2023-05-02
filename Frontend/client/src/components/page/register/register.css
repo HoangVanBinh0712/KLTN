@@ -46,7 +46,7 @@ html {
 }
 
 /*---------------------------------------------*/
-a {
+/* a {
   font-family: Poppins-Regular;
   font-size: 14px;
   line-height: 1.7;
@@ -56,7 +56,7 @@ a {
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
-}
+} */
 
 a:focus {
   outline: none !important;
@@ -114,7 +114,7 @@ iframe {
   [ Text ]*/
 .txt1 {
   font-family: Poppins-Regular;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.4;
   color: #207198;
   text-decoration: none;
@@ -191,6 +191,10 @@ iframe {
   display: block;
   background-color: #ffffff;
   padding: 60px 55px 55px 55px;
+}
+
+.register100-form input::placeholder {
+  color: #ff453a;
 }
 
 .register100-form-title {
@@ -327,7 +331,7 @@ iframe {
   display: -moz-box;
   display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   -ms-align-items: center;
   align-items: center;
 }
@@ -364,6 +368,19 @@ iframe {
   box-sizing: border-box;
   border: 2px solid #207198;
   border-radius: 8px;
+  font-size: 16px;
+}
+
+.select-reg {
+  width: 100%;
+  height: 60px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #207198;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #207198
 }
 
 .password {
@@ -450,5 +467,5 @@ i.fa-eye {
 .link-to-login {
   color: #345adf;
   text-decoration: none !important;
-  font-size: 16px;
+  font-size: 18px;
 }

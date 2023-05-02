@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useContext } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from "../../../contexts/AuthContext";
 import "../../css/Homepage.css"
@@ -12,15 +12,28 @@ const TopBar = () => {
 
     const { authState: { authloading, role, user }, logoutSection } = useContext(AuthContext)
 
-    console.log(user)
     const [isOpen, setIsOpen] = useState(false);
     const toggleDropdown = () => setIsOpen(!isOpen);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
+
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setIsOpen(false);
+        }
+    };
 
     const logout = () => {
         const confirm = window.confirm("Are you sure you want to logout?");
         if (confirm) {
             logoutSection()
-            return <Navigate to="/user/home"/>
+            return <Navigate to="/user/home" />
         }
     }
 
@@ -31,14 +44,14 @@ const TopBar = () => {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
-                    <img className="logo-intopbar" src={logoBHQ} alt="logo" />
+                    <a href='/user/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
                 </div>
                 <div className="menu-homepage">
                     <div className="option-menu">
-                        <a className="option-a-menu" href="#_">Job</a>
+                        <a className="option-a-menu" href="/user/home">Job</a>
                     </div>
                     <div className="option-menu">
-                        <a className="option-a-menu" href="#_">Profile & CV</a>
+                        <a className="option-a-menu" href="/user/account">Profile & CV</a>
                     </div>
                     <div className="option-menu">
                         <a className="option-a-menu" href="#_">Company</a>
@@ -51,30 +64,30 @@ const TopBar = () => {
                     <a href='/user/login'><img className="messbell-intopbar" src={messIcon} alt="mess" /></a>
                 </div>
                 <div className="mess-bell-homepage" style={{ marginRight: "20px" }}>
-                    <a href='/user/login'><img className="messbell-intopbar" src={bellIcon} alt="bell"  /></a>
+                    <a href='/user/login'><img className="messbell-intopbar" src={bellIcon} alt="bell" /></a>
                 </div>
                 <div className="signipup-homepage ">
-                    <div className="login-reg-topbar signin-blue">Sign In</div>
+                    <a href='/user/login'><div className="login-reg-topbar signin-blue">Sign In</div></a>
                 </div>
                 <div className="signipup-homepage ">
-                    <div className="login-reg-topbar signup-white">Sign up</div>
+                    <a href='/user/register'><div className="login-reg-topbar signup-white">Sign up</div></a>
                 </div>
             </div>
         )
     }
 
-    else if (!authloading /* && role === "ROLE_USER" */) {
+    else if (!authloading && role === "ROLE_USER") {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
-                    <img className="logo-intopbar" src={logoBHQ} alt="logo" />
+                <a href='/user/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
                 </div>
                 <div className="menu-homepage-signed">
                     <div className="option-menu">
-                        <a className="option-a-menu" href="#_">Job</a>
+                        <a className="option-a-menu" href="/user/home">Job</a>
                     </div>
                     <div className="option-menu">
-                        <a className="option-a-menu" href="#_">Profile & CV</a>
+                        <a className="option-a-menu" href="/user/account">Profile & CV</a>
                     </div>
                     <div className="option-menu">
                         <a className="option-a-menu" href="#_">Company</a>
@@ -83,7 +96,7 @@ const TopBar = () => {
                         <a className="option-a-menu" href="#_">Tools</a>
                     </div>
                 </div>
-                <div className="dropdown-container">
+                <div className="dropdown-container" ref={dropdownRef}>
                     <div className='option-account'>
                         <div className="signed-homepage">
                             <img className="messbell-intopbar" src={messIcon} alt="mess" />
@@ -92,7 +105,11 @@ const TopBar = () => {
                             <img className="messbell-intopbar" src={bellIcon} alt="bell" />
                         </div>
                         <div className="signed-homepage">
-                            <img className="messbell-intopbar" src={user.urlAvatar === null ? personIcon : user.urlAvatar} onClick={toggleDropdown} alt="avt" />
+                            <img className="messbell-intopbar" src={user.urlAvatar === null ? personIcon : user.urlAvatar}
+                                onClick={toggleDropdown}
+                                /* onMouseEnter={handleMouseEnter}
+                                onMouseLeave={handleMouseLeave} */
+                                alt="avt" />
                         </div>
                     </div>
                     {isOpen && (

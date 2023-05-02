@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import HomePage from "../employee_scenes/HomePage";
@@ -22,7 +21,8 @@ import Login from "../components/page/login/Login";
 import Register from "../components/page/register/Register";
 
 const EmployeeRoute = ({ ...rest }) => {
-  const isEmployee = true;
+
+  
   const location = useLocation();
   const currentUrl = location.pathname;
 
@@ -37,7 +37,7 @@ const EmployeeRoute = ({ ...rest }) => {
   if (currentUrl === "/user/account")
     return <Navigate to="/user/account/personal-info" />;
   //Check if user login here
-  if (isEmployee)
+  else    {
     body = (
       <Routes>
         <Route path="/user/login" element={<Login />} />
@@ -59,13 +59,6 @@ const EmployeeRoute = ({ ...rest }) => {
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     );
-  else {
-    <Routes>
-      <Route path="/user/login" element={<Login />} />
-      <Route path="/user/register" element={<Register />} />
-      <Route path="/user/home" element={<HomePage />} />
-      <Route path="/*" element={<PageNotFound />} />
-    </Routes>;
   }
 
   return <>{body}</>;

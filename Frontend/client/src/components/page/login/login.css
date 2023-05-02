@@ -47,7 +47,7 @@ html {
 }
 
 /*---------------------------------------------*/
-a {
+/* a {
   font-family: Poppins-Regular;
   font-size: 14px;
   line-height: 1.7;
@@ -57,7 +57,7 @@ a {
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
-}
+} */
 
 a:focus {
   outline: none !important;
@@ -115,7 +115,7 @@ iframe {
 [ Text ]*/
 .txt1 {
   font-family: Poppins-Regular;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.4;
   color: #207198;
   text-decoration: none;
@@ -327,7 +327,7 @@ iframe {
   display: -moz-box;
   display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   -ms-align-items: center;
   align-items: center;
 }
@@ -364,6 +364,11 @@ iframe {
   box-sizing: border-box;
   border: 2px solid #207198;
   border-radius: 8px;
+  font-size: 16px;
+}
+
+.input-text-login::placeholder {
+  color: #ff453a;
 }
 
 .password {
@@ -426,7 +431,7 @@ i.fa-eye {
   text-decoration: none;
   color: #345ADF;
   font-family: Poppins-Regular;
-  font-size: 16px;
+  font-size: 18px;
   margin: 0;
 }
 
@@ -449,6 +454,7 @@ i.fa-eye {
 .link-to-gg {
   color: #4653af;
   text-decoration: none;
+  margin-left: 10px;
 }
 
 .logo-login {
@@ -456,4 +462,5 @@ i.fa-eye {
   padding-top: 4px;
   margin-top: 10px;
 }
+
 
