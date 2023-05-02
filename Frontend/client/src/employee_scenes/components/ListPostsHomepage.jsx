@@ -1,0 +1,180 @@
+import React from 'react'
+import { useState, useContext } from 'react'
+
+import tamLogo from "../../assets/picture-banner/tma-logo.png"
+import roundheartIcon from "../../assets/icons/round-heart-icon.png"
+import heartIcon from "../../assets/icons/heart-icon.png"
+import leftArrow from "../../assets/icons/left-arow-icon.png"
+import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
+import logoPost from "../../assets/icons/logo.png"
+import { PostContext } from '../../contexts/PostContext'
+
+
+
+const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
+
+    const { postState: { postFollow } } = useContext(PostContext)
+    const post = listPosts
+
+    /* fomat of listposts(chỉ sử dụng những trường này)
+    const posts = [
+        {
+            id:1,
+            author: { id: 1, urlAvatar: tamLogo },
+            title: "TUYỂN THỰC TẬP SINH SINH VIÊN NGÀNH CNTT, ĐTVT1",
+            method: "FULL_TIME",
+            location: "Công ty: Công ty TNHH Giải Pháp Phần Mềm Tường Minh - Thành phố Hồ Chí Minh",
+            like: false
+        },
+    ] */
+    function chuckPosts(arr) {
+        const chunks = [];
+        let i = 0;
+        while (i < arr.length) {
+            chunks.push(arr.slice(i, i + 6));
+            i += 6;
+        }
+        return chunks;
+    }
+
+    const allPost = chuckPosts(post)
+
+    const [currentPage, setCurrentPage] = useState(0)
+
+    const toPreviousPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1)
+        }
+    }
+    const toNextPage = () => {
+        if (currentPage < allPost.length - 1) {
+            setCurrentPage(currentPage + 1)
+        }
+    }
+
+    const checkFollow = (id, arr) => {
+        const index = arr.findIndex(post => post.id === id);
+        if (index !== -1) return true
+        else return false
+    }
+
+    let postInBox
+    if (post.length > 0) {
+        postInBox = (<>
+            {allPost[currentPage].map((p) => (
+                <div className="post-item">
+                    <div className="logo-emp-post">
+                        <a href="# "><img src={p.author.urlAvatar === null ? logoPost : p.author.urlAvatar} className="img-inpost-homepage" alt="logo" /></a>
+                    </div>
+                    <div className="info-post-homepage">
+                        <div className="post-title-homepage">
+                            <a href="# ">{p.title}</a>
+                        </div>
+                        <div className="type-of-work">
+                            {p.method === "FULL_TIME" ? "Full time" : "Part time"}
+                        </div>
+                        <div className="locationg-company-homepage">
+                            {p.location}
+                        </div>
+                        <div className="follow-post-heart">
+                            <div className="heart-icon">
+                                {checkFollow(p.id, postFollow) ? (<img className="icon-hear-follow" src={heartIcon} alt="heart icon" />)
+                                    : (<img className="icon-hear-follow" src={roundheartIcon} alt="heart icon" />)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))
+            }
+        </>
+        )
+    }
+    else {
+        postInBox = (<>
+            There are no posts yet!
+        </>
+        )
+    }
+
+    let body
+    if (isHaveAi) {
+        body = (
+            <div className="hot-job-homepage">
+                <div className="hot-job-homepage-titlebox">
+                    <div className="post-bx-title-ai">
+                        {title}
+                    </div>
+                    <div className="round-recommend">
+                        Recommended by HBQ AI
+                    </div>
+                    <div className="post-bx-viewall-ai">
+                        {`View all >>`}
+                    </div>
+                </div>
+                <div className="list-posts-homepage">
+                    {postInBox}
+
+                </div>
+                <div className="paging-post" >
+                    <div className="circle-round" onClick={toPreviousPage}>
+                        <img src={leftArrow} alt='icon' />
+                    </div>
+                    {allPost.map((p, id) => (
+                        <div className="page-num-round"
+                            style={currentPage === id ? { backgroundColor: "#0c62ad", border: "2px solid #0c62ad" } : { backgroundColor: "#cfcfcf", border: "2px solid #cfcfcf" }}
+                        >
+
+                        </div>
+                    ))}
+                    <div className="circle-round" onClick={toNextPage}>
+                        <img src={rightArrow} alt='icon' />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    else {
+        body = (
+            <div className="hot-job-homepage">
+                <div className="hot-job-homepage-titlebox">
+                    <div className="post-bx-title">
+                        {title}
+                    </div>
+                    <div className="post-bx-viewall">
+                        {`View all >>`}
+                    </div>
+                </div>
+                <div className="list-posts-homepage">
+                    {postInBox}
+
+                </div>
+                <div className="paging-post">
+                    <div className="circle-round" onClick={toPreviousPage}>
+                        <img src={leftArrow} alt='icon' />
+                    </div>
+                    {allPost.map((p, id) => (
+                        <div className="page-num-round"
+                            style={currentPage === id ? { backgroundColor: "#0c62ad", border: "2px solid #0c62ad" } : { backgroundColor: "#cfcfcf", border: "2px solid #cfcfcf" }}
+                        >
+
+                        </div>
+                    ))}
+                    <div className="circle-round" onClick={toNextPage}>
+                        <img src={rightArrow} alt='icon' />
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+
+
+
+    return (
+        <>
+            {body}
+        </>
+    )
+}
+export default ListPostsHomepage;

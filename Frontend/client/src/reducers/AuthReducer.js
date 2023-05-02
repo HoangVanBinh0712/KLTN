@@ -1,11 +1,19 @@
 export const AuthReducer = (state, action) => {
-    const { type, payload: { isAuthenticated, user, role, profile, CV } } = action
+    const { type, payload: { isAuthenticated, user, role, profile, CV, achivement } } = action
 
     switch (type) {
         case 'SET_AUTH':
             return {
                 ...state,
                 authloading: false,
+                isAuthenticated,
+                user,
+                role,
+            }
+        case 'REMOVE_AUTH':
+            return {
+                ...state,
+                authloading: true,
                 isAuthenticated,
                 user,
                 role,
@@ -25,6 +33,11 @@ export const AuthReducer = (state, action) => {
             return {
                 ...state,
                 submited: false
+            }
+        case 'SET_ACHIVEMENT':
+            return {
+                ...state,
+                achivement,
             }
 
         default:
