@@ -200,7 +200,7 @@ body {
 
 .free-space .select {
     width: 100%;
-    padding: 0 0.5em;
+    padding: 0 0;
 }
 
 .free-space .content-wrapper p {
@@ -860,4 +860,21 @@ small {
 
 .checkbox-showpass {
     display: flex;
+    padding-left: 10px;
+}
+
+.checkbox-showpass input{
+    width: 20%;
+}
+
+.checkbox-show-password {
+    justify-content: space-between !important;
+}
+
+.coler-placeholder::placeholder {
+    color: #ff453a;
+}
+
+.ql-container {
+    height: 200px !important;
 }

@@ -33,7 +33,7 @@ const TopBar = () => {
         const confirm = window.confirm("Are you sure you want to logout?");
         if (confirm) {
             logoutSection()
-            return <Navigate to="/user/home" />
+            window.location.href='/user/home'
         }
     }
 
@@ -124,12 +124,12 @@ const TopBar = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className='drop-text my-account-chose'>My Account</div>
-                                <div className='drop-text emp-follow-chose'>My followed</div>
-                                <div className='drop-text post-follow-chose'>My Posts saved</div>
-                                <div className='drop-text post-apply-chose'>My post applied</div>
-                                <div className='drop-text change-pwd-chose'>Change Password</div>
-                                <div className='drop-text logout-chose' onClick={logout}>Logout</div>
+                                <div className='drop-text my-account-chose'><a href=' ' className='color-a-dropdownbox'>My Account</a></div>
+                                <div className='drop-text emp-follow-chose'><a href=' ' className='color-a-dropdownbox'>My followed</a></div>
+                                <div className='drop-text post-follow-chose'><a href=' ' className='color-a-dropdownbox'>My Posts saved</a></div>
+                                <div className='drop-text post-apply-chose'><a href=' ' className='color-a-dropdownbox'>My post applied</a></div>
+                                <div className='drop-text change-pwd-chose'><a href=' ' className='color-a-dropdownbox'>Change Password</a></div>
+                                <div className='drop-text logout-chose' onClick={logout}><a href=' ' className='color-a-dropdownbox'>Logout</a></div>
                             </div>
                         </div>
                     )}

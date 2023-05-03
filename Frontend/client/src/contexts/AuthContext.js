@@ -307,20 +307,138 @@ const AuthContextProvider = ({ children }) => {
       } else return { success: false, message: error.message };
     }
   };
+
+  //verify email
+  const sendVirifyCode = async (email) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.get(`${apiUrl}/send-user-verify-code?email=${email}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  const verifyEmail = async (email, code) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.put(`${apiUrl}/send-user-verify-code?email=${email}&code=${code}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  //UploadCV
+  const getResume = async () => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.get(`${apiUrl}/user/cv`,{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        if(response.status===200){
+          return { success: true, data: response.data };
+        }
+        else return {success: false};
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  const addResume = async (info,file) => {
+    try {
+      var bodyFormData = new FormData();
+      bodyFormData.append("name", JSON.stringify(info));
+      bodyFormData.append("CV", file);
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.post(`${apiUrl}/user/cv`, bodyFormData,{
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  const updateResume = async (cv) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.put(`${apiUrl}/user/cv/${cv.mediaId}`, cv,{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  const deleteResume = async (id) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.delete(`${apiUrl}/user/cv/?mediaId=${id}`,{
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
  
   //conxtext data
   const authContextData = {
-    loginUser,
-    registerUser,
-    registerEmployer,
-    logoutSection,
-    getUser,
-    updateUserInfo,
-    getUserAchive,
-    updateUserAchive,
-    createUserAchive,
-    deleteUserAchive,
-    changPassword,
+    loginUser,registerUser,registerEmployer,logoutSection,
+    getUser,updateUserInfo,
+    getUserAchive,updateUserAchive,createUserAchive,deleteUserAchive,
+    changPassword,sendVirifyCode,verifyEmail,
+    getResume,addResume,updateResume,deleteResume,
     showToast,
     setShowToast,
     authState,

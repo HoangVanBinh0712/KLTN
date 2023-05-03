@@ -208,7 +208,7 @@ const Register = () => {
                                 value={r_Password}
                                 placeholder={mess}
                             />
-                            <i id="fa1" className="fa fa-eye icon-eye" onClick={onClickShow2} style={{ top: "68%" }}></i>
+                            <i id="fa1" className="fa fa-eye icon-eye" onClick={onClickShow2} style={{ top: "66%" }}></i>
                         </div>
                         <div className="flex-sb-m w-full p-t-3 p-b-32">
                             <span className="recruit">Are you recruiter?</span>

@@ -168,7 +168,7 @@ const Login = () => {
 
                             <div className="login100-form-social-item">
                                 <img src={ggIcon} alt="gg icon" width="18px" height="18px" />
-                                <a className="link-to-gg" href="#_">
+                                <a className="link-to-gg" href="https://career-website.herokuapp.com/oauth2/authorization/google">
                                     Continue with google
                                 </a>
                             </div>

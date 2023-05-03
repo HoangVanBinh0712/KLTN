@@ -628,3 +628,7 @@ body {
     margin-right: 10px;
 }
 
+.color-a-dropdownbox {
+    text-decoration: none;
+    color: inherit;
+}
