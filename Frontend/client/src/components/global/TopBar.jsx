@@ -138,6 +138,65 @@ const TopBar = () => {
         )
     }
 
+    else if (!authloading && role === "ROLE_EMPLOYER") {
+        body = (
+            <div className="topbar-home">
+                <div className="logo-home">
+                <a href='/user/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
+                </div>
+                <div className="menu-homepage-signed">
+                    <div className="option-menu">
+                        <a className="option-a-menu" href="/user/home">Services</a>
+                    </div>
+                    <div className="option-menu">
+                        <a className="option-a-menu" href="/user/account">Brand promotion</a>
+                    </div>
+                    <div className="option-menu">
+                        <a className="option-a-menu" href="#_">Tools</a>
+                    </div>
+                </div>
+                <div className="dropdown-container" ref={dropdownRef}>
+                    <div className='option-account'>
+                        <div className="signed-homepage">
+                            <img className="messbell-intopbar" src={messIcon} alt="mess" />
+                        </div>
+                        <div className="signed-homepage">
+                            <img className="messbell-intopbar" src={bellIcon} alt="bell" />
+                        </div>
+                        <div className="signed-homepage">
+                            <img className="messbell-intopbar" src={user.urlAvatar === null ? personIcon : user.urlAvatar}
+                                onClick={toggleDropdown}
+                                /* onMouseEnter={handleMouseEnter}
+                                onMouseLeave={handleMouseLeave} */
+                                alt="avt" />
+                        </div>
+                    </div>
+                    {isOpen && (
+                        <div className="dropdown-menu">
+                            <div className='user-dropbox'>
+                                <div className='avt-in-dropbox'>
+                                    <img src={personIcon} alt="avt" />
+                                </div>
+                                <div className='name-in-dropbox'>
+                                    <div className='n-user-in-dropbox'>{user.name}</div>
+                                    <div className='num-user-in-dropbox'>USER ID: <b>{user.id}</b></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className='drop-text my-account-chose'><a href=' ' className='color-a-dropdownbox'>My Account</a></div>
+                                <div className='drop-text emp-follow-chose'><a href=' ' className='color-a-dropdownbox'>My followed</a></div>
+                                <div className='drop-text post-follow-chose'><a href=' ' className='color-a-dropdownbox'>My Posts saved</a></div>
+                                <div className='drop-text post-apply-chose'><a href=' ' className='color-a-dropdownbox'>My post applied</a></div>
+                                <div className='drop-text change-pwd-chose'><a href=' ' className='color-a-dropdownbox'>Change Password</a></div>
+                                <div className='drop-text logout-chose' onClick={logout}><a href=' ' className='color-a-dropdownbox'>Logout</a></div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        )
+    }
+
     return (
         <>
             {body}

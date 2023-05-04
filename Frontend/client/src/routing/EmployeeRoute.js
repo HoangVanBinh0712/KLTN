@@ -18,6 +18,7 @@ import UpdateResume from "../employee_scenes/components/UpdateResumeComponent";
 import VerifyEmail from "../employee_scenes/components/VerifyEmailComponent";
 import ResumeViewer from "../employee_scenes/components/ResumeViewerComponent";
 import Login from "../components/page/login/Login";
+import LoginGG from "../components/page/login/LoginWithGG";
 import Register from "../components/page/register/Register";
 
 const EmployeeRoute = ({ ...rest }) => {
@@ -41,6 +42,7 @@ const EmployeeRoute = ({ ...rest }) => {
     body = (
       <Routes>
         <Route path="/user/login" element={<Login />} />
+        <Route path="/login/:token" element={<LoginGG />} />
         <Route path="/user/register" element={<Register />} />
         <Route path="/user/home" element={<HomePage />} />
         <Route path="/user/account" element={<EmployeeAccountPage />}>
