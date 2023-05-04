@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import TopBar from './components/global/TopBar';
-import Banner from './components/global/Baner';
-import Footer from './components/global/Footer';
+import TopBar from '../components/global/TopBar';
+import Banner from '../components/global/Baner';
+import Footer from '../components/global/Footer';
 import ListPostsHomepage from './components/ListPostsHomepage';
 import TopEmployer from './components/TopEmployer';
 import { PostContext } from '../contexts/PostContext';

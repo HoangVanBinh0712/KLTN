@@ -1,9 +1,9 @@
 import React from 'react'
-import "../../css/Homepage.css";
+import "../../employee_scenes/css/Homepage.css";
 import { useState } from 'react';
-import banner1 from "../../../assets/img/banner-home.png"
-import banner2 from "../../../assets/img/banner-home-or.png"
-import banner3 from "../../../assets/img/banner-home-or2.png"
+import banner1 from "../../assets/img/banner-home.png"
+import banner2 from "../../assets/img/banner-home-or.png"
+import banner3 from "../../assets/img/banner-home-or2.png"
 
 
 const Baner = () => {

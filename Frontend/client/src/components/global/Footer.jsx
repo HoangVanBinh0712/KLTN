@@ -1,9 +1,9 @@
 import React from 'react'
-import topArrow from '../../../assets/icons/to-top-icon.png'
-import logoBHQ from "../../../assets/img/logo.png"
-import locationIcon from "../../../assets/icons/location-icon.png"
-import shareIcon from "../../../assets/icons/share-icon.png"
-import contactIcon from "../../../assets/icons/customer-support-icon.png"
+import topArrow from '../../assets/icons/to-top-icon.png'
+import logoBHQ from "../../assets/img/logo.png"
+import locationIcon from "../../assets/icons/location-icon.png"
+import shareIcon from "../../assets/icons/share-icon.png"
+import contactIcon from "../../assets/icons/customer-support-icon.png"
 
 const Footer = () => {
 

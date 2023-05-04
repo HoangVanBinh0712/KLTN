@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState, useContext, useRef, useEffect } from "react";
 import { Navigate } from 'react-router-dom';
-import { AuthContext } from "../../../contexts/AuthContext";
-import "../../css/Homepage.css"
-import logoBHQ from "../../../assets/img/logo.png"
-import messIcon from '../../../assets/icons/mess-icon.png'
-import bellIcon from '../../../assets/icons/bell-grey-icon.png'
-import personIcon from "../../../assets/img/personal.png"
+import { AuthContext } from "../../contexts/AuthContext";
+import "../../employee_scenes/css/Homepage.css"
+import logoBHQ from "../../assets/img/logo.png"
+import messIcon from '../../assets/icons/mess-icon.png'
+import bellIcon from '../../assets/icons/bell-grey-icon.png'
+import personIcon from "../../assets/img/personal.png"
 
 const TopBar = () => {
 
