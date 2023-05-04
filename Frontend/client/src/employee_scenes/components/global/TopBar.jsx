@@ -76,7 +76,7 @@ const TopBar = () => {
         )
     }
 
-    else if (!authloading && role === "ROLE_USER") {
+    else if (!authloading) {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
