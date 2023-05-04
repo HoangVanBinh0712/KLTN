@@ -1,5 +1,5 @@
 import AccountComponent from "./components/AccountComponent";
-import TopBar from "./components/global/TopBar";
+import TopBar from "../components/global/TopBar";
 import { Navigate } from "react-router-dom";
 
 

@@ -65,6 +65,25 @@ const AuthContextProvider = ({ children }) => {
     loadUser();
   }, []);
 
+  const loginGoogleUser = async (token) => {
+    try {
+      const response = await axios.get(`${apiUrl}/user`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, token);
+        localStorage.setItem(USER_ROLE, 'user');
+        await loadUser('user');
+      }
+      return response.data;
+    } catch (error) {
+      if (error.response) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
 
   // Login user
   const loginUser = async (userForm, role) => {
@@ -152,8 +171,8 @@ const AuthContextProvider = ({ children }) => {
             Authorization: `Bearer ${recentToken}`,
           },
         });
-        if(response.status===200)
-        return response.data;
+        if (response.status === 200)
+          return response.data;
       } else throw new Error("Unauthorized !");
     } catch (error) {
       if (error.response.data) {
@@ -171,15 +190,12 @@ const AuthContextProvider = ({ children }) => {
       bodyFormData.append("cover", cover);
 
       if (recentToken !== undefined) {
-        console.log('henooo')
-        const response = await axios.put(`${apiUrl}/user`,bodyFormData, {
+        const response = await axios.put(`${apiUrl}/user`, bodyFormData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${recentToken}`,
           },
         });
-        if(response.status===200)
-        console.log(response.data)
         return response.data;
       } else throw new Error("Unauthorized !");
     } catch (error) {
@@ -192,7 +208,7 @@ const AuthContextProvider = ({ children }) => {
   //get achive
   const getUserAchive = async () => {
     try {
-      
+
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
 
@@ -202,11 +218,11 @@ const AuthContextProvider = ({ children }) => {
             Authorization: `Bearer ${recentToken}`,
           },
         });
-        if(response.status===200){
+        if (response.status === 200) {
           dispatch({
             type: "SET_ACHIVEMENT",
             payload: {
-              achivement:response.data,
+              achivement: response.data,
             },
           });
         }
@@ -219,7 +235,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
   //update achive
-  const updateUserAchive = async (id,info,image) => {
+  const updateUserAchive = async (id, info, image) => {
     try {
       var bodyFormData = new FormData();
       bodyFormData.append("info", JSON.stringify(info));
@@ -227,7 +243,7 @@ const AuthContextProvider = ({ children }) => {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
 
-        const response = await axios.put(`${apiUrl}/user/achievements/${id}`, bodyFormData,{
+        const response = await axios.put(`${apiUrl}/user/achievements/${id}`, bodyFormData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${recentToken}`,
@@ -243,7 +259,7 @@ const AuthContextProvider = ({ children }) => {
   };
 
   //create achive
-  const createUserAchive = async (info,image) => {
+  const createUserAchive = async (info, image) => {
     try {
       var bodyFormData = new FormData();
       bodyFormData.append("info", JSON.stringify(info));
@@ -251,7 +267,7 @@ const AuthContextProvider = ({ children }) => {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
 
-        const response = await axios.post(`${apiUrl}/user/achievements`, bodyFormData,{
+        const response = await axios.post(`${apiUrl}/user/achievements`, bodyFormData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${recentToken}`,
@@ -269,7 +285,7 @@ const AuthContextProvider = ({ children }) => {
   //delete achive
   const deleteUserAchive = async (id) => {
     try {
-      
+
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
 
@@ -352,16 +368,16 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.get(`${apiUrl}/user/cv`,{
+        const response = await axios.get(`${apiUrl}/user/cv`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
           },
         });
-        if(response.status===200){
+        if (response.status === 200) {
           return { success: true, data: response.data };
         }
-        else return {success: false};
+        else return { success: false };
       } else throw new Error("Unauthorized !");
     } catch (error) {
       if (error.response.data) {
@@ -370,14 +386,14 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const addResume = async (info,file) => {
+  const addResume = async (info, file) => {
     try {
       var bodyFormData = new FormData();
       bodyFormData.append("name", JSON.stringify(info));
       bodyFormData.append("CV", file);
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.post(`${apiUrl}/user/cv`, bodyFormData,{
+        const response = await axios.post(`${apiUrl}/user/cv`, bodyFormData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${recentToken}`,
@@ -396,13 +412,13 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.put(`${apiUrl}/user/cv/${cv.mediaId}`, cv,{
+        const response = await axios.put(`${apiUrl}/user/cv/${cv.mediaId}`, cv, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
           },
         });
-        
+
         return response.data;
       } else throw new Error("Unauthorized !");
     } catch (error) {
@@ -416,13 +432,13 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.delete(`${apiUrl}/user/cv/?mediaId=${id}`,{
+        const response = await axios.delete(`${apiUrl}/user/cv/?mediaId=${id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
           },
         });
-        
+
         return response.data;
       } else throw new Error("Unauthorized !");
     } catch (error) {
@@ -431,14 +447,35 @@ const AuthContextProvider = ({ children }) => {
       } else return { success: false, message: error.message };
     }
   };
- 
+
+  //Predict Resume
+  const predictResume = async (mediaId) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.get(`${apiUrl}/jobseeker/cvpredict?mediaId=${mediaId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+
   //conxtext data
   const authContextData = {
-    loginUser,registerUser,registerEmployer,logoutSection,
-    getUser,updateUserInfo,
-    getUserAchive,updateUserAchive,createUserAchive,deleteUserAchive,
-    changPassword,sendVirifyCode,verifyEmail,
-    getResume,addResume,updateResume,deleteResume,
+    loginUser,loginGoogleUser, registerUser, registerEmployer, logoutSection,
+    getUser, updateUserInfo,
+    getUserAchive, updateUserAchive, createUserAchive, deleteUserAchive,
+    changPassword, sendVirifyCode, verifyEmail,
+    getResume, addResume, updateResume, deleteResume, predictResume,
     showToast,
     setShowToast,
     authState,

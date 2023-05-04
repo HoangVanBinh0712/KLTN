@@ -13,18 +13,18 @@ const UserPersonalInfo = () => {
   const { warn, success } = useToast();
 
   const [userInfo, setUserinfor] = useState({
-    email: user !== null ? user.email : "",
-    name: user !== null ? user.name : "",
-    phone: user !== null ? user.phone : '',
-    address: user !== null ? user.address : "",
-    cityId: user !== null ? user.city.id : '',
-    industryId: user !== null ? user.industry.id : "",
-    urlCover: user !== null ? user.urlCover : null,
-    urlAvatar: user !== null ? user.urlAvatar : null,
+    email:  "",
+    name: "",
+    phone: '',
+    address:  "",
+    cityId: '',
+    industryId:  "",
+    urlCover:  null,
+    urlAvatar:  null,
   })
   const { email, name, phone, address, cityId, industryId, urlCover, urlAvatar } = userInfo
 
-  const [desc, setDesc] = useState('');
+  const [description, setDesc] = useState('');
   const handleDescChange = (newValue) => {
     setDesc(newValue);
   }
@@ -41,12 +41,12 @@ const UserPersonalInfo = () => {
       ...userInfo,
       email: userData !== null ? userData.email : "",
       name: userData !== null ? userData.name : "",
-      phone: userData !== null ? userData.phone : '',
+      phone: userData.phone !== null ? userData.phone : '',
       address: userData !== null ? userData.address : "",
-      cityId: userData !== null ? userData.city.id : '',
-      industryId: userData !== null ? userData.industry.id : "",
-      urlCover: userData !== null ? userData.urlCover : null,
-      urlAvatar: userData !== null ? userData.urlAvatar : null,
+      cityId: userData.city !== null ? userData.city.id : '',
+      industryId: userData.industry !== null ? userData.industry.id : "",
+      urlCover: userData.urlCover !== null ? userData.urlCover : null,
+      urlAvatar: userData.urlAvatar !== null ? userData.urlAvatar : null,
     })
     userData !== null ? setDesc(userData.description) : setDesc("")
 
@@ -123,14 +123,13 @@ const UserPersonalInfo = () => {
 
   const onUpdateUserClick = async (event) => {
     try {
-      const infoData = { email, name, phone, address, cityId, industryId }
+      const infoData = { email, name, phone, address, cityId, industryId, description }
       const reponseData = await updateUserInfo(infoData, avatar, cover)
-      console.log(reponseData)
       if (reponseData.success) {
         success('Update information successfully!')
       }
       else {
-        warn(reponseData.message)
+        warn(reponseData.message+': '+Object.keys(reponseData.data)+" "+reponseData.data[0])
       }
 
     }
@@ -218,12 +217,12 @@ const UserPersonalInfo = () => {
           </div>
           <div className="text-area-group">
             <div className="label">Description</div>
-            <ReactQuill value={desc} onChange={handleDescChange} style={{}} />
+            <ReactQuill value={description} onChange={handleDescChange} style={{}} />
           </div>
           <div className="double-select">
             <div className="select">
               <div className="label">Location</div>
-              <select name="city" id="" onChange={onChangeUserInfo}>
+              <select name="cityId" id="" onChange={onChangeUserInfo}>
                 {cities.lenght !== 0 ?
                   (cities.map((c) => (
                     <option key={c.id} value={c.id} selected={cityId === c.id}>
@@ -243,7 +242,7 @@ const UserPersonalInfo = () => {
             </div>
             <div className="select">
               <div className="label">Industry</div>
-              <select name="industry" id="" onChange={onChangeUserInfo}>
+              <select name="industryId" id="" onChange={onChangeUserInfo}>
                 {industries.lenght !== 0 ?
                   (industries.map((c) => (
                     <option key={c.id} value={c.id} selected={industryId === c.id}>

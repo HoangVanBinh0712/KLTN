@@ -91,8 +91,28 @@ const PostContextProvider = ({ children }) => {
         }
     }
 
+    const getPostByIndustry = async (industryId) => {
+        try {
+            const responsePost = await axios.get(`${apiUrl}/post?industryId=${industryId}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    
+                },
+            })
+            console.log(responsePost.data)
+            if (responsePost.data.success) {
+                return responsePost.data
+            }
+        }
+        catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    }
+
     //conxtext data
     const authPostData = {
+        getPostById,getPostByIndustry,
         postState,
     };
 

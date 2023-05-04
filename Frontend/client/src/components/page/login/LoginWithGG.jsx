@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState, useContext } from 'react'
-import { Navigate, Link } from 'react-router-dom'
+import { Navigate, Link, useSearchParams } from 'react-router-dom'
 import './login.css'
 import logoBHQ from '../../../assets/img/logo.png'
 import pt3Login from '../../../assets/img/cv-picture3.png'
@@ -9,9 +9,9 @@ import { AuthContext } from '../../../contexts/AuthContext'
 import { useToast } from "../../../contexts/Toast";
 import axios from 'axios'
 
-const Login = () => {
+const LoginGG = () => {
 
-    const { authState: { authloading, role }, loginUser } = useContext(AuthContext)
+    const { authState: { authloading, role }, loginUser, loginGoogleUser } = useContext(AuthContext)
     const [waitLogin, setAuthLoading] = useState(true);
     const { warn, error, success } = useToast();
 
@@ -86,6 +86,23 @@ const Login = () => {
         }
         setAuthLoading(true);
     }
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    // single-time read
+    const params = Object.fromEntries([...searchParams]);
+
+    const loginGG = async () => {
+        try {
+            await loginGoogleUser(params.token)
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(()=>{
+        loginGG()
+    },[])
 
     let body
     if (!authloading && role === "ROLE_USER") {
@@ -188,4 +205,4 @@ const Login = () => {
         </>
     )
 }
-export default Login;
+export default LoginGG;
