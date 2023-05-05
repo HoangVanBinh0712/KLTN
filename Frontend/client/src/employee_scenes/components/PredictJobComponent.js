@@ -17,18 +17,19 @@ const PredictJob = () => {
 
   const predictCV = async (cvId) => {
     const res = await predictResume(cvId)
-    console.log(res)
     if (res.success) {
       SetResumePredict(res.predictResult)
       setListPostPre(res.data);
       setlistIndustryPre(Object.keys(res.predictResult))
     }
+    else warn(res.message)
   }
 
   const getAllResume = async () => {
     const res = await getResume()
     if (res.success) {
       setAllResume(res.data);
+      if(res.data.length!==0)setCurrentResumeId(res.data[0].mediaId)
     }
   }
 
