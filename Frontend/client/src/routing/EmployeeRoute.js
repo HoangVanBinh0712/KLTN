@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import HomePage from "../employee_scenes/HomePage";
@@ -20,31 +20,32 @@ import ResumeViewer from "../employee_scenes/components/ResumeViewerComponent";
 import Login from "../components/page/login/Login";
 import LoginGG from "../components/page/login/LoginWithGG";
 import Register from "../components/page/register/Register";
+import { AuthContext } from "../contexts/AuthContext";
 
 const EmployeeRoute = ({ ...rest }) => {
 
-  
+  const {authState:{authloading, role}}=useContext(AuthContext)
   const location = useLocation();
   const currentUrl = location.pathname;
 
   let body;
 
   if (currentUrl === "/") {
-    return <Navigate to="/user/home" />;
+    return <Navigate to="/home" />;
   }
   if (currentUrl === "/user") {
-    return <Navigate to="/user/home" />;
+    return <Navigate to="/home" />;
   }
   if (currentUrl === "/user/account")
     return <Navigate to="/user/account/personal-info" />;
   //Check if user login here
-  else    {
+  else  if(!authloading && role==="ROLE_USER")  {
     body = (
       <Routes>
         <Route path="/user/login" element={<Login />} />
         <Route path="/login/:token" element={<LoginGG />} />
         <Route path="/user/register" element={<Register />} />
-        <Route path="/user/home" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/user/account" element={<EmployeeAccountPage />}>
           <Route path="personal-info" element={<PersonalInfoComponent />} />
           <Route path="achievement" element={<UserAchievement />} />
@@ -57,6 +58,20 @@ const EmployeeRoute = ({ ...rest }) => {
           <Route path="resume-viewer" element={<ResumeViewer />} />
           <Route path="update-resume" element={<UpdateResume />} />
           <Route path="verify-email" element={<VerifyEmail />} />
+        </Route>
+        <Route path="/*" element={<PageNotFound />} />
+      </Routes>
+    );
+  }
+  else {
+    body = (
+      <Routes>
+        <Route path="/user/login" element={<Login />} />
+        <Route path="/login/:token" element={<LoginGG />} />
+        <Route path="/user/register" element={<Register />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/user/account" element={<EmployeeAccountPage />}>
+          <Route path="personal-info" element={<PersonalInfoComponent />} />
         </Route>
         <Route path="/*" element={<PageNotFound />} />
       </Routes>

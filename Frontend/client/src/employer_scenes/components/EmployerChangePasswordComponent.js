@@ -112,7 +112,7 @@ const EmployerChangePassword = () => {
                             </input>
                         </div>
                         <div className="group-buttons checkbox-show-password">
-                            <div style={{ width: "200px" }}>
+                            <div style={{ width: "300px" }}>
                                 <label className="checkbox-showpass">
                                     <input
                                         type="checkbox"

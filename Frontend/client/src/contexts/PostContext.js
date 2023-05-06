@@ -66,7 +66,7 @@ const PostContextProvider = ({ children }) => {
 
     useEffect(() => {
         getAllPost()
-        if(localStorage["user-token"]!==undefined){
+        if(localStorage["user-token"]!==undefined, localStorage["USER_ROLE"]==="user" ){
             getFollowPost()
         }
         

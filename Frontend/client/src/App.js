@@ -34,7 +34,7 @@ function App() {
       <AdminRoute path="/admin/dashboard /admin/account /admin/post /admin/services /admin/form /admin/bar /admin/pie /admin/line /admin/industries /admin/reports /admin/form" />
     );
   } else if (currentUrl.includes("/employer"))
-    body = <EmployerRoute path="/employer/login " />;
+    body = <EmployerRoute path="/employer/login" />;
   else {
     body = <EmployeeRoute path="/user/login " />;
   }

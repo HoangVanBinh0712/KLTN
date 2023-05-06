@@ -33,7 +33,7 @@ const TopBar = () => {
         const confirm = window.confirm("Are you sure you want to logout?");
         if (confirm) {
             logoutSection()
-            window.location.href='/user/home'
+            window.location.href='/home'
         }
     }
 
@@ -44,11 +44,11 @@ const TopBar = () => {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
-                    <a href='/user/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
+                    <a href='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
                 </div>
                 <div className="menu-homepage">
                     <div className="option-menu">
-                        <a className="option-a-menu" href="/user/home">Job</a>
+                        <a className="option-a-menu" href="/home">Job</a>
                     </div>
                     <div className="option-menu">
                         <a className="option-a-menu" href="/user/account">Profile & CV</a>
@@ -76,15 +76,15 @@ const TopBar = () => {
         )
     }
 
-    else if (!authloading) {
+    else if (!authloading && role === "ROLE_USER") {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
-                <a href='/user/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
+                <a href='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
                 </div>
                 <div className="menu-homepage-signed">
                     <div className="option-menu">
-                        <a className="option-a-menu" href="/user/home">Job</a>
+                        <a className="option-a-menu" href="/home">Job</a>
                     </div>
                     <div className="option-menu">
                         <a className="option-a-menu" href="/user/account">Profile & CV</a>
@@ -142,14 +142,14 @@ const TopBar = () => {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
-                <a href='/user/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
+                <a href='/employer/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
                 </div>
                 <div className="menu-homepage-signed">
                     <div className="option-menu">
-                        <a className="option-a-menu" href="/user/home">Services</a>
+                        <a className="option-a-menu" href="/employer/home">Services</a>
                     </div>
                     <div className="option-menu">
-                        <a className="option-a-menu" href="/user/account">Brand promotion</a>
+                        <a className="option-a-menu" href="#_">Brand promotion</a>
                     </div>
                     <div className="option-menu">
                         <a className="option-a-menu" href="#_">Tools</a>
@@ -183,10 +183,11 @@ const TopBar = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className='drop-text my-account-chose'><a href=' ' className='color-a-dropdownbox'>My Account</a></div>
-                                <div className='drop-text emp-follow-chose'><a href=' ' className='color-a-dropdownbox'>My followed</a></div>
-                                <div className='drop-text post-follow-chose'><a href=' ' className='color-a-dropdownbox'>My Posts saved</a></div>
-                                <div className='drop-text post-apply-chose'><a href=' ' className='color-a-dropdownbox'>My post applied</a></div>
+                                <div className='drop-text my-account-chose'><a href='/employer/account' className='color-a-dropdownbox'>My Account</a></div>
+                                <div className='drop-text add-post-chose'><a href=' ' className='color-a-dropdownbox'>Create Post</a></div>
+                                <div className='drop-text list-posting-chose'><a href=' ' className='color-a-dropdownbox'>My Job Posting</a></div>
+                                <div className='drop-text search-cv-chose'><a href=' ' className='color-a-dropdownbox'>Looking for Candidates</a></div>
+                                <div className='drop-text brand-promotion-chose'><a href=' ' className='color-a-dropdownbox'>Brand Promotion</a></div>
                                 <div className='drop-text change-pwd-chose'><a href=' ' className='color-a-dropdownbox'>Change Password</a></div>
                                 <div className='drop-text logout-chose' onClick={logout}><a href=' ' className='color-a-dropdownbox'>Logout</a></div>
                             </div>

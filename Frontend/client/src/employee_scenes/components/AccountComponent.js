@@ -5,7 +5,7 @@ import certificateIcon from "../../assets/icons/certificate-blue-icon.png";
 import changePasswordIcon from "../../assets/icons/change-password-icon.png";
 import checkIcon from "../../assets/icons/check-icon.png";
 import addPostIcon from "../../assets/icons/add-post-icon.png";
-import editIcon from "../../assets/icons/edit-icon.png";
+import editIcon from "../../assets/icons/edit-icon-blue.png";
 import cvIcon from "../../assets/icons/cv-icon.png";
 import applyIcon from "../../assets/icons/apply-icon.png";
 import heartIcon from "../../assets/icons/heart-icon.png";

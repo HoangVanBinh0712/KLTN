@@ -37,13 +37,13 @@ const EmployerAccount = () => {
           </div>
           <ul className="nav-item disabled">
             <li>
-              <Link className="nav-text" to="">
+              <Link className="nav-text" to="recruitment-statistics">
                 <img src={chartIcon} alt="" className="nav-icon" />
                 Recruitment statistics
               </Link>
             </li>
             <li>
-              <Link className="nav-text" to="">
+              <Link className="nav-text" to="recruitment-statistics">
                 <img src={supportIcon} alt="" className="nav-icon"></img>
                 Customer service
               </Link>
@@ -95,7 +95,7 @@ const EmployerAccount = () => {
               </Link>
             </li>
             <li>
-              <Link className="nav-text" to="update-resume">
+              <Link className="nav-text" to="job-posting">
                 <img src={jobPostingIcon} alt="" className="nav-icon"></img>
                 Your job posting
               </Link>
@@ -119,7 +119,7 @@ const EmployerAccount = () => {
             <li>
               <Link className="nav-text" to="post-followed">
                 <img src={viewProfileIcon} alt="" className="nav-icon"></img>
-                Looking for new Candidates
+                Looking for Candidates
               </Link>
             </li>
           </ul>

@@ -9,24 +9,11 @@ import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import logoPost from "../../assets/icons/logo.png"
 import { PostContext } from '../../contexts/PostContext'
 
-
-
 const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
 
     const { postState: { postFollow } } = useContext(PostContext)
     const post = listPosts
 
-    /* fomat of listposts(chỉ sử dụng những trường này)
-    const posts = [
-        {
-            id:1,
-            author: { id: 1, urlAvatar: tamLogo },
-            title: "TUYỂN THỰC TẬP SINH SINH VIÊN NGÀNH CNTT, ĐTVT1",
-            method: "FULL_TIME",
-            location: "Công ty: Công ty TNHH Giải Pháp Phần Mềm Tường Minh - Thành phố Hồ Chí Minh",
-            like: false
-        },
-    ] */
     function chuckPosts(arr) {
         const chunks = [];
         let i = 0;

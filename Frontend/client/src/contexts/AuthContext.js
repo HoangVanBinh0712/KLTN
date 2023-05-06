@@ -468,6 +468,26 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  //Employer
+  //get SubmitCV
+  const getCvSubmited =async (postId)=>{
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.get(`${apiUrl}/employer/submitcv?postId=${postId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  }
 
   //conxtext data
   const authContextData = {
@@ -476,6 +496,7 @@ const AuthContextProvider = ({ children }) => {
     getUserAchive, updateUserAchive, createUserAchive, deleteUserAchive,
     changPassword, sendVirifyCode, verifyEmail,
     getResume, addResume, updateResume, deleteResume, predictResume,
+    getCvSubmited,
     showToast,
     setShowToast,
     authState,

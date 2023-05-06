@@ -89,7 +89,7 @@ const Login = () => {
 
     let body
     if (!authloading && role === "ROLE_USER") {
-        body = (<Navigate to="/user/home" />)
+        body = (<Navigate to="/home" />)
     }
     else if (!authloading && role === "ROLE_EMPLOYER") {
         body = (<Navigate to="/employer/home" />)

@@ -9,7 +9,8 @@ import EmployerInfo from "../employer_scenes/components/EmployerInfoComponent";
 import PageNotFound from "../components/page/notfound/PageNotFound";
 import EmployerVerifyEmail from "../employer_scenes/components/EmployerVerifyEmailComponent";
 import AddPostComponent from "../employer_scenes/components/AddPostComponent";
-
+import JobPostingComponent from "../employer_scenes/components/JobPostingComponent";
+import HomePage from "../employee_scenes/HomePage";
 const EmployerRoute = ({ ...rest }) => {
   const location = useLocation();
   const currentUrl = location.pathname;
@@ -17,14 +18,10 @@ const EmployerRoute = ({ ...rest }) => {
   let body;
 
   if (currentUrl === "/" || currentUrl === "/employer") {
-    return <Navigate to="/user/home" />;
+    return <Navigate to="/home" />;
   }
   if (currentUrl === "/employer/login") {
-    body = (
-      <>
-        <div>Login page </div>
-      </>
-    );
+    return <Navigate to="/user/login"/>
   }
   //Check if user logged in
   if (currentUrl === "/employer/account")
@@ -34,13 +31,13 @@ const EmployerRoute = ({ ...rest }) => {
       <Routes>
         <Route path="/employer/login" element={<Login />} />
         <Route path="/employer/register" element={<Register />} />
+        <Route path="/employer/home" element={<HomePage />} />
         <Route path="/employer/account" element={<EmployerAccount />}>
           <Route path="employer-info" element={<EmployerInfo />} />
           <Route path="change-password" element={<EmployerChangePassword />} />
           <Route path="verify-email" element={<EmployerVerifyEmail />} />
-
           <Route path="add-post" element={<AddPostComponent />} />
-
+          <Route path="job-posting" element={<JobPostingComponent />} />
         </Route>
         <Route path="/*" element={<PageNotFound />} />
       </Routes>

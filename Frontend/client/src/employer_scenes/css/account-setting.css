@@ -13,6 +13,16 @@
     src: url("../../assets/fonts/roboto/Roboto-Bold.ttf");
 }
 
+@font-face {
+    font-family: Roboto-Medium;
+    src: url("../../assets/fonts/roboto/Roboto-Medium.ttf");
+}
+
+@font-face {
+    font-family: Roboto-Light;
+    src: url("../../assets/fonts/roboto/Roboto-Light.ttf");
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -513,7 +523,6 @@ small {
     width: 100px;
     height: 100px;
     border: 1px solid gray;
-    padding: 10px;
     border-radius: 5px;
 }
 
@@ -624,6 +633,47 @@ small {
 
 }
 
+/*predict-job*/
+
+.predict-result {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #F2F7FF;
+    width: 100%;
+    padding: 20px;
+    gap: 1em;
+    box-sizing: border-box;
+}
+
+.predict-result .single-result {
+    width: 25%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.predict-result .single-result .pipe {
+    width: 85%;
+    background-color: #D9D9D9;
+    height: 100%;
+    border-radius: 5px;
+
+}
+
+.predict-result .single-result .pipe .value {
+    width: 66%;
+    height: 100%;
+    background-color: #0A66C2;
+    border-radius: 5px;
+
+}
+
+.predict-result .value-text {
+    padding-left: 10px;
+}
+
 /*Verify email*/
 .free-space .content-wrapper .code-input {
     margin-bottom: 20px;
@@ -648,6 +698,67 @@ small {
 .free-space .content-wrapper .code-input input {
     width: 100%;
 
+}
+
+
+/*Achievement*/
+
+.content-wrapper .image-wrapper {
+    padding: 20px 0;
+    display: flex;
+    gap: 1em;
+    border-radius: 5px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-wrapper .image-wrapper .big-icon {
+    width: 20%;
+    height: auto;
+
+}
+
+.content-wrapper .image-wrapper .uploads {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.content-wrapper .image-wrapper .uploads .button {
+    margin-bottom: 10px;
+}
+
+
+@media screen and (max-width: 767px) {
+    .free-space {
+        min-height: max-content;
+        padding-top: 5%;
+    }
+
+    .content-wrapper .predict-result {
+        justify-content: space-between;
+        column-gap: 0;
+    }
+
+    .content-wrapper .predict-result .single-result {
+        width: 40%;
+    }
+
+    .content-wrapper .image-wrapper .big-icon {
+        width: 80%;
+        height: 80%;
+    }
+
+    input,
+    select,
+    .select {
+        width: 100% !important;
+    }
+
+    .item-long {
+        display: none;
+    }
 }
 
 /* spinner */
@@ -680,7 +791,7 @@ small {
 }
 
 .achivement-item {
-    height: 110px;
+    height: 120px;
     width: 100%;
     display: flex;
     border-bottom: 1px solid #999999;
@@ -747,6 +858,7 @@ small {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: white ;
 }
 
 .chose-update {
@@ -778,44 +890,170 @@ small {
     height: 200px !important;
 }
 
-.row .left,
-.row .right {
-    width: 45%;
-
+.text-in-value-bar {
+    color: white;
+    padding: 0 10px;
 }
 
-input.radio::after,
-input.radio:checked::after {
-    content: none;
-}
-
-.left .row {
-    gap: 0;
-}
-
-.left .row div {
-    width: 33%;
-    display: flex;
-    align-items: center;
-    padding: 1em;
-    margin-bottom: 1em;
-
-}
-
-.left input {
-    width: max-content;
-}
-
-.left label {
+.link-to-upload-nohave::after {
+    content: url('../../assets/icons/upload-a-after.png');
     margin-left: 5px;
 }
 
-.left .input-wrapper,
-.right .input-wrapper,
-.right .select,
-.left .text-area-group,
-.right .text-area-group {
-    width: 100% !important;
-    margin-bottom: 1em;
-
+.overal-group-chose {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 30px;
 }
+
+.group-manager-post-title {
+    width: 8%;
+    font-family: Roboto-Bold;
+    color: #000;
+}
+
+.group-manager-post {
+    display: flex;
+    width: 15% !important;
+    border: 2px solid #0C62AD !important;
+    justify-content: center;
+    margin: 0 10px;
+    font-family: Roboto-Medium !important;
+    color: #000 !important;
+    font-weight: 300 !important;
+    padding: 0.4em !important;
+}
+
+.group-manager-post p {
+    font-family: Roboto-Medium !important;
+    color: #000 !important;
+    font-weight: 300 !important;
+    font-size: 20px;
+}
+
+.select-filer-group {
+    display: flex;
+    width: 80%;
+}
+
+.select-filer-row {
+    display: flex;
+    width: 100%;
+    margin-top: 18px;
+    justify-content: space-between;
+}
+
+.title-filter {
+    display: flex;
+    width: 50px;
+    align-items: center;
+}
+
+.select-item {
+    width: 30%;
+}
+
+.clear-select-item {
+    display: flex;
+    width: 30%;
+    align-items: center;
+    text-decoration: underline;
+    color: #0C62AD;
+}
+
+.clear-select-item p {
+    cursor: pointer;
+    font-size: 18px;
+    color: inherit;
+}
+
+.select-item select {
+    padding: 0.6em;
+    box-sizing: border-box;
+    border-color: #6c6c6c !important;
+    width: 90%;
+    font-size: 1em;
+    margin: 0 10px;
+}
+
+.ex-button {
+    display: flex;
+    align-items: center;
+    border: 2px solid #0C62AD;
+    border-radius: 3px;
+}
+
+.ex-button::before {
+    content: url("../../assets/icons/excel-logo50px.png");
+    margin-right: 10px;
+}
+
+.col-title-listpost {
+    display: flex;
+    justify-content: space-between;
+    font-family: Roboto-Medium;
+    color: #000;
+    font-size: 18px;
+    padding: 25px;
+}
+
+.row-data-listpost {
+    display: flex;
+    justify-content: space-between;
+    font-family: Roboto-Light !important;
+    color: #6c6c6c;
+    font-size: 18px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
+    padding: 16px 25px;
+    align-items: center;
+    height: 62px;
+}
+
+.limit-title-post {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+.btn-state-post-acpt {
+    border: 1px solid #3a8963;
+    padding: 0px 5px;
+    border-radius: 8px;
+    color: #3a8963;
+    font-family: Roboto-Light !important;
+}
+
+.btn-state-post-pending {
+    border: 1px solid #0C62AD;
+    padding: 0px 5px;
+    border-radius: 8px;
+    color: #0C62AD;
+    font-family: Roboto-Light !important;
+}
+
+.btn-state-post-denied {
+    border: 1px solid #f8bc6e;
+    padding: 0px 5px;
+    border-radius: 8px;
+    color: #f8bc6e;
+    font-family: Roboto-Light !important;
+}
+
+
+.others-btn {
+    height: 30px;
+    width: 30px;
+    border: 1px solid #6c6c6c;
+    border-radius: 100%;
+    margin-right: 10px;
+    cursor: pointer;
+    margin-left: 40px;
+}
+
+.three-dot-chose-post {
+    transform: rotate(90deg);
+    height: 100%;
+    width: auto;
+}
+

@@ -616,6 +616,25 @@ body {
     margin-right: 10px;
 }
 
+.add-post-chose::before {
+    content: url("../../assets/icons/add-post-icon20px.png");
+    margin-right: 10px;
+}
+
+.list-posting-chose::before {
+    content: url("../../assets/icons/list-post-icon20px.png");
+    margin-right: 10px;
+}
+
+.search-cv-chose::before {
+    content: url("../../assets/icons/view-profile-icon20px.png");
+    margin-right: 10px;
+}
+
+.brand-promotion-chose::before {
+    content: url("../../assets/icons/upgrade-icon20px.png");
+    margin-right: 10px;
+}
 .logout-chose {
     border-top: 1px solid #b7b7b7;
     width: 85%;
