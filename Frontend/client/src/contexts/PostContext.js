@@ -66,7 +66,7 @@ const PostContextProvider = ({ children }) => {
 
     useEffect(() => {
         getAllPost()
-        if(localStorage["user-token"]!==undefined, localStorage["USER_ROLE"]==="user" ){
+        if(localStorage["user-token"]!==undefined && localStorage["USER_ROLE"]==="user" ){
             getFollowPost()
         }
         
@@ -110,9 +110,31 @@ const PostContextProvider = ({ children }) => {
         }
     }
 
+    //Employer
+  //get SubmitCV
+  const getCvSubmited =async (postId)=>{
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.get(`${apiUrl}/employer/submitcv?postId=${postId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  }
+
     //conxtext data
     const authPostData = {
         getPostById,getPostByIndustry,
+        getCvSubmited,
         postState,
     };
 

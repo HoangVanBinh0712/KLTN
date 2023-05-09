@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    padding: 0;
+   /*  background-color: #f5f5f5; */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+}
+
+.body-container {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+#service-banner{
+    width: 100%;
+    height: auto;
+}
+
+#arrow_wrapper{
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+#arrow_below_banner{
+    margin-top: 10px;
+    width: 40px;
+    height: 40px;
+}
+
+#our_service_title{
+    font-weight: 800;
+    margin-top: 35px;
+    color: black;
+    font-size: 30px;
+}
+
+#our_service_explaination{
+    margin-top: 10px;
+    color: #262626;
+}
+
+#service_list{
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 1520px;
+}
+
+#service_logo{
+    width: 40%;
+    height: 40%;
+}
+
+#service_info{
+    margin-left: 120px;
+    margin-right: 60px;
+    display: flex;
+    align-self: center;
+    width: 580px;
+    flex-direction: column;
+    color: #858585;
+}
+
+.service_item_wrapper{
+    margin-top: 120px;
+    display: flex;
+    justify-content: center;
+}
+
+#service_name{
+    font-weight: 800;
+    color: black;
+    font-size: 30px;
+}
+
+#service_price{
+    color: #ff7d55;
+    font-weight: 800;
+    font-size: 30px;
+}
+
+#service_duration_wrapper{
+    margin-top: 5px;
+    display: flex;
+}
+
+#service_duaration{
+    margin-left: 10px;
+    color: #ff7d55;
+}
+
+#service_value_item{
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#service_value_list{
+    margin-top: 5px;
+}
+
+#service_value{
+    margin-left: 5px;
+}
+
+#service_checkbox{
+    width: 25px;
+    height: auto;
+}
+
+#service_conclusion{
+    margin-top: 5px;
+}
+
+#btn_buy_now{
+    margin-top: 40px;
+    border: 2px solid #0c62ad;
+    border-radius: 8px;
+    width: 132px;
+    height: 49px;
+    color: #2f70b3;
+    padding: 0;
+    font-size: 18px;
+}

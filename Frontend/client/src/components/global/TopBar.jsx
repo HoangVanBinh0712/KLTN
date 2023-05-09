@@ -16,10 +16,16 @@ const TopBar = () => {
     const toggleDropdown = () => setIsOpen(!isOpen);
     const dropdownRef = useRef(null);
 
+    const [isOpenTool, setIsOpenTool] = useState(false);
+    const toggleDropdownTool = () => setIsOpenTool(!isOpenTool);
+    const dropTooldownRef = useRef(null);
+
     useEffect(() => {
         document.addEventListener("click", handleClickOutside);
+        document.addEventListener("click", handleClickOutsideTool);
         return () => {
             document.removeEventListener("click", handleClickOutside);
+            document.removeEventListener("click", handleClickOutsideTool);
         };
     }, []);
 
@@ -29,11 +35,17 @@ const TopBar = () => {
         }
     };
 
+    const handleClickOutsideTool = (event) => {
+        if (dropTooldownRef.current && !dropTooldownRef.current.contains(event.target)) {
+            setIsOpenTool(false);
+        }
+    };
+
     const logout = () => {
         const confirm = window.confirm("Are you sure you want to logout?");
         if (confirm) {
             logoutSection()
-            window.location.href='/home'
+            window.location.href = '/home'
         }
     }
 
@@ -57,7 +69,7 @@ const TopBar = () => {
                         <a className="option-a-menu" href="#_">Company</a>
                     </div>
                     <div className="option-menu">
-                        <a className="option-a-menu" href="#_">Tools</a>
+                        <a className="option-a-menu" href="#_" >Tools</a>
                     </div>
                 </div>
                 <div className="mess-bell-homepage">
@@ -80,7 +92,7 @@ const TopBar = () => {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
-                <a href='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
+                    <a href='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
                 </div>
                 <div className="menu-homepage-signed">
                     <div className="option-menu">
@@ -92,8 +104,14 @@ const TopBar = () => {
                     <div className="option-menu">
                         <a className="option-a-menu" href="#_">Company</a>
                     </div>
-                    <div className="option-menu">
-                        <a className="option-a-menu" href="#_">Tools</a>
+                    <div className="option-menu" ref={dropTooldownRef} style={{zIndex:100}}>
+                        <a className="option-a-menu" href="#_" onClick={toggleDropdownTool}>Tools</a>
+                        {isOpenTool && (
+                            <div className='dropbox-tool-topbar' >
+                                <div className='option-dropdown'><a className="option-a-menu" href="#_">Predict Resume</a></div>
+                                <div className='option-dropdown'> <a className="option-a-menu" href="#_">Customer services</a></div>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="dropdown-container" ref={dropdownRef}>
@@ -142,7 +160,7 @@ const TopBar = () => {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
-                <a href='/employer/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
+                    <a href='/employer/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
                 </div>
                 <div className="menu-homepage-signed">
                     <div className="option-menu">
@@ -151,8 +169,15 @@ const TopBar = () => {
                     <div className="option-menu">
                         <a className="option-a-menu" href="#_">Brand promotion</a>
                     </div>
-                    <div className="option-menu">
-                        <a className="option-a-menu" href="#_">Tools</a>
+                    <div className="option-menu" ref={dropTooldownRef} style={{zIndex:100}}>
+                        <a className="option-a-menu" href="#_" onClick={toggleDropdownTool}>Tools</a>
+                        {isOpenTool && (
+                            <div className='dropbox-tool-topbar' >
+                                <div className='option-dropdown'><a className="option-a-menu" href="/employer/account/recruitment-statistics">Recruitment ststistics</a></div>
+                                <div className='option-dropdown'><a className="option-a-menu" href="/employer/search-candidates">Looking for candidates</a></div>
+                                <div className='option-dropdown'> <a className="option-a-menu" href="/employer/account/customer-services">Customer services</a></div>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="dropdown-container" ref={dropdownRef}>

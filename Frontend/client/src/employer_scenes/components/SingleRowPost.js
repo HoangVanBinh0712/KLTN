@@ -1,10 +1,10 @@
 import threeDotIcon from '../../assets/icons/3dot-icon.png'
 import { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../../contexts/AuthContext'
+import { PostContext } from '../../contexts/PostContext'
 
 const SingleRowPost = ({ post }) => {
 
-    const { getCvSubmited } = useContext(AuthContext)
+    const { getCvSubmited } = useContext(PostContext)
 
     const [isOpen, setIsOpen] = useState(false)
     const [numCv, setNumCv] = useState(0)
@@ -12,12 +12,12 @@ const SingleRowPost = ({ post }) => {
     const getCv = async () => {
         const res = await getCvSubmited(post.id)
         console.log(res)
-        if(res.success)setNumCv(res.data.length)
+        if (res.success) setNumCv(res.data.length)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getCv()
-    },[])
+    }, [])
 
     const onMouseEnter = () => {
         setIsOpen(true)
@@ -33,6 +33,10 @@ const SingleRowPost = ({ post }) => {
         const year = myDate.getFullYear();
 
         return (`${day}/${month}/${year}`)
+    }
+
+    const viewPost = () => {
+        window.location.href = `/employer/post/${post.id}`
     }
 
     const statePost = (status) => {
@@ -74,8 +78,12 @@ const SingleRowPost = ({ post }) => {
                 </div>
                 {isOpen && (<>
                     <div style={{ position: 'absolute', width: '100%', zIndex: "5" }}>
-                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}> View</div>
-                        <div className="chose-active chose-delete" style={{ marginLeft: "-15px" }}> Delete</div>
+                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={viewPost}>
+                            View Post</div>
+                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}> 
+                            Submited</div>
+                        <div className="chose-active chose-delete" style={{ marginLeft: "-15px" }}> 
+                            Delete</div>
                     </div>
                 </>)}
             </div>
