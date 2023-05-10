@@ -1,24 +1,28 @@
 import { createContext, useReducer, useEffect, useContext } from "react";
 import axios from "axios";
 import { PostReducer } from "../reducers/PostReducer";
-import { apiUrl,LOCAL_STORAGE_TOKEN_NAME } from "./Constants";
+import { apiUrl, LOCAL_STORAGE_TOKEN_NAME } from "./Constants";
+import { AuthContext } from "./AuthContext";
 
 
 export const PostContext = createContext();
 
 const PostContextProvider = ({ children }) => {
-    
+
+    const { authState: { user } } = useContext(AuthContext)
     const [postState, dispatch] = useReducer(PostReducer, {
         postLoading: true,
         posts: [],
         postsAi: [],
-        postFollow:[],
+        postFollow: [],
+        postHot: [],
+        postMostView: [],
 
     });
 
     const getAllPost = async () => {
         try {
-            
+
             const responsePost = await axios.get(`${apiUrl}/post`, {
                 headers: {
                     "Content-Type": "application/json",
@@ -29,6 +33,52 @@ const PostContextProvider = ({ children }) => {
                     type: "POSTS_LOADED_SUCCESS",
                     payload: {
                         posts: responsePost.data.data,
+                    },
+                });
+            }
+        }
+        catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    }
+
+    const getHotPost = async () => {
+        try {
+
+            const responsePost = await axios.get(`${apiUrl}/post/hot-job?page=1&limit=18`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            if (responsePost.data.success) {
+                dispatch({
+                    type: "HOT_POST_LOADED_SUCCESS",
+                    payload: {
+                        postHot: responsePost.data.data,
+                    },
+                });
+            }
+        }
+        catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    }
+
+    const getMostViewPost = async () => {
+        try {
+
+            const responsePost = await axios.get(`${apiUrl}/post/most-view?type=YEAR&page=1&limit=18`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            if (responsePost.data.success) {
+                dispatch({
+                    type: "MOST_VIEW_LOADED_SUCCESS",
+                    payload: {
+                        postMostView: responsePost.data.data,
                     },
                 });
             }
@@ -63,24 +113,55 @@ const PostContextProvider = ({ children }) => {
         }
     }
 
+    const getPredictPost = async (industryId) => {
+        try {
+            const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+            const responsePost = await axios.get(`${apiUrl}/user/cvpredict/post?industryId=${industryId}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${recentToken}`,
+                },
+            })
+            console.log(responsePost)
+            if (responsePost.data.success) {
+                dispatch({
+                    type: "POST_PREDICT_SUCCESS",
+                    payload: {
+                        postsAi: responsePost.data.data,
+                    },
+                });
+            }
+        }
+        catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    }
+
 
     useEffect(() => {
         getAllPost()
-        if(localStorage["user-token"]!==undefined && localStorage["USER_ROLE"]==="user" ){
+        getMostViewPost()
+        getHotPost()
+        if (user !== null) {
+            if (user.industry.id !== undefined && user.role === "ROLE_USER") {
+                getPredictPost(user.industry.id)
+            }
+        }
+        if (localStorage["user-token"] !== undefined && localStorage["USER_ROLE"] === "user") {
             getFollowPost()
         }
-        
-    }, []);
+
+    }, [user]);
 
     const getPostById = async (id) => {
         try {
             const responsePost = await axios.get(`${apiUrl}/post/${id}`, {
                 headers: {
                     "Content-Type": "application/json",
-                    
+
                 },
             })
-            console.log(responsePost.data)
             if (responsePost.data.success) {
                 return responsePost.data
             }
@@ -96,7 +177,7 @@ const PostContextProvider = ({ children }) => {
             const responsePost = await axios.get(`${apiUrl}/post?industryId=${industryId}`, {
                 headers: {
                     "Content-Type": "application/json",
-                    
+
                 },
             })
             console.log(responsePost.data)
@@ -111,29 +192,29 @@ const PostContextProvider = ({ children }) => {
     }
 
     //Employer
-  //get SubmitCV
-  const getCvSubmited =async (postId)=>{
-    try {
-      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
-      if (recentToken !== undefined) {
-        const response = await axios.get(`${apiUrl}/employer/submitcv?postId=${postId}`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${recentToken}`,
-          },
-        });
-        return response.data;
-      } else throw new Error("Unauthorized !");
-    } catch (error) {
-      if (error.response) {
-        return error.response.data;
-      } else return { success: false, message: error.message };
+    //get SubmitCV
+    const getCvSubmited = async (postId) => {
+        try {
+            const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+            if (recentToken !== undefined) {
+                const response = await axios.get(`${apiUrl}/employer/submitcv?postId=${postId}`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${recentToken}`,
+                    },
+                });
+                return response.data;
+            } else throw new Error("Unauthorized !");
+        } catch (error) {
+            if (error.response) {
+                return error.response.data;
+            } else return { success: false, message: error.message };
+        }
     }
-  }
 
     //conxtext data
     const authPostData = {
-        getPostById,getPostByIndustry,
+        getPostById, getPostByIndustry,
         getCvSubmited,
         postState,
     };

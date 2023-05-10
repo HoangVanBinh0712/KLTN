@@ -1,22 +1,52 @@
 
 export const PostReducer = (state, action) => {
-  const { type, payload:{posts,postsAI, postFollow, currentPage,totalPage, limit}} = action;
+  const { type, payload: { posts, postsAi, postHot, postMostView, postFollow, currentPage, totalPage, limit } } = action;
   switch (type) {
     case "POSTS_LOADED_SUCCESS":
       return {
         ...state,
         postLoading: false,
         posts,
-        
+
         /* currentPage,
         totalPage,
         limit, */
       };
-      case "POSTS_FOLLOW":
-        return {
-          ...state,
-          postFollow, 
-        };
+    case "POST_PREDICT_SUCCESS":
+      return {
+        ...state,
+        postLoading: false,
+        postsAi,
+
+        /* currentPage,
+        totalPage,
+        limit, */
+      };
+    case "HOT_POST_LOADED_SUCCESS":
+      return {
+        ...state,
+        postLoading: false,
+        postHot,
+
+        /* currentPage,
+        totalPage,
+        limit, */
+      };
+    case "MOST_VIEW_LOADED_SUCCESS":
+      return {
+        ...state,
+        postLoading: false,
+        postMostView,
+
+        /* currentPage,
+        totalPage,
+        limit, */
+      };
+    case "POSTS_FOLLOW":
+      return {
+        ...state,
+        postFollow,
+      };
     case "POSTS_LOADED_FAIL":
       return {
         ...state,

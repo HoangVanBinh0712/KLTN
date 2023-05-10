@@ -8,7 +8,8 @@ export const GlobalContext = createContext();
 const GlobalContextProvider = ({ children }) => {
     const [globalState, dispatch] = useReducer(GlobalReducer, {
         industries: [],
-        cities: []
+        cities: [],
+        highlightCompany:[],
     });
 
     const getIndustry = async () => {
@@ -54,10 +55,32 @@ const GlobalContextProvider = ({ children }) => {
             else return { success: false, message: error.message };
         }
     }
+    const getHighLightCompany = async () => {
+        try {
+            const resCom = await axios.get(`${apiUrl}/user/highlight-company`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            if(resCom.status===200){
+                dispatch({
+                    type: "SET_COMPANY",
+                    payload: {
+                        highlightCompany: resCom.data,
+                    },
+                  });
+            }
+        }
+        catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    }
 
     useEffect(() => {
         getIndustry()
         getCity()
+        getHighLightCompany()
     }, []);
 
     //conxtext data

@@ -39,6 +39,10 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
         }
     }
 
+    const toAnyPage =(page) =>{
+        setCurrentPage(page)
+    }
+
     const checkFollow = (id, arr) => {
         const index = arr.findIndex(post => post.id === id);
         if (index !== -1) return true
@@ -48,8 +52,8 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
     let postInBox
     if (post.length > 0) {
         postInBox = (<>
-            {allPost[currentPage].map((p) => (
-                <div className="post-item">
+            {allPost[currentPage].map((p,id) => (
+                <div className="post-item" key={id}>
                     <div className="logo-emp-post">
                         <a href="# "><img src={p.author.urlAvatar === null ? logoPost : p.author.urlAvatar} className="img-inpost-homepage" alt="logo" /></a>
                     </div>
@@ -107,7 +111,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                         <img src={leftArrow} alt='icon' />
                     </div>
                     {allPost.map((p, id) => (
-                        <div className="page-num-round"
+                        <div className="page-num-round" onClick={()=>{toAnyPage(id)}}
                             style={currentPage === id ? { backgroundColor: "#0c62ad", border: "2px solid #0c62ad" } : { backgroundColor: "#cfcfcf", border: "2px solid #cfcfcf" }}
                         >
 
@@ -141,7 +145,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                         <img src={leftArrow} alt='icon' />
                     </div>
                     {allPost.map((p, id) => (
-                        <div className="page-num-round"
+                        <div className="page-num-round" onClick={()=>{toAnyPage(id)}}
                             style={currentPage === id ? { backgroundColor: "#0c62ad", border: "2px solid #0c62ad" } : { backgroundColor: "#cfcfcf", border: "2px solid #cfcfcf" }}
                         >
 

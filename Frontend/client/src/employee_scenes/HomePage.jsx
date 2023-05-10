@@ -5,11 +5,13 @@ import Footer from '../components/global/Footer';
 import ListPostsHomepage from './components/ListPostsHomepage';
 import TopEmployer from './components/TopEmployer';
 import { PostContext } from '../contexts/PostContext';
+import { GlobalContext } from '../contexts/GlobalContext';
 
 const HomePage = () => {
 
-  const {postState:{posts}}=useContext(PostContext)
-  
+  const {postState:{posts, postHot, postMostView, postsAi}}=useContext(PostContext)
+  const {globalState:{ highlightCompany}}=useContext(GlobalContext)
+
   return (
     <>
       <TopBar />
@@ -17,18 +19,18 @@ const HomePage = () => {
       <ListPostsHomepage
         title={"Hot job"}
         isHaveAi={false}
-        listPosts={posts}
+        listPosts={postHot}
       />
-      <TopEmployer/>
+      <TopEmployer listCompanies={highlightCompany}/>
       <ListPostsHomepage
-        title={"Hot job"}
+        title={"Suitable job"}
         isHaveAi={true}
-        listPosts={posts}
+        listPosts={postsAi}
       />
       <ListPostsHomepage
-        title={"Hot job"}
+        title={"Attractive job"}
         isHaveAi={false}
-        listPosts={posts}
+        listPosts={postMostView}
       />
       <Footer/>
     </>

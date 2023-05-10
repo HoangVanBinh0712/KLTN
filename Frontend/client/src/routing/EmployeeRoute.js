@@ -22,6 +22,7 @@ import LoginGG from "../components/page/login/LoginWithGG";
 import Register from "../components/page/register/Register";
 import PostDetails from "../components/PostDetails";
 import EmployerProfile from "../employer_scenes/components/EmployerProfile";
+import SearchPageComponent from "../employee_scenes/components/SearchPageComponent";
 import { AuthContext } from "../contexts/AuthContext";
 
 const EmployeeRoute = ({ ...rest }) => {
@@ -49,6 +50,7 @@ const EmployeeRoute = ({ ...rest }) => {
         <Route path="/user/register" element={<Register />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/post/:id" element={<PostDetails />} />
+        <Route path="/posts" element={<SearchPageComponent />} />
         <Route path="/recruiter/:id" element={<EmployerProfile />} />
         <Route path="/user/account" element={<EmployeeAccountPage />}>
           <Route path="personal-info" element={<PersonalInfoComponent />} />
@@ -75,6 +77,7 @@ const EmployeeRoute = ({ ...rest }) => {
         <Route path="/user/register" element={<Register />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/post/:id" element={<PostDetails />} />
+        <Route path="/posts" element={<SearchPageComponent />} />
         <Route path="/recruiter/:id" element={<EmployerProfile />} />
         <Route path="/user/account" element={<EmployeeAccountPage />}>
           <Route path="personal-info" element={<PersonalInfoComponent />} />

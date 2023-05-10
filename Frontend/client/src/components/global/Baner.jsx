@@ -4,10 +4,13 @@ import { useState } from 'react';
 import banner1 from "../../assets/img/banner-home.png"
 import banner2 from "../../assets/img/banner-home-or.png"
 import banner3 from "../../assets/img/banner-home-or2.png"
+import { GlobalContext } from '../../contexts/GlobalContext';
 
 
 const Baner = () => {
 
+   /*  const {globalState:{cities}} =useState(GlobalContext)
+    console.log(cities) */
     const banner = [banner1,banner2,banner3]
     const [currentSlide, setCurrentSlide] = useState(0);
     

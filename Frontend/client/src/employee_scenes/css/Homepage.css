@@ -357,8 +357,10 @@ body {
 }
 
 .circle-round img {
-    height: 75%;
-    width: auto;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
 }
 
 .page-num-round {
