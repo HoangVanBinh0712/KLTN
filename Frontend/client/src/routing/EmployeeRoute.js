@@ -51,6 +51,7 @@ const EmployeeRoute = ({ ...rest }) => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/post/:id" element={<PostDetails />} />
         <Route path="/posts" element={<SearchPageComponent />} />
+        <Route path="/posts/:keyword" element={<SearchPageComponent />} />
         <Route path="/recruiter/:id" element={<EmployerProfile />} />
         <Route path="/user/account" element={<EmployeeAccountPage />}>
           <Route path="personal-info" element={<PersonalInfoComponent />} />
@@ -78,6 +79,7 @@ const EmployeeRoute = ({ ...rest }) => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/post/:id" element={<PostDetails />} />
         <Route path="/posts" element={<SearchPageComponent />} />
+        <Route path="/posts/:keyword" element={<SearchPageComponent />} />
         <Route path="/recruiter/:id" element={<EmployerProfile />} />
         <Route path="/user/account" element={<EmployeeAccountPage />}>
           <Route path="personal-info" element={<PersonalInfoComponent />} />

@@ -10,8 +10,8 @@ const TopEmployer = ({listCompanies}) => {
             Top Employers
         </div>
         <div className="list-emp-homepage">
-            {listCompanies.map((emp=>
-                <img src={emp.urlAvatar===null?tamLogo:emp.urlAvatar} className="logo-top-emp" alt='logo'/>
+            {listCompanies.map((emp,id)=>(
+                <img src={emp.urlAvatar===null?tamLogo:emp.urlAvatar} className="logo-top-emp" alt='logo' key={id}/>
                 ))}
         </div>
     </div>

@@ -80,9 +80,15 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
         </>
         )
     }
-    else {
+    else if (!isHaveAi){
         postInBox = (<>
             There are no posts yet!
+        </>
+        )
+    }
+    else {
+        postInBox = (<>
+            You need to login and upload your profile so we can recommend suitable jobs for you.
         </>
         )
     }
@@ -111,7 +117,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                         <img src={leftArrow} alt='icon' />
                     </div>
                     {allPost.map((p, id) => (
-                        <div className="page-num-round" onClick={()=>{toAnyPage(id)}}
+                        <div className="page-num-round" onClick={()=>{toAnyPage(id)}} key={id}
                             style={currentPage === id ? { backgroundColor: "#0c62ad", border: "2px solid #0c62ad" } : { backgroundColor: "#cfcfcf", border: "2px solid #cfcfcf" }}
                         >
 
@@ -145,7 +151,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                         <img src={leftArrow} alt='icon' />
                     </div>
                     {allPost.map((p, id) => (
-                        <div className="page-num-round" onClick={()=>{toAnyPage(id)}}
+                        <div className="page-num-round" onClick={()=>{toAnyPage(id)}} key={id}
                             style={currentPage === id ? { backgroundColor: "#0c62ad", border: "2px solid #0c62ad" } : { backgroundColor: "#cfcfcf", border: "2px solid #cfcfcf" }}
                         >
 

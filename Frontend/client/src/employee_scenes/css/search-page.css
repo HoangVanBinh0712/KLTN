@@ -110,6 +110,16 @@ div.button:hover {
     font-size: 18px;
 }
 
+.search-bar .row-flex-horizon .clear-selection {
+    width: 100%;
+    color: #0C62AD !important;
+    text-align: center;
+    line-height: 1.5em;
+    font-size: 18px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .search-bar .row-flex-horizon .search-select {
     border: 1px solid #cfcfcf;
     border-radius: 5px;

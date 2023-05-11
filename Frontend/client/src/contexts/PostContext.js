@@ -191,6 +191,22 @@ const PostContextProvider = ({ children }) => {
         }
     }
 
+    const getPostByAnyFilter = async (keyword)=>{
+        try {
+
+            const responsePost = await axios.get(`${apiUrl}/post${keyword}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            return responsePost.data
+        }
+        catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    }
+
     //Employer
     //get SubmitCV
     const getCvSubmited = async (postId) => {
@@ -214,7 +230,7 @@ const PostContextProvider = ({ children }) => {
 
     //conxtext data
     const authPostData = {
-        getPostById, getPostByIndustry,
+        getPostById, getPostByIndustry,getPostByAnyFilter,
         getCvSubmited,
         postState,
     };

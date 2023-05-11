@@ -289,8 +289,9 @@ body {
 
 .post-title-homepage {
     font-family: Futura-Heavy;
-    font-size: 16px;
+    font-size: 20px;
     width: 90%;
+    text-transform: uppercase;
 }
 
 .post-title-homepage a {
@@ -304,13 +305,14 @@ body {
     text-align: center;
     border-radius: 3px;
     color: #1d39cf;
-    font-size: 14px;
+    font-size: 16px;
+    margin: 5px 0;
 }
 
 .locationg-company-homepage {
     font-family: Futura-Book;
     color: #787d8e;
-    font-size: 15px;
+    font-size: 18px;
     width: 90%;
 }
 
