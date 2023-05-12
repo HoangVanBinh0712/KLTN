@@ -173,7 +173,7 @@
 
 .content-wrapper{
     margin-bottom: 35px;
-    display: block;
+    /* display: block; */
     box-shadow: none;
 }
 

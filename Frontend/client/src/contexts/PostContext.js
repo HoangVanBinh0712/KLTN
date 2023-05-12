@@ -122,7 +122,6 @@ const PostContextProvider = ({ children }) => {
                     Authorization: `Bearer ${recentToken}`,
                 },
             })
-            console.log(responsePost)
             if (responsePost.data.success) {
                 dispatch({
                     type: "POST_PREDICT_SUCCESS",
@@ -228,10 +227,53 @@ const PostContextProvider = ({ children }) => {
         }
     }
 
+    // follow/ unfollow post
+    const followPost = async (postId) => {
+        try {
+            const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+            if (recentToken !== undefined) {
+                const response = await axios.post(`${apiUrl}/user/follow/${postId}`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${recentToken}`,
+                    },
+                });
+                if(response.data.success)getFollowPost()
+                return response.data;
+            } else throw new Error("Unauthorized !");
+        } catch (error) {
+            if (error.response) {
+                return error.response.data;
+            } else return { success: false, message: error.message };
+        }
+    }
+
+    const unfollowPost = async (postId) => {
+        try {
+            const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+            if (recentToken !== undefined) {
+                const response = await axios.post(`${apiUrl}/user/unfollow/${postId}`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${recentToken}`,
+                    },
+                });
+                if(response.data.success)getFollowPost()
+                return response.data;
+            } else throw new Error("Unauthorized !");
+        } catch (error) {
+            if (error.response) {
+                return error.response.data;
+            } else return { success: false, message: error.message };
+        }
+    }
+
+
     //conxtext data
     const authPostData = {
         getPostById, getPostByIndustry,getPostByAnyFilter,
         getCvSubmited,
+        followPost, unfollowPost,
         postState,
     };
 

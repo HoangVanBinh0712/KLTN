@@ -57,7 +57,7 @@ const EmployerProfile = () => {
                             </div>
                             <div id="employer-seen" className="info-area">
                                 <p className="area-title">Recruitment</p>
-                                <div className="content-wrapper">
+                                <div className="content-wrapper" style={{display:'block'}}>
                                     <div className="employer-seen-info" style={{padding:"10px"}}>
                                         <img id="employer-logo" src={logoIcon} alt='' style={{width:"20%"}}/>
                                         <div className="info-employee-wrapper">

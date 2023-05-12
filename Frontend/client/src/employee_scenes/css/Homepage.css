@@ -60,7 +60,7 @@ body {
 .messbell-intopbar {
     width: 60%;
     cursor: pointer;
-    margin: 25%;
+    margin: 20%;
     padding: 5%;
     border: 1px solid #e7e7e7;
     background-color: #e7e7e7;
@@ -546,6 +546,7 @@ body {
 .option-account {
     display: flex;
     justify-content: end;
+    align-items: center;
 }
 
 .user-dropbox {

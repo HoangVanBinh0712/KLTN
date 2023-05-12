@@ -27,7 +27,7 @@ import { AuthContext } from "../contexts/AuthContext";
 
 const EmployeeRoute = ({ ...rest }) => {
 
-  const {authState:{authloading, role}}=useContext(AuthContext)
+  const { authState: { authloading, role } } = useContext(AuthContext)
   const location = useLocation();
   const currentUrl = location.pathname;
 
@@ -42,7 +42,47 @@ const EmployeeRoute = ({ ...rest }) => {
   if (currentUrl === "/user/account")
     return <Navigate to="/user/account/personal-info" />;
   //Check if user login here
-  else  if(!authloading && role==="ROLE_USER")  {
+  else if (!authloading && role === "ROLE_USER") {
+    body = (
+      <Routes>
+        <Route path="/user/login" element={<Login />} />
+        <Route path="/login/:token" element={<LoginGG />} />
+        <Route path="/user/register" element={<Register />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/post/:id" element={<PostDetails />} />
+        <Route path="/posts" element={<SearchPageComponent />} />
+        <Route path="/posts/:keyword" element={<SearchPageComponent />} />
+        <Route path="/recruiter/:id" element={<EmployerProfile />} />
+        <Route path="/user/account" element={!authloading && role === "ROLE_USER" ? (<EmployeeAccountPage />)
+          :(<Navigate to="/user/login" />)}>
+          <Route path="personal-info" element={!authloading && role === "ROLE_USER" ? (<PersonalInfoComponent />)
+          :(<Navigate to="/user/login" />)} />
+          <Route path="achievement" element={!authloading && role === "ROLE_USER" ? (<UserAchievement />)
+          :(<Navigate to="/user/login" />)} />
+          <Route path="add-resume" element={!authloading && role === "ROLE_USER" ? (<AddResume />)
+          :(<Navigate to="/user/login" />)} />
+          <Route path="change-password" element={!authloading && role === "ROLE_USER" ? (<ChangePassword />)
+          :(<Navigate to="/user/login" />)} />
+          <Route path="post-followed" element={!authloading && role === "ROLE_USER" ? (<PostFollowed />)
+          :(<Navigate to="/user/login" />)} />
+          <Route path="post-submitted" element={!authloading && role === "ROLE_USER" ? (<PostSubmitted />)
+          :(<Navigate to="/user/login" />)} />
+          <Route path="predict-job" element={!authloading && role === "ROLE_USER" ? (<PredictJob />)
+          :(<Navigate to="/user/login" />)} />
+          <Route path="recruiter-followed" element={!authloading && role === "ROLE_USER" ? (<RecruiterFollowed />)
+          :(<Navigate to="/user/login" />)} />
+          <Route path="resume-viewer" element={!authloading && role === "ROLE_USER" ? (<ResumeViewer />)
+          :(<Navigate to="/user/login" />)} />
+          <Route path="update-resume" element={!authloading && role === "ROLE_USER" ? (<UpdateResume />)
+          :(<Navigate to="/user/login" />)} />
+          <Route path="verify-email" element={!authloading && role === "ROLE_USER" ? (<VerifyEmail />)
+          :(<Navigate to="/user/login" />)} />
+        </Route>
+        <Route path="/*" element={<PageNotFound />} />
+      </Routes>
+    );
+  }
+  else {
     body = (
       <Routes>
         <Route path="/user/login" element={<Login />} />
@@ -65,24 +105,6 @@ const EmployeeRoute = ({ ...rest }) => {
           <Route path="resume-viewer" element={<ResumeViewer />} />
           <Route path="update-resume" element={<UpdateResume />} />
           <Route path="verify-email" element={<VerifyEmail />} />
-        </Route>
-        <Route path="/*" element={<PageNotFound />} />
-      </Routes>
-    );
-  }
-  else {
-    body = (
-      <Routes>
-        <Route path="/user/login" element={<Login />} />
-        <Route path="/login/:token" element={<LoginGG />} />
-        <Route path="/user/register" element={<Register />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/post/:id" element={<PostDetails />} />
-        <Route path="/posts" element={<SearchPageComponent />} />
-        <Route path="/posts/:keyword" element={<SearchPageComponent />} />
-        <Route path="/recruiter/:id" element={<EmployerProfile />} />
-        <Route path="/user/account" element={<EmployeeAccountPage />}>
-          <Route path="personal-info" element={<PersonalInfoComponent />} />
         </Route>
         <Route path="/*" element={<PageNotFound />} />
       </Routes>

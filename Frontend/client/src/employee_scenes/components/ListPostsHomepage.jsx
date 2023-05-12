@@ -8,9 +8,11 @@ import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import logoPost from "../../assets/icons/logo.png"
 import { PostContext } from '../../contexts/PostContext'
+import { AuthContext } from '../../contexts/AuthContext'
 
 const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
 
+    const {authState:{role}}=useContext(AuthContext)
     const { postState: { postFollow } } = useContext(PostContext)
     const post = listPosts
 
@@ -68,7 +70,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                             {p.location}
                         </div>
                         <div className="follow-post-heart">
-                            <div className="heart-icon">
+                            <div className="heart-icon" style={role!=="ROLE_EMPLOYER"?{display:'block'}:{display:'none'}}>
                                 {checkFollow(p.id, postFollow) ? (<img className="icon-hear-follow" src={heartIcon} alt="heart icon" />)
                                     : (<img className="icon-hear-follow" src={roundheartIcon} alt="heart icon" />)}
                             </div>

@@ -44,8 +44,8 @@ const TopBar = () => {
     const logout = () => {
         const confirm = window.confirm("Are you sure you want to logout?");
         if (confirm) {
-            logoutSection()
             window.location.href = '/home'
+            logoutSection()
         }
     }
 
