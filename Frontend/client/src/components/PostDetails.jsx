@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom'
 import TopBar from './global/TopBar';
 import Footer from './global/Footer';
+import ReactQuill from 'react-quill';
 import "./css/postdetail.css"
 
 import logoIcon from '../assets/icons/logo.png'
@@ -16,6 +18,9 @@ import pingIcon from '../assets/icons/location-ping.png'
 const PostDetails = () => {
 
     let { id } = useParams();
+
+    const [isSubmitFormOpen, setSubmitForm]=useState(false)
+
 
     const data = {
         "id": 1,
@@ -91,19 +96,91 @@ const PostDetails = () => {
         }
     }
 
+    const getPostDate = (date) => {
+        const myDate = new Date(date);
+        const day = ("0" + myDate.getDate()).slice(-2);
+        const month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+        const year = myDate.getFullYear();
+
+        return (`${day}/${month}/${year}`)
+    }
+
+    const getTypeJob = (type) => {
+        if (type === "FULL_TIME")
+            return 'Full time'
+        if (type === "PART_TIME")
+            return 'Part time'
+        if (type === "INTERN")
+            return 'Intern'
+    }
+
+    const getGender = (gen) => {
+        if (gen === "MALE")
+            return 'Male'
+        if (gen === "FEMALE")
+            return 'Female'
+        if (gen === "NONE")
+            return 'Not required'
+    }
+
+    const getExp = (exp) => {
+        if (exp === "NONE")
+            return 'Not required'
+        if (exp === "UNDER_ONE_YEAR")
+            return 'Under 1 year'
+        if (exp === "ONE_YEAR")
+            return '1 year'
+        if (exp === "TWO_YEAR")
+            return '2 years'
+        if (exp === "THREE_YEAR")
+            return '3 years'
+        if (exp === "FOUR_YEAR")
+            return '4 years'
+        if (exp === "FIVE_YEAR")
+            return '5 years'
+        if (exp === "ABOVE_FIVE_YEAR")
+            return 'Over 5 years'
+
+    }
+
+    function handleCopyClick() {
+        const copyText = window.location.href;
+        const tempInput = document.createElement("input");
+        document.body.appendChild(tempInput);
+        tempInput.setAttribute("value", copyText);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+    }
+
+    const [selectValue, setSelectValue] = useState('');
+    const [quillValue, setQuillValue] = useState('');
+
+    const handleSelectChange = (event) => {
+        setSelectValue(event.target.value);
+    };
+
+    const handleQuillChange = (value) => {
+        setQuillValue(value);
+    };
+
+    const applyClick = () => {
+
+    }
+
     return (<>
         <TopBar />
         <div className="post-detail">
-            <div className='post-title-intop'>Digital Marketing Specialist</div>
+            <div className='post-title-intop'>{data.title}</div>
             <div className="post">
                 <img className="avatar" src={logoIcon} alt="" />
                 <div className="post-info">
-                    <p className="title">Digital Marketing Specialist</p>
+                    <p className="title">{data.title}</p>
                     <div className="post-description">
-                        ABC Company
+                        {data.author.name}
                     </div>
                     <div className="post-deadline-submit">
-                        Deadline for submission: 30/06/2023
+                        Deadline for submission: {' '}{getPostDate(data.expirationDate)}
                     </div>
                 </div>
                 <div className="group-buttons">
@@ -120,7 +197,7 @@ const PostDetails = () => {
             <div className="recruitment">
                 <div className='recruitment-title'>Recruitment</div>
                 <div className="content-wrapper">
-                    <h1 style={{fontSize:'26px'}}>Details</h1>
+                    <h1 style={{ fontSize: '26px' }}>Details</h1>
                     <div className="row-space-between">
                         <div className="left-group">
                             <h3 style={{ fontWeight: "600" }}>Overal</h3>
@@ -131,7 +208,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Salary</h4>
-                                        <p>12 Milion</p>
+                                        <p>{data.salary !== null ? data.salary : ''}{' '}{data.currency}</p>
                                     </div>
                                 </div>
                                 <div className="item" style={{ backgroundColor: "inherit" }} >
@@ -140,7 +217,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Quantity</h4>
-                                        <p>12 people</p>
+                                        <p>{data.recruit} people</p>
                                     </div>
                                 </div>
                                 <div className="item" style={{ backgroundColor: "inherit" }}>
@@ -149,7 +226,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Type of work</h4>
-                                        <p>Full time</p>
+                                        <p>{getTypeJob(data.method)}</p>
                                     </div>
                                 </div>
                                 <div className="item" style={{ backgroundColor: "inherit" }}>
@@ -158,7 +235,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Level</h4>
-                                        <p>Staff</p>
+                                        <p>{data.position}</p>
                                     </div>
                                 </div>
                                 <div className="item" style={{ backgroundColor: "inherit" }}>
@@ -167,7 +244,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Gender</h4>
-                                        <p>Not required</p>
+                                        <p>{getGender(data.gender)}</p>
                                     </div>
                                 </div>
                                 <div className="item" style={{ backgroundColor: "inherit" }}>
@@ -176,7 +253,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Experience</h4>
-                                        <p>1 year</p>
+                                        <p>{getExp(data.experience)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -185,9 +262,12 @@ const PostDetails = () => {
 
                             <h3>Share Recruitment</h3>
                             <div className="row-flex">
-                                <p>Copy link:</p>
+                                <p style={{ width: '80%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                    Copy link:{' '}{window.location.href}
+                                </p>
 
-                                <div className="button-copy"><i className="fa fa-clone" aria-hidden="true"></i>
+                                <div className="button-copy" onClick={() => handleCopyClick()}>
+                                    <i className="fa fa-clone" aria-hidden="true"></i>
                                 </div>
                             </div>
                             <p>Share with:</p>
@@ -203,40 +283,24 @@ const PostDetails = () => {
 
                             <div className="left-group">
                                 <h3 style={{ fontWeight: "600" }}>Workplace</h3>
-                                <div className='workplace-inpost-detail'> Số 1 võ văn Ngân, phường linh chiểu</div>
+                                <div className='workplace-inpost-detail'> {data.location}</div>
                             </div>
                             <div className="detail">
                                 <h3 style={{ fontSize: "20px" }}>Description</h3>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, eius. Voluptatem est
-                                    hic,
-                                    inventore, porro quod dolorum sed perspiciatis at mollitia quae debitis nobis veniam
-                                    odio
-                                    aspernatur sunt ipsum vel!</p>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, eius. Voluptatem est
-                                    hic,
-                                    inventore, porro quod dolorum sed perspiciatis at mollitia quae debitis nobis veniam
-                                    odio
-                                    aspernatur sunt ipsum vel!</p>
+                                <p>{data.description}</p>
+
                             </div>
                             <div className="detail">
                                 <h3 style={{ fontSize: "20px" }}>Requirement</h3>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, eius. Voluptatem est
-                                    hic,
-                                    inventore, porro quod dolorum sed perspiciatis at mollitia quae debitis nobis veniam
-                                    odio
-                                    aspernatur sunt ipsum vel!</p>
+                                <p>{data.requirement}</p>
                             </div>
                             <div className="detail">
                                 <h3 style={{ fontSize: "20px" }}>Benifit</h3>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Suscipit, eius. Voluptatem est
-                                    hic,
-                                    inventore, porro quod dolorum sed perspiciatis at mollitia quae debitis nobis veniam
-                                    odio
-                                    aspernatur sunt ipsum vel!</p>
+                                <p>{data.benifit}</p>
                             </div>
                             <div className="detail">
                                 <h3 style={{ fontSize: "20px" }}>How to apply</h3>
-                                <p>Candidates apply online by clicking <span><a href="">Apply</a></span> below</p>
+                                <p>Candidates apply online by clicking <span style={{ color: "#0c62ad" }}>Apply</span> below</p>
                                 <div className="group-buttons flex-row">
                                     <div className="button">
                                         <i className="fa fa-paper-plane" aria-hidden="true"></i>
@@ -248,7 +312,7 @@ const PostDetails = () => {
                                     </div>
                                 </div>
                                 <div className="post-deadline-submit">
-                                    Deadline for submission: 30/06/2023
+                                    Deadline for submission: {' '}{getPostDate(data.expirationDate)}
                                 </div>
                             </div>
                         </div>
@@ -265,24 +329,28 @@ const PostDetails = () => {
                                 </div>
                             </div>
                             <div>
-                                <h3 style={{ fontSize: "20px", fontWeight:700 }}>Industry</h3>
+                                <h3 style={{ fontSize: "20px", fontWeight: 700 }}>Industry</h3>
                                 <div className="mark">
-                                    Marketing
+                                    {data.industry.name}
                                 </div>
-                                <h3 style={{ fontSize: "20px", fontWeight:700 }}>Area</h3>
+                                <h3 style={{ fontSize: "20px", fontWeight: 700 }}>Area</h3>
                                 <div className="mark">
-                                    Ho Chi Minh City
+                                    {data.city.name}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="content-footer">
-                    <h1 style={{fontSize:'26px', fontWeight:"600"}}>ABC COMPANY information <span><a href="">View company {" >>"}</a></span></h1>
+                    <h1 style={{ fontSize: '26px', fontWeight: "600" }}>{data.author.name} information
+                        <span>
+                            <a href={`/recruiter/${data.author.id}`}>View company {" >>"}</a>
+                        </span>
+                    </h1>
 
                     <div className="row-flex flex-column">
 
-                        <div className="item" style={{width:"24%"}}>
+                        <div className="item" style={{ width: "24%" }}>
                             <div className="icon-wrapper">
                                 <img src={accIcon} alt="" />
                             </div>
@@ -297,15 +365,30 @@ const PostDetails = () => {
                             </div>
                             <div className="item-detail">
                                 <h4>Headquarters</h4>
-                                <p>Số 1 võ văn ngân</p>
+                                <p>{data.author.address}</p>
                             </div>
                         </div>
                     </div>
                     <div className="footer-line">
                         <img src={workIcon} alt="" />
-                        <h3 style={{ fontSize: "20px", fontWeight:600 }}>Jobs with the company</h3>
-                        <span><a href="# " style={{fontSize:'20px', color:'#0c62ad'}}>View More</a></span>
+                        <h3 style={{ fontSize: "20px", fontWeight: 600 }}>Jobs with the company</h3>
+                        <span>
+                            <a href={`/recruiter/${data.author.id}`} style={{ fontSize: '20px', color: '#0c62ad' }}>View More</a>
+                        </span>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div className='form-submit-cv' style={!isSubmitFormOpen?{display:'block'}:{display:'none'}}>
+            <div className='form-submit-cv-control'>
+                <select value={selectValue} onChange={handleSelectChange}>
+                    <option value="">Select an option</option>
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                </select>
+                <ReactQuill value={quillValue} onChange={handleQuillChange} />
+                <div>
+                    
                 </div>
             </div>
         </div>

@@ -291,9 +291,9 @@ const SearchPageComponent = () => {
                     <img className="avatar"
                         src={p.author.urlAvatar === null ? logoPost : p.author.urlAvatar}
                         alt=""
-                        onClick={() => onClickImagePost(p.author.id)} />
+                        onClick={() => {onClickImagePost(p.author.id)}} />
                     <div className="cart-info">
-                        <p className="title" onClick={() => onClickPostTitle(p.author.id)}>{p.title}</p>
+                        <p className="title" onClick={() => onClickPostTitle(p.id)}>{p.title}</p>
                         <div className="cart-description">
                             {p.author.name}
                         </div>
@@ -448,7 +448,8 @@ const SearchPageComponent = () => {
                         <h3>May be you are interested</h3>
                         {postMostView.length > 0 ? (
                             <div className="cart-v1">
-                                <p className="title"style={{ cursor: "pointer" }} onClick={() => onClickPostTitle(postMostView[0].author.id)}>
+                                <p className="title" style={{ cursor: "pointer" }}
+                                    onClick={() => onClickPostTitle(postMostView[0].id)}>
                                     {postMostView[0].title}</p>
                                 <div className="row-flex-horizon align-items-unset">
                                     <img className="avatar"
@@ -477,7 +478,8 @@ const SearchPageComponent = () => {
                         ) : (<></>)}
                         {postMostView.length > 1 ? (
                             <div className="cart-v1">
-                                <p className="title" style={{ cursor: "pointer" }} onClick={() => onClickPostTitle(postMostView[1].author.id)}>
+                                <p className="title" style={{ cursor: "pointer" }}
+                                    onClick={() => onClickPostTitle(postMostView[1].id)}>
                                     {postMostView[1].title}</p>
                                 <div className="row-flex-horizon align-items-unset">
                                     <img className="avatar"
@@ -514,7 +516,7 @@ const SearchPageComponent = () => {
                                         src={postMostView[2].author.urlAvatar !== null ? postMostView[2].author.urlAvatar : logoPost}
                                         alt=""
                                         style={{ borderRadius: '5px', height: '150px', cursor: "pointer" }}
-                                        onClick={() => onClickImagePost(postMostView[2].author.id)}
+                                        onClick={() => onClickImagePost(postMostView[2].id)}
                                     />
                                     <div className="cart-info">
                                         <p className="method">{getTypeJob(postMostView[2].method)}</p>
