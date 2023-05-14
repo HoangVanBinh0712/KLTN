@@ -51,17 +51,18 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
         else return false
     }
 
+
     let postInBox
     if (post.length > 0) {
         postInBox = (<>
             {allPost[currentPage].map((p,id) => (
                 <div className="post-item" key={id}>
                     <div className="logo-emp-post">
-                        <a href="# "><img src={p.author.urlAvatar === null ? logoPost : p.author.urlAvatar} className="img-inpost-homepage" alt="logo" /></a>
+                        <a href={`/recruiter/${p.author.id}`}><img src={p.author.urlAvatar === null ? logoPost : p.author.urlAvatar} className="img-inpost-homepage" alt="logo" /></a>
                     </div>
                     <div className="info-post-homepage">
                         <div className="post-title-homepage">
-                            <a href="# ">{p.title}</a>
+                            <a href={`/post/${p.id}`}>{p.title}</a>
                         </div>
                         <div className="type-of-work">
                             {p.method === "FULL_TIME" ? "Full time" : "Part time"}

@@ -2,8 +2,6 @@ import '../css/search-page.css'
 import TopBar from '../../components/global/TopBar'
 import Footer from '../../components/global/Footer'
 import bannerSearch from '../../assets/picture-banner/banner-search.png'
-import logoIcon from "../../assets/icons/logo.png"
-import tamLogoIcon from "../../assets/picture-banner/tma-logo.png"
 import roundheartIcon from "../../assets/icons/round-heart-icon.png"
 import heartIcon from "../../assets/icons/heart-icon.png"
 import updPic from '../../assets/picture-banner/update-cv.png'
@@ -242,14 +240,14 @@ const SearchPageComponent = () => {
                 if (checkFollow(id, postFollow)) {
                     const res = await unfollowPost(id)
                     if (res.success) {
-                        success('The article has been added to favorites.')
+                        success('The post has been removed from the favorites list.')
                     }
                     else warn(res.message)
                 }
                 else {
                     const res = await followPost(id)
                     if (res.success) {
-                        success('The post has been removed from the favorites list.')
+                        success('The article has been added to favorites.')
                     }
                     else warn(res.message)
                 }

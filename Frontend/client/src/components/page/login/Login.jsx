@@ -61,7 +61,6 @@ const Login = () => {
         setAuthLoading(false);
         event.preventDefault();
         if (email.length === 0 || pwd.length === 0) {
-            console.log("hehe")
             setMess("*Required...")
             setTimeout(() => {
                 setMess("")
@@ -158,18 +157,20 @@ const Login = () => {
                             <div>
                                 <a href="#_" className="txt3">Forgot a password?</a>
                             </div>
-                            <div className="text-center p-t-20 p-b-20">
-                                <span className="txt2">
-                                    Or
-                                </span>
-                            </div>
+                            {checkUser && (<>
+                                <div className="text-center p-t-20 p-b-20">
+                                    <span className="txt2">
+                                        Or
+                                    </span>
+                                </div>
 
-                            <div className="login100-form-social-item">
-                                <img src={ggIcon} alt="gg icon" width="18px" height="18px" />
-                                <a className="link-to-gg" href="https://career-website.herokuapp.com/oauth2/authorization/google">
-                                    Continue with google
-                                </a>
-                            </div>
+                                <div className="login100-form-social-item">
+                                    <img src={ggIcon} alt="gg icon" width="18px" height="18px" />
+                                    <a className="link-to-gg" href="https://career-website.herokuapp.com/oauth2/authorization/google">
+                                        Continue with google
+                                    </a>
+                                </div>
+                            </>)}
                         </form>
 
                         <div className="login100-more">

@@ -192,7 +192,7 @@ body {
 .free-space input,
 .free-space button,
 .free-space select {
-    padding: 1em;
+    padding: 0.5em;
     box-sizing: border-box;
     width: 100%;
     font-size: 1em;
@@ -259,7 +259,7 @@ div.button {
     align-items: center;
     border: 1px solid #0C62AD;
     color: #0C62AD;
-    padding: 0.8em;
+    padding: 0.5em;
     gap: 0.5em;
     font-weight: bold;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);

@@ -1,61 +1,102 @@
-import logoIcon from "../../assets/picture-banner/logo.png";
+import roundheartIcon from "../../assets/icons/round-heart-icon.png"
+import heartIcon from "../../assets/icons/heart-icon.png"
+import logoPost from "../../assets/icons/logo.png"
+import { useToast } from "../../contexts/Toast";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import { PostContext } from "../../contexts/PostContext";
 
 const SinglePost = ({ post }) => {
 
-  const aPost = {
-    id: 1,
-    title:"Second title",
-    description:"Mặc áo vào thứ anh cần là nụ cười của em ?",
-    method: "FULL_TIME",
-    position:"Manager",
-    experience:"THREE_YEAR",
-    gender:"MALE",
-    requirement:"Toeic 650+ or Ielts 6.0+",
-    benifit:"Bao hiem suc khoe",
-    contact:"MrBinh: 0337445599",
-    salary:null,
-    currency:"AGREEMENT",
-    location:"Binh An, Di an",
-    recruit:15,
-    createDate :"2023-01-07 10:56:01",
-    expirationDate :"2023-06-06 00:00:00",
-    industry:{ id: 1, name: "IT" },
-    city:{ id: 1, name: "TP Hồ Chí Minh" },
-    status:"ACTIVE",
-    viewCount:7,
+  const { authState: { authloading, role } } = useContext(AuthContext)
+  const { postState: { postFollow }, followPost, unfollowPost, } = useContext(PostContext)
+  const { warn, success } = useToast()
+
+  const aPost = post
+
+  const onClickImagePost = (empId) => {
+    window.location.href = `/recruiter/${empId}`
   }
 
-  function getDaysSince(date) {
-    const now = new Date(); 
-    const timeDiff = now.getTime() - date.getTime(); 
-    return Math.floor(timeDiff / (1000 * 3600 * 24)); 
+  const onClickPostTitle = (postId) => {
+    window.location.href = `/post/${postId}`
   }
+
+  function getDaysDiff(date) {
+    const oneDay = 24 * 60 * 60 * 1000; // số miligiây trong 1 ngày
+    const currentDate = new Date();
+    const inputDate = new Date(date);
+    const diffDays = Math.round(Math.abs((currentDate - inputDate) / oneDay));
+    return diffDays;
+  }
+
+  const checkFollow = (id, arr) => {
+    const index = arr.findIndex(post => post.id === id);
+    if (index !== -1) return true
+    else return false
+  }
+
+  const heartClick = async (id) => {
+    if (authloading) {
+      window.location.href = 'user/login'
+    }
+    else {
+      if (role === "ROLE_USER") {
+        if (checkFollow(id, postFollow)) {
+          const res = await unfollowPost(id)
+          if (res.success) {
+            success('The post has been removed from the favorites list.')
+          }
+          else warn(res.message)
+        }
+        else {
+          const res = await followPost(id)
+          if (res.success) {
+            success('The article has been added to favorites.')
+          }
+          else warn(res.message)
+        }
+      }
+    }
+  }
+
 
   return (
-    <div className="cart" >
-      <img className="avatar" src={logoIcon} alt=""></img>
+    <div className="cart">
+      <img className="avatar"
+      style={{height:'100%', width:'auto', border:'none', padding:'0'}}
+        src={aPost.author.urlAvatar === null ? logoPost : aPost.author.urlAvatar}
+        alt=""
+        onClick={() => { onClickImagePost(aPost.author.id) }} />
       <div className="cart-info">
-        <p className="title">{aPost.title}</p>
+        <p className="title" onClick={() => onClickPostTitle(aPost.id)}>{aPost.title}</p>
         <div className="cart-description">
-          {aPost.requirement}
+          {aPost.author.name}
         </div>
-        <div className="row-flex">
-          <div className="item">
-            <p>{aPost.salary===null?'negotiation':aPost.salary + aPost.currency}</p>
+        <div className="row-flex-horizon flex-wrap">
+          <div className='list-item-flex-start'>
+            <div className="item">
+              <p>{aPost.salary !== null ? aPost.salary : ''}{aPost.currency}</p>
+            </div>
+            <div className="item">
+              <p>{aPost.location}</p>
+            </div>
+            <div className="item">
+              <p>{getDaysDiff(aPost.createDate)} days ago</p>
+            </div>
+            <div className="item">
+              <p>{getDaysDiff(aPost.expirationDate)} days left</p>
+            </div>
           </div>
-          <div className="item">
-            <p>{aPost.city.name}</p>
+          <div style={role !== "ROLE_EMPLOYER" ? { display: 'block' } : { display: 'none' }} className='follow-post-in-search-page'
+            onClick={() => { heartClick(aPost.id) }}>
+            {checkFollow(aPost.id, postFollow) ? (<img src={heartIcon} alt='' style={{ height: '100%', width: 'auto' }} />)
+              : (<img src={roundheartIcon} alt='' style={{ height: '100%', width: 'auto' }} />)}
           </div>
-          <div className="item">
-            <p>1 ngày trước</p>
-          </div>
-          <div className="item">
-            <p>Còn 10 ngày</p>
-          </div>
-          <i className="fa fa-heart-o" aria-hidden="true"></i>
         </div>
+
       </div>
-    </div >
+    </div>
   );
 };
 

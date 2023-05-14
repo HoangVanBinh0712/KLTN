@@ -72,8 +72,8 @@ const TopBar = () => {
                         <a className="option-a-menu" href="#_" >Tools</a>
                     </div>
                 </div>
-                <div className="mess-bell-homepage">
-                    <a href='/user/login'><img className="messbell-intopbar" src={messIcon} alt="mess" /></a>
+                <div className="mess-bell-homepage" style={{}}>
+                    {/* <a href='/user/login'> */}<img className="messbell-intopbar" src={messIcon} alt="mess" />{/* </a> */}
                 </div>
                 <div className="mess-bell-homepage" style={{ marginRight: "20px" }}>
                     <a href='/user/login'><img className="messbell-intopbar" src={bellIcon} alt="bell" /></a>

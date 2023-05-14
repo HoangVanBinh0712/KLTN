@@ -468,7 +468,104 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  //submit CV
+  const submitResume = async (info) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.post(`${apiUrl}/user/submitcv`,info, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  const deleteSubmitedResume = async (info) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.delete(`${apiUrl}/user/submitcv`,info, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  const checkSubmitedResume = async (postId) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.get(`${apiUrl}/user/check-submit-cv?postId=${postId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  const getPostSubmitedByResume = async (mediaId) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.get(`${apiUrl}/user/submitcv/${mediaId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  // Report
+  const reportPost = async (info) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.post(`${apiUrl}/report`,info, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
   
+
 
   //conxtext data
   const authContextData = {
@@ -477,7 +574,8 @@ const AuthContextProvider = ({ children }) => {
     getUserAchive, updateUserAchive, createUserAchive, deleteUserAchive,
     changPassword, sendVirifyCode, verifyEmail,
     getResume, addResume, updateResume, deleteResume, predictResume,
-    
+    submitResume, deleteSubmitedResume,checkSubmitedResume,getPostSubmitedByResume,
+    reportPost,
     showToast,
     setShowToast,
     authState,
