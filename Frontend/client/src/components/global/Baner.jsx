@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "../../employee_scenes/css/Homepage.css";
 import { useContext, useState } from 'react';
 import banner1 from "../../assets/img/banner-home.png"
@@ -23,7 +23,6 @@ const Baner = () => {
         }
     }
 
-    setInterval(nextImage, 20000);
 
     const [searchInfo, setSearchInfo] = useState({
         keyword: '',

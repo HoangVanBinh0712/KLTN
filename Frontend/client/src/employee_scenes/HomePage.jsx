@@ -6,22 +6,27 @@ import ListPostsHomepage from './components/ListPostsHomepage';
 import TopEmployer from './components/TopEmployer';
 import { PostContext } from '../contexts/PostContext';
 import { GlobalContext } from '../contexts/GlobalContext';
+import ChatBox from '../components/global/ChatBox';
+import { AuthContext } from '../contexts/AuthContext';
 
 const HomePage = () => {
 
-  const {postState:{posts, postHot, postMostView, postsAi}}=useContext(PostContext)
-  const {globalState:{ highlightCompany}}=useContext(GlobalContext)
+  const { postState: { posts, postHot, postMostView, postsAi } } = useContext(PostContext)
+  const { globalState: { highlightCompany } } = useContext(GlobalContext)
+  const { authState: { user, authloading } } = useContext(AuthContext)
 
   return (
     <>
+      {!authloading && user && <ChatBox />}
+
       <TopBar />
       <Banner />
-      <ListPostsHomepage
+      {/* <ListPostsHomepage
         title={"Hot job"}
         isHaveAi={false}
         listPosts={postHot}
       />
-      <TopEmployer listCompanies={highlightCompany}/>
+      <TopEmployer listCompanies={highlightCompany} />
       <ListPostsHomepage
         title={"Suitable job"}
         isHaveAi={true}
@@ -31,8 +36,7 @@ const HomePage = () => {
         title={"Attractive job"}
         isHaveAi={false}
         listPosts={postMostView}
-      />
-      <Footer/>
+      /> */}
     </>
   )
 }

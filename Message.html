@@ -20,11 +20,6 @@
 			padding: 0;
 		}
 
-		td {
-			border-radius: 10px;
-			word-wrap: break-word;
-		}
-
 		.list-room {
 			border: 1px solid black;
 			background-color: salmon;
@@ -462,7 +457,7 @@
 		var maxPage = 2;
 		var data = []
 		var stompClient = null;
-		var fetchChatUrl = "https://career-website.herokuapp.com/api/chat/message/";
+		var fetchChatUrl = "http://localhost:8080/api/chat/message/";
 
 		var email = ''
 		//Minh`
@@ -496,7 +491,7 @@
 			if (stompClient)
 				stompClient.disconnect();
 
-			const socket = new SockJS('https://career-website.herokuapp.com/chat');
+			const socket = new SockJS('http://localhost:8080/chat');
 
 			stompClient = Stomp.over(socket);
 			const auth_headers = {
@@ -523,7 +518,7 @@
 					else {
 						p.className = "unread-message"
 						//Set seen to true
-						axios.put(`https://career-website.herokuapp.com/api/chat/message/${obj.chatMessageId}`, {}, { headers: auth_headers })
+						axios.put(`http://localhost:8080/api/chat/message/${obj.chatMessageId}`, {}, { headers: auth_headers })
 					}
 					//Sort message room to newest message
 					sortNewestMessage(obj.chatRoomId)
@@ -727,13 +722,13 @@
 		function keyUpJwt(token) {
 			email = parseJwt(token).sub
 			inputEmail.value = email
-			axios.get(`https://career-website.herokuapp.com/api/${userRole.value}`, {
+			axios.get(`http://localhost:8080/api/${userRole.value}`, {
 				headers: {
 					Authorization: 'Bearer ' + token
 				}
 			}).then(res => {
 				currentUser = res.data
-				axios.get(`https://career-website.herokuapp.com/api/chat/chat-room?page=1&limit=1000`, {
+				axios.get(`http://localhost:8080/api/chat/chat-room?page=1&limit=1000`, {
 					headers: {
 						Authorization: 'Bearer ' + token
 					}
@@ -778,7 +773,7 @@
 								return caclTime(mess.time)
 							else return ''
 						}
-						axios.get(`https://career-website.herokuapp.com/api/chat/unread?${query}`, {
+						axios.get(`http://localhost:8080/api/chat/unread?${query}`, {
 							headers: {
 								Authorization: 'Bearer ' + token
 							}
