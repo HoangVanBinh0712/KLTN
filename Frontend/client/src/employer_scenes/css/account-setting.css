@@ -35,6 +35,10 @@ body {
     flex-direction: column;
 }
 
+#inp-add-post-page {
+    border: 1px solid rgb(175,175,175) !important;
+}
+
 .header {
     height: 0px;
     background-color: white;
@@ -1056,4 +1060,5 @@ small {
     height: 100%;
     width: auto;
 }
+
 

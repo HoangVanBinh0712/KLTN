@@ -565,16 +565,139 @@ const AuthContextProvider = ({ children }) => {
     }
   };
   
+  // emp followed
+  const getEmpFollow = async () => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.get(`${apiUrl}/user/list-emp-follow`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
 
+  const followEmp = async (empId) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.post(`${apiUrl}/user/emp-follow/${empId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  const unFollowEmp = async (empId) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.post(`${apiUrl}/user/emp-unfollow/${empId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+  
+  // emp View
+  const getEmpViewCv = async (mediaId) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.get(`${apiUrl}/user/cv-viewer/${mediaId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  //emp 
+  //update info
+  const updateEmpInfo = async (userInfo, avatar, cover) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      var bodyFormData = new FormData();
+      bodyFormData.append("info", JSON.stringify(userInfo));
+      bodyFormData.append("avatar", avatar);
+      bodyFormData.append("cover", cover);
+
+      if (recentToken !== undefined) {
+        const response = await axios.put(`${apiUrl}/employer`, bodyFormData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  //chang password
+  const changEmpPassword = async (pw) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.put(`${apiUrl}/employer/password`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
 
   //conxtext data
   const authContextData = {
     loginUser,loginGoogleUser, registerUser, registerEmployer, logoutSection,
-    getUser, updateUserInfo,
+    getUser, updateUserInfo,updateEmpInfo,
     getUserAchive, updateUserAchive, createUserAchive, deleteUserAchive,
-    changPassword, sendVirifyCode, verifyEmail,
+    changPassword,changEmpPassword, sendVirifyCode, verifyEmail,
     getResume, addResume, updateResume, deleteResume, predictResume,
     submitResume, deleteSubmitedResume,checkSubmitedResume,getPostSubmitedByResume,
+    getEmpFollow,followEmp,unFollowEmp, getEmpViewCv,
     reportPost,
     showToast,
     setShowToast,

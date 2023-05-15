@@ -1,160 +1,157 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useState, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import logoIcon from "../../assets/picture-banner/logo.png";
 import { AuthContext } from "../../contexts/AuthContext";
-import { GlobalContext } from "../../contexts/GlobalContext";
 import { useToast } from "../../contexts/Toast";
+import { PostContext } from "../../contexts/PostContext";
 
 const AddPostComponent = () => {
-  const {
-    authState: { user },
-    getUser,
-    updateUserInfo,
-  } = useContext(AuthContext);
-  const {
-    globalState: { cities, industries },
-  } = useContext(GlobalContext);
+
+  const { authState: { user }, } = useContext(AuthContext);
+  const {createPost} = useContext(PostContext)
   const { warn, success } = useToast();
+  const [ mess, setMess ] = useState('')
 
-  const [userInfo, setUserinfor] = useState({
-    email: user !== null ? user.email : "",
-    name: user !== null ? user.name : "",
-    phone: user !== null ? user.phone : "",
-    address: user !== null ? user.address : "",
-    cityId: user !== null ? user.city.id : "",
-    industryId: user !== null ? user.industry.id : "",
-    urlCover: user !== null ? user.urlCover : null,
-    urlAvatar: user !== null ? user.urlAvatar : null,
-  });
-  const {
-    email,
-    name,
-    phone,
-    address,
-    cityId,
-    industryId,
-    urlCover,
-    urlAvatar,
-  } = userInfo;
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+  const minDate = tomorrow.toISOString().split("T")[0];
 
-  const [desc, setDesc] = useState("");
+  const initialPostInfo = {
+    title: "",
+    description: "",
+    method: "FULL_TIME",
+    position: "Staff",
+    experience: "NONE",
+    gender: "NONE",
+    requirement: "",
+    benifit: "",
+    contact: user !== null ? user.phone : '',
+    salary: 0,
+    currency: "VND",
+    location: user !== null ? user.address : '',
+    recruit: 1,
+    expirationDate: minDate,
+    industry: user !== null ? user.industry.id : 0,
+    city: user !== null ? user.city.id : 0,
+  }
+
+  const [postInfo, setPostInfo] = useState(initialPostInfo)
+  const { title, position, experience, salary, recruit, expirationDate, description, requirement, benifit } = postInfo
+
   const handleDescChange = (newValue) => {
-    setDesc(newValue);
-  };
+    setPostInfo({
+      ...postInfo,
+      description: newValue
+    })
+  }
 
-  const onChangeUserInfo = (event) =>
-    setUserinfor({
-      ...userInfo,
-      [event.target.name]: event.target.value,
-    });
+  const handleRequirementChange = (newValue) => {
+    setPostInfo({
+      ...postInfo,
+      requirement: newValue
+    })
+  }
 
-  const getUserInfo = async () => {
-    const userData = await getUser("user");
-    setUserinfor({
-      ...userInfo,
-      email: userData !== null ? userData.email : "",
-      name: userData !== null ? userData.name : "",
-      phone: userData !== null ? userData.phone : "",
-      address: userData !== null ? userData.address : "",
-      cityId: userData !== null ? userData.city.id : "",
-      industryId: userData !== null ? userData.industry.id : "",
-      urlCover: userData !== null ? userData.urlCover : null,
-      urlAvatar: userData !== null ? userData.urlAvatar : null,
-    });
-    userData !== null ? setDesc(userData.description) : setDesc("");
-  };
+  const handleBenifitChange = (newValue) => {
+    setPostInfo({
+      ...postInfo,
+      benifit: newValue
+    })
+  }
 
-  const [userImage, setUserImage] = useState({
-    avatar: null,
-    cover: null,
-  });
-  const { avatar, cover } = userImage;
+  const onChangeTitle = (event) => {
+    setPostInfo({
+      ...postInfo,
+      title: event.target.value
+    })
+  }
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
+  const onChangeWokType = (event) => {
+    setPostInfo({
+      ...postInfo,
+      method: event.target.value
+    })
+  }
 
-  const fileAvtInput = useRef(null);
-  const fileCoverInput = useRef(null);
-  const fileToBase64 = (file, cb) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      cb(null, reader.result);
-    };
-    reader.onerror = function (error) {
-      cb(error, null);
-    };
-  };
+  const onChangegenderType = (event) => {
+    setPostInfo({
+      ...postInfo,
+      gender: event.target.value
+    })
+  }
 
-  const handleChangeAvtClick = () => {
-    fileAvtInput.current.click();
-  };
-  const handleChoseFileAvt = ({ target }) => {
-    if (target.files < 1 || !target.validity.valid) {
-      return;
-    }
-    const file = target.files[0];
-    fileToBase64(file, (err, result) => {
-      if (result) {
-        setUserImage({
-          ...userImage,
-          avatar: file,
-        });
+  const onChangeCurencyType = (event) => {
+    setPostInfo({
+      ...postInfo,
+      currency: event.target.value
+    })
+  }
+
+  const onChangeSalary = (event) => {
+    setPostInfo({
+      ...postInfo,
+      salary: event.target.value
+    })
+  }
+
+  const onChangeRecruiter = (event) => {
+    setPostInfo({
+      ...postInfo,
+      recruit: event.target.value
+    })
+  }
+
+  const onChangePosition = (event) => {
+    setPostInfo({
+      ...postInfo,
+      position: event.target.value
+    })
+  }
+
+  const onChangeExp = (event) => {
+    setPostInfo({
+      ...postInfo,
+      experience: event.target.value
+    })
+  }
+
+  const onChangeExpiration = (event) => {
+    setPostInfo({
+      ...postInfo,
+      expirationDate: event.target.value
+    })
+  }
+
+  const checkPostInfo = (pInfo) => {
+    if (pInfo.title.length === 0 || pInfo.description.length === 0 || pInfo.requirement.length === 0 || pInfo.benifit.length === 0)
+      return false
+    return true
+  }
+
+  const onSaveClick = async () => {
+    if (checkPostInfo(postInfo)) {
+      const res = await createPost(postInfo)
+      if (res.success) {
+        success("Created new post successfully!")
+        setPostInfo(initialPostInfo)
       }
-    });
-    setUserinfor({
-      ...userInfo,
-      urlAvatar: URL.createObjectURL(file),
-    });
-  };
-
-  const handleChangeCoverClick = () => {
-    fileCoverInput.current.click();
-  };
-  const handleChoseFileCover = ({ target }) => {
-    if (target.files < 1 || !target.validity.valid) {
-      return;
+      else warn(res.message)
     }
-    const file = target.files[0];
-    fileToBase64(file, (err, result) => {
-      if (result) {
-        setUserImage({
-          ...userImage,
-          cover: file,
-        });
-      }
-    });
-    setUserinfor({
-      ...userInfo,
-      urlCover: URL.createObjectURL(file),
-    });
-  };
-
-  const onUpdateUserClick = async (event) => {
-    try {
-      const infoData = { email, name, phone, address, cityId, industryId };
-      const reponseData = await updateUserInfo(infoData, avatar, cover);
-      console.log(reponseData);
-      if (reponseData.success) {
-        success("Update information successfully!");
-      } else {
-        warn(reponseData.message);
-      }
-    } catch (error) {
-      if (error.response.data) {
-        return error.response.data;
-      } else return { success: false, message: error.message };
+    else {
+      setMess("*Required...")
+      setTimeout(() => {
+        setMess("")
+      }, 5000)
     }
-  };
+  }
 
   const onCancelClick = () => {
     const confirm = window.confirm(
       "Are you sure you want to cancel, the information you changed will not be saved?"
     );
     if (confirm) {
-      getUserInfo();
+      setPostInfo(initialPostInfo)
     }
   };
 
@@ -162,173 +159,218 @@ const AddPostComponent = () => {
   body = (
     <div style={{ width: "80%" }}>
       <div className="component-title">
-        <span>Profile</span>
+        <span>Fill in the information to create a new post</span>
       </div>
       <div className="free-space" id="free-space">
         <div className="content-wrapper">
           <div className="input-wrapper">
             <div className="label">Title</div>
-            <input type="text" name="title" value={email}></input>
+            <input type="text" name="title" id="inp-add-post-page" className="coler-placeholder"
+              value={title}
+              placeholder={mess}
+              style={{ width: '48%' }}
+              onChange={onChangeTitle}>
+
+            </input>
           </div>
           <div className="text-area-group">
-            <div className="label">Description</div>
-            <ReactQuill value={desc} onChange={handleDescChange} style={{}} />
+            <div className="label">Description <p style={{color:'#ff453a'}}>{' '}{mess}</p></div>
+            <ReactQuill value={description} onChange={handleDescChange} className="coler-placeholder" />
           </div>
 
           <div className="row">
-            <div className="left">
-              <div className="text-area-group">
-                <div className="label">Description</div>
+            <div className="left" style={{ width: '48%' }}>
+              <div className="text-area-group" style={{ marginBottom: '10px' }}>
+                <div className="label">Requirement <p style={{color:'#ff453a'}}>{' '}{mess}</p></div>
                 <ReactQuill
-                  value={desc}
-                  onChange={handleDescChange}
+                  value={requirement}
+                  onChange={handleRequirementChange}
                   style={{}}
                 />
               </div>
-              <b>Working type</b>
-              <div className="row">
-                <div>
+              <b style={{ color: '#0c62ad' }}>Working type</b>
+              <div className="row" style={{ justifyContent: 'flex-start', marginBottom: '5px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
-                    className="radio"
+                    className="inp-radio-add-post-page"
                     type="radio"
-                    id="age1"
-                    name="age"
-                    value="30"
+                    id="type2"
+                    name="type"
+                    value="FULL_TIME"
+                    style={{ width: '15%' }}
+                    defaultChecked
+                    onChange={onChangeWokType}
                   />
-                  <label for="age1">Part time</label>
+                  <label for="type2" style={{ width: '120px', marginLeft: '5px', }}>Full time</label>
                 </div>
-                <div>
+                <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
-                    className="radio"
+                    className="inp-radio-add-post-page"
                     type="radio"
-                    id="age2"
-                    name="age"
-                    value="60"
+                    id="type1"
+                    name="type"
+                    value="PART_TIME"
+                    style={{ width: '15%' }}
+                    onChange={onChangeWokType}
                   />
-                  <label for="age2">Full time</label>
+                  <label for="type1" style={{ width: '120px', marginLeft: '5px', }}>Part time</label>
                 </div>
-                <div>
+                <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
-                    className="radio"
+                    className="inp-radio-add-post-page"
                     type="radio"
-                    id="age2"
-                    name="age"
-                    value="60"
+                    id="type3"
+                    name="type"
+                    value="INTERN"
+                    style={{ width: '15%' }}
+                    onChange={onChangeWokType}
                   />
-                  <label for="age2">Intern</label>
-                </div>
-              </div>
-              <b>Gender</b>
-              <div className="row">
-                <div>
-                  <input
-                    className="radio"
-                    type="radio"
-                    id="age1"
-                    name="age"
-                    value="30"
-                  />
-                  <label for="age1">Male</label>
-                </div>
-                <div>
-                  <input
-                    className="radio"
-                    type="radio"
-                    id="age2"
-                    name="age"
-                    value="60"
-                  />
-                  <label for="age2">Female</label>
-                </div>
-                <div>
-                  <input
-                    className="radio"
-                    type="radio"
-                    id="age2"
-                    name="age"
-                    value="60"
-                  />
-                  <label for="age2">No require</label>
+                  <label for="type3" style={{ width: '120px', marginLeft: '5px', }}>Intern</label>
                 </div>
               </div>
-              <b>Currency</b>
-              <div className="row">
-                <div>
+              <b style={{ color: '#0c62ad' }}>Gender</b>
+              <div className="row" style={{ justifyContent: 'flex-start', marginBottom: '5px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
-                    className="radio"
+                    className="inp-radio-add-post-page"
                     type="radio"
-                    id="age1"
-                    name="age"
-                    value="30"
+                    id="gender1"
+                    name="gender"
+                    value="MALE"
+                    style={{ width: '15%' }}
+                    onChange={onChangegenderType}
                   />
-                  <label for="age1">VNĐ</label>
+                  <label for="gender1" style={{ width: '120px', marginLeft: '5px', }}>Male</label>
                 </div>
-                <div>
+                <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
-                    className="radio"
+                    className="inp-radio-add-post-page"
                     type="radio"
-                    id="age2"
-                    name="age"
-                    value="60"
+                    id="gender2"
+                    name="gender"
+                    value="FEMALE"
+                    style={{ width: '15%' }}
+                    onChange={onChangegenderType}
                   />
-                  <label for="age2">USD</label>
+                  <label for="gender2" style={{ width: '120px', marginLeft: '5px', }}>Female</label>
                 </div>
-                <div>
+                <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
-                    className="radio"
+                    className="inp-radio-add-post-page"
                     type="radio"
-                    id="age2"
-                    name="age"
-                    value="60"
+                    id="gender3"
+                    name="gender"
+                    value="NONE"
+                    style={{ width: '15%' }}
+                    defaultChecked
+                    onChange={onChangegenderType}
                   />
-                  <label for="age2">Aggreement</label>
+                  <label for="gender3" style={{ width: '130px', marginLeft: '5px', }}>No require</label>
                 </div>
               </div>
-              <div className="input-wrapper">
+              <b style={{ color: '#0c62ad' }}>Currency</b>
+              <div className="row" style={{ justifyContent: 'flex-start', marginBottom: '5px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
+                  <input
+                    className="inp-radio-add-post-page"
+                    type="radio"
+                    id="currency1"
+                    name="currency"
+                    value="30"
+                    style={{ width: '15%' }}
+                    defaultChecked
+                    onChange={onChangeCurencyType}
+                  />
+                  <label for="currency1" style={{ width: '120px', marginLeft: '5px', }}>VNĐ</label>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
+                  <input
+                    className="inp-radio-add-post-page"
+                    type="radio"
+                    id="currency2"
+                    name="currency"
+                    value="USD"
+                    style={{ width: '15%' }}
+                    onChange={onChangeCurencyType}
+                  />
+                  <label for="currency2" style={{ width: '120px', marginLeft: '5px', }}>USD</label>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
+                  <input
+                    className="inp-radio-add-post-page"
+                    type="radio"
+                    id="currency3"
+                    name="currency"
+                    value="AGGREEMENT"
+                    style={{ width: '15%' }}
+                    onChange={onChangeCurencyType}
+                  />
+                  <label for="currency3" style={{ width: '120px', marginLeft: '5px', }}>Aggreement</label>
+                </div>
+              </div>
+              <div className="input-wrapper" style={{ width: '100%' }}>
                 <div className="label">Salary</div>
-                <input type="text" name="title" value={email}></input>
+                <input type="number" name="title" value={salary}
+                  id="inp-add-post-page"
+                  onChange={onChangeSalary}
+                ></input>
               </div>
             </div>
-            <div className="right">
-              <div className="text-area-group">
-                <div className="label">Description</div>
+            <div className="right" style={{ width: '48%' }}>
+              <div className="text-area-group" style={{ marginBottom: '10px' }}>
+                <div className="label">Benifit <p style={{color:'#ff453a'}}>{' '}{mess}</p></div>
                 <ReactQuill
-                  value={desc}
-                  onChange={handleDescChange}
+                  value={benifit}
+                  onChange={handleBenifitChange}
                   style={{}}
                 />
               </div>
-              <div className="select">
+              <div className="select" style={{ width: '100%' }}>
                 <div className="label">Position</div>
-                <select name="industry" id="">
-                  <option value="">Finance</option>
-                  <option value="">Banking</option>
-                  <option value="">Social Media</option>
+                <select name="position" id="inp-add-post-page" onChange={onChangePosition}>
+                  <option value="Staff" selected={position === 'Staff'}>Staff</option>
+                  <option value="Leader" selected={position === 'Leader'}>Leader</option>
+                  <option value="Manager" selected={position === 'Manager'}>Manager</option>
+                  <option value="Deputy" selected={position === 'Deputy'}>Deputy</option>
+                  <option value="Vice_President" selected={position === 'Vice_President'}>Vice president</option>
+                  <option value="Branch_Manager" selected={position === 'Branch_Manager'}>Branch manager</option>
                 </select>
               </div>
-              <div className="select">
+              <div className="select" style={{ width: '100%' }} >
                 <div className="label">Experience</div>
-                <select name="industry" id="">
-                  <option value="">Finance</option>
-                  <option value="">Banking</option>
-                  <option value="">Social Media</option>
+                <select name="industry" id="inp-add-post-page" onChange={onChangeExp}>
+                  <option value="NONE" selected={experience === 'NONE'}>None</option>
+                  <option value="UNDER_ONE_YEAR" selected={experience === 'UNDER_ONE_YEAR'}>Under one year</option>
+                  <option value="ONE_YEAR" selected={experience === 'ONE_YEAR'}>One year</option>
+                  <option value="TWO_YEAR" selected={experience === 'TWO_YEAR'}>Two year</option>
+                  <option value="THREE_YEAR" selected={experience === 'THREE_YEAR'}>Three year</option>
+                  <option value="FOUR_YEAR" selected={experience === 'FOUR_YEAR'}>Four year</option>
+                  <option value="FIVE_YEAR" selected={experience === 'FIVE_YEAR'}>Five year</option>
+                  <option value="ABOVE_FIVE_YEAR" selected={experience === 'ABOVE_FIVE_YEAR'}>Above five year</option>
                 </select>
               </div>
-              <div className="input-wrapper">
+              <div className="input-wrapper" style={{ width: '100%' }}>
                 <div className="label">Recruit</div>
-                <input type="number" name="title" value={email}></input>
+                <input type="number" name="title" value={recruit}
+                  id="inp-add-post-page"
+                  onChange={onChangeRecruiter}
+                ></input>
               </div>
-              <div className="input-wrapper">
+              <div className="input-wrapper" style={{ width: '100%' }}>
                 <div className="label">Expiration date</div>
-                <input type="date" name="title" value={email}></input>
+                <input type="date" name="title" value={expirationDate}
+                  min={minDate}
+                  id="inp-add-post-page"
+                  onChange={onChangeExpiration}
+                ></input>
               </div>
             </div>
           </div>
 
           <div className="group-buttons">
-            <div className="button" onClick={onUpdateUserClick}>
+            <div className="button" onClick={onSaveClick}>
               <i className="fa fa-floppy-o" aria-hidden="true"></i>
-              Confirm
+              Create
             </div>
             <div className="button cancel" onClick={onCancelClick}>
               <i className="fa fa-times" aria-hidden="true"></i>

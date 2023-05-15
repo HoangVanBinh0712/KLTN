@@ -142,11 +142,11 @@ const TopBar = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className='drop-text my-account-chose'><a href=' ' className='color-a-dropdownbox'>My Account</a></div>
-                                <div className='drop-text emp-follow-chose'><a href=' ' className='color-a-dropdownbox'>My followed</a></div>
-                                <div className='drop-text post-follow-chose'><a href=' ' className='color-a-dropdownbox'>My Posts saved</a></div>
-                                <div className='drop-text post-apply-chose'><a href=' ' className='color-a-dropdownbox'>My post applied</a></div>
-                                <div className='drop-text change-pwd-chose'><a href=' ' className='color-a-dropdownbox'>Change Password</a></div>
+                                <div className='drop-text my-account-chose'><a href='/user/account' className='color-a-dropdownbox'>My Account</a></div>
+                                <div className='drop-text emp-follow-chose'><a href='/user/account/recruiter-followed' className='color-a-dropdownbox'>My followed</a></div>
+                                <div className='drop-text post-follow-chose'><a href='/user/account/post-followed' className='color-a-dropdownbox'>My Posts saved</a></div>
+                                <div className='drop-text post-apply-chose'><a href='/user/account/post-submitted' className='color-a-dropdownbox'>My post applied</a></div>
+                                <div className='drop-text change-pwd-chose'><a href='/user/account/change-password' className='color-a-dropdownbox'>Change Password</a></div>
                                 <div className='drop-text logout-chose' onClick={logout}><a href=' ' className='color-a-dropdownbox'>Logout</a></div>
                             </div>
                         </div>

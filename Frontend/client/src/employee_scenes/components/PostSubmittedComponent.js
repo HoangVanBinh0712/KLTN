@@ -1,4 +1,3 @@
-import Paging from "./PagingComponent";
 import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import SinglePost from "./SinglePostComponent";
@@ -20,7 +19,10 @@ const PostSubmitted = () => {
     if (res.success) {
       setListPostSubmited(res.data);
     }
-    else warn(res.message)
+    else {
+      setListPostSubmited([]);
+      warn("*Your profile has not applied for any jobs yet")
+    } 
   }
 
   const getAllResume = async () => {
@@ -84,9 +86,8 @@ const PostSubmitted = () => {
   }
   else {
     postInResultBox = (<>
-      There are no posts macth!
-    </>
-    )
+      Select your profile to view your submition.
+    </>)
   }
   return (
     <div style={{ width: "80%" }}>
@@ -105,7 +106,7 @@ const PostSubmitted = () => {
                   : (allResume.map((r, id) => (<option value={r.mediaId} key={id}>{r.name}</option>)))}
               </select>
               <div className="group-buttons">
-                <div className="button">
+                <div className="button" onClick={() => predictClick()}>
                   <i className="fa fa-list" aria-hidden="true"></i>
                   View
                 </div>

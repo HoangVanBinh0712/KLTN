@@ -888,3 +888,11 @@ small {
     content: url('../../assets/icons/upload-a-after.png');
     margin-left: 5px;
 }
+
+.inp-add-post-page {
+    border: 1px solid rgb(175,175,175) !important;
+}
+
+.inp-radio-add-post-page::after {
+    content: none !important;
+}

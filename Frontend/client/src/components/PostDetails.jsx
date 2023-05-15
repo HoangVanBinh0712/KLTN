@@ -278,7 +278,7 @@ const PostDetails = () => {
             name: user.name,
             phone: user.phone,
             email: user.email,
-            reportContet: reportMessage,
+            reportContent: reportMessage,
             postId: Number(id),
         }
         if (reportMessage.length > 30) {

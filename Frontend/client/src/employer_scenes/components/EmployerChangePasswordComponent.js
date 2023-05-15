@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useToast } from "../../contexts/Toast";
 
 const EmployerChangePassword = () => {
-    const { changePassword } = useContext(AuthContext)
+    const { changEmpPassword } = useContext(AuthContext)
     const { warn, success } = useToast();
 
     const [oldPassword, setOldPassword] = useState('')
@@ -62,7 +62,7 @@ const EmployerChangePassword = () => {
                     confirmPassword: confirmPassword
                 }
                 if (confirm) {
-                    const res = await changePassword(pw);
+                    const res = await changEmpPassword(pw);
                     if (res.success) {
                         success('Changed password successfully!')
                     }
@@ -80,7 +80,7 @@ const EmployerChangePassword = () => {
                 <div className="component-title">
                     <span>Change password</span>
                 </div>
-                <div className="free-space" id="free-space">
+                <div className="free-space" id="free-space" style={{justifyContent: 'flex-start'}}>
                     <div className="content-wrapper">
 
                         <div className="input-wrapper ">
