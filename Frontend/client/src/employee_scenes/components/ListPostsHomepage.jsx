@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useContext } from 'react'
 
-import tamLogo from "../../assets/picture-banner/tma-logo.png"
 import roundheartIcon from "../../assets/icons/round-heart-icon.png"
 import heartIcon from "../../assets/icons/heart-icon.png"
 import leftArrow from "../../assets/icons/left-arow-icon.png"

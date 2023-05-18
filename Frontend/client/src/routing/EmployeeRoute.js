@@ -23,6 +23,7 @@ import Register from "../components/page/register/Register";
 import PostDetails from "../components/PostDetails";
 import EmployerProfile from "../employer_scenes/components/EmployerProfile";
 import SearchPageComponent from "../employee_scenes/components/SearchPageComponent";
+import PageCustomerServices from "../components/PageCustomerServices";
 import { AuthContext } from "../contexts/AuthContext";
 
 const EmployeeRoute = ({ ...rest }) => {
@@ -93,6 +94,7 @@ const EmployeeRoute = ({ ...rest }) => {
         <Route path="/posts" element={<SearchPageComponent />} />
         <Route path="/posts/:keyword" element={<SearchPageComponent />} />
         <Route path="/recruiter/:id" element={<EmployerProfile />} />
+        <Route path="/customer-services" element={<PageCustomerServices />} />
         <Route path="/user/account" element={<EmployeeAccountPage />}>
           <Route path="personal-info" element={<PersonalInfoComponent />} />
           <Route path="achievement" element={<UserAchievement />} />

@@ -13,8 +13,10 @@ const ServicePage = () => {
     return (
         <>
             <TopBar />
-            <div class="body-container">
-                <img id="service-banner" src={serviceBaner} alt='' />
+            <div style={{ width: '100%' }}>
+                <img id="service-banner" src={serviceBaner} alt='' style={{ width: '100%', height: 'auto' }} />
+            </div>
+            <div class="body-container" style={{ height: 'auto' }}>
                 <div id="arrow_wrapper">
                     <img id="arrow_below_banner" src={vShapeIcon} alt='' />
                     <div id="our_service_title">OUR SERVICES</div>
@@ -22,7 +24,9 @@ const ServicePage = () => {
                 </div>
                 <div id="service_list">
                     <div class="service_item_wrapper">
-                        <img id="service_logo" src={homeService1} alt='' />
+                        <div style={{width:'50%'}}>
+                            <img id="service_logo" src={homeService1} alt='' />
+                        </div>
                         <div id="service_info">
                             <div id="service_name">Basic Service</div>
                             <div id="service_price">10.00 USD</div>
@@ -50,7 +54,7 @@ const ServicePage = () => {
                     </div>
 
                     <div class="service_item_wrapper">
-                        <div id="service_info">
+                        <div id="service_info" >
                             <div id="service_name">Basic Service</div>
                             <div id="service_price">10.00 USD</div>
                             <div id="service_duration_wrapper">
@@ -82,12 +86,16 @@ const ServicePage = () => {
                             <div id="service_conclusion">Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.</div>
                             <button id="btn_buy_now">Buy now</button>
                         </div>
-                        <img id="service_logo" src={homeService2} alt='' />
+                        <div style={{width:'50%'}}>
+                            <img id="service_logo" src={homeService2} alt='' />
+                        </div>
                     </div>
 
 
                     <div class="service_item_wrapper">
-                        <img id="service_logo" src={homeService1} alt='' />
+                    <div style={{width:'50%'}}>
+                            <img id="service_logo" src={homeService1} alt='' />
+                        </div>
                         <div id="service_info">
                             <div id="service_name">Basic Service</div>
                             <div id="service_price">10.00 USD</div>

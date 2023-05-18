@@ -128,15 +128,23 @@ const LoginGG = () => {
                             </div>
                             <div >
                                 <label classname="lb-name" for="email" style={{ color: "#207198" }}>Email</label>
-                                <input className="input-text-login"
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={email}
-                                    placeholder={mess}
-                                    onChange={onChangeEmail}
-                                    required
-                                />
+                                <div class="group-password" >
+                                    <div style={{width:'92%'}}>
+                                        <input className="input-text-login password"
+                                            type={showPassword ? "text" : "password"}
+                                            id="pswrd"
+                                            name="pwd"
+                                            value={pwd}
+                                            placeholder={mess}
+                                            style={{ margin: "0", border:'none', height:'56px' }}
+                                            onChange={onChangePwd}
+                                            required
+                                        />
+                                    </div>
+                                    <div style={{display:'flex', alignItems:'center'}}>
+                                        <i class="fa fa-eye" onClick={onClick} ></i>
+                                    </div>
+                                </div>
                             </div>
                             <div >
                                 <label classname="lb-name" for="password" style={{ color: "#207198" }}>Password</label>

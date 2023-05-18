@@ -689,6 +689,22 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  // User get employer profile
+  const getEmployerProfile = async (id) => {
+    try {
+        const response = await axios.get(`${apiUrl}/employer/information/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        return response;
+    } catch (error) {
+      if (error.response) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
   //conxtext data
   const authContextData = {
     loginUser,loginGoogleUser, registerUser, registerEmployer, logoutSection,
@@ -698,6 +714,7 @@ const AuthContextProvider = ({ children }) => {
     getResume, addResume, updateResume, deleteResume, predictResume,
     submitResume, deleteSubmitedResume,checkSubmitedResume,getPostSubmitedByResume,
     getEmpFollow,followEmp,unFollowEmp, getEmpViewCv,
+    getEmployerProfile,
     reportPost,
     showToast,
     setShowToast,

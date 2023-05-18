@@ -2,7 +2,7 @@ import threeDotIcon from '../../assets/icons/3dot-icon.png'
 import { useContext, useEffect, useState } from 'react'
 import { PostContext } from '../../contexts/PostContext'
 
-const SingleRowPost = ({ post }) => {
+const SingleRowPost = ({ post , num }) => {
 
     const { getCvSubmited } = useContext(PostContext)
 
@@ -11,7 +11,6 @@ const SingleRowPost = ({ post }) => {
 
     const getCv = async () => {
         const res = await getCvSubmited(post.id)
-        console.log(res)
         if (res.success) setNumCv(res.data.length)
     }
 
@@ -44,15 +43,15 @@ const SingleRowPost = ({ post }) => {
         if (status === "ACTIVE")
             body = (<div className="btn-state-post-acpt"> Accepted</div>)
         if (status === "WAIT_FOR_ACCEPT")
-            body = (<div className="btn-state-pending"> Pending</div>)
+            body = (<div className="btn-state-post-pending"> Pending</div>)
         if (status === "DELETED_BY_ADMIN")
-            body = (<div className="btn-state-denied"> Unaccept</div>)
+            body = (<div className="btn-state-post-denied"> Unaccept</div>)
         return body
     }
     return (
         <div className="row-data-listpost">
             <div style={{ width: "25px", fontFamily: "Roboto-Light" }}>
-                {post.id}.
+                {num+1}.
             </div>
             <div style={{ width: "30%", fontFamily: "Roboto-Light" }} className="limit-title-post">
                 {post.title}

@@ -1,414 +1,58 @@
-import { useState } from "react"
-import Paging from "./PagingComponent";
+import { useContext, useEffect, useState } from "react"
 import SingleRowPost from "./SingleRowPost";
 import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
+import { PostContext } from "../../contexts/PostContext";
+import { useToast } from "../../contexts/Toast";
 
 const JobPostingComponent = () => {
 
-    const listPost = [
-        {
-            "id": 1,
-            "title": "Second title",
-            "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-            "method": "FULL_TIME",
-            "position": "Manager",
-            "experience": "THREE_YEAR",
-            "gender": "MALE",
-            "requirement": "Toeic 650+ or Ielts 6.0+",
-            "benifit": "Bao hiem suc khoe",
-            "contact": "MrBinh: 0337445599",
-            "salary": null,
-            "currency": "AGREEMENT",
-            "location": "Binh An, Di an",
-            "recruit": 15,
-            "createDate": "2023-01-07 10:56:01",
-            "expirationDate": "2023-06-06 00:00:00",
-            "status": "ACTIVE",
-            "viewCount": 7,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            }
-        },
-        {
-            "id": 2,
-            "title": "First title",
-            "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-            "method": "FULL_TIME",
-            "position": "Staff",
-            "experience": "NONE",
-            "gender": "MALE",
-            "requirement": "Toeic 550+ or Ielts 5.5+",
-            "benifit": "Bao hiem suc khoe",
-            "contact": "MrBinh: 0337445596",
-            "salary": 1000,
-            "currency": "USD",
-            "location": "Binh An, Di an",
-            "recruit": 5,
-            "createDate": "2023-02-07 11:02:28",
-            "expirationDate": "2023-06-06 00:00:00",
-            "status": "ACTIVE",
-            "viewCount": 8,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            }
-        },
-        {
-            "id": 4,
-            "title": "First title",
-            "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-            "method": "FULL_TIME",
-            "position": "Staff",
-            "experience": "NONE",
-            "gender": "MALE",
-            "requirement": "Toeic 550+ or Ielts 5.5+",
-            "benifit": "Bao hiem suc khoe",
-            "contact": "MrBinh: 0337445596",
-            "salary": 1000,
-            "currency": "USD",
-            "location": "Binh An, Di an",
-            "recruit": 5,
-            "createDate": "2023-03-06 16:40:59",
-            "expirationDate": "2023-06-06 00:00:00",
-            
-            "status": "ACTIVE",
-            "viewCount": 0,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            }
-        },
-        {
-            "id": 5,
-            "title": "First title",
-            "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-            "method": "FULL_TIME",
-            "position": "Staff",
-            "experience": "NONE",
-            "gender": "MALE",
-            "requirement": "Toeic 550+ or Ielts 5.5+",
-            "benifit": "Bao hiem suc khoe",
-            "contact": "MrBinh: 0337445596",
-            "salary": 1000,
-            "currency": "USD",
-            "location": "Binh An, Di an",
-            "recruit": 5,
-            "createDate": "2023-03-06 16:42:01",
-            "expirationDate": "2023-06-06 00:00:00",
-            
-            "status": "ACTIVE",
-            "viewCount": 0,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            }
-        },
-        {
-            "id": 8,
-            "title": "First title",
-            "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-            "method": "FULL_TIME",
-            "position": "Staff",
-            "experience": "NONE",
-            "gender": "MALE",
-            "requirement": "Toeic 550+ or Ielts 5.5+",
-            "benifit": "Bao hiem suc khoe",
-            "contact": "MrBinh: 0337445596",
-            "salary": 1000,
-            "currency": "USD",
-            "location": "Binh An, Di an",
-            "recruit": 5,
-            "createDate": "2023-01-06 16:45:40",
-            "expirationDate": "2023-06-06 00:00:00",
-            
-            "status": "ACTIVE",
-            "viewCount": 0,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            }
-        },
-        {
-            "id": 9,
-            "title": "string",
-            "description": "string",
-            "method": "FULL_TIME",
-            "position": "Staff",
-            "experience": "NONE",
-            "gender": "MALE",
-            "requirement": "string",
-            "benifit": "string",
-            "contact": "string",
-            "salary": 1000,
-            "currency": "AGREEMENT",
-            "location": "Di An",
-            "recruit": 10,
-            "createDate": "2023-01-14 21:02:28",
-            "expirationDate": "2023-06-06 00:00:00",
-            
-            "status": "ACTIVE",
-            "viewCount": 0,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            },
-            
-        },
-        {
-            "id": 1,
-            "title": "Second title",
-            "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-            "method": "FULL_TIME",
-            "position": "Manager",
-            "experience": "THREE_YEAR",
-            "gender": "MALE",
-            "requirement": "Toeic 650+ or Ielts 6.0+",
-            "benifit": "Bao hiem suc khoe",
-            "contact": "MrBinh: 0337445599",
-            "salary": null,
-            "currency": "AGREEMENT",
-            "location": "Binh An, Di an",
-            "recruit": 15,
-            "createDate": "2023-01-07 10:56:01",
-            "expirationDate": "2023-06-06 00:00:00",
-            "status": "ACTIVE",
-            "viewCount": 7,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            }
-        },
-        {
-            "id": 2,
-            "title": "First title",
-            "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-            "method": "FULL_TIME",
-            "position": "Staff",
-            "experience": "NONE",
-            "gender": "MALE",
-            "requirement": "Toeic 550+ or Ielts 5.5+",
-            "benifit": "Bao hiem suc khoe",
-            "contact": "MrBinh: 0337445596",
-            "salary": 1000,
-            "currency": "USD",
-            "location": "Binh An, Di an",
-            "recruit": 5,
-            "createDate": "2023-02-07 11:02:28",
-            "expirationDate": "2023-06-06 00:00:00",
-            "status": "ACTIVE",
-            "viewCount": 8,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            }
-        },
-        {
-            "id": 4,
-            "title": "First title",
-            "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-            "method": "FULL_TIME",
-            "position": "Staff",
-            "experience": "NONE",
-            "gender": "MALE",
-            "requirement": "Toeic 550+ or Ielts 5.5+",
-            "benifit": "Bao hiem suc khoe",
-            "contact": "MrBinh: 0337445596",
-            "salary": 1000,
-            "currency": "USD",
-            "location": "Binh An, Di an",
-            "recruit": 5,
-            "createDate": "2023-03-06 16:40:59",
-            "expirationDate": "2023-06-06 00:00:00",
-            
-            "status": "ACTIVE",
-            "viewCount": 0,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            }
-        },
-        {
-            "id": 5,
-            "title": "First title",
-            "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-            "method": "FULL_TIME",
-            "position": "Staff",
-            "experience": "NONE",
-            "gender": "MALE",
-            "requirement": "Toeic 550+ or Ielts 5.5+",
-            "benifit": "Bao hiem suc khoe",
-            "contact": "MrBinh: 0337445596",
-            "salary": 1000,
-            "currency": "USD",
-            "location": "Binh An, Di an",
-            "recruit": 5,
-            "createDate": "2023-03-06 16:42:01",
-            "expirationDate": "2023-06-06 00:00:00",
-            
-            "status": "ACTIVE",
-            "viewCount": 0,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            }
-        },
-        {
-            "id": 8,
-            "title": "First title",
-            "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-            "method": "FULL_TIME",
-            "position": "Staff",
-            "experience": "NONE",
-            "gender": "MALE",
-            "requirement": "Toeic 550+ or Ielts 5.5+",
-            "benifit": "Bao hiem suc khoe",
-            "contact": "MrBinh: 0337445596",
-            "salary": 1000,
-            "currency": "USD",
-            "location": "Binh An, Di an",
-            "recruit": 5,
-            "createDate": "2023-01-06 16:45:40",
-            "expirationDate": "2023-06-06 00:00:00",
-            
-            "status": "ACTIVE",
-            "viewCount": 0,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            }
-        },
-        {
-            "id": 9,
-            "title": "string",
-            "description": "string",
-            "method": "FULL_TIME",
-            "position": "Staff",
-            "experience": "NONE",
-            "gender": "MALE",
-            "requirement": "string",
-            "benifit": "string",
-            "contact": "string",
-            "salary": 1000,
-            "currency": "AGREEMENT",
-            "location": "Di An",
-            "recruit": 10,
-            "createDate": "2023-01-14 21:02:28",
-            "expirationDate": "2023-06-06 00:00:00",
-            
-            "status": "ACTIVE",
-            "viewCount": 0,
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            },
-            
-        },
-        
-    ]
+    const { getEmpPost } = useContext(PostContext)
+    const { warn, success } = useToast()
 
-    const [approvedPost, setApprovedPost] = useState(0)
-    const [pendingPost, setPendingPost] = useState(0)
-    const [deniedPost, setDeniedPost] = useState(0)
+    const [filter, setFilter]= useState({
+        method:'',
+        position:'',
+        status:''
+    })
+    const {method, position, status}=filter
+    const [allEmpPost, setAllEmpPost] = useState([])
+    const [postGroups, setPostGroups] = useState([])
+    const [postDisplay, setPostDisplay] = useState([])
 
-    const post = listPost
+    const getallPost = async (keyword) => {
+        const res = await getEmpPost(keyword)
+        if (res.success) {
+            setAllEmpPost(res.data)
+            setPostDisplay(res.data)
+            const arr = res.data
+            const statusGroups = arr.reduce((groups, item) => {
+                const { status } = item;
+                if (!groups[status]) {
+                    groups[status] = [];
+                }
+                groups[status].push(item);
+                return groups;
+            }, {});
+            setPostGroups(statusGroups)
+        }
+    }
+
+    const createSearchPararam = (obj) => {
+        let searchQuery = ''
+        searchQuery += '?limit=48'
+        for (let prop in obj) {
+            searchQuery += `&${prop}=${obj[prop]}`
+        }
+        return searchQuery
+    }
+
+    useEffect(() => {
+        const keyword = createSearchPararam(filter)
+        getallPost(keyword)
+    }, [filter])
+
+    const post = postDisplay
 
     function chuckPosts(arr, length) {
         const chunks = [];
@@ -435,9 +79,62 @@ const JobPostingComponent = () => {
         }
     }
 
-    const toAnyPage =(page) =>{
+    const toAnyPage = (page) => {
         setCurrentPage(page)
     }
+
+    const onClickAllPost = () => {
+        setPostDisplay(allEmpPost)
+    }
+    const onClickApprovePost = () => {
+        if (postGroups.ACTIVE !== undefined) {
+            setPostDisplay(postGroups.ACTIVE)
+        }
+        else warn('There are no posts in this category!');
+    }
+    const onClickPendingPost = () => {
+        if (postGroups.WAIT_FOR_ACCEPT !== undefined) {
+            setPostDisplay(postGroups.WAIT_FOR_ACCEPT)
+        }
+        else warn('There are no posts in this category!');
+    }
+    const onClickUnacceptPost = () => {
+        if (postGroups.DELETED_BY_ADMIN !== undefined) {
+            setPostDisplay(postGroups.DELETED_BY_ADMIN)
+        }
+        else warn('There are no posts in this category!');
+    }
+
+    const onChangeSelectPost = (event) => {
+        setFilter({
+            ...filter,
+            status:event.target.value
+        })
+    }
+
+    const onChangeSelectPosition = (event) => {
+        setFilter({
+            ...filter,
+            position:event.target.value
+        })
+    }
+
+    const onChangeSelectType = (event) => {
+        setFilter({
+            ...filter,
+            method:event.target.value
+        })
+    }
+
+    const onClickClearFilter = ()=>{
+        setFilter({
+            ...filter,
+            method:'',
+            position:'',
+            status:'',
+        })
+    }
+
 
     return (
         <div style={{ width: "80%" }}>
@@ -449,28 +146,34 @@ const JobPostingComponent = () => {
                     <div className='title-group-overal group-manager-post-title'>
                         Overal:
                     </div>
-                    <div className='title-group-overal group-manager-post button'>
+                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickAllPost() }}>
                         <div>
                             <p>Total post</p>
-                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>{listPost.length}</span>
+                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>{allEmpPost.length}</span>
                         </div>
                     </div>
-                    <div className='title-group-overal group-manager-post button'>
+                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickApprovePost() }}>
                         <div>
                             <p>Approved</p>
-                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>{approvedPost}</span>
+                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>
+                                {postGroups.ACTIVE !== undefined ? postGroups.ACTIVE.length : 0}
+                            </span>
                         </div>
                     </div>
-                    <div className='title-group-overal group-manager-post button'>
+                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickPendingPost() }}>
                         <div>
                             <p>Pending</p>
-                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>{pendingPost}</span>
+                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>
+                                {postGroups.WAIT_FOR_ACCEPT !== undefined ? postGroups.WAIT_FOR_ACCEPT.length : 0}
+                            </span>
                         </div>
                     </div>
-                    <div className='title-group-overal group-manager-post button'>
+                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickUnacceptPost() }}>
                         <div>
                             <p>Denied</p>
-                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>{deniedPost}</span>
+                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>
+                                {postGroups.DELETED_BY_ADMIN !== undefined ? postGroups.DELETED_BY_ADMIN.length : 0}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -480,25 +183,37 @@ const JobPostingComponent = () => {
                             Filter:
                         </div>
                         <div className='select-item'>
-                            <select>
-                                <option> All post</option>
+                            <select onChange={onChangeSelectPost} defaultValue={''}>
+                                <option value={''} selected={status === ''}> All post</option>
+                                <option value={'ACTIVE'} selected={status === 'ACTIVE'}> Approved post</option>
+                                <option value={'WAIT_FOR_ACCEPT'} selected={status === 'WAIT_FOR_ACCEPT'}> Pending post</option>
+                                <option value={'DELETED_BY_ADMIN'} selected={status === 'DELETED_BY_ADMIN'}> Denied post</option>
                             </select>
                         </div>
                         <div className='select-item'>
-                            <select>
-                                <option> All level</option>
+                            <select onChange={onChangeSelectPosition} defaultValue={''}>
+                                <option value="" selected={position === ''}>All position</option>
+                                <option value="Staff" selected={position === 'Staff'}>Staff</option>
+                                <option value="Leader" selected={position === 'Leader'}>Leader</option>
+                                <option value="Manager" selected={position === 'Manager'}>Manager</option>
+                                <option value="Deputy" selected={position === 'Deputy'}>Deputy</option>
+                                <option value="Vice_President" selected={position === 'Vice_President'}>Vice president</option>
+                                <option value="Branch_Manager" selected={position === 'Branch_Manager'}>Branch manager</option>
                             </select>
                         </div>
                         <div className='select-item'>
-                            <select>
-                                <option> Type of work</option>
+                            <select onChange={onChangeSelectType} defaultValue={''}>
+                                <option value="" selected={method === ''}>Type of work</option>
+                                <option value="FULL_TIME" selected={method === 'FULL_TIME'}>Full time</option>
+                                <option value="PART_TIME" selected={method === 'PART_TIME'}>Part time</option>
+                                <option value="INTERN" selected={method === 'INTERN'}>Intern</option>
                             </select>
                         </div>
                         <div className='clear-select-item'>
-                            <p href=" ">Clear selection </p>
+                            <p onClick={()=>onClickClearFilter()}>Clear selection </p>
                         </div>
                     </div>
-                    <div className='ex-button' style={{ width: "16%", height:"80%" }}>
+                    <div className='ex-button' style={{ width: "16%", height: "50px" }}>
                         <div style={{ marginRight: "20px", justifyContent: "center", display: "flex", width: "100%" }}>Export list</div>
                     </div>
                 </div>
@@ -529,27 +244,27 @@ const JobPostingComponent = () => {
                             Others
                         </div>
                     </div>
-                    {listPost.length === 0 ? (
+                    {postDisplay.length === 0 ? (
                         <div style={{ display: "flex", justifyContent: "center" }}> You don't have any posts yet</div>)
-                        : (allPost[currentPage].map((p) => (
-                            <SingleRowPost post={p} />))
+                        : (allPost[currentPage].map((p, id) => (
+                            <SingleRowPost post={p} key={id} num={id}/>))
                         )
                     }
 
                 </div>
-                <div className="paging-post" style={{marginTop:'-10px'}}>
+                <div className="paging-post" style={{ marginTop: '-10px' }}>
                     <div className="circle-round" onClick={toPreviousPage}>
-                        <img src={leftArrow} alt='icon' style={{height: "95%"}}/>
+                        <img src={leftArrow} alt='icon' style={{ height: "95%" }} />
                     </div>
                     {allPost.map((p, id) => (
-                        <div className="page-num-round" onClick={()=>{toAnyPage(id)}}
+                        <div className="page-num-round" onClick={() => { toAnyPage(id) }} key={id}
                             style={currentPage === id ? { backgroundColor: "#0c62ad", border: "2px solid #0c62ad" } : { backgroundColor: "#cfcfcf", border: "2px solid #cfcfcf" }}
                         >
 
                         </div>
                     ))}
                     <div className="circle-round" onClick={toNextPage}>
-                        <img src={rightArrow} alt='icon' style={{height: "95%"}}/>
+                        <img src={rightArrow} alt='icon' style={{ height: "95%" }} />
                     </div>
                 </div>
             </div>

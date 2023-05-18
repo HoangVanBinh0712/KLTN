@@ -12,6 +12,9 @@ import JobPostingComponent from "../employer_scenes/components/JobPostingCompone
 import ServicePage from "../employer_scenes/components/ServicePage";
 import PostDetails from "../components/PostDetails";
 import EmployeeProfile from "../employee_scenes/components/EmployeeProfile";
+import PageCustomerServices from "../components/PageCustomerServiceNoneTopbar";
+import CvSubmitComponent from "../employer_scenes/components/CvSubmitComponent";
+import SubmitDetail from "../employer_scenes/components/SubmitDetail";
 import { AuthContext } from "../contexts/AuthContext";
 
 
@@ -47,6 +50,10 @@ const EmployerRoute = ({ ...rest }) => {
           <Route path="verify-email" element={<EmployerVerifyEmail />} />
           <Route path="add-post" element={<AddPostComponent />} />
           <Route path="job-posting" element={<JobPostingComponent />} />
+          <Route path="cus-service" element={<PageCustomerServices />} />
+          <Route path="post-submitted" element={<CvSubmitComponent />} />
+          <Route path="post-submitted/:id" element={<SubmitDetail />} />
+
         </Route>
         <Route path="/*" element={<PageNotFound />} />
       </Routes>

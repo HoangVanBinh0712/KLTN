@@ -991,6 +991,7 @@ small {
 .ex-button::before {
     content: url("../../assets/icons/excel-logo50px.png");
     margin-right: 10px;
+    margin-left: 5px;
 }
 
 .col-title-listpost {

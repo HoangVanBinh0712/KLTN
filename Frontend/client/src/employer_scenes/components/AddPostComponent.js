@@ -8,9 +8,9 @@ import { PostContext } from "../../contexts/PostContext";
 const AddPostComponent = () => {
 
   const { authState: { user }, } = useContext(AuthContext);
-  const {createPost} = useContext(PostContext)
+  const { createPost } = useContext(PostContext)
   const { warn, success } = useToast();
-  const [ mess, setMess ] = useState('')
+  const [mess, setMess] = useState('')
 
   const today = new Date();
   const tomorrow = new Date(today);
@@ -36,91 +36,64 @@ const AddPostComponent = () => {
     city: user !== null ? user.city.id : 0,
   }
 
-  const [postInfo, setPostInfo] = useState(initialPostInfo)
-  const { title, position, experience, salary, recruit, expirationDate, description, requirement, benifit } = postInfo
+  const [title, setTitle] = useState(initialPostInfo.title)
+  const [description, setDescription] = useState(initialPostInfo.description)
+  const [method, setMethod] = useState(initialPostInfo.method)
+  const [position, setPosition] = useState(initialPostInfo.position)
+  const [experience, setExperience] = useState(initialPostInfo.experience)
+  const [gender, setGender] = useState(initialPostInfo.gender)
+  const [requirement, setRequirement] = useState(initialPostInfo.requirement)
+  const [benifit, setBenifit] = useState(initialPostInfo.benifit)
+  const [salary, setSalary] = useState(initialPostInfo.salary)
+  const [currency, setCurrency] = useState(initialPostInfo.currency)
+  const [recruit, setRecruit] = useState(initialPostInfo.recruit)
+  const [expirationDate, setExpirationDate] = useState(initialPostInfo.expirationDate)
+
 
   const handleDescChange = (newValue) => {
-    setPostInfo({
-      ...postInfo,
-      description: newValue
-    })
+    setDescription(newValue)
   }
-
   const handleRequirementChange = (newValue) => {
-    setPostInfo({
-      ...postInfo,
-      requirement: newValue
-    })
+    setRequirement(newValue)
   }
-
   const handleBenifitChange = (newValue) => {
-    setPostInfo({
-      ...postInfo,
-      benifit: newValue
-    })
+    setBenifit(newValue)
   }
 
   const onChangeTitle = (event) => {
-    setPostInfo({
-      ...postInfo,
-      title: event.target.value
-    })
+    setTitle(event.target.value)
   }
 
   const onChangeWokType = (event) => {
-    setPostInfo({
-      ...postInfo,
-      method: event.target.value
-    })
+    setMethod(event.target.value)
   }
 
   const onChangegenderType = (event) => {
-    setPostInfo({
-      ...postInfo,
-      gender: event.target.value
-    })
+    setGender(event.target.value)
   }
 
   const onChangeCurencyType = (event) => {
-    setPostInfo({
-      ...postInfo,
-      currency: event.target.value
-    })
+    setCurrency(event.target.value)
   }
 
   const onChangeSalary = (event) => {
-    setPostInfo({
-      ...postInfo,
-      salary: event.target.value
-    })
+    setSalary(event.target.value)
   }
 
   const onChangeRecruiter = (event) => {
-    setPostInfo({
-      ...postInfo,
-      recruit: event.target.value
-    })
+    setRecruit(event.target.value)
   }
 
   const onChangePosition = (event) => {
-    setPostInfo({
-      ...postInfo,
-      position: event.target.value
-    })
+    setPosition(event.target.value)
   }
 
   const onChangeExp = (event) => {
-    setPostInfo({
-      ...postInfo,
-      experience: event.target.value
-    })
+    setExperience(event.target.value)
   }
 
   const onChangeExpiration = (event) => {
-    setPostInfo({
-      ...postInfo,
-      expirationDate: event.target.value
-    })
+    setExpirationDate(event.target.value)
   }
 
   const checkPostInfo = (pInfo) => {
@@ -130,11 +103,40 @@ const AddPostComponent = () => {
   }
 
   const onSaveClick = async () => {
+    const postInfo = {
+      title: title,
+      description: description,
+      method: method,
+      position: position,
+      experience: experience,
+      gender: gender,
+      requirement: requirement,
+      benifit: benifit,
+      contact: user !== null ? user.phone : '',
+      salary: salary,
+      currency: currency,
+      location: user !== null ? user.address : '',
+      recruit: recruit,
+      expirationDate: expirationDate,
+      industry: user !== null ? user.industry.id : 0,
+      city: user !== null ? user.city.id : 0,
+    }
     if (checkPostInfo(postInfo)) {
       const res = await createPost(postInfo)
       if (res.success) {
         success("Created new post successfully!")
-        setPostInfo(initialPostInfo)
+        setTitle(initialPostInfo.title)
+        setDescription(initialPostInfo.description)
+        setMethod(initialPostInfo.method)
+        setPosition(initialPostInfo.position)
+        setExperience(initialPostInfo.experience)
+        setGender(initialPostInfo.gender)
+        setRequirement(initialPostInfo.requirement)
+        setBenifit(initialPostInfo.benifit)
+        setSalary(initialPostInfo.salary)
+        setCurrency(initialPostInfo.currency)
+        setRecruit(initialPostInfo.recruit)
+        setExpirationDate(initialPostInfo.expirationDate)
       }
       else warn(res.message)
     }
@@ -151,7 +153,18 @@ const AddPostComponent = () => {
       "Are you sure you want to cancel, the information you changed will not be saved?"
     );
     if (confirm) {
-      setPostInfo(initialPostInfo)
+      setTitle(initialPostInfo.title)
+      setDescription(initialPostInfo.description)
+      setMethod(initialPostInfo.method)
+      setPosition(initialPostInfo.position)
+      setExperience(initialPostInfo.experience)
+      setGender(initialPostInfo.gender)
+      setRequirement(initialPostInfo.requirement)
+      setBenifit(initialPostInfo.benifit)
+      setSalary(initialPostInfo.salary)
+      setCurrency(initialPostInfo.currency)
+      setRecruit(initialPostInfo.recruit)
+      setExpirationDate(initialPostInfo.expirationDate)
     }
   };
 
@@ -174,14 +187,14 @@ const AddPostComponent = () => {
             </input>
           </div>
           <div className="text-area-group">
-            <div className="label">Description <p style={{color:'#ff453a'}}>{' '}{mess}</p></div>
+            <div className="label">Description <p style={{ color: '#ff453a' }}>{' '}{mess}</p></div>
             <ReactQuill value={description} onChange={handleDescChange} className="coler-placeholder" />
           </div>
 
           <div className="row">
             <div className="left" style={{ width: '48%' }}>
               <div className="text-area-group" style={{ marginBottom: '10px' }}>
-                <div className="label">Requirement <p style={{color:'#ff453a'}}>{' '}{mess}</p></div>
+                <div className="label">Requirement <p style={{ color: '#ff453a' }}>{' '}{mess}</p></div>
                 <ReactQuill
                   value={requirement}
                   onChange={handleRequirementChange}
@@ -318,7 +331,7 @@ const AddPostComponent = () => {
             </div>
             <div className="right" style={{ width: '48%' }}>
               <div className="text-area-group" style={{ marginBottom: '10px' }}>
-                <div className="label">Benifit <p style={{color:'#ff453a'}}>{' '}{mess}</p></div>
+                <div className="label">Benifit <p style={{ color: '#ff453a' }}>{' '}{mess}</p></div>
                 <ReactQuill
                   value={benifit}
                   onChange={handleBenifitChange}

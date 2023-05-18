@@ -43,7 +43,7 @@ const EmployerAccount = () => {
               </Link>
             </li>
             <li>
-              <Link className="nav-text" to="recruitment-statistics">
+              <Link className="nav-text" to="cus-service">
                 <img src={supportIcon} alt="" className="nav-icon"></img>
                 Customer service
               </Link>
