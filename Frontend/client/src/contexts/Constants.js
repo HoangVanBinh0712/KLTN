@@ -1,5 +1,5 @@
-export const apiUrl = 'http://localhost:8081/api'
-export const apiWS = 'localhost:8081'
+export const apiUrl = 'https://career-website.herokuapp.com/api'
+export const apiWS = 'career-website.herokuapp.com'
 /* export const apiUrl = process.env.NODE_ENV !== 'production' ? 'http://localhost:8081/api' : 'https://career-website.herokuapp.com/api' */
 export const LOCAL_STORAGE_TOKEN_NAME = 'user-token'
 export const USER_ROLE = 'USER_ROLE'

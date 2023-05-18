@@ -7,13 +7,13 @@ import { useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { apiUrl } from "../../contexts/Constants";
 import userIcon from "../../assets/user.png";
-import useStompClient from "./useStompClient";
-
+import { useRef } from "react";
+import Stomp from "stompjs";
+import { apiWS } from "../../contexts/Constants";
 const ChatBox = () => {
   const {
     authState: { user, authLoading },
   } = useContext(AuthContext);
-  const stClient = useStompClient();
 
   const userJwtToken = localStorage.getItem("user-token");
 
@@ -36,10 +36,11 @@ const ChatBox = () => {
         chatContent: chatContent,
       },
   */
-  // const [listRoomFull, setListRoomFull] = useState([]);
   const [listOpenRoom, setListOpenRoom] = useState([]);
   const [messengers, setMessengers] = useState([]);
-  const [subscriptionId, setSubscriptionId] = useState(null);
+
+  const listOpenRoomRef = useRef(listOpenRoom);
+  const listRoomRef = useRef(listRoom);
 
   const handleMessagesRef = (ref, length) => {
     if (ref) {
@@ -49,6 +50,9 @@ const ChatBox = () => {
     }
   };
 
+  const auth_headers = {
+    Authorization: "Bearer " + userJwtToken,
+  };
   //Global variables
   var page = 1;
 
@@ -57,17 +61,83 @@ const ChatBox = () => {
   const maxRoom = 3;
 
   useEffect(() => {
+    listOpenRoomRef.current = listOpenRoom;
+    listRoomRef.current = listRoom;
+  }, [listOpenRoom, listRoom]);
+
+  useEffect(() => {
+    const stClient = Stomp.client(`ws://${apiWS}/chat`);
     if (!authLoading && user) {
       keyUpJwt(userJwtToken);
+
+      // stompClientRef.current.debug = false;
+      stClient.connect(auth_headers, () => {
+        ///${user.id}/messages/${reciverId}
+        stClient.subscribe(`/user/queue`, function (message) {
+          const obj = JSON.parse(message.body);
+          if (listRoomRef.current) {
+            const destRoom = listRoomRef.current.filter((r) => r.room.id === obj.chatRoomId)[0];
+            if (destRoom) {
+              destRoom.unread = obj.data;
+              destRoom.unread_time = new Date().getHours() + ":" + new Date().getMinutes();
+              destRoom.seen = false;
+            }
+          }
+
+          //If room is open -> add message
+          //else open a new room
+          if (listOpenRoomRef.current.some((r) => r.roomId === obj.chatRoomId)) {
+            const newListOpenRoom = [
+              ...listOpenRoomRef.current.map((op) => {
+                if (op.roomId === obj.chatRoomId) {
+                  op.chatContent.push({
+                    id: null,
+                    chatRoomId: obj.chatRoomId,
+                    image: null,
+                    senderId: null,
+                    content: obj.data,
+                    user1Seen: true,
+                    user2Seen: true,
+                    time: formatDateToYYYYMMDDHHMMSS(new Date()),
+                  });
+                }
+                return op;
+              }),
+            ];
+            setListOpenRoom(newListOpenRoom);
+            //When room is openned dont need to hight light
+
+            //Set seen to true
+            axios.put(`${apiUrl}/chat/message/${obj.chatMessageId}`, {}, { headers: auth_headers });
+          } else {
+            functionOpenRoom(obj.chatRoomId);
+          }
+
+          //Sort message room to newest message
+          if (listRoomRef.current.length > 0) {
+            const room = filterListRoom(obj.chatRoomId, true)[0];
+            const newListRom = filterListRoom(obj.chatRoomId, false);
+            setListRoom([room, ...newListRom]);
+          }
+        });
+      });
     }
+
     return () => {
-      if (stClient) {
-        console.count("re-render");
-        stClient.unsubscribe(subscriptionId);
-        stClient.disconnect();
-      }
+      stClient.disconnect();
     };
-  }, [stClient]);
+  }, []);
+
+  function formatDateToYYYYMMDDHHMMSS(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
 
   function caclTime(time) {
     const date1 = new Date(time);
@@ -94,135 +164,64 @@ const ChatBox = () => {
     return result ? result : " Bây giờ";
   }
 
-  async function connectSocket(listOpenRoom, lst) {
-    const auth_headers = {
-      Authorization: "Bearer " + userJwtToken,
-    };
-
-    //Disable log
-    ///${user.id}/messages/${reciverId}
-    if (stClient) {
-      stClient.unsubscribe(subscriptionId);
-      const subscription = stClient.subscribe(`/user/queue`, function (message) {
-        const obj = JSON.parse(message.body);
-
-        if (lst) {
-          const destRoom = lst.filter((r) => r.room.id === obj.chatRoomId)[0];
-          console.log(destRoom);
-          if (destRoom) {
-            destRoom.unread = obj.data;
-            destRoom.unread_time = new Date().getHours() + ":" + new Date().getMinutes();
-            destRoom.seen = false;
-          }
-        } else {
-          const destRoom = filterListRoom(obj.chatRoomId, true)[0];
-          console.log(destRoom);
-          if (destRoom) {
-            destRoom.unread = obj.data;
-            destRoom.unread_time = new Date().getHours() + ":" + new Date().getMinutes();
-            destRoom.seen = false;
-          }
-        }
-        //If room is open -> add message
-        //else open a new room
-        if (listOpenRoom.some((r) => r.roomId === obj.chatRoomId)) {
-          const newListOpenRoom = [
-            ...listOpenRoom.map((op) => {
-              if (op.roomId === obj.chatRoomId) {
-                op.chatContent.push({
-                  id: null,
-                  chatRoomId: obj.chatRoomId,
-                  image: null,
-                  senderId: null,
-                  content: obj.data,
-                  user1Seen: true,
-                  user2Seen: true,
-                  time: new Date(),
-                });
-              }
-              return op;
-            }),
-          ];
-          setListOpenRoom(newListOpenRoom);
-          //When room is openned dont need to hight light
-
-          //Set seen to true
-          axios.put(`${apiUrl}/chat/message/${obj.chatMessageId}`, {}, { headers: auth_headers });
-        } else {
-          setSubscriptionId(subscription.id);
-          stClient.unsubscribe(subscription.id);
-          console.log("Got a message " + obj.chatRoomId, listOpenRoom);
-          openRoom(obj.chatRoomId, listOpenRoom);
-        }
-
-        //Sort message room to newest message
-        if (listRoom.length > 0) {
-          const room = filterListRoom(obj.chatRoomId, true)[0];
-          const newListRom = filterListRoom(obj.chatRoomId, false);
-          setListRoom([room, ...newListRom]);
-        }
-      });
-      setSubscriptionId(subscription.id);
-    }
-  }
-
   function filterListRoom(roomId, isEqual) {
-    if (isEqual) return listRoom.filter((r) => r.room.id === roomId);
-    else return listRoom.filter((r) => r.room.id !== roomId);
+    if (isEqual) return listRoomRef.current.filter((r) => r.room.id === roomId);
+    else return listRoomRef.current.filter((r) => r.room.id !== roomId);
   }
 
   function sendMessage(roomId) {
     const mess = getElementById(`${roomId}-input-message`);
-    if (!stClient) {
-      alert("Connect -> Set User Id -> Send");
-      return;
-    }
+
     if (!mess.value.trim()) {
       alert("Must type something !");
       return;
     }
-    const time = new Date();
+    const stClient = Stomp.client(`ws://${apiWS}/chat`);
+    stClient.connect(auth_headers, async () => {
+      const time = new Date();
+      await stClient.send(
+        "/websocket/chat",
+        {},
+        JSON.stringify({
+          idReceiver: getReciever(getRoomById(roomId)).id,
+          contentType: 0,
+          data: mess.value,
+          chatRoomId: roomId,
+          time: time,
+        })
+      );
+      setListOpenRoom([
+        ...listOpenRoomRef.current.map((op) => {
+          if (op.roomId === roomId) {
+            op.chatContent.push({
+              id: null,
+              chatRoomId: roomId,
+              image: null,
+              senderId: user.id,
+              content: mess.value,
+              user1Seen: true,
+              user2Seen: true,
+              time: formatDateToYYYYMMDDHHMMSS(time),
+            });
+          }
+          return op;
+        }),
+      ]);
 
-    stClient.send(
-      "/websocket/chat",
-      {},
-      JSON.stringify({
-        idReceiver: getReciever(getRoomById(roomId)).id,
-        contentType: 0,
-        data: mess.value,
-        chatRoomId: roomId,
-        time: time,
-      })
-    );
-    setListOpenRoom([
-      ...listOpenRoom.map((op) => {
-        if (op.roomId === roomId) {
-          op.chatContent.push({
-            id: null,
-            chatRoomId: roomId,
-            image: null,
-            senderId: user.id,
-            content: mess.value,
-            user1Seen: true,
-            user2Seen: true,
-            time: time,
-          });
-        }
-        return op;
-      }),
-    ]);
-    const destRoom = filterListRoom(roomId, true)[0];
-    destRoom.unread = "You :" + mess.value;
-    destRoom.unread_time = new Date().getHours() + ":" + new Date().getMinutes();
-    destRoom.seen = true;
+      const destRoom = filterListRoom(roomId, true)[0];
+      destRoom.unread = "You :" + mess.value;
+      destRoom.unread_time = new Date().getHours() + ":" + new Date().getMinutes();
+      destRoom.seen = true;
 
-    if (listRoom.length > 0) {
-      const room = filterListRoom(roomId, true)[0];
-      const newListRom = filterListRoom(roomId, false);
-      setListRoom([room, ...newListRom]);
-    }
+      if (listRoomRef.current.length > 0) {
+        const room = filterListRoom(roomId, true)[0];
+        const newListRom = filterListRoom(roomId, false);
+        setListRoom([room, ...newListRom]);
+      }
 
-    mess.value = "";
+      mess.value = "";
+      await stClient.disconnect();
+    });
   }
 
   function keyUpMessage(e, roomId) {
@@ -232,9 +231,6 @@ const ChatBox = () => {
   }
 
   async function loadMessage(url) {
-    var auth_headers = {
-      Authorization: "Bearer " + userJwtToken,
-    };
     const response = await axios.get(url, { headers: auth_headers });
 
     return response.data.data;
@@ -258,11 +254,11 @@ const ChatBox = () => {
       })
       .then((response) => {
         const data = response.data.data;
-        const room = listOpenRoom.filter((r) => r.roomId === roomId)[0];
+        const room = listOpenRoomRef.current.filter((r) => r.roomId === roomId)[0];
         room.chatContent = [...data, ...room.chatContent];
 
         setListOpenRoom([
-          ...listOpenRoom.map((x) => {
+          ...listOpenRoomRef.current.map((x) => {
             if (x.roomId === roomId) return room;
             return x;
           }),
@@ -275,28 +271,28 @@ const ChatBox = () => {
     return null;
   }
   function getRoomById(roomId) {
-    return listRoom.filter((x) => x.room.id === roomId)[0];
+    return listRoomRef.current.filter((x) => x.room.id === roomId)[0];
   }
   function closeRoom(roomId) {
-    setListOpenRoom([...listOpenRoom.filter((r) => r.roomId !== roomId)]);
-    connectSocket([...listOpenRoom.filter((r) => r.roomId !== roomId)]);
+    setListOpenRoom([...listOpenRoomRef.current.filter((r) => r.roomId !== roomId)]);
   }
 
   /*Function */
-  async function openRoom(roomId, listOpenRoom) {
+  async function functionOpenRoom(roomId) {
     //Convert to this room
     //We have a messengers as a list of room you have.
     //When create new room we check if roomId is already open in listOpenRoom
-    if (listOpenRoom.some((room) => room.roomId === roomId)) return;
-    let newListOpenRoom = [...listOpenRoom];
+    if (listOpenRoomRef.current.some((room) => room.roomId === roomId)) return;
+    let newListOpenRoom = [...listOpenRoomRef.current];
     //drop oldest room
-    if (listOpenRoom.length >= maxRoom) {
-      const oldestRoom = listOpenRoom[0];
+    if (listOpenRoomRef.current.length >= maxRoom) {
+      const oldestRoom = listOpenRoomRef.current[0];
       //close room
-      newListOpenRoom = [...listOpenRoom.filter((r) => r.roomId !== oldestRoom.roomId)];
+      newListOpenRoom = [...listOpenRoomRef.current.filter((r) => r.roomId !== oldestRoom.roomId)];
     }
     // inputChatRoomId.value = roomId
-    const room = listRoom.filter((room) => room.id === roomId)[0];
+    const room = getRoomById(roomId);
+
     //push a room to current room
     //Push recieverId to room
     const recieverName = getReciever(room).name;
@@ -312,8 +308,6 @@ const ChatBox = () => {
       },
     ];
     setListOpenRoom(lstOpenRoom);
-
-    connectSocket(lstOpenRoom);
   }
   function getNewMessage(arrMessage, roomId) {
     const mess = arrMessage.filter((x) => x.chatRoomId === roomId)[0];
@@ -382,7 +376,6 @@ const ChatBox = () => {
       lst.push(singleRoomChat);
     }
     setListRoom(lst);
-    connectSocket([], lst);
   }
   function getElementById(id) {
     return document.getElementById(id);
@@ -395,7 +388,7 @@ const ChatBox = () => {
     }
   };
 
-  const isRoomOpened = (roomId, listOpenRoom) => {
+  const isRoomOpened = (roomId) => {
     return listOpenRoom.some((x) => x.roomId === roomId);
   };
 
@@ -409,10 +402,10 @@ const ChatBox = () => {
               {listRoom.map((chat_room, index) => (
                 <div
                   key={index}
-                  className={`room ${isRoomOpened(chat_room.room.id, listOpenRoom) ? "room-opened" : ""}`}
+                  className={`room ${isRoomOpened(chat_room.room.id) ? "room-opened" : ""}`}
                   id={`room-${chat_room.room.id}`}
                   onClick={() => {
-                    openRoom(chat_room.room.id, listOpenRoom);
+                    functionOpenRoom(chat_room.room.id);
                   }}
                 >
                   <img className="avatar" src={chat_room.user.urlAvatar ? chat_room.user.urlAvatar : userIcon} width="50px" height="50px" alt="" />
