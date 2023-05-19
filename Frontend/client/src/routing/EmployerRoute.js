@@ -13,8 +13,8 @@ import ServicePage from "../employer_scenes/components/ServicePage";
 import PostDetails from "../components/PostDetails";
 import EmployeeProfile from "../employee_scenes/components/EmployeeProfile";
 import PageCustomerServices from "../components/PageCustomerServiceNoneTopbar";
-import CvSubmitComponent from "../employer_scenes/components/CvSubmitComponent";
 import SubmitDetail from "../employer_scenes/components/SubmitDetail";
+import CandidatesProfile from "../employer_scenes/components/CandidatesProfile";
 import { AuthContext } from "../contexts/AuthContext";
 
 
@@ -51,7 +51,7 @@ const EmployerRoute = ({ ...rest }) => {
           <Route path="add-post" element={<AddPostComponent />} />
           <Route path="job-posting" element={<JobPostingComponent />} />
           <Route path="cus-service" element={<PageCustomerServices />} />
-          <Route path="post-submitted" element={<CvSubmitComponent />} />
+          <Route path="post-submitted" element={<CandidatesProfile />} />
           <Route path="post-submitted/:id" element={<SubmitDetail />} />
 
         </Route>

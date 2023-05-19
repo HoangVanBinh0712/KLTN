@@ -2,7 +2,7 @@ import threeDotIcon from '../../assets/icons/3dot-icon.png'
 import { useContext, useEffect, useState } from 'react'
 
 
-export const SingleRowSubmit = ({ submit, num, position }) => {
+export const SingleRowSubmit = ({ submit, num, position, openAppointment }) => {
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -42,11 +42,11 @@ export const SingleRowSubmit = ({ submit, num, position }) => {
                 {num + 1}.
             </div>
             <div style={{ width: "30%", fontFamily: "Roboto-Light" }} className="limit-title-post">
-                <div className='name-user'>
+                <div className='name-user' onClick={viewProfile} style={{cursor:'pointer'}}>
                     {submit.profile.user.name}
                     <i className="fa fa-check-circle-o" aria-hidden="true" style={{ marginLeft: '5px', color: "#0c62ad" }}></i>
                 </div>
-                <div className='name-profile'>
+                <div className='name-profile' onClick={viewCV} style={{cursor:'pointer'}}>
                     <i className="fa fa-file-text-o" aria-hidden="true" style={{ marginRight: '5px', color: "#0c62ad" }}></i>
                     {submit.profile.name}
                 </div>
@@ -61,17 +61,21 @@ export const SingleRowSubmit = ({ submit, num, position }) => {
                 Attached Profile
             </div>
             <div style={{ width: "8%", position: 'relative' }} onMouseEnter={onMouseEnter} onMouseLeave={onMouseOver}>
-                <div className="others-btn" style={{marginLeft:'60%'}} >
+                <div className="others-btn" style={{ marginLeft: '60%' }} >
                     <img src={threeDotIcon} alt='' className="three-dot-chose-post"></img>
                 </div>
                 {isOpen && (<>
                     <div style={{ position: 'absolute', width: '100%', zIndex: "5" }}>
-                        <div className="chose-active chose-update" style={{ marginLeft: "-15px", width:'140px' }} onClick={viewProfile}>
+                        <div className="chose-active chose-update" style={{ marginLeft: "-15px", width: '140px' }} onClick={viewProfile}>
                             View Profile</div>
-                        <div className="chose-active chose-update" style={{ marginLeft: "-15px", width:'140px' }} onClick={viewCV}>
+                        <div className="chose-active chose-update" style={{ marginLeft: "-15px", width: '140px' }} onClick={viewCV}>
                             View Resume</div>
-                        <div className="chose-active chose-update" style={{ marginLeft: "-15px", width:'140px' }} onClick={()=>viewPredict()}>
-                            View Predict</div>
+                        <div className="chose-active chose-update" style={{ marginLeft: "-15px", width: '140px', display:'flex', textAlign:'center' }}
+                            onClick={() => openAppointment(submit.profile.user.id)}>
+                            Appointment
+                        </div>
+                        {/* <div className="chose-active chose-update" style={{ marginLeft: "-15px", width:'140px' }} onClick={()=>viewPredict()}>
+                            View Predict</div> */}
                     </div>
                 </>)}
             </div>

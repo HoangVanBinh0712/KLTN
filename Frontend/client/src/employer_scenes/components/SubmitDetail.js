@@ -2,19 +2,32 @@ import { useParams } from 'react-router-dom';
 import '../css/submites-sc.css'
 import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
+import addIcon from '../../assets/icons/add-icon.png'
+import ReactQuill from 'react-quill';
 import { SingleRowSubmit } from './SingleRowSubmit'
 import { useContext, useEffect, useState } from 'react';
 import { PostContext } from '../../contexts/PostContext';
+import { useToast } from '../../contexts/Toast';
 
 
 const SubmitDetail = () => {
 
     let { id } = useParams();
     const { getCvSubmited, getPostById } = useContext(PostContext)
+    const {warn, success} = useToast()
 
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    const minDate = tomorrow.toISOString().split("T")[0];
 
     const [listSubmittion, setListSubmiition] = useState([])
     const [postCurrent, setPostCurrent] = useState({})
+    const [isPredict, setIsPredict] = useState(false)
+    const [isAppointment, setIsAppointment] = useState(false)
+    const [jskIdSubmit, setJskSubmit] = useState(0)
+    const [noteAppoint, setNoteAppoint] = useState('')
+    const [appointmentTime, setAppointmentTime] = useState(minDate)
 
     const getSubmittion = async () => {
         const res = await getCvSubmited(id)
@@ -36,6 +49,11 @@ const SubmitDetail = () => {
         return chunks;
     }
 
+    const openAndSetId = (id) => {
+        setIsAppointment(true)
+        setJskSubmit(id)
+    }
+
     const allSubmit = chuckPosts(listSubmittion, 8)
 
     const [currentPage, setCurrentPage] = useState(0)
@@ -49,7 +67,7 @@ const SubmitDetail = () => {
     if (listSubmittion.length > 0) {
         listData = (<>
             {allSubmit[currentPage].map((sub, id) => (
-                <SingleRowSubmit submit={sub} num={id} position={postCurrent.position} key={id} />
+                <SingleRowSubmit submit={sub} num={id} position={postCurrent.position} key={id} openAppointment={openAndSetId} />
             ))
             }
         </>)
@@ -101,16 +119,34 @@ const SubmitDetail = () => {
         setCurrentPage(page)
     }
 
+    const onChangeNoteAppointment = (value) => {
+        setNoteAppoint(value)
+    }
 
-    return (
+    const closeAppointmentForm = () => {
+        setIsAppointment(false)
+    }
+
+    const onClickCreateAppoint = async () => {
+        success('Created Appointment successfully!')
+        setTimeout(() => {
+            setIsAppointment(false)
+          }, 2000)
+    }
+
+    const onChangeAppointmentDate = (event) => {
+        setAppointmentTime(event.target.value)
+    }
+
+    return (<>
         <div style={{ width: "80%" }}>
             <div className="component-title">
                 <span>Submitted details</span>
             </div>
-            <div className="free-space" id="free-space" style={{ justifyContent: 'flex-start', paddingTop: '35px',paddingBottom:'2%' }}>
+            <div className="free-space" id="free-space" style={{ justifyContent: 'flex-start', paddingTop: '35px', paddingBottom: '2%' }}>
                 <div className='row-title-status'>
                     <div className='title-and-expoet-btn'>
-                        Maketing, sale staff <p>{'('}{'23'}{' '}{'submits'}{')'}</p>
+                        Maketing, sale staff <p>{'('}{listSubmittion.length}{' '}{'submits'}{')'}</p>
                     </div>
                     {statePost(postCurrent.status)}
                 </div>
@@ -165,6 +201,68 @@ const SubmitDetail = () => {
                 </div>
             </div>
         </div>
+        <div className='form-submit-cv' style={isPredict ? { display: 'block' } : { display: 'none' }}>
+            <div className='form-submit-report-control'>
+                <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
+                    {/* <div className='name-post-report'>
+                        {data.title}
+                    </div>
+                    <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { closeFormReport() }} /></div> */}
+                </div>
+                <div style={{ display: 'flex', height: '30px', fontSize: '16px', color: "#6c6c6c" }}>
+                    {' * '}Let us know why you're reporting this post.
+                </div>
+                {/* <p style={{ color: '#ff453a', fontSize: '16px' }}> {mess}</p>
+                <div className="group-buttons flex-row"
+                    style={{ display: 'flex', justifyContent: 'end', marginTop: '20px', gap: '1em' }}>
+                    <div className="button" onClick={() => submitReport()}>
+                        <i className="fa fa-paper-plane" aria-hidden="true"></i>
+                        SEND
+                    </div>
+                    <div className="button btn-close" onClick={() => { closeFormReport() }}>
+                        <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', }}></i>
+                        CLOSE
+                    </div>
+                </div> */}
+
+            </div>
+        </div>
+        <div className='form-submit-cv' style={isAppointment ? { display: 'block' } : { display: 'none' }}>
+            <div className='form-submit-report-control'>
+                <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
+                    <div className='note-title'>
+                        Note
+                    </div>
+                    <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { closeAppointmentForm() }} /></div>
+                </div>
+                <div style={{ display: 'flex', height: '30px', fontSize: '16px', color: "#6c6c6c" }}>
+                    {' * '}Give the candidate some necessary information, or requirements for the candidate.
+                </div>
+                <ReactQuill value={noteAppoint} onChange={onChangeNoteAppointment} />
+                <div style={{ display: 'flex', height: '30px', fontSize: '16px', color: "#6c6c6c" }}>
+                    {' * '}Select a date for the meeting.
+                </div>
+                <input type="date" name="title"
+                    className='input-time-appointment'
+                    min={minDate}
+                    id="inp-add-post-page"
+                    onChange={onChangeAppointmentDate}
+                ></input>
+                <div className="group-buttons flex-row"
+                    style={{ display: 'flex', justifyContent: 'end', marginTop: '20px', gap: '1em' }}>
+                    <div className="button" onClick={() => onClickCreateAppoint()}>
+                        <i className="fa fa-paper-plane" aria-hidden="true"></i>
+                        SEND
+                    </div>
+                    <div className="button btn-close" onClick={() => { closeAppointmentForm() }}>
+                        <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', }}></i>
+                        CLOSE
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </>
     )
 }
 export default SubmitDetail
