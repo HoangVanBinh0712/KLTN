@@ -1,4 +1,5 @@
 import '../../employee_scenes/css/search-page.css'
+import '../css/candidate.css'
 import bannerSearch from '../../assets/picture-banner/banner-search.png'
 import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
@@ -118,7 +119,7 @@ const SearchCandidates = () => {
 
     const scrollTop = (position) => {
         window.scrollTo({ top: position, behavior: 'smooth' });
-      };
+    };
 
     const toPreviousPage = () => {
         if (currentPage > 0) {
@@ -136,6 +137,46 @@ const SearchCandidates = () => {
         setCurrentPage(page)
     }
 
+    const [isOpenProfile, setIsOpenProfile] = useState(true)
+
+    const initCandidate = {
+        url: "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673146190/qvi636rtvl7jlfhjnu5f.pdf",
+        name: "CV Frontend",
+        workExperiences: "TODO WEBSITE [ 01/11/2022 - 21/11/2022 ] Team member",
+        skillsAndKnowledges: "Experience\nWork: 2 months internship at FPT software\nKnowledge of Java, C++, C#, JavaScirpt, OOP.\nDatabase: SQL Server, MySQL, MongoDB.\nTools: Git & Github, VSCode, Eclipse\nWeb: Java Spring, Java Servlet, React, NodeJs, Angular",
+        user: {
+            id: 1,
+            email: "thebest11447@gmail.com",
+            emailConfirm: false,
+            name: "Hoang Van Binh",
+            phone: "0422995300",
+            city: {
+                id: 1,
+                name: "TP Hồ Chí Minh"
+            },
+            industry: {
+                id: 3,
+                name: "BANKING"
+            },
+        }
+    }
+
+    const [candidateInfo, setCandidateInfo] = useState(initCandidate)
+
+    const onClickCvTitle = (url) => {
+        window.open(url, "_blank");
+    }
+
+    const onClickOpenCandiInfo = (value) => {
+        setCandidateInfo(value)
+        setIsOpenProfile(true)
+    }
+
+    const onClickCloseForm = () => {
+        setIsOpenProfile(false)
+        setCandidateInfo(initCandidate)
+    }
+
     return (
         <>
             <div className="search-page">
@@ -144,7 +185,7 @@ const SearchCandidates = () => {
                 <div className="search-bar">
                     <div className="row-flex-horizon" style={{ marginBottom: '1em' }}>
                         <input className="search-text" type="text"
-                            placeholder="Job title, position you want ..."
+                            placeholder="Infomation, position you want ..."
                             value={inputKeyword}
                             onChange={onChangeInputKeyword} />
                         <select className="search-select option-select-page-search" onChange={onChangeSelectIndustry}>
@@ -206,8 +247,8 @@ const SearchCandidates = () => {
                 <div className="search-content">
                     <div className="list-post" style={{ width: '100%' }}>
                         {listProfileResult.length > 0 ? (<>
-                            {allPost[currentPage].map((a,id) => (
-                                <SingleCandidateProfile data={a} key={id} />
+                            {allPost[currentPage].map((a, id) => (
+                                <SingleCandidateProfile data={a} key={id} openClick={onClickOpenCandiInfo} />
                             ))
                             }
                         </>) : (<></>)}
@@ -229,6 +270,60 @@ const SearchCandidates = () => {
                         </div>
                     </div>
 
+                </div>
+            </div>
+            <div className='form-candidate-profile' style={isOpenProfile ? { display: 'block' } : { display: 'none' }}>
+                <div className='form-info-candidate-control'>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
+                        <div style={{ color: '#0c62ad' }}>
+                            {`${candidateInfo.user.name}'s Infomation`}
+                        </div>
+                        <div>
+                            <i className="fa fa-times" aria-hidden="true"
+                                style={{ height: '25px', width: 'auto', color: '#6c6c6c', cursor: 'pointer' }} onClick={() => onClickCloseForm()}>
+                            </i>
+                        </div>
+                    </div>
+                    <div className='name-candidate bs-info'>
+                        <div style={{ marginRight: '10px', color: 'black', fontWeight: '500' }}>Name:</div>
+                        {candidateInfo.user.name}
+                    </div>
+                    <div className='name-candidate bs-info'>
+                        <div style={{ marginRight: '10px', color: 'black', fontWeight: '500' }}>Email:</div>
+                        {candidateInfo.user.email}
+                    </div>
+                    <div className='name-candidate bs-info'>
+                        <div style={{ marginRight: '10px', color: 'black', fontWeight: '500' }}>Phone:</div>
+                        {candidateInfo.user.phone}
+                    </div>
+                    <div className='name-candidate' style={{ width: '20%', color: 'black', fontWeight: '500' }}>
+                        {`Experiences:`}
+                    </div>
+                    <div className='exp-area'
+                        dangerouslySetInnerHTML={{ __html: candidateInfo.workExperiences.length > 0 ? candidateInfo.workExperiences : '' }}>
+
+                    </div>
+                    <div className='name-candidate' style={{ width: '30%', color: 'black', fontWeight: '500' }}>
+                        {`Skill and Knowledges:`}
+                    </div>
+                    <div className='exp-area'
+                        dangerouslySetInnerHTML={{ __html: candidateInfo.skillsAndKnowledges.length > 0 ? candidateInfo.skillsAndKnowledges : '' }}>
+
+                    </div>
+                    <div style={{ display: 'flex', height: '30px', fontSize: '16px', color: "#6c6c6c", paddingLeft: '20px' }}>
+                        {' * '}Click on profile name to view.
+                    </div>
+                    <div className="cart-description-profile" style={{ cursor: 'pointer', paddingLeft: '20px' }}
+                        onClick={() => onClickCvTitle(candidateInfo.url)}>
+                        <i className="fa fa-file-text-o" aria-hidden="true" style={{ margin: '0 5px', color: '#0c62ad' }}></i>
+                        {candidateInfo.name}
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'end' }}>
+                        <div className="button btn-close" onClick={() => { onClickCloseForm() }}>
+                            <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', }}></i>
+                            CLOSE
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

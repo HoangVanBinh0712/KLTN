@@ -1,13 +1,57 @@
+import { useEffect, useState } from "react"
 import logoPost from "../../assets/icons/logo.png"
 
-const SingleCandidateProfile = ({ data }) => {
+const SingleCandidateProfile = ({ data, openClick }) => {
+
+    const initCandidate = {
+        url: "",
+        name: "",
+        workExperiences: "",
+        skillsAndKnowledges: "",
+        user: {
+            id: 0,
+            email: "",
+            emailConfirm: false,
+            name: "",
+            phone: "",
+            city: {
+                id: 0,
+                name: ""
+            },
+            industry: {
+                id: 0,
+                name: ""
+            },
+        }
+    }
+    const [candidateInfo, setCandidateInfo] = useState(initCandidate)
+
+    useEffect(()=> {
+        const candidateData = {
+            url: data.url,
+            name: data.name,
+            workExperiences: data.workExperiences,
+            skillsAndKnowledges: data.skillsAndKnowledges,
+            user: {
+                id: data.user.id,
+                email: data.user.email,
+                emailConfirm: data.user.emailConfirm,
+                name: data.user.name,
+                phone: data.user.name,
+                city: data.user.city,
+                industry: data.user.industry,
+            }
+        }
+
+        setCandidateInfo(candidateData)
+    },[])
 
     const onClickImagePost = (empId) => {
         window.open(`/employer/candidates/${empId}`, "_blank");
     }
 
-    const onClickPostTitle = (url) => {
-        window.open(url, "_blank");
+    const onClickProfileBtn = () => {
+        openClick(candidateInfo)
     }
 
     const onClickCvTitle = (url) => {
@@ -91,7 +135,7 @@ const SingleCandidateProfile = ({ data }) => {
                         </p>
                         <p style={{ fontSize: '16px' }}>Last modified: {getPostDate(data.lastModified)}</p>
                     </div>
-                    <div className='btn-view' onClick={() => 'onClickImagePost(data.user.id)'}>
+                    <div className='btn-view' onClick={() => onClickProfileBtn()}>
                         View profile
                     </div>
                 </div>
