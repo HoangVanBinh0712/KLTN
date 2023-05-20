@@ -133,13 +133,13 @@ const EmployerAccount = () => {
           </div>
           <ul className="nav-item">
             <li>
-              <Link className="nav-text" to="resume-viewer">
+              <Link className="nav-text" to="purchase-history">
                 <img src={historyIcon} alt="" className="nav-icon"></img>
                 Purchase history
               </Link>
             </li>
             <li>
-              <Link className="nav-text" to="recruiter-followed">
+              <Link className="nav-text" to="current-services">
                 <img src={checkServiceIcon} alt="" className="nav-icon"></img>
                 Current Service
               </Link>
