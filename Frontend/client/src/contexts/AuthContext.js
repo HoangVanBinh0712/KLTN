@@ -473,7 +473,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.post(`${apiUrl}/user/submitcv`,info, {
+        const response = await axios.post(`${apiUrl}/user/submitcv`, info, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -492,7 +492,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.delete(`${apiUrl}/user/submitcv`,info, {
+        const response = await axios.delete(`${apiUrl}/user/submitcv`, info, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -550,7 +550,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.post(`${apiUrl}/report`,info, {
+        const response = await axios.post(`${apiUrl}/report`, info, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -564,7 +564,7 @@ const AuthContextProvider = ({ children }) => {
       } else return { success: false, message: error.message };
     }
   };
-  
+
   // emp followed
   const getEmpFollow = async () => {
     try {
@@ -622,7 +622,7 @@ const AuthContextProvider = ({ children }) => {
       } else return { success: false, message: error.message };
     }
   };
-  
+
   // emp View
   const getEmpViewCv = async (mediaId) => {
     try {
@@ -692,12 +692,12 @@ const AuthContextProvider = ({ children }) => {
   // User get employer profile
   const getEmployerProfile = async (id) => {
     try {
-        const response = await axios.get(`${apiUrl}/employer/information/${id}`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        return response;
+      const response = await axios.get(`${apiUrl}/employer/information/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response;
     } catch (error) {
       if (error.response) {
         return error.response.data;
@@ -709,12 +709,12 @@ const AuthContextProvider = ({ children }) => {
   //get service
   const getEmployerService = async (type) => {
     try {
-        const response = await axios.get(`${apiUrl}/employer/order?status=${type}&page=1&limit=48`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        return response.data;
+      const response = await axios.get(`${apiUrl}/employer/order?status=${type}&page=1&limit=48`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
     } catch (error) {
       if (error.response) {
         return error.response.data;
@@ -722,17 +722,58 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  //SearchCv 
+  const getUserProfileByAnyFilter = async (keyword) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/employer/profile-search${keyword}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        })
+        return responsePost.data
+      } else throw new Error("Unauthorized !");
+    }
+    catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  }
+
+  //get Jsk profile
+  const getUserProfileJSK = async (id) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/public/user/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        })
+        return responsePost.data
+      } else throw new Error("Unauthorized !");
+    }
+    catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  }
 
   //conxtext data
   const authContextData = {
-    loginUser,loginGoogleUser, registerUser, registerEmployer, logoutSection,
-    getUser, updateUserInfo,updateEmpInfo,
+    loginUser, loginGoogleUser, registerUser, registerEmployer, logoutSection,
+    getUser, updateUserInfo, updateEmpInfo,
     getUserAchive, updateUserAchive, createUserAchive, deleteUserAchive,
-    changPassword,changEmpPassword, sendVirifyCode, verifyEmail,
+    changPassword, changEmpPassword, sendVirifyCode, verifyEmail,
     getResume, addResume, updateResume, deleteResume, predictResume,
-    submitResume, deleteSubmitedResume,checkSubmitedResume,getPostSubmitedByResume,
-    getEmpFollow,followEmp,unFollowEmp, getEmpViewCv,
-    getEmployerProfile,getEmployerService,
+    submitResume, deleteSubmitedResume, checkSubmitedResume, getPostSubmitedByResume,
+    getEmpFollow, followEmp, unFollowEmp, getEmpViewCv,
+    getUserProfileJSK,
+    getEmployerProfile, getEmployerService,
+    getUserProfileByAnyFilter,
     reportPost,
     showToast,
     setShowToast,

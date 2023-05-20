@@ -361,3 +361,21 @@ div.button:hover {
     width: 30px;
     cursor: pointer;
 }
+
+.gr-name-btn-view {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gr-name-btn-view .btn-view{
+    height: 36px;
+    padding: 0 5px;
+    font-size: 18px;
+    color: #0C62AD;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #0C62AD;
+    border-radius: 3px;
+    cursor: pointer;
+}

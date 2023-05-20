@@ -17,6 +17,7 @@ import SubmitDetail from "../employer_scenes/components/SubmitDetail";
 import CandidatesProfile from "../employer_scenes/components/CandidatesProfile";
 import PurchaseHistory from "../employer_scenes/components/PurchaseHistory";
 import CurrentService from "../employer_scenes/components/CurrentService";
+import SearchCandidates from "../employer_scenes/components/SearchCandidates";
 import { AuthContext } from "../contexts/AuthContext";
 
 
@@ -57,6 +58,7 @@ const EmployerRoute = ({ ...rest }) => {
           <Route path="post-submitted/:id" element={<SubmitDetail />} />
           <Route path="purchase-history" element={<PurchaseHistory />} />
           <Route path="current-services" element={<CurrentService />} />
+          <Route path="search-candidates" element={<SearchCandidates />} />
           
         </Route>
         <Route path="/*" element={<PageNotFound />} />

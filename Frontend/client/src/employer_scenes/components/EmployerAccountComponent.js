@@ -117,7 +117,7 @@ const EmployerAccount = () => {
               </Link>
             </li>
             <li>
-              <Link className="nav-text" to="post-followed">
+              <Link className="nav-text" to="search-candidates">
                 <img src={viewProfileIcon} alt="" className="nav-icon"></img>
                 Looking for Candidates
               </Link>
