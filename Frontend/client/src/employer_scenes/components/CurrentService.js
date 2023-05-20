@@ -18,7 +18,7 @@ const CurrentService = () => {
                     <CurrentServiceItem user={user} />
                 </div>
                 <div className="view-more-ser">
-                    <Link to='/employer/home'><p>View more services {'>>'}</p></Link>
+                    <Link to='/employer/home' style={{textDecoration:'none'}}><p>View more services {'>>'}</p></Link>
                 </div>
             </div>
         </div>
