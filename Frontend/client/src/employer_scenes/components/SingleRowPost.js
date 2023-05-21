@@ -99,8 +99,11 @@ const SingleRowPost = ({ post, num, resetStatus }) => {
                             View Post</div>
                         <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={() => viewSubmitClick()}>
                             Submited</div>
-                        <div className="chose-active chose-delete" style={{ marginLeft: "-15px" }} onClick={() => onClickDeletePost()}>
+                        {post.status==='DELETED'?(<></>):(
+                            <div className="chose-active chose-delete" style={{ marginLeft: "-15px" }} onClick={() => onClickDeletePost()}>
                             Delete</div>
+                        )}
+                        
                     </div>
                 </>)}
             </div>
