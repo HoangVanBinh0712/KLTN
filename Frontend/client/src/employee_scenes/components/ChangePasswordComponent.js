@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useToast } from "../../contexts/Toast";
 
 const ChangePassword = () => {
-    const { changePassword } = useContext(AuthContext)
+    const { changPassword } = useContext(AuthContext)
     const { warn, success } = useToast();
 
     const [oldPassword, setOldPassword] = useState('')
@@ -62,7 +62,7 @@ const ChangePassword = () => {
                     confirmPassword: confirmPassword
                 }
                 if (confirm) {
-                    const res = await changePassword(pw);
+                    const res = await changPassword(pw);
                     if (res.success) {
                         success('Changed password successfully!')
                     }

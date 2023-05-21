@@ -22,8 +22,8 @@ const UserPersonalInfo = () => {
     name: "",
     phone: "",
     address: "",
-    cityId: "",
-    industryId: "",
+    cityId: "1",
+    industryId: "1",
     urlCover: null,
     urlAvatar: null,
   });
@@ -48,8 +48,8 @@ const UserPersonalInfo = () => {
       name: userData !== null ? userData.name : "",
       phone: userData.phone !== null ? userData.phone : "",
       address: userData !== null ? userData.address : "",
-      cityId: userData.city !== null ? userData.city.id : "",
-      industryId: userData.industry !== null ? userData.industry.id : "",
+      cityId: userData.city !== null ? userData.city.id : "1",
+      industryId: userData.industry !== null ? userData.industry.id : "1",
       urlCover: userData.urlCover !== null ? userData.urlCover : null,
       urlAvatar: userData.urlAvatar !== null ? userData.urlAvatar : null,
     });

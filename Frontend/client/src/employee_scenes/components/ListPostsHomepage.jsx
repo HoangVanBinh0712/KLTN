@@ -12,9 +12,9 @@ import { useToast } from '../../contexts/Toast'
 
 const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
 
-    const {authState:{authloading,role}}=useContext(AuthContext)
+    const { authState: { authloading, role } } = useContext(AuthContext)
     const { postState: { postFollow }, followPost, unfollowPost } = useContext(PostContext)
-    const {success, warn} = useToast()
+    const { success, warn } = useToast()
 
     const post = listPosts
 
@@ -43,7 +43,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
         }
     }
 
-    const toAnyPage =(page) =>{
+    const toAnyPage = (page) => {
         setCurrentPage(page)
     }
 
@@ -77,11 +77,14 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
         }
     }
 
+    const onClickToAllPost = () => {
+        window.location.href = "/posts";
+    }
 
     let postInBox
     if (post.length > 0) {
         postInBox = (<>
-            {allPost[currentPage].map((p,id) => (
+            {allPost[currentPage].map((p, id) => (
                 <div className="post-item" key={id}>
                     <div className="logo-emp-post">
                         <a href={`/recruiter/${p.author.id}`}><img src={p.author.urlAvatar === null ? logoPost : p.author.urlAvatar} className="img-inpost-homepage" alt="logo" /></a>
@@ -97,7 +100,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                             {p.location}
                         </div>
                         <div className="follow-post-heart">
-                            <div className="heart-icon" style={role!=="ROLE_EMPLOYER"?{display:'block'}:{display:'none'}} onClick={()=>heartClick(p.id)}>
+                            <div className="heart-icon" style={role !== "ROLE_EMPLOYER" ? { display: 'block' } : { display: 'none' }} onClick={() => heartClick(p.id)}>
                                 {checkFollow(p.id, postFollow) ? (<img className="icon-hear-follow" src={heartIcon} alt="heart icon" />)
                                     : (<img className="icon-hear-follow" src={roundheartIcon} alt="heart icon" />)}
                             </div>
@@ -109,7 +112,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
         </>
         )
     }
-    else if (!isHaveAi){
+    else if (!isHaveAi) {
         postInBox = (<>
             There are no posts yet!
         </>
@@ -133,8 +136,8 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                     <div className="round-recommend">
                         Recommended by HBQ AI
                     </div>
-                    <div className="post-bx-viewall-ai">
-                        {`View all >>`}
+                    <div className="post-bx-viewall-ai" >
+                        <div style={{ cursor: 'pointer' }} onClick={()=>{onClickToAllPost()}}>{`View all >>`}</div>
                     </div>
                 </div>
                 <div className="list-posts-homepage">
@@ -146,7 +149,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                         <img src={leftArrow} alt='icon' />
                     </div>
                     {allPost.map((p, id) => (
-                        <div className="page-num-round" onClick={()=>{toAnyPage(id)}} key={id}
+                        <div className="page-num-round" onClick={() => { toAnyPage(id) }} key={id}
                             style={currentPage === id ? { backgroundColor: "#0c62ad", border: "2px solid #0c62ad" } : { backgroundColor: "#cfcfcf", border: "2px solid #cfcfcf" }}
                         >
 
@@ -167,8 +170,8 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                     <div className="post-bx-title">
                         {title}
                     </div>
-                    <div className="post-bx-viewall">
-                        {`View all >>`}
+                    <div className="post-bx-viewall" >
+                        <div style={{ cursor: 'pointer' }} onClick={()=>{onClickToAllPost()}}>{`View all >>`}</div>
                     </div>
                 </div>
                 <div className="list-posts-homepage">
@@ -180,7 +183,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                         <img src={leftArrow} alt='icon' />
                     </div>
                     {allPost.map((p, id) => (
-                        <div className="page-num-round" onClick={()=>{toAnyPage(id)}} key={id}
+                        <div className="page-num-round" onClick={() => { toAnyPage(id) }} key={id}
                             style={currentPage === id ? { backgroundColor: "#0c62ad", border: "2px solid #0c62ad" } : { backgroundColor: "#cfcfcf", border: "2px solid #cfcfcf" }}
                         >
 

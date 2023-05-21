@@ -296,7 +296,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.put(`${apiUrl}/user/password`, {
+        const response = await axios.put(`${apiUrl}/user/password`, pw,{
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -660,7 +660,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.put(`${apiUrl}/employer/password`, {
+        const response = await axios.put(`${apiUrl}/employer/password`, pw,{
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,

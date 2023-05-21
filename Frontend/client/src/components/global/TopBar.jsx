@@ -59,7 +59,7 @@ const TopBar = () => {
                 </div>
                 <div className="menu-homepage" style={{width:'70%'}}>
                     <div className="option-menu">
-                        <Link className="option-a-menu" to="/home">Job</Link>
+                        <Link className="option-a-menu" to="/posts">Job</Link>
                     </div>
                     <div className="option-menu">
                         <Link className="option-a-menu" to="/user/account">Profile & CV</Link>
@@ -90,7 +90,7 @@ const TopBar = () => {
                 </div>
                 <div className="menu-homepage-signed">
                     <div className="option-menu">
-                        <Link className="option-a-menu" to="/home">Job</Link>
+                        <Link className="option-a-menu" to="/posts">Job</Link>
                     </div>
                     <div className="option-menu">
                         <Link className="option-a-menu" to="/user/account">Profile & CV</Link>

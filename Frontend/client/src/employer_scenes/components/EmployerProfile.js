@@ -94,6 +94,7 @@ const EmployerProfile = () => {
         tempInput.select();
         document.execCommand("copy");
         document.body.removeChild(tempInput);
+        success('Copied!')
     }
 
     const onClicUnfollow = async (id) => {

@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import TopBar from './global/TopBar';
 import Footer from './global/Footer';
 import ReactQuill from 'react-quill';
@@ -24,14 +24,14 @@ const PostDetails = () => {
     let { id } = useParams();
     const { authState: { isAuthenticated, role, user },
         getResume, deleteSubmitedResume, submitResume, checkSubmitedResume, reportPost } = useContext(AuthContext)
-    const { postState: { postFollow }, getPostById,followPost, unfollowPost, } = useContext(PostContext)
+    const { postState: { postFollow }, getPostById, followPost, unfollowPost, } = useContext(PostContext)
     const { success, warn } = useToast()
 
     const [isSubmitFormOpen, setSubmitForm] = useState(false)
     const [isReportFormOpen, setReportForm] = useState(false)
     const [isSubmited, setIsSubmited] = useState(false)
     const [allResume, setAllResume] = useState([])
-    const [dataPost, setDataPost]=useState({})
+    const [dataPost, setDataPost] = useState({})
 
     const getAllResume = async () => {
         const res = await getResume()
@@ -41,7 +41,7 @@ const PostDetails = () => {
 
     }
 
-    const getDataPost = async()=>{
+    const getDataPost = async () => {
         const res = await getPostById(id)
         if (res.success) {
             setDataPost(res.data);
@@ -56,14 +56,14 @@ const PostDetails = () => {
 
     useEffect(() => {
         getDataPost()
-        if (isAuthenticated && role === "ROLE_USER"){
+        if (isAuthenticated && role === "ROLE_USER") {
             getAllResume()
             setIsSubmited(checkSubmit())
         }
-        
+
     }, [user])
 
-    const data = dataPost.author===undefined?{
+    const data = dataPost.author === undefined ? {
         "id": 1,
         "title": "Second title",
         "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
@@ -135,7 +135,7 @@ const PostDetails = () => {
             "canSearchCV": true,
             "canFilterCVSubmit": true
         }
-    }:dataPost
+    } : dataPost
 
     const getPostDate = (date) => {
         const myDate = new Date(date);
@@ -327,15 +327,21 @@ const PostDetails = () => {
         }
     }
 
+    const ocClickToNTDProfile = () =>{
+        window.location.href=`/recruiter/${data.author.id}`
+    }
+
     return (<>
         <TopBar />
         <div className="post-detail">
             <div className='post-title-intop'>{data.title}</div>
             <div className="post">
-                <img className="avatar" src={logoIcon} alt="" />
+                <img className="avatar" src={logoIcon} alt="" 
+                style={{ height: '100%', width: 'auto', cursor:'pointer' }} 
+                onClick={()=>ocClickToNTDProfile()}/>
                 <div className="post-info">
                     <p className="title">{data.title}</p>
-                    <div className="post-description">
+                    <div className="post-description" onClick={()=>ocClickToNTDProfile()} style={{width:"140px", cursor:'pointer'}}>
                         {data.author.name}
                     </div>
                     <div className="post-deadline-submit">
@@ -356,10 +362,10 @@ const PostDetails = () => {
                             </div>
                         )}
                         {checkFollow(id, postFollow) ? (
-                            <div className="button btn-save" onClick={()=>savePostClick(id)}>
+                            <div className="button btn-save" onClick={() => savePostClick(id)}>
                                 <i className="fa fa-heart" aria-hidden="true"></i>
                                 UNSAVE
-                            </div>) : (<div className="button btn-save" onClick={()=>savePostClick(id)}>
+                            </div>) : (<div className="button btn-save" onClick={() => savePostClick(id)}>
                                 <i className="fa fa-heart-o" aria-hidden="true"></i>
                                 SAVE
                             </div>)
