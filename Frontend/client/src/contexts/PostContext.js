@@ -143,7 +143,7 @@ const PostContextProvider = ({ children }) => {
         getMostViewPost()
         getHotPost()
         if (user !== null) {
-            if (user.industry.id !== undefined && user.role === "ROLE_USER") {
+            if (user.industry !== null && user.role === "ROLE_USER") {
                 getPredictPost(user.industry.id)
             }
         }

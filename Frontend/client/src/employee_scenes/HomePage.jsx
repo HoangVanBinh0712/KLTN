@@ -27,17 +27,24 @@ const HomePage = () => {
         listPosts={postHot}
       />
       <TopEmployer listCompanies={highlightCompany} />
-      <ListPostsHomepage
-        title={"Suitable job"}
-        isHaveAi={true}
-        listPosts={postsAi}
-      />
+      {!authloading && user.role === "ROLE_USER" ? (
+        <ListPostsHomepage
+          title={"Suitable job"}
+          isHaveAi={true}
+          listPosts={postsAi}
+        />
+      ) : (
+        <></>
+      )
+
+      }
+
       <ListPostsHomepage
         title={"Attractive job"}
         isHaveAi={false}
         listPosts={postMostView}
       />
-      <Footer/>
+      <Footer />
     </>
   )
 }

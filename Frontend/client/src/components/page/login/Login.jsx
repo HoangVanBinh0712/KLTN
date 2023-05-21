@@ -117,7 +117,7 @@ const Login = () => {
                                     </p>
                                 </div>
                                 <div >
-                                    <label className="lb-name" for="email" style={{ color: "#207198" }}>Email</label>
+                                    <label className="lb-name" htmlFor="email" style={{ color: "#207198" }}>Email</label>
                                     <input className="input-text-login"
                                         type="email"
                                         id="email"
@@ -130,9 +130,9 @@ const Login = () => {
                                     />
                                 </div>
                                 <div >
-                                    <label className="lb-name" for="password" style={{ color: "#207198" }}>Password</label>
+                                    <label className="lb-name" htmlFor="password" style={{ color: "#207198" }}>Password</label>
                                     <div className="group-password" >
-                                        <div style={{ width: '92%' }}>
+                                        <div style={{ width: '100%' }}>
                                             <input className="input-text-login password"
                                                 type={showPassword ? "text" : "password"}
                                                 id="pswrd"
@@ -144,7 +144,10 @@ const Login = () => {
                                                 required
                                             />
                                         </div>
-                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <div style={{
+                                            display: 'flex', alignItems: 'center', position: 'absolute', right: "1.5em",
+                                            top: "50%"
+                                        }}>
                                             <i className="fa fa-eye" onClick={onClick} ></i>
                                         </div>
                                     </div>

@@ -44,9 +44,9 @@ export const AdminRoute = ({ ...rest }) => {
     }
     else if (currentUrl === "/admin/login" && !isAdmin) {
         body = (
-            <AuthContextProvider>
-                <LoginPageAdmin />
-            </AuthContextProvider>
+            <Routes>
+                <Route path ="/admin/login" element={<LoginPageAdmin />} />
+            </Routes>
         )
     }
     else if (!webUrlActivity.includes(currentUrl + " ")) {
@@ -55,6 +55,9 @@ export const AdminRoute = ({ ...rest }) => {
                 <Route path ="/admin/*" element={<PageNotFound />} />
             </Routes>
         )
+    }
+    else if (isAdmin && currentUrl === "/admin/login") {
+        return <Navigate to="/admin/dashboard" />;
     }
     else if (rest.path.includes(currentUrl) && isAdmin) {
         body = (
@@ -86,9 +89,7 @@ export const AdminRoute = ({ ...rest }) => {
             </AuthContextProvider>
         )
     }
-    else if (isAdmin && currentUrl === "/admin/login") {
-        return <Navigate to="/admin/dashboard" />;
-    }
+    
     else if (rest.path.includes(currentUrl)) {
         body = (
             <>

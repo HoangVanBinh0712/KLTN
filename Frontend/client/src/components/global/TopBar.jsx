@@ -57,7 +57,7 @@ const TopBar = () => {
                 <div className="logo-home">
                     <Link to='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></Link>
                 </div>
-                <div className="menu-homepage">
+                <div className="menu-homepage" style={{width:'70%'}}>
                     <div className="option-menu">
                         <Link className="option-a-menu" to="/home">Job</Link>
                     </div>
@@ -67,16 +67,11 @@ const TopBar = () => {
                     <div className="option-menu">
                         <Link className="option-a-menu" to="#_">Company</Link>
                     </div>
-                    <div className="option-menu">
+                    {/* <div className="option-menu">
                         <Link className="option-a-menu" to="#_" >Tools</Link>
-                    </div>
+                    </div> */}
                 </div>
-                <div className="mess-bell-homepage" style={{}}>
-                    {/* <Link to='/user/login'> */}<img className="messbell-intopbar" src={messIcon} alt="mess" />{/* </Link> */}
-                </div>
-                <div className="mess-bell-homepage" style={{ marginRight: "20px" }}>
-                    <Link to='/user/login'><img className="messbell-intopbar" src={bellIcon} alt="bell" /></Link>
-                </div>
+                
                 <div className="signipup-homepage ">
                     <Link to='/user/login'><div className="login-reg-topbar signin-blue">Sign In</div></Link>
                 </div>
@@ -103,7 +98,7 @@ const TopBar = () => {
                     <div className="option-menu">
                         <Link className="option-a-menu" to="#_">Company</Link>
                     </div>
-                    <div className="option-menu" ref={dropTooldownRef}>
+                    {/* <div className="option-menu" ref={dropTooldownRef}>
                         <p className="option-a-menu" href="#_" onClick={toggleDropdownTool} style={{ cursor: 'pointer' }}>Tools</p>
                         {isOpenTool && (
                             <div className='dropbox-tool-topbar' >
@@ -111,16 +106,16 @@ const TopBar = () => {
                                 <div className='option-dropdown'> <Link className="option-a-menu" to="#_">Customer services</Link></div>
                             </div>
                         )}
-                    </div>
+                    </div> */}
                 </div>
                 <div className="dropdown-container" ref={dropdownRef}>
                     <div className='option-account'>
-                        <div className="signed-homepage">
+                       {/*  <div className="signed-homepage">
                             <img className="messbell-intopbar" src={messIcon} alt="mess" />
                         </div>
                         <div className="signed-homepage">
                             <img className="messbell-intopbar" src={bellIcon} alt="bell" />
-                        </div>
+                        </div> */}
                         <div className="signed-homepage">
                             <img className="messbell-intopbar" src={user.urlAvatar === null ? personIcon : user.urlAvatar}
                                 onClick={toggleDropdown}
@@ -162,16 +157,19 @@ const TopBar = () => {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
-                    <Link to='/employer/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></Link>
+                    <Link to='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></Link>
                 </div>
                 <div className="menu-homepage-signed">
                     <div className="option-menu">
                         <Link className="option-a-menu" to="/employer/home">Services</Link>
                     </div>
                     <div className="option-menu">
-                        <Link className="option-a-menu" to="#_">Brand promotion</Link>
+                        <Link className="option-a-menu" to="/employer/account/job-posting">Your job posting</Link>
                     </div>
-                    <div className="option-menu" ref={dropTooldownRef}>
+                    <div className="option-menu">
+                        <Link className="option-a-menu" to="/employer/account/search-candidates">Search for Candidate</Link>
+                    </div>
+                    {/* <div className="option-menu" ref={dropTooldownRef}>
                         <p className="option-a-menu" onClick={toggleDropdownTool} style={{ cursor: 'pointer' }}>Tools</p>
                         {isOpenTool && (
                             <div className='dropbox-tool-topbar' >
@@ -180,16 +178,16 @@ const TopBar = () => {
                                 <div className='option-dropdown'> <Link className="option-a-menu" to="/customer-services">Customer services</Link></div>
                             </div>
                         )}
-                    </div>
+                    </div> */}
                 </div>
                 <div className="dropdown-container" ref={dropdownRef}>
                     <div className='option-account'>
-                        <div className="signed-homepage">
+                        {/* <div className="signed-homepage">
                             <img className="messbell-intopbar" src={messIcon} alt="mess" />
                         </div>
                         <div className="signed-homepage">
                             <img className="messbell-intopbar" src={bellIcon} alt="bell" />
-                        </div>
+                        </div> */}
                         <div className="signed-homepage">
                             <img className="messbell-intopbar" src={user.urlAvatar === null ? personIcon : user.urlAvatar}
                                 onClick={toggleDropdown}

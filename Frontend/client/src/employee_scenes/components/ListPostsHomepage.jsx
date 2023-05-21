@@ -8,11 +8,14 @@ import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import logoPost from "../../assets/icons/logo.png"
 import { PostContext } from '../../contexts/PostContext'
 import { AuthContext } from '../../contexts/AuthContext'
+import { useToast } from '../../contexts/Toast'
 
 const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
 
-    const {authState:{role}}=useContext(AuthContext)
-    const { postState: { postFollow } } = useContext(PostContext)
+    const {authState:{authloading,role}}=useContext(AuthContext)
+    const { postState: { postFollow }, followPost, unfollowPost } = useContext(PostContext)
+    const {success, warn} = useToast()
+
     const post = listPosts
 
     function chuckPosts(arr) {
@@ -50,6 +53,30 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
         else return false
     }
 
+    const heartClick = async (id) => {
+        if (authloading) {
+            window.location.href = 'user/login'
+        }
+        else {
+            if (role === "ROLE_USER") {
+                if (checkFollow(id, postFollow)) {
+                    const res = await unfollowPost(id)
+                    if (res.success) {
+                        success('The post has been removed from the favorites list.')
+                    }
+                    else warn(res.message)
+                }
+                else {
+                    const res = await followPost(id)
+                    if (res.success) {
+                        success('The article has been added to favorites.')
+                    }
+                    else warn(res.message)
+                }
+            }
+        }
+    }
+
 
     let postInBox
     if (post.length > 0) {
@@ -70,7 +97,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                             {p.location}
                         </div>
                         <div className="follow-post-heart">
-                            <div className="heart-icon" style={role!=="ROLE_EMPLOYER"?{display:'block'}:{display:'none'}}>
+                            <div className="heart-icon" style={role!=="ROLE_EMPLOYER"?{display:'block'}:{display:'none'}} onClick={()=>heartClick(p.id)}>
                                 {checkFollow(p.id, postFollow) ? (<img className="icon-hear-follow" src={heartIcon} alt="heart icon" />)
                                     : (<img className="icon-hear-follow" src={roundheartIcon} alt="heart icon" />)}
                             </div>
