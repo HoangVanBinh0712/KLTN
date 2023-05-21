@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import TopBar from './global/TopBar';
 import Footer from './global/Footer';
 import ReactQuill from 'react-quill';
@@ -332,15 +332,21 @@ const PostDetails = () => {
         }
     }
 
+    const ocClickToNTDProfile = () =>{
+        window.location.href=`/recruiter/${data.author.id}`
+    }
+
     return (<>
         <TopBar />
         <div className="post-detail">
             <div className='post-title-intop'>{data.title}</div>
             <div className="post">
-                <img className="avatar" src={logoIcon} alt="" />
+                <img className="avatar" src={logoIcon} alt="" 
+                style={{ height: '100%', width: 'auto', cursor:'pointer' }} 
+                onClick={()=>ocClickToNTDProfile()}/>
                 <div className="post-info">
                     <p className="title">{data.title}</p>
-                    <div className="post-description">
+                    <div className="post-description" onClick={()=>ocClickToNTDProfile()} style={{width:"140px", cursor:'pointer'}}>
                         {data.author.name}
                     </div>
                     <div className="post-deadline-submit">
