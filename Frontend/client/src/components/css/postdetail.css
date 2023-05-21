@@ -203,7 +203,7 @@
 }
 
 .post-detail .right-group {
-    width: 24%;
+    width: 26%;
     padding: 10px 10px 10px 20px;
     box-sizing: border-box;
     box-shadow: 0px 0px 5px #cfcfcf;
@@ -226,7 +226,7 @@
 }
 
 .post-detail .list-right-group {
-    width: 24%;
+    width: 26%;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -451,5 +451,60 @@
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
-    height: 80%;
+    min-height: 500px;
+    
+}
+
+.form-submit-report-control {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    min-height: 450px;
+}
+.name-post-submit {
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #0C62AD;
+}
+
+.name-post-submit::before {
+    content: "Apply for";
+    margin-right: 8px;
+    font-weight: 600;
+    color: #000 !important;
+}
+
+.name-post-report {
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #0C62AD;
+}
+
+.name-post-report::before {
+    content: "Report";
+    margin-right: 8px;
+    font-weight: 600;
+    color: #000 !important;
+}
+
+.select-submit-cv-form {
+    height: 50px;
+    margin-bottom: 1em;
+    border-radius: 3px;
+    color: #6c6c6c;
+    width: 100%;
+    font-size: 16px;
+    padding-left: 10px;
+}
+
+.close-form-submit {
+    transform: rotate(45deg);
+    height: 50%;
+    width: auto;
+    cursor: pointer;
+}
+
+.btn-close {
+    border: 1px solid #6c6c6c !important;
+    color: #6c6c6c !important;
 }

@@ -58,9 +58,10 @@ body {
 }
 
 .messbell-intopbar {
+    position: relative;
+    top: 20%;
     width: 60%;
     cursor: pointer;
-    margin: 20%;
     padding: 5%;
     border: 1px solid #e7e7e7;
     background-color: #e7e7e7;
@@ -512,7 +513,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 20%;
-    margin: 0 12% 0 12%;
+    margin: 5px 12% 0 12%;
     border-top: 1px solid #676767;
     font-family: Arial;
     font-weight: 300;
@@ -532,6 +533,7 @@ body {
 .dropdown-container {
     display: block;
     width: 20%;
+    margin-top: 0.5%;
     margin-right: 30px;
 }
 

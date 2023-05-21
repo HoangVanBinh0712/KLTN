@@ -360,7 +360,7 @@
 }
 
 .copy-icon {
-    width: 20%;
+    width: 90%;
     cursor: pointer;
 }
 
@@ -376,6 +376,13 @@
 .keyword-wrapper{
     margin-top: 15px;
     display: flex;
+    gap: 10px
+}
+
+.keyword {
+    border-radius: 3px;
+    background-color: #cfcfcf;
+    padding: 0 5px;
 }
 
 .favorite{

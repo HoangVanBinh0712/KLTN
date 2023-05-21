@@ -2,7 +2,7 @@ import threeDotIcon from '../../assets/icons/3dot-icon.png'
 import { useContext, useEffect, useState } from 'react'
 import { PostContext } from '../../contexts/PostContext'
 
-const SingleRowPost = ({ post , num }) => {
+const SinglePostCvSubmit = ({ post, num }) => {
 
     const { getCvSubmited } = useContext(PostContext)
 
@@ -35,7 +35,11 @@ const SingleRowPost = ({ post , num }) => {
     }
 
     const viewPost = () => {
-        window.location.href = `/employer/post/${post.id}`
+        window.open(`/employer/post/${post.id}`, "_blank");
+    }
+
+    const viewSubmitClick = ()=>{
+        window.location.href = `/employer/account/post-submitted/${post.id}`
     }
 
     const statePost = (status) => {
@@ -48,15 +52,10 @@ const SingleRowPost = ({ post , num }) => {
             body = (<div className="btn-state-post-denied"> Unaccept</div>)
         return body
     }
-
-    const viewSubmitClick = ()=>{
-        window.location.href = `/employer/account/post-submitted/${post.id}`
-    }
-
     return (
         <div className="row-data-listpost">
             <div style={{ width: "25px", fontFamily: "Roboto-Light" }}>
-                {num+1}.
+                {num + 1}.
             </div>
             <div style={{ width: "30%", fontFamily: "Roboto-Light" }} className="limit-title-post">
                 {post.title}
@@ -84,14 +83,12 @@ const SingleRowPost = ({ post , num }) => {
                     <div style={{ position: 'absolute', width: '100%', zIndex: "5" }}>
                         <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={viewPost}>
                             View Post</div>
-                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={()=>viewSubmitClick()}> 
+                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={()=>viewSubmitClick()}>
                             Submited</div>
-                        <div className="chose-active chose-delete" style={{ marginLeft: "-15px" }}> 
-                            Delete</div>
                     </div>
                 </>)}
             </div>
         </div>
     )
 }
-export default SingleRowPost;
+export default SinglePostCvSubmit;

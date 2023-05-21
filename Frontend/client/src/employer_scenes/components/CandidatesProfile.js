@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react"
-import SingleRowPost from "./SingleRowPost";
+import SinglePostCvSubmit from "./SinglePostCvSubmit";
 import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import { PostContext } from "../../contexts/PostContext";
 import { useToast } from "../../contexts/Toast";
 
-const JobPostingComponent = () => {
+const CandidatesProfile = () => {
 
     const { getEmpPost } = useContext(PostContext)
     const { warn, success } = useToast()
@@ -16,25 +16,12 @@ const JobPostingComponent = () => {
         status:''
     })
     const {method, position, status}=filter
-    const [allEmpPost, setAllEmpPost] = useState([])
-    const [postGroups, setPostGroups] = useState([])
     const [postDisplay, setPostDisplay] = useState([])
 
     const getallPost = async (keyword) => {
         const res = await getEmpPost(keyword)
         if (res.success) {
-            setAllEmpPost(res.data)
             setPostDisplay(res.data)
-            const arr = res.data
-            const statusGroups = arr.reduce((groups, item) => {
-                const { status } = item;
-                if (!groups[status]) {
-                    groups[status] = [];
-                }
-                groups[status].push(item);
-                return groups;
-            }, {});
-            setPostGroups(statusGroups)
         }
     }
 
@@ -83,28 +70,6 @@ const JobPostingComponent = () => {
         setCurrentPage(page)
     }
 
-    const onClickAllPost = () => {
-        setPostDisplay(allEmpPost)
-    }
-    const onClickApprovePost = () => {
-        if (postGroups.ACTIVE !== undefined) {
-            setPostDisplay(postGroups.ACTIVE)
-        }
-        else warn('There are no posts in this category!');
-    }
-    const onClickPendingPost = () => {
-        if (postGroups.WAIT_FOR_ACCEPT !== undefined) {
-            setPostDisplay(postGroups.WAIT_FOR_ACCEPT)
-        }
-        else warn('There are no posts in this category!');
-    }
-    const onClickUnacceptPost = () => {
-        if (postGroups.DELETED_BY_ADMIN !== undefined) {
-            setPostDisplay(postGroups.DELETED_BY_ADMIN)
-        }
-        else warn('There are no posts in this category!');
-    }
-
     const onChangeSelectPost = (event) => {
         setFilter({
             ...filter,
@@ -135,47 +100,13 @@ const JobPostingComponent = () => {
         })
     }
 
+
     return (
         <div style={{ width: "80%" }}>
             <div className="component-title">
                 <span>Your job posting</span>
             </div>
-            <div className="free-space" id="free-space">
-                <div className='overal-group-chose'>
-                    <div className='title-group-overal group-manager-post-title'>
-                        Overal:
-                    </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickAllPost() }}>
-                        <div>
-                            <p>Total post</p>
-                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>{allEmpPost.length}</span>
-                        </div>
-                    </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickApprovePost() }}>
-                        <div>
-                            <p>Approved</p>
-                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>
-                                {postGroups.ACTIVE !== undefined ? postGroups.ACTIVE.length : 0}
-                            </span>
-                        </div>
-                    </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickPendingPost() }}>
-                        <div>
-                            <p>Pending</p>
-                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>
-                                {postGroups.WAIT_FOR_ACCEPT !== undefined ? postGroups.WAIT_FOR_ACCEPT.length : 0}
-                            </span>
-                        </div>
-                    </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickUnacceptPost() }}>
-                        <div>
-                            <p>Denied</p>
-                            <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>
-                                {postGroups.DELETED_BY_ADMIN !== undefined ? postGroups.DELETED_BY_ADMIN.length : 0}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+            <div className="free-space" id="free-space" style={{paddingTop:'20px'}}>
                 <div className='select-filer-row'>
                     <div className='select-filer-group'>
                         <div className='title-filter'>
@@ -246,7 +177,7 @@ const JobPostingComponent = () => {
                     {postDisplay.length === 0 ? (
                         <div style={{ display: "flex", justifyContent: "center" }}> You don't have any posts yet</div>)
                         : (allPost[currentPage].map((p, id) => (
-                            <SingleRowPost post={p} key={id} num={id}/>))
+                            <SinglePostCvSubmit post={p} key={id} num={id}/>))
                         )
                     }
 
@@ -270,4 +201,4 @@ const JobPostingComponent = () => {
         </div>
     )
 }
-export default JobPostingComponent
+export default CandidatesProfile

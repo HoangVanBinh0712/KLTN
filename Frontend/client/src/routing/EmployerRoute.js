@@ -12,6 +12,12 @@ import JobPostingComponent from "../employer_scenes/components/JobPostingCompone
 import ServicePage from "../employer_scenes/components/ServicePage";
 import PostDetails from "../components/PostDetails";
 import EmployeeProfile from "../employee_scenes/components/EmployeeProfile";
+import PageCustomerServices from "../components/PageCustomerServiceNoneTopbar";
+import SubmitDetail from "../employer_scenes/components/SubmitDetail";
+import CandidatesProfile from "../employer_scenes/components/CandidatesProfile";
+import PurchaseHistory from "../employer_scenes/components/PurchaseHistory";
+import CurrentService from "../employer_scenes/components/CurrentService";
+import SearchCandidates from "../employer_scenes/components/SearchCandidates";
 import { AuthContext } from "../contexts/AuthContext";
 
 
@@ -47,6 +53,13 @@ const EmployerRoute = ({ ...rest }) => {
           <Route path="verify-email" element={<EmployerVerifyEmail />} />
           <Route path="add-post" element={<AddPostComponent />} />
           <Route path="job-posting" element={<JobPostingComponent />} />
+          <Route path="cus-service" element={<PageCustomerServices />} />
+          <Route path="post-submitted" element={<CandidatesProfile />} />
+          <Route path="post-submitted/:id" element={<SubmitDetail />} />
+          <Route path="purchase-history" element={<PurchaseHistory />} />
+          <Route path="current-services" element={<CurrentService />} />
+          <Route path="search-candidates" element={<SearchCandidates />} />
+          
         </Route>
         <Route path="/*" element={<PageNotFound />} />
       </Routes>

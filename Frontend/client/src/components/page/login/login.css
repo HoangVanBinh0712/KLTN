@@ -168,14 +168,12 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  flex-direction: row-reverse;
-
 }
 
 /*==================================================================
 [ login more ]*/
 .login100-more {
-  width: calc(100% - 650px);
+  width: 60%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -187,7 +185,7 @@ iframe {
 [ Form ]*/
 
 .login100-form {
-  width: 650px;
+  width: 40%;
   display: block;
   background-color: #ffffff;
   padding: 60px 55px 55px 55px;
@@ -373,13 +371,11 @@ iframe {
 
 .password {
   width: 100%;
-  height: 60px;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: 2px solid #207198;
-  border-radius: 8px;
-  position: relative;
+  height: 30px;
+  padding: 10px 320px 10px 0px;
+  margin: 2px 0px;
+  border: 2px solid #fff;
+  outline: none;
 }
 
 .input-radio-login {
@@ -461,6 +457,30 @@ i.fa-eye {
   padding-left: 24px;
   padding-top: 4px;
   margin-top: 10px;
+  height: 100%;
+  width: auto;
 }
 
+.group-password {
+  width: 100%;
+  height: 60px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #207198;
+  border-radius: 8px;
+  display: inline-flex;
+}
 
+.frame-logo-login {
+  height: 100px;
+  padding-left: 50px;
+}
+
+.picture-login-page {
+  width: 100%;
+}
+
+.picture-login-page img {
+  width: 70%;
+  height: auto;
+}

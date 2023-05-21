@@ -218,7 +218,8 @@ const PostContextProvider = ({ children }) => {
                         Authorization: `Bearer ${recentToken}`,
                     },
                 });
-                return response.data;
+                if(response.data.success)
+                    return response.data;
             } else throw new Error("Unauthorized !");
         } catch (error) {
             if (error.response) {
@@ -268,12 +269,72 @@ const PostContextProvider = ({ children }) => {
         }
     }
 
+    //Employer active
+    const createPost = async (postInfo) => {
+        try {
+            const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+            if (recentToken !== undefined) {
+                const response = await axios.post(`${apiUrl}/employer/post`,postInfo, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${recentToken}`,
+                    },
+                });
+                return response.data;
+            } else throw new Error("Unauthorized !");
+        } catch (error) {
+            if (error.response) {
+                return error.response.data;
+            } else return { success: false, message: error.message };
+        }
+    }
+
+    const updatePost = async (postId,postInfo) => {
+        try {
+            const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+            if (recentToken !== undefined) {
+                const response = await axios.put(`${apiUrl}/employer/post/${postId}`,postInfo, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${recentToken}`,
+                    },
+                });
+                return response.data;
+            } else throw new Error("Unauthorized !");
+        } catch (error) {
+            if (error.response) {
+                return error.response.data;
+            } else return { success: false, message: error.message };
+        }
+    }
+
+    const getEmpPost = async (keyword) => {
+        try {
+            const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+            if (recentToken !== undefined) {
+                const response = await axios.get(`${apiUrl}/employer/post${keyword}`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${recentToken}`,
+                    },
+                });
+                return response.data;
+            } else throw new Error("Unauthorized !");
+        }
+        catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    }
+
 
     //conxtext data
     const authPostData = {
         getPostById, getPostByIndustry,getPostByAnyFilter,
         getCvSubmited,
         followPost, unfollowPost,
+        createPost, updatePost,
+        getEmpPost,
         postState,
     };
 

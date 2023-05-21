@@ -61,7 +61,6 @@ const Login = () => {
         setAuthLoading(false);
         event.preventDefault();
         if (email.length === 0 || pwd.length === 0) {
-            console.log("hehe")
             setMess("*Required...")
             setTimeout(() => {
                 setMess("")
@@ -99,7 +98,15 @@ const Login = () => {
             <div className="limiter">
                 <div className="container-login100">
                     <div className="wrap-login100">
-                        <form className="login100-form">
+                        <div className="login100-more">
+                            <div className='frame-logo-login'>
+                                <img className='logo-login' src={logoBHQ} alt="img logo" height="8%" />
+                            </div>
+                            <div className='picture-login-page'>
+                                <img src={pt3Login} alt="img adv" height="680px" style={{ paddingBottom: "28px", margin: "0 13%" }} />
+                            </div>
+                        </div>
+                        <div className="login100-form">
                             <span className="login100-form-title p-b-43">
                                 Login
                             </span>
@@ -110,7 +117,7 @@ const Login = () => {
                                 </p>
                             </div>
                             <div >
-                                <label classname="lb-name" for="email" style={{ color: "#207198" }}>Email</label>
+                                <label className="lb-name" for="email" style={{ color: "#207198" }}>Email</label>
                                 <input className="input-text-login"
                                     type="email"
                                     id="email"
@@ -118,21 +125,30 @@ const Login = () => {
                                     value={email}
                                     placeholder={mess}
                                     onChange={onChangeEmail}
+                                    style={{ fontSize: '20px' }}
                                     required
                                 />
                             </div>
                             <div >
-                                <label classname="lb-name" for="password" style={{ color: "#207198" }}>Password</label>
-                                <input className="input-text-login password"
-                                    type={showPassword ? "text" : "password"}
-                                    id="pswrd"
-                                    name="pwd"
-                                    value={pwd}
-                                    placeholder={mess}
-                                    onChange={onChangePwd}
-                                    required
-                                />
-                                <i className="fa fa-eye" onClick={onClick} style={{ right: "5%", top: "42%" }}></i>
+                                <label className="lb-name" for="password" style={{ color: "#207198" }}>Password</label>
+                                <div className="group-password" >
+                                    <div style={{ width: '92%' }}>
+                                        <input className="input-text-login password"
+                                            type={showPassword ? "text" : "password"}
+                                            id="pswrd"
+                                            name="pwd"
+                                            value={pwd}
+                                            placeholder={mess}
+                                            style={{ margin: "0", border: 'none', height: '56px', fontSize: '20px' }}
+                                            onChange={onChangePwd}
+                                            required
+                                        />
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <i className="fa fa-eye" onClick={onClick} ></i>
+                                    </div>
+                                </div>
+
                             </div>
                             <div className="flex-sb-m w-full p-t-3 p-b-32">
                                 <span className="recruit">Are you recruiter?</span>
@@ -158,23 +174,21 @@ const Login = () => {
                             <div>
                                 <a href="#_" className="txt3">Forgot a password?</a>
                             </div>
-                            <div className="text-center p-t-20 p-b-20">
-                                <span className="txt2">
-                                    Or
-                                </span>
-                            </div>
+                            {checkUser && (<>
+                                <div className="text-center p-t-20 p-b-20">
+                                    <span className="txt2" style={{ fontSize: '20px' }}>
+                                        Or
+                                    </span>
+                                </div>
 
-                            <div className="login100-form-social-item">
-                                <img src={ggIcon} alt="gg icon" width="18px" height="18px" />
-                                <a className="link-to-gg" href="https://career-website.herokuapp.com/oauth2/authorization/google">
-                                    Continue with google
-                                </a>
-                            </div>
-                        </form>
-
-                        <div className="login100-more">
-                            <img className='logo-login' src={logoBHQ} alt="img logo" height="8%" />
-                            <img src={pt3Login} alt="img adv" height="680px" style={{ paddingBottom: "28px", margin: "0 13%" }} />
+                                <div className="login100-form-social-item">
+                                    <img src={ggIcon} alt="gg icon" width="18px" height="18px" />
+                                    <a className="link-to-gg" href="https://career-website.herokuapp.com/oauth2/authorization/google"
+                                        style={{ fontSize: '18px' }}>
+                                        Continue with google
+                                    </a>
+                                </div>
+                            </>)}
                         </div>
 
                     </div>

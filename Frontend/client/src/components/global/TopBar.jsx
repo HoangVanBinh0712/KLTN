@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useContext, useRef, useEffect } from "react";
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
 import "../../employee_scenes/css/Homepage.css"
 import logoBHQ from "../../assets/img/logo.png"
@@ -44,7 +44,7 @@ const TopBar = () => {
     const logout = () => {
         const confirm = window.confirm("Are you sure you want to logout?");
         if (confirm) {
-            window.location.href = '/home'
+            window.location.href = ''
             logoutSection()
         }
     }
@@ -56,33 +56,33 @@ const TopBar = () => {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
-                    <a href='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
+                    <Link to='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></Link>
                 </div>
                 <div className="menu-homepage">
                     <div className="option-menu">
-                        <a className="option-a-menu" href="/home">Job</a>
+                        <Link className="option-a-menu" to="/home">Job</Link>
                     </div>
                     <div className="option-menu">
-                        <a className="option-a-menu" href="/user/account">Profile & CV</a>
+                        <Link className="option-a-menu" to="/user/account">Profile & CV</Link>
                     </div>
                     <div className="option-menu">
-                        <a className="option-a-menu" href="#_">Company</a>
+                        <Link className="option-a-menu" to="#_">Company</Link>
                     </div>
                     <div className="option-menu">
-                        <a className="option-a-menu" href="#_" >Tools</a>
+                        <Link className="option-a-menu" to="#_" >Tools</Link>
                     </div>
                 </div>
-                <div className="mess-bell-homepage">
-                    <a href='/user/login'><img className="messbell-intopbar" src={messIcon} alt="mess" /></a>
+                <div className="mess-bell-homepage" style={{}}>
+                    {/* <a href='/user/login'> */}<img className="messbell-intopbar" src={messIcon} alt="mess" />{/* </a> */}
                 </div>
                 <div className="mess-bell-homepage" style={{ marginRight: "20px" }}>
-                    <a href='/user/login'><img className="messbell-intopbar" src={bellIcon} alt="bell" /></a>
+                    <Link to='/user/login'><img className="messbell-intopbar" src={bellIcon} alt="bell" /></Link>
                 </div>
                 <div className="signipup-homepage ">
-                    <a href='/user/login'><div className="login-reg-topbar signin-blue">Sign In</div></a>
+                    <Link to='/user/login'><div className="login-reg-topbar signin-blue">Sign In</div></Link>
                 </div>
                 <div className="signipup-homepage ">
-                    <a href='/user/register'><div className="login-reg-topbar signup-white">Sign up</div></a>
+                    <Link to='/user/register'><div className="login-reg-topbar signup-white">Sign up</div></Link>
                 </div>
             </div>
         )
@@ -92,20 +92,20 @@ const TopBar = () => {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
-                    <a href='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></a>
+                    <Link to='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></Link>
                 </div>
                 <div className="menu-homepage-signed">
                     <div className="option-menu">
-                        <a className="option-a-menu" href="/home">Job</a>
+                        <Link className="option-a-menu" to="/home">Job</Link>
                     </div>
                     <div className="option-menu">
-                        <a className="option-a-menu" href="/user/account">Profile & CV</a>
+                        <Link className="option-a-menu" to="/user/account">Profile & CV</Link>
                     </div>
                     <div className="option-menu">
-                        <a className="option-a-menu" href="#_">Company</a>
+                        <Link className="option-a-menu" to="#_">Company</Link>
                     </div>
-                    <div className="option-menu" ref={dropTooldownRef} style={{zIndex:100}}>
-                        <a className="option-a-menu" href="#_" onClick={toggleDropdownTool}>Tools</a>
+                    <div className="option-menu" ref={dropTooldownRef} style={{ zIndex: 100 }}>
+                        <p className="option-a-menu" href="#_" onClick={toggleDropdownTool} style={{cursor:'pointer'}}>Tools</p>
                         {isOpenTool && (
                             <div className='dropbox-tool-topbar' >
                                 <div className='option-dropdown'><a className="option-a-menu" href="#_">Predict Resume</a></div>
@@ -142,11 +142,11 @@ const TopBar = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className='drop-text my-account-chose'><a href=' ' className='color-a-dropdownbox'>My Account</a></div>
-                                <div className='drop-text emp-follow-chose'><a href=' ' className='color-a-dropdownbox'>My followed</a></div>
-                                <div className='drop-text post-follow-chose'><a href=' ' className='color-a-dropdownbox'>My Posts saved</a></div>
-                                <div className='drop-text post-apply-chose'><a href=' ' className='color-a-dropdownbox'>My post applied</a></div>
-                                <div className='drop-text change-pwd-chose'><a href=' ' className='color-a-dropdownbox'>Change Password</a></div>
+                                <div className='drop-text my-account-chose'><a href='/user/account' className='color-a-dropdownbox'>My Account</a></div>
+                                <div className='drop-text emp-follow-chose'><a href='/user/account/recruiter-followed' className='color-a-dropdownbox'>My followed</a></div>
+                                <div className='drop-text post-follow-chose'><a href='/user/account/post-followed' className='color-a-dropdownbox'>My Posts saved</a></div>
+                                <div className='drop-text post-apply-chose'><a href='/user/account/post-submitted' className='color-a-dropdownbox'>My post applied</a></div>
+                                <div className='drop-text change-pwd-chose'><a href='/user/account/change-password' className='color-a-dropdownbox'>Change Password</a></div>
                                 <div className='drop-text logout-chose' onClick={logout}><a href=' ' className='color-a-dropdownbox'>Logout</a></div>
                             </div>
                         </div>
@@ -164,18 +164,18 @@ const TopBar = () => {
                 </div>
                 <div className="menu-homepage-signed">
                     <div className="option-menu">
-                        <a className="option-a-menu" href="/employer/home">Services</a>
+                        <Link className="option-a-menu" to="/employer/home">Services</Link>
                     </div>
                     <div className="option-menu">
-                        <a className="option-a-menu" href="#_">Brand promotion</a>
+                        <Link className="option-a-menu" to="#_">Brand promotion</Link>
                     </div>
-                    <div className="option-menu" ref={dropTooldownRef} style={{zIndex:100}}>
-                        <a className="option-a-menu" href="#_" onClick={toggleDropdownTool}>Tools</a>
+                    <div className="option-menu" ref={dropTooldownRef} style={{ zIndex: 100 }}>
+                        <p className="option-a-menu" onClick={toggleDropdownTool} style={{cursor:'pointer'}}>Tools</p>
                         {isOpenTool && (
                             <div className='dropbox-tool-topbar' >
                                 <div className='option-dropdown'><a className="option-a-menu" href="/employer/account/recruitment-statistics">Recruitment ststistics</a></div>
                                 <div className='option-dropdown'><a className="option-a-menu" href="/employer/search-candidates">Looking for candidates</a></div>
-                                <div className='option-dropdown'> <a className="option-a-menu" href="/employer/account/customer-services">Customer services</a></div>
+                                <div className='option-dropdown'> <a className="option-a-menu" href="/customer-services">Customer services</a></div>
                             </div>
                         )}
                     </div>
@@ -208,13 +208,27 @@ const TopBar = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className='drop-text my-account-chose'><a href='/employer/account' className='color-a-dropdownbox'>My Account</a></div>
-                                <div className='drop-text add-post-chose'><a href=' ' className='color-a-dropdownbox'>Create Post</a></div>
-                                <div className='drop-text list-posting-chose'><a href=' ' className='color-a-dropdownbox'>My Job Posting</a></div>
-                                <div className='drop-text search-cv-chose'><a href=' ' className='color-a-dropdownbox'>Looking for Candidates</a></div>
-                                <div className='drop-text brand-promotion-chose'><a href=' ' className='color-a-dropdownbox'>Brand Promotion</a></div>
-                                <div className='drop-text change-pwd-chose'><a href=' ' className='color-a-dropdownbox'>Change Password</a></div>
-                                <div className='drop-text logout-chose' onClick={logout}><a href=' ' className='color-a-dropdownbox'>Logout</a></div>
+                                <div className='drop-text my-account-chose'>
+                                    <a href='/employer/account' className='color-a-dropdownbox'>My Account</a>
+                                </div>
+                                <div className='drop-text add-post-chose'>
+                                    <a href='/employer/account/add-post' className='color-a-dropdownbox'>Create Post</a>
+                                </div>
+                                <div className='drop-text list-posting-chose'>
+                                    <a href='/employer/account/job-posting' className='color-a-dropdownbox'>My Job Posting</a>
+                                </div>
+                                <div className='drop-text search-cv-chose'>
+                                    <a href=' ' className='color-a-dropdownbox'>Looking for Candidates</a>
+                                </div>
+                                <div className='drop-text brand-promotion-chose'>
+                                    <a href=' ' className='color-a-dropdownbox'>Brand Promotion</a>
+                                </div>
+                                <div className='drop-text change-pwd-chose'>
+                                    <a href='/employer/account/change-password' className='color-a-dropdownbox'>Change Password</a>
+                                </div>
+                                <div className='drop-text logout-chose' onClick={logout}>
+                                    <a href=' ' className='color-a-dropdownbox'>Logout</a>
+                                </div>
                             </div>
                         </div>
                     )}

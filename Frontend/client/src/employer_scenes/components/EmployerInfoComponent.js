@@ -8,7 +8,7 @@ import { useToast } from "../../contexts/Toast";
 
 const EmployerInfo = () => {
 
-  const { authState: { user }, getUser, updateUserInfo } = useContext(AuthContext)
+  const { authState: { user }, getUser, updateEmpInfo } = useContext(AuthContext)
   const { globalState: { cities, industries } } = useContext(GlobalContext)
   const { warn, success } = useToast();
 
@@ -36,7 +36,7 @@ const EmployerInfo = () => {
     });
 
   const getUserInfo = async () => {
-    const userData = await getUser('user');
+    const userData = await getUser('employer');
     setUserinfor({
       ...userInfo,
       email: userData !== null ? userData.email : "",
@@ -123,9 +123,8 @@ const EmployerInfo = () => {
 
   const onUpdateUserClick = async (event) => {
     try {
-      const infoData = { email, name, phone, address, cityId, industryId }
-      const reponseData = await updateUserInfo(infoData, avatar, cover)
-      console.log(reponseData)
+      const infoData = { email, name, phone, address, cityId, industryId, description:desc }
+      const reponseData = await updateEmpInfo(infoData, avatar, cover)
       if (reponseData.success) {
         success('Update information successfully!')
       }
@@ -135,7 +134,7 @@ const EmployerInfo = () => {
 
     }
     catch (error) {
-      if (error.response.data) {
+      if (error.response) {
         return error.response.data;
       } else return { success: false, message: error.message };
     }
