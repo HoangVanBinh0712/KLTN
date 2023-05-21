@@ -24,14 +24,14 @@ const PostDetails = () => {
     let { id } = useParams();
     const { authState: { isAuthenticated, role, user },
         getResume, deleteSubmitedResume, submitResume, checkSubmitedResume, reportPost } = useContext(AuthContext)
-    const { postState: { postFollow }, getPostById,followPost, unfollowPost, } = useContext(PostContext)
+    const { postState: { postFollow }, getPostById, followPost, unfollowPost, } = useContext(PostContext)
     const { success, warn } = useToast()
 
     const [isSubmitFormOpen, setSubmitForm] = useState(false)
     const [isReportFormOpen, setReportForm] = useState(false)
     const [isSubmited, setIsSubmited] = useState(false)
     const [allResume, setAllResume] = useState([])
-    const [dataPost, setDataPost]=useState({})
+    const [dataPost, setDataPost] = useState({})
 
     const getAllResume = async () => {
         const res = await getResume()
@@ -41,7 +41,7 @@ const PostDetails = () => {
 
     }
 
-    const getDataPost = async()=>{
+    const getDataPost = async () => {
         const res = await getPostById(id)
         if (res.success) {
             setDataPost(res.data);
@@ -50,20 +50,24 @@ const PostDetails = () => {
 
     const checkSubmit = async () => {
         const res = await checkSubmitedResume(id)
-        if (res.data !== null) return true
-        return false
+        if (res.data !== null) {
+            setSelectValue(res.data.mediaId)
+            setIsSubmited(true)
+        }
+        setIsSubmited(false)
+
     }
 
     useEffect(() => {
         getDataPost()
-        if (isAuthenticated && role === "ROLE_USER"){
+        if (isAuthenticated && role === "ROLE_USER") {
             getAllResume()
-            setIsSubmited(checkSubmit())
+            checkSubmit()
         }
-        
+
     }, [user])
 
-    const data = dataPost.author===undefined?{
+    const data = dataPost.author === undefined ? {
         "id": 1,
         "title": "Second title",
         "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
@@ -135,7 +139,7 @@ const PostDetails = () => {
             "canSearchCV": true,
             "canFilterCVSubmit": true
         }
-    }:dataPost
+    } : dataPost
 
     const getPostDate = (date) => {
         const myDate = new Date(date);
@@ -267,6 +271,7 @@ const PostDetails = () => {
             const res = await deleteSubmitedResume(info)
             if (res.success) {
                 success("Unapplied successfully!")
+                setIsSubmited(false)
             }
             else warn(res.message)
         }
@@ -356,10 +361,10 @@ const PostDetails = () => {
                             </div>
                         )}
                         {checkFollow(id, postFollow) ? (
-                            <div className="button btn-save" onClick={()=>savePostClick(id)}>
+                            <div className="button btn-save" onClick={() => savePostClick(id)}>
                                 <i className="fa fa-heart" aria-hidden="true"></i>
                                 UNSAVE
-                            </div>) : (<div className="button btn-save" onClick={()=>savePostClick(id)}>
+                            </div>) : (<div className="button btn-save" onClick={() => savePostClick(id)}>
                                 <i className="fa fa-heart-o" aria-hidden="true"></i>
                                 SAVE
                             </div>)

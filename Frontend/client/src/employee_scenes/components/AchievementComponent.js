@@ -5,16 +5,15 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useToast } from "../../contexts/Toast";
 
 const UserAchievement = () => {
-
-  const { getUserAchive, updateUserAchive, createUserAchive, deleteUserAchive } = useContext(AuthContext)
+  const { getUserAchive, updateUserAchive, createUserAchive, deleteUserAchive } = useContext(AuthContext);
   const { warn, success } = useToast();
 
-  const [dataAchive, setDataAchive] = useState([])
+  const [dataAchive, setDataAchive] = useState([]);
 
   const getDataAchive = async () => {
-    const responseAchive = await getUserAchive()
-    setDataAchive(responseAchive)
-  }
+    const responseAchive = await getUserAchive();
+    setDataAchive(responseAchive);
+  };
 
   useEffect(() => {
     getDataAchive();
@@ -25,16 +24,17 @@ const UserAchievement = () => {
     name: "",
     type: "ACTIVITY",
     url: "",
-    imageUrl: ""
-  })
-  const { id, name, type, url, imageUrl } = currentAchive
-
-  const onChangeAchicve = (event) => setCurrentAchive({
-    ...currentAchive,
-    [event.target.name]: event.target.value,
+    imageUrl: "",
   });
+  const { id, name, type, url, imageUrl } = currentAchive;
 
-  const [image, setImage] = useState(null)
+  const onChangeAchicve = (event) =>
+    setCurrentAchive({
+      ...currentAchive,
+      [event.target.name]: event.target.value,
+    });
+
+  const [image, setImage] = useState(null);
 
   const fileAchiveInput = useRef(null);
 
@@ -59,18 +59,17 @@ const UserAchievement = () => {
     const file = target.files[0];
     fileToBase64(file, (err, result) => {
       if (result) {
-        setImage(
-          file
-        );
+        setImage(file);
       }
     });
     setCurrentAchive({
       ...currentAchive,
-      imageUrl: URL.createObjectURL(file)
-    })
+      imageUrl: URL.createObjectURL(file),
+    });
   };
 
   const childSetCurrentAchive = (childAchive) => {
+    console.log(childAchive);
     setCurrentAchive({
       ...currentAchive,
       id: childAchive.id,
@@ -78,69 +77,66 @@ const UserAchievement = () => {
       type: childAchive.type,
       url: childAchive.url,
       imageUrl: childAchive.imageUrl,
-    })
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const onupdateUserAchiveClick = async (event) => {
-    const infoData = { name, type, url }
-    const imageData = image
-    const response = await updateUserAchive(id, infoData, imageData)
+    const infoData = { name, type, url };
+    const imageData = image;
+    const response = await updateUserAchive(id, infoData, imageData);
     if (response.success) {
-      success('Updated achivement successfully!')
-      getDataAchive()
+      success("Updated achivement successfully!");
+      getDataAchive();
+    } else {
+      warn(response.message);
     }
-    else {
-      warn(response.message)
-    }
-  }
+  };
 
   const createNewAchive = async (event) => {
-    const infoData = { name, type, url }
-    const imageData = image
-    const response = await createUserAchive(infoData, imageData)
+    const infoData = { name, type, url };
+    const imageData = image;
+    const response = await createUserAchive(infoData, imageData);
     if (response.success) {
-      success('Created achivement successfully!')
-      getDataAchive()
+      success("Created achivement successfully!");
+      getDataAchive();
+    } else {
+      warn(response.message);
     }
-    else {
-      warn(response.message)
-    }
-  }
+  };
 
   const onChildDeleteClick = async (idACh) => {
     const confirm = window.confirm("Are you sure you want to delete this Achivement?");
     if (confirm) {
-      const response = await deleteUserAchive(idACh)
+      const response = await deleteUserAchive(idACh);
       if (response.success) {
-        success('Deleted achivement successfully!')
-      }
-      else {
-        warn(response.message)
+        success("Deleted achivement successfully!");
+        setDataAchive(dataAchive.filter((a) => a.id !== id));
+      } else {
+        warn(response.message);
       }
     }
-  }
+  };
 
   const onClickDeleteButton = async () => {
     if (id === null) {
-      warn("You need to choose an achievement")
-    }
-    else {
+      warn("You need to choose an achievement");
+    } else {
       const confirm = window.confirm("Are you sure you want to delete this Achivement?");
       if (confirm) {
-        const response = await deleteUserAchive(id)
+        const response = await deleteUserAchive(id);
         if (response.success) {
-          success('Deleted achivement successfully!')
-        }
-        else {
-          warn(response.message)
+          success("Deleted achivement successfully!");
+          setDataAchive(dataAchive.filter((a) => a.id !== id));
+        } else {
+          warn(response.message);
         }
       }
     }
-  }
+  };
 
   const onCancelClick = () => {
-    const confirm = window.confirm("Các thay đổi sẽ không được lưu, bạn vẫn muốn huỷ?");
+    const confirm = window.confirm("Change is not saved ! Still want to cancel?");
     if (confirm) {
       setCurrentAchive({
         ...currentAchive,
@@ -148,10 +144,10 @@ const UserAchievement = () => {
         name: "",
         type: "ACTIVITY",
         url: "",
-        imageUrl: ""
-      })
+        imageUrl: "",
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -163,7 +159,7 @@ const UserAchievement = () => {
           <div className="content-wrapper">
             <div className="image-wrapper">
               <img src={imageUrl === "" ? cameraIcon : imageUrl} alt="" className="big-icon"></img>
-              <div className="uploads" >
+              <div className="uploads">
                 <div className="button" onClick={handleChangeAvtClick}>
                   <i className="fa fa-upload" aria-hidden="true"></i>
                   Upload image
@@ -187,9 +183,13 @@ const UserAchievement = () => {
             <div className="row">
               <div className="select">
                 <div className="label">Type</div>
-                <select name="type" id="" onChange={onChangeAchicve} >
-                  <option value="ACTIVITY" selected={type === "ACTIVITY"}>Activity</option>
-                  <option value="CERTIFICATE" selected={type === "CERTIFICATE"}>Certificate</option>
+                <select name="type" id="" onChange={onChangeAchicve}>
+                  <option value="ACTIVITY" selected={type === "ACTIVITY"}>
+                    Activity
+                  </option>
+                  <option value="CERTIFICATE" selected={type === "CERTIFICATE"}>
+                    Certificate
+                  </option>
                 </select>
               </div>
               <div className="input-wrapper">
@@ -199,12 +199,12 @@ const UserAchievement = () => {
             </div>
 
             <div className="group-buttons">
-              <div className="button" onClick={id === '' ? createNewAchive : onupdateUserAchiveClick}>
+              <div className="button" onClick={id === "" ? createNewAchive : onupdateUserAchiveClick}>
                 <i className="fa fa-floppy-o" aria-hidden="true"></i>
                 Confirm
               </div>
               <div className="button cancel" onClick={onCancelClick}>
-                <i className="fa fa-times" aria-hidden="true" ></i>
+                <i className="fa fa-times" aria-hidden="true"></i>
                 Cancel
               </div>
 
@@ -217,10 +217,9 @@ const UserAchievement = () => {
           <div className="content-wrapper">
             {dataAchive.length === 0 ? (
               <div className="achivement-item"> You don't have any activities or certificates yet</div>
-            )
-              : (dataAchive.map((a) => (
-                <SingleAchivement achive={a} onUpdateClick={childSetCurrentAchive} onDeleteClick={onChildDeleteClick} key={a.id} />
-              )))}
+            ) : (
+              dataAchive.map((a) => <SingleAchivement achive={a} onUpdateClick={childSetCurrentAchive} onDeleteClick={onChildDeleteClick} key={a.id} />)
+            )}
           </div>
         </div>
       </div>

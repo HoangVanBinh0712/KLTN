@@ -206,7 +206,7 @@ const Register = () => {
                         <div >
                             <label className="lb-name">Password</label>
                             <div className="group-password" >
-                                <div style={{ width: '92%' }}>
+                                <div style={{ width: '100%' }}>
                                     <input className="input-text-login password"
                                         type={showPassword1 ? "text" : "password"}
                                         id="pswrd"
@@ -218,7 +218,10 @@ const Register = () => {
                                         required
                                     />
                                 </div>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <div style={{
+                                    display: 'flex', alignItems: 'center', position: 'absolute', right: "1.5em",
+                                    top: "50%"
+                                }}>
                                     <i className="fa fa-eye" onClick={onClickShow1} ></i>
                                 </div>
                             </div>
@@ -226,7 +229,7 @@ const Register = () => {
                         <div >
                             <label className="lb-name" >Confirm Password</label>
                             <div className="group-password" >
-                                <div style={{ width: '92%' }}>
+                                <div style={{ width: '100%' }}>
                                     <input className="input-text-login password"
                                         type={showPassword2 ? "text" : "password"}
                                         id="pswrd"
@@ -238,7 +241,10 @@ const Register = () => {
                                         required
                                     />
                                 </div>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <div style={{
+                                    display: 'flex', alignItems: 'center', position: 'absolute', right: "1.5em",
+                                    top: "50%"
+                                }}>
                                     <i className="fa fa-eye" onClick={onClickShow2} ></i>
                                 </div>
                             </div>

@@ -2,7 +2,7 @@
 [ FONT ]*/
 
 @font-face {
-  font-family: Poppins-Regular;
+
   src: url('../../../assets/fonts/poppins/Poppins-Regular.ttf');
 }
 
@@ -47,7 +47,7 @@ html {
 
 /*---------------------------------------------*/
 /* a {
-  font-family: Poppins-Regular;
+   
   font-size: 14px;
   line-height: 1.7;
   color: #666666;
@@ -78,8 +78,7 @@ h6 {
 }
 
 p {
-  font-family: Poppins-Regular;
-  font-size: 14px;
+  font-size: 1em;
   line-height: 1.7;
   color: #666666;
   margin: 0px;
@@ -113,7 +112,7 @@ iframe {
 /*==================================================================
   [ Text ]*/
 .txt1 {
-  font-family: Poppins-Regular;
+
   font-size: 1em;
   line-height: 1.4;
   color: #207198;
@@ -122,7 +121,7 @@ iframe {
 }
 
 .recruit {
-  font-family: Poppins-Regular;
+
   font-size: 1em;
   line-height: 1.4;
   color: #207198;
@@ -431,7 +430,7 @@ i.fa-eye {
 }
 
 .txt3 {
-  font-family: Poppins-Regular;
+
   font-size: 1em;
   color: #207198;
   text-decoration: none;
@@ -451,7 +450,7 @@ i.fa-eye {
 }
 
 .lb-name {
-  font-family: Poppins-Regular;
+
   font-size: 1em;
   color: #207198;
   display: block;

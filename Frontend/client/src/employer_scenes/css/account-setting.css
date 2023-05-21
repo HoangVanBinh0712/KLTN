@@ -855,10 +855,10 @@ small {
     padding-left: 8%;
 }
 
-.mana-achive::before {
+/* .mana-achive::before {
     content: url("../../assets/icons/3dot-icon20px.png");
     cursor: pointer;
-}
+} */
 
 .chose-active {
     margin-left: -50px;
@@ -869,6 +869,7 @@ small {
     align-items: center;
     justify-content: center;
     background-color: white;
+    padding: 3px 5px;
 }
 
 .chose-active:hover {
@@ -962,7 +963,7 @@ small {
 
 .title-filter {
     display: flex;
-    width: 50px;
+    width: 70px;
     align-items: center;
 }
 
