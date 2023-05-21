@@ -11,129 +11,94 @@ import threeDotIcon from '../../assets/icons/3dot-icon.png'
 import cerIcon from '../../assets/icons/certificate-icon.png'
 import actIcon from '../../assets/icons/activities.png'
 import addIcon from '../../assets/icons/add-icon.png'
-
-
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 
 
 const EmployeeProfile = () => {
 
     let { id } = useParams();
+    const { getUserProfileJSK, getUserProfileByAnyFilter } = useContext(AuthContext)
 
-    const data = {
+    const [jskInfo, setJskInfo] = useState({
         "user": {
-            "id": 1,
-            "email": "thebest11447@gmail.com",
+            "id": 0,
+            "email": "",
             "emailConfirm": false,
-            "name": "Hoang Van Binh",
-            "phone": "0422995300",
-            "city": {
-                "id": 1,
-                "name": "TP Hồ Chí Minh"
-            },
-            "industry": {
-                "id": 3,
-                "name": "BANKING"
-            },
-            "urlAvatar": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1682658630/iolgjegkzo5t87xr8uhu.png",
-            "urlCover": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1682658948/mlmxay2y7ecd5v40wcyy.png",
-            "address": "574/45 Trần Hưng Đạo",
-            "description": "<p><br></p>",
+            "name": "",
+            "phone": "",
+            "city": null,
+            "industry": null,
+            "urlAvatar": "",
+            "urlCover": "",
+            "address": "",
+            "description": "",
             "role": "ROLE_USER",
             "service": null,
             "serviceExpirationDate": null
         },
-        "achievements": [
-            {
-                "id": 3,
-                "name": "Achievement 1 Technology",
-                "user": {
-                    "id": 1,
-                    "email": "thebest11447@gmail.com",
-                    "emailConfirm": false,
-                    "name": "Hoang Van Binh",
-                    "phone": "0422995300",
-                    "city": {
-                        "id": 1,
-                        "name": "TP Hồ Chí Minh"
-                    },
-                    "industry": {
-                        "id": 3,
-                        "name": "BANKING"
-                    },
-                    "urlAvatar": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1682658630/iolgjegkzo5t87xr8uhu.png",
-                    "urlCover": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1682658948/mlmxay2y7ecd5v40wcyy.png",
-                    "address": "574/45 Trần Hưng Đạo",
-                    "description": "<p><br></p>",
-                    "role": "ROLE_USER",
-                    "service": null,
-                    "serviceExpirationDate": null
-                },
-                "imageUrl": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1682911452/zdr27b7lskxualtebfup.png",
-                "type": "ACTIVITY",
-                "url": "https://www.youtube.com/watch?v=xypzmu5mMPY&list=RDMMZuk5zGv5Un4&index=10",
-                "createDate": null
-            },
-            {
-                "id": 4,
-                "name": "Running Viet Race",
-                "user": {
-                    "id": 1,
-                    "email": "thebest11447@gmail.com",
-                    "emailConfirm": false,
-                    "name": "Hoang Van Binh",
-                    "phone": "0422995300",
-                    "city": {
-                        "id": 1,
-                        "name": "TP Hồ Chí Minh"
-                    },
-                    "industry": {
-                        "id": 3,
-                        "name": "BANKING"
-                    },
-                    "urlAvatar": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1682658630/iolgjegkzo5t87xr8uhu.png",
-                    "urlCover": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1682658948/mlmxay2y7ecd5v40wcyy.png",
-                    "address": "574/45 Trần Hưng Đạo",
-                    "description": "<p><br></p>",
-                    "role": "ROLE_USER",
-                    "service": null,
-                    "serviceExpirationDate": null
-                },
-                "imageUrl": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673534466/spa99evbuz1p5nn8rqqb.jpg",
-                "type": "CERTIFICATE",
-                "url": "https://www.youtube.com/watch?v=X7sSE3yCNLI&list=RDMMZuk5zGv5Un4&index=11",
-                "createDate": null
-            },
-            {
-                "id": 14,
-                "name": "Olypic mathematic asian44",
-                "user": {
-                    "id": 1,
-                    "email": "thebest11447@gmail.com",
-                    "emailConfirm": false,
-                    "name": "Hoang Van Binh",
-                    "phone": "0422995300",
-                    "city": {
-                        "id": 1,
-                        "name": "TP Hồ Chí Minh"
-                    },
-                    "industry": {
-                        "id": 3,
-                        "name": "BANKING"
-                    },
-                    "urlAvatar": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1682658630/iolgjegkzo5t87xr8uhu.png",
-                    "urlCover": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1682658948/mlmxay2y7ecd5v40wcyy.png",
-                    "address": "574/45 Trần Hưng Đạo",
-                    "description": "<p><br></p>",
-                    "role": "ROLE_USER",
-                    "service": null,
-                    "serviceExpirationDate": null
-                },
-                "imageUrl": "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1682708297/eopse7okt960ociemoxe.png",
-                "type": "CERTIFICATE",
-                "url": "https://www.youtube.com",
-                "createDate": "2023-04-28 18:58:16"
-            }
-        ]
+        "achievements": [],
+    })
+
+    const [listJskRec, setListJskRec] = useState([])
+
+    const getJSK = async () => {
+        const res = await getUserProfileJSK(id)
+        setJskInfo(res)
+        console.log(res)
+        const key = res.user.industry !== null ? `?industryId=${res.user.industry.id}` : ''
+        const resP = await getUserProfileByAnyFilter(key)
+        console.log(resP)
+        if (resP.success) {
+            setListJskRec(resP.data)
+        }
+    }
+    getJSK()
+
+    const onClickAchiName = (url) => {
+        window.open(url, "_blank")
+    }
+
+    const getPostDate = (date) => {
+        const myDate = new Date(date);
+        const day = ("0" + myDate.getDate()).slice(-2);
+        const month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+        const year = myDate.getFullYear();
+
+        return (`${day}/${month}/${year}`)
+    }
+
+    const getExpUser = (value) => {
+        let body;
+        if (value === "NONE") {
+            body = <>Experience: None</>;
+        }
+        if (value === "UNDER_ONE_YEAR") {
+            body = <>Experience: Under one year</>;
+        }
+        if (value === "ONE_YEAR") {
+            body = <>Experience: One year</>;
+        }
+        if (value === "TWO_YEAR") {
+            body = <>Experience: Two years</>;
+        }
+        if (value === "THREE_YEAR") {
+            body = <>Experience: Three years</>;
+        }
+        if (value === "FOUR_YEAR") {
+            body = <>Experience: Four years</>;
+        }
+        if (value === "FIVE_YEAR") {
+            body = <>Experience: Five years</>;
+        }
+        if (value === "ABOVE_FIVE_YEAR") {
+            body = <>Experience: Above five years</>;
+        }
+        return body;
+    };
+
+    const onClickJskImg = (id) =>{
+        window.open(`/employer/candidates/${id}`,'_blank')
     }
 
     return (
@@ -141,7 +106,7 @@ const EmployeeProfile = () => {
             <TopBar />
             <div className='background-grey-profile'>
                 <div className="body-container">
-                    <p id="notice">{`${data.user.name} information`}</p>
+                    <p id="notice">{`${jskInfo.user.name} information`}</p>
                     <div className="profile-head">
                         <div className="cover">
                             <div id="change-image" style={{ display: 'none' }}>
@@ -154,11 +119,15 @@ const EmployeeProfile = () => {
                                 <div className="transparent-camera" style={{ display: 'none' }}><img id="camera-icon" src={cameraIcon} alt='' /></div>
                             </div>
                             <div className="name-viewer-wrapper">
-                                <div className="name">{data.user.name}</div>
+                                <div className="name">{jskInfo.user.name}</div>
                                 <div className="viewer-info">
                                     <div className="viewer-icon"></div>
-                                    <div className="viewer-count">
-                                        {data.user.city===null?('Not updated yet!'):(data.user.city.name)}
+                                    <div className="viewer-count" style={{ marginRight: '5px' }}>
+                                        {jskInfo.user.city === null ? ('Not updated yet!') : (jskInfo.user.city.name)}
+                                    </div>
+                                    -
+                                    <div className="viewer-count" style={{ marginLeft: '5px' }}>
+                                        {jskInfo.user.industry === null ? ('Not updated Industry yet!') : (`Industry: ${jskInfo.user.industry.name}`)}
                                     </div>
                                 </div>
                             </div>
@@ -168,53 +137,53 @@ const EmployeeProfile = () => {
                         <div className="left-side-content">
                             <div className="info-area">
                                 <p className="area-title">Introduction</p>
-                                <div className="area-content" dangerouslySetInnerHTML={{ __html: data.user.description }} >
-                                    
+                                <div className="area-content" dangerouslySetInnerHTML={{ __html: jskInfo.user.description }} >
+
                                 </div>
                                 <div className="edit-button" style={{ display: 'none' }}></div>
                             </div>
                             <div id="employer-seen" className="info-area">
-                                <p className="area-title">Employers seen CV</p>
+                                <p className="area-title">May be you are interested</p>
                                 <div className="content-wrapper" style={{ display: 'block' }}>
-                                    <div className="employer-seen-info">
-                                        <img id="employer-logo" src={logoIcon} alt='' />
-                                        <div className="info-employee-wrapper">
-                                            <div id="employer-seen-name">Nguyen Sy Manh <img id="tick" src={checkIcon} alt='' /></div>
-                                            <div id="company-name">CÔNG TY TNHH ABC</div>
+                                    {listJskRec.length > 0 ? (<>
+                                        {listJskRec.map((r, id) => (
+                                            <div className="employer-seen-info" key={id}>
+                                                <img id="employer-logo"
+                                                    src={r.user.urlAvatar !== null ? r.user.urlAvatar : logoIcon} alt=''
+                                                    style={{ border: '2px solid #cfcfcf' }}
+                                                    onClick={()=>onClickJskImg(r.user.id)} />
+                                                <div className="info-employee-wrapper">
+                                                    <div id="employer-seen-name" onClick={()=>onClickJskImg(r.user.id)}>
+                                                        {r.user.name} 
+                                                        <img id="tick" src={checkIcon} alt='' /></div>
+                                                    <div id="jsk-info">
+                                                        <div className='square-content'>
+                                                            {`City: ${r.user.city !== null ? r.user.city.name : 'Updating'}`}
+                                                        </div>
+                                                        <div className='square-content'>
+                                                            {getExpUser(r.experience)}
+                                                        </div>
+                                                        <div className='square-content'>
+                                                            {`Position: ${r.position}`}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="day-viewed">{`Last modified: ${getPostDate(r.lastModified)}`}</div>
+                                            </div>
+                                        ))}
+                                    </>) : (
+                                        <div className="employer-seen-info">
+                                            There are no similar candidates
                                         </div>
-                                        <div id="day-viewed">2 ngày trước</div>
-                                    </div>
-                                    <div className="employer-seen-info">
-                                        <img id="employer-logo" src={logoIcon} alt='' />
-                                        <div className="info-employee-wrapper">
-                                            <div id="employer-seen-name">Nguyen Sy Manh <img id="tick" src={checkIcon} alt='' /></div>
-                                            <div id="company-name">CÔNG TY TNHH ABC</div>
-                                        </div>
-                                        <div id="day-viewed">2 ngày trước</div>
-                                    </div>
-                                    <div className="employer-seen-info">
-                                        <img id="employer-logo" src={logoIcon} alt='' />
-                                        <div className="info-employee-wrapper">
-                                            <div id="employer-seen-name">Nguyen Sy Manh <img id="tick" src={checkIcon} alt='' /></div>
-                                            <div id="company-name">CÔNG TY TNHH ABC</div>
-                                        </div>
-                                        <div id="day-viewed">2 ngày trước</div>
-                                    </div>
-                                    <div className="employer-seen-info">
-                                        <img id="employer-logo" src={logoIcon} alt='' />
-                                        <div className="info-employee-wrapper">
-                                            <div id="employer-seen-name">Nguyen Sy Manh <img id="tick" src={checkIcon} alt='' /></div>
-                                            <div id="company-name">CÔNG TY TNHH ABC</div>
-                                        </div>
-                                        <div id="day-viewed">2 ngày trước</div>
-                                    </div>
+                                    )}
+
                                 </div>
                             </div>
                         </div>
                         <div className="right-side-content">
                             <div className="info-area">
                                 <p className="area-title">Address</p>
-                                <p className="area-content"><img id="location-ping" src={locationIcon} alt='' /> Số 1 Võ Văn Ngân, Phường Linh Chiểu, Thành phố Thủ Đức, Thành phố Hồ Chí Minh</p>
+                                <p className="area-content"><img id="location-ping" src={locationIcon} alt='' /> {jskInfo.user.address}</p>
                                 <div className="edit-button" style={{ display: 'none' }}></div>
                             </div>
                             <div className="info-area" id="achivement-area">
@@ -223,26 +192,18 @@ const EmployeeProfile = () => {
                                     <img id="add-button" src={addIcon} alt='' style={{ display: 'none' }} />
                                 </div>
                                 <div className="area-content">
-                                    <div className="achive-item">
-                                        <img id="achive-icon" src={cerIcon} alt='' />
-                                        <div className="achive-name">Achivement 1</div>
-                                        <img id="achive-more" src={threeDotIcon} alt='' style={{ display: 'none' }} />
-                                    </div>
-                                    <div className="achive-item">
-                                        <img id="achive-icon" src={cerIcon} alt='' />
-                                        <div className="achive-name">Achivement 1</div>
-                                        <img id="achive-more" src={threeDotIcon} alt='' style={{ display: 'none' }} />
-                                    </div>
-                                    <div className="achive-item">
-                                        <img id="achive-icon" src={cerIcon} alt='' />
-                                        <div className="achive-name">Achivement 1</div>
-                                        <img id="achive-more" src={threeDotIcon} alt='' style={{ display: 'none' }} />
-                                    </div>
-                                    <div className="achive-item">
-                                        <img id="achive-icon" src={cerIcon} alt='' />
-                                        <div className="achive-name">Achivement 1</div>
-                                        <img id="achive-more" src={threeDotIcon} alt='' style={{ display: 'none' }} />
-                                    </div>
+                                    {jskInfo.achievements.length > 0 ? (<>
+                                        {jskInfo.achievements.map((ach, id) => (<>
+                                            {ach.type === "CERTIFICATE" ? (
+                                                <div className="achive-item" key={id}>
+                                                    <img id="achive-icon" src={cerIcon} alt='' />
+                                                    <div className="achive-name" onClick={() => onClickAchiName(ach.url)}>{ach.name}</div>
+                                                    <img id="achive-more" src={threeDotIcon} alt='' style={{ display: 'none' }} />
+                                                </div>
+                                            ) : (<></>)}
+                                        </>))}
+                                    </>) : ('No activity yet')}
+
                                 </div>
                             </div>
                             <div className="info-area" id="activities-area">
@@ -251,38 +212,20 @@ const EmployeeProfile = () => {
                                     <img id="add-button" src={addIcon} alt='' style={{ display: 'none' }} />
                                 </div>
                                 <div className="area-content">
-                                    <div className="achive-item">
-                                        <img id="clock-icon" src={actIcon} alt='' />
-                                        <div className="achive-name" id="activity-title">
-                                            <div id="activity-name">Activity 1</div>
-                                            <div id="activity-time">06/2021-06-2022</div>
-                                        </div>
-                                        <img id="achive-more" src={threeDotIcon} alt='' style={{ display: 'none' }} />
-                                    </div>
-                                    <div className="achive-item">
-                                        <img id="clock-icon" src={actIcon} alt='' />
-                                        <div className="achive-name" id="activity-title">
-                                            <div id="activity-name">Activity 1</div>
-                                            <div id="activity-time">06/2021-06-2022</div>
-                                        </div>
-                                        <img id="achive-more" src={threeDotIcon} alt='' style={{ display: 'none' }} />
-                                    </div>
-                                    <div className="achive-item">
-                                        <img id="clock-icon" src={actIcon} alt='' />
-                                        <div className="achive-name" id="activity-title">
-                                            <div id="activity-name">Activity 1</div>
-                                            <div id="activity-time">06/2021-06-2022</div>
-                                        </div>
-                                        <img id="achive-more" src={threeDotIcon} alt='' style={{ display: 'none' }} />
-                                    </div>
-                                    <div className="achive-item">
-                                        <img id="clock-icon" src={actIcon} alt='' />
-                                        <div className="achive-name" id="activity-title">
-                                            <div id="activity-name">Activity 1</div>
-                                            <div id="activity-time">06/2021-06-2022</div>
-                                        </div>
-                                        <img id="achive-more" src={threeDotIcon} alt='' style={{ display: 'none' }} />
-                                    </div>
+                                    {jskInfo.achievements.length > 0 ? (<>
+                                        {jskInfo.achievements.map((ach, id) => (<>
+                                            {ach.type === "ACTIVITY" ? (
+                                                <div className="achive-item" key={id}>
+                                                    <img id="clock-icon" src={actIcon} alt='' />
+                                                    <div className="achive-name" id="activity-title">
+                                                        <div id="activity-name" onClick={() => onClickAchiName(ach.url)}>{ach.name}</div>
+                                                        <div id="activity-time">{ach.createDate}</div>
+                                                    </div>
+                                                    <img id="achive-more" src={threeDotIcon} alt='' style={{ display: 'none' }} />
+                                                </div>
+                                            ) : (<></>)}
+                                        </>))}
+                                    </>) : ('No activity yet')}
                                 </div>
                             </div>
                         </div>

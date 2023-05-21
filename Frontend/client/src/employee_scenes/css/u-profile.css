@@ -261,6 +261,8 @@
 
 .achive-name{
     margin-left: 15px;
+    cursor: pointer;
+    color: #0c62ad;
 }
 
 #achive-more{
