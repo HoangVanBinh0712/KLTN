@@ -179,9 +179,9 @@ const SearchCandidates = () => {
 
     return (
         <>
-            <div className="search-page">
+            <div className="search-page" style={{width: "80%"}}>
                 <img className="banner" src={bannerSearch} alt="" />
-                <div className="search-bar">
+                <div className="search-bar" style={{width: "100%"}}>
                     <div className="row-flex-horizon" style={{ marginBottom: '1em' }}>
                         <input className="search-text" type="text"
                             placeholder="Infomation, position you want ..."
@@ -190,7 +190,7 @@ const SearchCandidates = () => {
                         <select className="search-select option-select-page-search" onChange={onChangeSelectIndustry}>
                             <option value="" selected={selectIndustry === ''}>All industries</option>
                             {industries.map((i) => (
-                                <option key={i.id} value={i.id} selected={selectIndustry == i.id}>
+                                <option key={i.id} value={i.id} selected={selectIndustry === i.id}>
                                     {i.name}
                                 </option>
                             ))}
@@ -198,7 +198,7 @@ const SearchCandidates = () => {
                         <select className="search-select option-select-page-search" onChange={onChangeInputCity}>
                             <option value="" selected={inputCity === ''}>All areas</option>
                             {cities.map((c) => (
-                                <option key={c.id} value={c.id} selected={inputCity == c.id}>
+                                <option key={c.id} value={c.id} selected={inputCity === c.id}>
                                     {c.name}
                                 </option>
                             ))}
@@ -242,8 +242,8 @@ const SearchCandidates = () => {
                     </div>
 
                 </div>
-                <div className='quantity-number-rusult'> Found <p> {listProfileResult.length} </p> jobs matching your request.</div>
-                <div className="search-content">
+                <div className='quantity-number-rusult' style={{width: "98%"}}> Found <p> {listProfileResult.length} </p> jobs matching your request.</div>
+                <div className="search-content" style={{width: "100%"}}>
                     <div className="list-post" style={{ width: '100%' }}>
                         {listProfileResult.length > 0 ? (<>
                             {allPost[currentPage].map((a, id) => (

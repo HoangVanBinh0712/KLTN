@@ -118,6 +118,8 @@ body {
     width: 100%;
     height: auto;
     display: block;
+    z-index: -1;
+    position: relative;
 }
 
 /* .banner-top img.active {
@@ -652,6 +654,8 @@ body {
     width: 85%;
     padding-top: 10px;
     padding-bottom: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .logout-chose::before {

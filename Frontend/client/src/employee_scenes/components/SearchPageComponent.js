@@ -453,7 +453,7 @@ const SearchPageComponent = () => {
                                     <img className="avatar"
                                         src={postMostView[0].author.urlAvatar !== null ? postMostView[0].author.urlAvatar : logoPost}
                                         alt=""
-                                        style={{ borderRadius: '5px', height: '150px', cursor: "pointer" }}
+                                        style={{ borderRadius: '5px', height: '100px', cursor: "pointer" }}
                                         onClick={() => onClickImagePost(postMostView[0].author.id)} />
                                     <div className="cart-info">
                                         <p className="method">{getTypeJob(postMostView[0].method)}</p>
@@ -483,7 +483,7 @@ const SearchPageComponent = () => {
                                     <img className="avatar"
                                         src={postMostView[1].author.urlAvatar !== null ? postMostView[1].author.urlAvatar : logoPost}
                                         alt=""
-                                        style={{ borderRadius: '5px', height: '150px', cursor: "pointer" }}
+                                        style={{ borderRadius: '5px', height: '100px', cursor: "pointer" }}
                                         onClick={() => onClickImagePost(postMostView[1].author.id)} />
                                     <div className="cart-info">
                                         <p className="method">{getTypeJob(postMostView[1].method)}</p>
@@ -513,7 +513,7 @@ const SearchPageComponent = () => {
                                     <img className="avatar"
                                         src={postMostView[2].author.urlAvatar !== null ? postMostView[2].author.urlAvatar : logoPost}
                                         alt=""
-                                        style={{ borderRadius: '5px', height: '150px', cursor: "pointer" }}
+                                        style={{ borderRadius: '5px', height: '100px', cursor: "pointer" }}
                                         onClick={() => onClickImagePost(postMostView[2].id)}
                                     />
                                     <div className="cart-info">

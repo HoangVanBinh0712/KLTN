@@ -44,7 +44,6 @@ const TopBar = () => {
     const logout = () => {
         const confirm = window.confirm("Are you sure you want to logout?");
         if (confirm) {
-            window.location.href = ''
             logoutSection()
         }
     }
@@ -150,7 +149,7 @@ const TopBar = () => {
                                 <div className='drop-text post-follow-chose'><Link to='/user/account/post-followed' className='color-a-dropdownbox'>My Posts saved</Link></div>
                                 <div className='drop-text post-apply-chose'><Link to='/user/account/post-submitted' className='color-a-dropdownbox'>My post applied</Link></div>
                                 <div className='drop-text change-pwd-chose'><Link to='/user/account/change-password' className='color-a-dropdownbox'>Change Password</Link></div>
-                                <div className='drop-text logout-chose' onClick={logout}><Link to=' ' className='color-a-dropdownbox'>Logout</Link></div>
+                                <div className='drop-text logout-chose' onClick={logout}>Logout</div>
                             </div>
                         </div>
                     )}
@@ -177,7 +176,7 @@ const TopBar = () => {
                         {isOpenTool && (
                             <div className='dropbox-tool-topbar' >
                                 <div className='option-dropdown'><Link className="option-a-menu" to="/employer/account/recruitment-statistics">Recruitment ststistics</Link></div>
-                                <div className='option-dropdown'><Link className="option-a-menu" to="/employer/search-candidates">Looking for candidates</Link></div>
+                                <div className='option-dropdown'><Link className="option-a-menu" to="/employer/account/search-candidates">Looking for candidates</Link></div>
                                 <div className='option-dropdown'> <Link className="option-a-menu" to="/customer-services">Customer services</Link></div>
                             </div>
                         )}
@@ -229,8 +228,7 @@ const TopBar = () => {
                                 <div className='drop-text change-pwd-chose'>
                                     <Link to='/employer/account/change-password' className='color-a-dropdownbox'>Change Password</Link>
                                 </div>
-                                <div className='drop-text logout-chose' onClick={logout}>
-                                    <Link to=' ' className='color-a-dropdownbox'>Logout</Link>
+                                <div className='drop-text logout-chose' onClick={logout}>Logout
                                 </div>
                             </div>
                         </div>

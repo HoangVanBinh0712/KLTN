@@ -22,7 +22,6 @@ const Topbar = () => {
     const confirm = window.confirm("Are you sure you want to logout?");
     if (confirm) {
       logoutSection()
-      console.log('heeeee')
       return <Navigate to="/" />;
     }
   }

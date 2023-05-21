@@ -12,7 +12,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     flex-direction: column;
     gap: 1em;
-    width: 80%;
+    /* width: 80%; */
 }
 
 
@@ -56,7 +56,7 @@ div.button:hover {
 
 .search-bar {
     box-sizing: border-box;
-    width: 100%;
+    width: 80%;
     background-color: white;
     padding: 1em;
     border-radius: 0px;
@@ -137,7 +137,7 @@ div.button:hover {
     display: flex;
     padding: 1em;
     justify-content: space-between;
-    width: 100%;
+    width: 80%;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     box-sizing: border-box;
@@ -295,7 +295,7 @@ div.button:hover {
     margin-bottom: -10px;
     display: flex;
     justify-content: start;
-    width: 98%;
+    width: 78%;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
     align-items: center;

@@ -3,6 +3,7 @@ import axios from "axios";
 import { AuthReducer } from "../reducers/AuthReducer";
 import { apiUrl, LOCAL_STORAGE_TOKEN_NAME, USER_ROLE } from "./Constants";
 import SetAuthToken from "../utlis/SetAuthToken";
+import { Navigate } from "react-router";
 
 export const AuthContext = createContext();
 
@@ -13,7 +14,6 @@ const AuthContextProvider = ({ children }) => {
     user: null,
     role: null,
   });
-
 
   const [showToast, setShowToast] = useState({
     show: false,
@@ -75,8 +75,8 @@ const AuthContextProvider = ({ children }) => {
       });
       if (response.status === 200) {
         localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, token);
-        localStorage.setItem(USER_ROLE, 'user');
-        await loadUser('user');
+        localStorage.setItem(USER_ROLE, "user");
+        await loadUser("user");
       }
       return response.data;
     } catch (error) {
@@ -97,20 +97,17 @@ const AuthContextProvider = ({ children }) => {
       if (response.status === 200) {
         if (response.data.userInfo.role === role) {
           localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
-          let u_role = null
-          if (role === 'ROLE_USER') {
-            u_role = 'user'
-          }
-          else if (role === 'ROLE_EMPLOYER') {
-            u_role = 'employer'
-          }
-          else if (role === 'ROLE_ADMIN') {
-            u_role = 'admin'
+          let u_role = null;
+          if (role === "ROLE_USER") {
+            u_role = "user";
+          } else if (role === "ROLE_EMPLOYER") {
+            u_role = "employer";
+          } else if (role === "ROLE_ADMIN") {
+            u_role = "admin";
           }
           localStorage.setItem(USER_ROLE, u_role);
           await loadUser(localStorage[USER_ROLE]);
-        }
-        else return { success: false, message: "Username or password is incorrect!" };
+        } else return { success: false, message: "Username or password is incorrect!" };
       }
       return response.data;
     } catch (error) {
@@ -135,16 +132,13 @@ const AuthContextProvider = ({ children }) => {
   const registerEmployer = async (EmpForm) => {
     try {
       const response = await axios.post(`${apiUrl}/register-employer`, EmpForm);
-      if (response.data.success)
-        return response.data;
+      if (response.data.success) return response.data;
     } catch (error) {
       if (error.response.data) {
         return error.response.data;
       } else return { success: false, message: error.message };
     }
   };
-
-
 
   const logoutSection = () => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
@@ -157,6 +151,7 @@ const AuthContextProvider = ({ children }) => {
         role: null,
       },
     });
+    window.location.href = "home";
   };
 
   // auth user
@@ -164,15 +159,13 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-
         const response = await axios.get(`${apiUrl}/${user}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
           },
         });
-        if (response.status === 200)
-          return response.data;
+        if (response.status === 200) return response.data;
       } else throw new Error("Unauthorized !");
     } catch (error) {
       if (error.response.data) {
@@ -208,10 +201,8 @@ const AuthContextProvider = ({ children }) => {
   //get achive
   const getUserAchive = async () => {
     try {
-
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-
         const response = await axios.get(`${apiUrl}/user/achievements`, {
           headers: {
             "Content-Type": "application/json",
@@ -242,7 +233,6 @@ const AuthContextProvider = ({ children }) => {
       bodyFormData.append("image", image);
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-
         const response = await axios.put(`${apiUrl}/user/achievements/${id}`, bodyFormData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -266,7 +256,6 @@ const AuthContextProvider = ({ children }) => {
       bodyFormData.append("image", image);
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-
         const response = await axios.post(`${apiUrl}/user/achievements`, bodyFormData, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -285,10 +274,8 @@ const AuthContextProvider = ({ children }) => {
   //delete achive
   const deleteUserAchive = async (id) => {
     try {
-
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-
         const response = await axios.delete(`${apiUrl}/user/achievements/${id}`, {
           headers: {
             "Content-Type": "application/json",
@@ -376,8 +363,7 @@ const AuthContextProvider = ({ children }) => {
         });
         if (response.status === 200) {
           return { success: true, data: response.data };
-        }
-        else return { success: false };
+        } else return { success: false };
       } else throw new Error("Unauthorized !");
     } catch (error) {
       if (error.response.data) {
@@ -643,7 +629,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  //emp 
+  //emp
   //update info
   const updateEmpInfo = async (userInfo, avatar, cover) => {
     try {
@@ -722,7 +708,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  //SearchCv 
+  //SearchCv
   const getUserProfileByAnyFilter = async (keyword) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
@@ -732,15 +718,14 @@ const AuthContextProvider = ({ children }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
           },
-        })
-        return responsePost.data
+        });
+        return responsePost.data;
       } else throw new Error("Unauthorized !");
-    }
-    catch (error) {
+    } catch (error) {
       if (error.response.data) return error.response.data;
       else return { success: false, message: error.message };
     }
-  }
+  };
 
   //get Jsk profile
   const getUserProfileJSK = async (id) => {
@@ -752,27 +737,49 @@ const AuthContextProvider = ({ children }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
           },
-        })
-        return responsePost.data
+        });
+        return responsePost.data;
       } else throw new Error("Unauthorized !");
-    }
-    catch (error) {
+    } catch (error) {
       if (error.response.data) return error.response.data;
       else return { success: false, message: error.message };
     }
-  }
+  };
 
   //conxtext data
   const authContextData = {
-    loginUser, loginGoogleUser, registerUser, registerEmployer, logoutSection,
-    getUser, updateUserInfo, updateEmpInfo,
-    getUserAchive, updateUserAchive, createUserAchive, deleteUserAchive,
-    changPassword, changEmpPassword, sendVirifyCode, verifyEmail,
-    getResume, addResume, updateResume, deleteResume, predictResume,
-    submitResume, deleteSubmitedResume, checkSubmitedResume, getPostSubmitedByResume,
-    getEmpFollow, followEmp, unFollowEmp, getEmpViewCv,
+    loginUser,
+    loginGoogleUser,
+    registerUser,
+    registerEmployer,
+    logoutSection,
+    getUser,
+    updateUserInfo,
+    updateEmpInfo,
+    getUserAchive,
+    updateUserAchive,
+    createUserAchive,
+    deleteUserAchive,
+    changPassword,
+    changEmpPassword,
+    sendVirifyCode,
+    verifyEmail,
+    getResume,
+    addResume,
+    updateResume,
+    deleteResume,
+    predictResume,
+    submitResume,
+    deleteSubmitedResume,
+    checkSubmitedResume,
+    getPostSubmitedByResume,
+    getEmpFollow,
+    followEmp,
+    unFollowEmp,
+    getEmpViewCv,
     getUserProfileJSK,
-    getEmployerProfile, getEmployerService,
+    getEmployerProfile,
+    getEmployerService,
     getUserProfileByAnyFilter,
     reportPost,
     showToast,
@@ -781,11 +788,7 @@ const AuthContextProvider = ({ children }) => {
   };
 
   //return
-  return (
-    <AuthContext.Provider value={authContextData}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={authContextData}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContextProvider;

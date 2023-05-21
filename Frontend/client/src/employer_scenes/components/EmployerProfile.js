@@ -23,6 +23,7 @@ import { PostContext } from '../../contexts/PostContext';
 const EmployerProfile = () => {
 
     let { id } = useParams();
+    
     const { authState: { isAuthenticated, role }, getEmpFollow, getEmployerProfile, followEmp, unFollowEmp }
         = useContext(AuthContext)
     const { postState: { postFollow }, getPostByAnyFilter, unfollowPost, followPost } = useContext(PostContext)

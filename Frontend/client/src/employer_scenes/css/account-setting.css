@@ -133,6 +133,10 @@ body {
     color: black;
 }
 
+.navbar-vertical .nav-item li.selected {
+    background-color: rgba(59, 130, 246, .5);
+}
+
 .navbar-vertical .nav-item li img {
     margin-right: 0.5em;
 }
@@ -866,7 +870,8 @@ small {
     justify-content: center;
     background-color: white;
 }
-.chose-active:hover{
+
+.chose-active:hover {
     color: black;
     background-color: coral;
 }
