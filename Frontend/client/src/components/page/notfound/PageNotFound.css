@@ -72,7 +72,7 @@
 
 .content h4 {
     font-size: 1.5em;
-    margin-bottom: 20px;
+    margin-bottom: 1.2em;
     text-transform: uppercase;
     color: #000;
     font-size: 2em;
@@ -96,7 +96,7 @@
 }
 
 .content .btns {
-    margin: 25px 0;
+    margin: 1.4em 0;
     display: inline-flex;
 }
 
@@ -107,8 +107,8 @@
     border: 2px solid #69a6ce;
     color: #69a6ce;
     font-weight: 500;
-    padding: 10px 25px;
-    border-radius: 25px;
+    padding: 10px 1.4em;
+    border-radius: 1.4em;
     text-transform: uppercase;
     transition: all 0.3s ease;
 }

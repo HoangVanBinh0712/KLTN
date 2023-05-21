@@ -12,6 +12,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     flex-direction: column;
     gap: 1em;
+    width: 80%;
 }
 
 
@@ -55,7 +56,7 @@ div.button:hover {
 
 .search-bar {
     box-sizing: border-box;
-    width: 80%;
+    width: 100%;
     background-color: white;
     padding: 1em;
     border-radius: 0px;
@@ -75,7 +76,7 @@ div.button:hover {
     width: 100%;
     box-sizing: border-box;
     padding: 0.7em;
-    font-size: 18px;
+    font-size: 1em;
     font-family: Futura-Book;
 }
 
@@ -88,26 +89,26 @@ div.button:hover {
 .option-select-page-search {
     background-image: url("../../assets/icons/headquater-icon.png");
     background-repeat: no-repeat;
-    padding-left: 35px !important;
+    padding-left: 1.8em !important;
     background-position: 10px 50%;
 }
 
 .blue-border-select {
     border: 1px solid #77a5cc !important;
-    font-size: 16px !important;
+    font-size: 1em !important;
 }
 
 .search-bar .row-filter::before {
     content: "Filter: ";
     color: #6c6c6c;
-    font-size: 16px;
+    font-size: 1em;
 }
 
 .search-bar .row-flex-horizon a {
     width: 100%;
     color: #0C62AD !important;
     text-align: center;
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .search-bar .row-flex-horizon .clear-selection {
@@ -115,7 +116,7 @@ div.button:hover {
     color: #0C62AD !important;
     text-align: center;
     line-height: 1.5em;
-    font-size: 18px;
+    font-size: 1em;
     text-decoration: underline;
     cursor: pointer;
 }
@@ -124,7 +125,7 @@ div.button:hover {
     border: 1px solid #cfcfcf;
     border-radius: 5px;
     outline: none;
-    font-size: 18px;
+    font-size: 1em;
     color: #6c6c6c;
 }
 
@@ -136,7 +137,7 @@ div.button:hover {
     display: flex;
     padding: 1em;
     justify-content: space-between;
-    width: 80%;
+    width: 100%;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     box-sizing: border-box;
@@ -150,7 +151,7 @@ div.button:hover {
     width: 66%;
     display: flex;
     flex-direction: column;
-    padding: 25px;
+    padding: 1.4em;
     margin-bottom: 1.5em;
     gap: 1.5em;
     box-sizing: border-box;
@@ -172,6 +173,7 @@ div.button:hover {
     box-sizing: border-box;
     width: 100%;
     background-color: #F2F7FF;
+    align-items: center;
 }
 
 .search-content .intro .banner-left {
@@ -189,8 +191,8 @@ div.button:hover {
 
 .search-content .list-post .cart .avatar,
 .search-content .intro .cart-v1 .avatar {
-    width: auto;
-    height: 100%;
+    width: 100px;
+    height: 100px;
     border: 1px solid #cfcfcf;
     border-radius: 10px;
 }
@@ -203,11 +205,12 @@ div.button:hover {
 
 .search-content .list-post .cart .cart-info {
     width: 100%;
-    padding-left: 20px;
+    padding-left: 1.2em;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    row-gap: 0.4em;
 }
 
 
@@ -231,7 +234,7 @@ div.button:hover {
 .row-flex-horizon .item-v1 p {
     padding: 0;
     margin: 0;
-    font-size: 17px;
+    font-size: 1em;
 }
 
 .row-flex-horizon .item {
@@ -275,7 +278,7 @@ div.button:hover {
     text-transform: uppercase;
     padding: 0 0 10px;
     font-family: 'Futura-Book';
-    font-size: 20px;
+    font-size: 1.2em;
     font-weight: 500;
 }
 
@@ -292,16 +295,16 @@ div.button:hover {
     margin-bottom: -10px;
     display: flex;
     justify-content: start;
-    width: 78%;
+    width: 98%;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 1em;
     align-items: center;
 }
 
 .quantity-number-rusult p {
     color: #0C62AD;
     padding: 0 8px;
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .list-item-flex-start {
@@ -328,7 +331,7 @@ div.button:hover {
 
 .cart-description {
     color: #6c6c6c;
-    font-size: 20px;
+    font-size: 1em;
 }
 
 .cart-description::before {
@@ -357,8 +360,8 @@ div.button:hover {
 }
 
 .follow-post-in-search-page {
-    height: 30px;
-    width: 30px;
+    height: 1.6em;
+    width: 1.6em;
     cursor: pointer;
 }
 
@@ -368,9 +371,9 @@ div.button:hover {
 }
 
 .gr-name-btn-view .btn-view{
-    height: 36px;
+    height: 1.8em;
     padding: 0 5px;
-    font-size: 18px;
+    font-size: 1em;
     color: #0C62AD;
     display: flex;
     justify-content: center;

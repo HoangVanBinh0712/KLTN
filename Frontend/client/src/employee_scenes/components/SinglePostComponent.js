@@ -64,7 +64,7 @@ const SinglePost = ({ post }) => {
   return (
     <div className="cart">
       <img className="avatar"
-      style={{height:'100%', width:'auto', border:'none', padding:'0'}}
+      style={{border:'none', padding:'0'}}
         src={aPost.author.urlAvatar === null ? logoPost : aPost.author.urlAvatar}
         alt=""
         onClick={() => { onClickImagePost(aPost.author.id) }} />

@@ -91,13 +91,13 @@ const PurchaseHistory = () => {
                     <div className='title-group-overal group-manager-post-title'>
                         Overal:
                     </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickAllService() }}>
+                    <div className='title-group-overal group-manager-post over-all' onClick={() => { onClickAllService() }}>
                         <div>
                             <p>Total Oders</p>
                             <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>{listAllServices.length}</span>
                         </div>
                     </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickPaidService() }}>
+                    <div className='title-group-overal group-manager-post over-all' onClick={() => { onClickPaidService() }}>
                         <div>
                             <p>Paid</p>
                             <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>
@@ -105,7 +105,7 @@ const PurchaseHistory = () => {
                             </span>
                         </div>
                     </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickPendingPayService() }}>
+                    <div className='title-group-overal group-manager-post over-all' onClick={() => { onClickPendingPayService() }}>
                         <div>
                             <p>Waiting payment</p>
                             <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>

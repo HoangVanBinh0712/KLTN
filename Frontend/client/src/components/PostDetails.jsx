@@ -370,7 +370,7 @@ const PostDetails = () => {
             <div className="recruitment">
                 <div className='recruitment-title'>Recruitment</div>
                 <div className="content-wrapper">
-                    <h1 style={{ fontSize: '26px' }}>Details</h1>
+                    <h1 style={{ fontSize: '1.4em' }}>Details</h1>
                     <div className="row-space-between">
                         <div className="left-group">
                             <h3 style={{ fontWeight: "600" }}>Overal</h3>
@@ -459,21 +459,21 @@ const PostDetails = () => {
                                 <div className='workplace-inpost-detail'> {data.location}</div>
                             </div>
                             <div className="detail">
-                                <h3 style={{ fontSize: "22px" }}>Description</h3>
-                                <p style={{ fontSize: "18px" }}>{data.description}</p>
+                                <h3 style={{ fontSize: "1.2em" }}>Description</h3>
+                                <p style={{ fontSize: "1em" }}>{data.description}</p>
 
                             </div>
                             <div className="detail">
-                                <h3 style={{ fontSize: "22px" }}>Requirement</h3>
-                                <p style={{ fontSize: "18px" }}>{data.requirement}</p>
+                                <h3 style={{ fontSize: "1.2em" }}>Requirement</h3>
+                                <p style={{ fontSize: "1em" }}>{data.requirement}</p>
                             </div>
                             <div className="detail">
-                                <h3 style={{ fontSize: "22px" }}>Benifit</h3>
-                                <p style={{ fontSize: "18px" }}>{data.benifit}</p>
+                                <h3 style={{ fontSize: "1.2em" }}>Benifit</h3>
+                                <p style={{ fontSize: "1em" }}>{data.benifit}</p>
                             </div>
                             <div className="detail">
-                                <h3 style={{ fontSize: "22px" }}>How to apply</h3>
-                                <p style={{ fontSize: "18px" }}>Candidates apply online by clicking <span style={{ color: "#0c62ad" }}>Apply</span> below</p>
+                                <h3 style={{ fontSize: "1.2em" }}>How to apply</h3>
+                                <p style={{ fontSize: "1em" }}>Candidates apply online by clicking <span style={{ color: "#0c62ad" }}>Apply</span> below</p>
                                 {role !== "ROLE_EMPLOYER" ? (
                                     <div className="group-buttons flex-row">
                                         {isSubmited ? (
@@ -507,18 +507,18 @@ const PostDetails = () => {
                         <div className="list-right-group">
                             <div className="right-group">
                                 <h3 style={{ marginLeft: "-10px" }}>Report Recruitment</h3>
-                                <p style={{ fontSize: "18px" }}>If you find that this job posting is incorrect or has one of the following symptoms, please report it to us.</p>
+                                <p style={{ fontSize: "1em" }}>If you find that this job posting is incorrect or has one of the following symptoms, please report it to us.</p>
                                 <img src={questionIcon} alt="" />
                                 <div className="button" onClick={() => { reportClick() }}>
                                     Report
                                 </div>
                             </div>
                             <div>
-                                <h3 style={{ fontSize: "22px", fontWeight: 700 }}>Industry</h3>
+                                <h3 style={{ fontSize: "1.2em", fontWeight: 700 }}>Industry</h3>
                                 <div className="mark">
                                     {data.industry.name}
                                 </div>
-                                <h3 style={{ fontSize: "22px", fontWeight: 700 }}>Area</h3>
+                                <h3 style={{ fontSize: "1.2em", fontWeight: 700 }}>Area</h3>
                                 <div className="mark">
                                     {data.city.name}
                                 </div>
@@ -527,7 +527,7 @@ const PostDetails = () => {
                     </div>
                 </div>
                 <div className="content-footer">
-                    <h1 style={{ fontSize: '26px', fontWeight: "600" }}>{data.author.name} information
+                    <h1 style={{ fontSize: '1.4em', fontWeight: "600" }}>{data.author.name} information
                         <span>
                             <a href={`/recruiter/${data.author.id}`}>View company {" >>"}</a>
                         </span>
@@ -556,9 +556,9 @@ const PostDetails = () => {
                     </div>
                     <div className="footer-line">
                         <img src={workIcon} alt="" />
-                        <h3 style={{ fontSize: "20px", fontWeight: 600 }}>Jobs with the company</h3>
+                        <h3 style={{ fontSize: "1.2em", fontWeight: 600 }}>Jobs with the company</h3>
                         <span>
-                            <a href={`/recruiter/${data.author.id}`} style={{ fontSize: '20px', color: '#0c62ad' }}>View More</a>
+                            <a href={`/recruiter/${data.author.id}`} style={{ fontSize: '1.2em', color: '#0c62ad' }}>View More</a>
                         </span>
                     </div>
                 </div>
@@ -579,13 +579,13 @@ const PostDetails = () => {
                         (<option value="-1">You have not uploaded any profile yet</option>)
                         : (allResume.map((r, id) => (<option value={r.mediaId} key={id}>{r.name}</option>)))}
                 </select>
-                <div style={{ display: 'flex', height: '30px', fontSize: '16px', color: "#6c6c6c" }}>
+                <div style={{ display: 'flex', height: '30px', fontSize: '1em', color: "#6c6c6c" }}>
                     {' * '}Please write a paragraph to introduce yourself so that the employer can get to know you better!
                 </div>
                 <ReactQuill value={coverLetter} onChange={onChangeCoverletter} />
-                <p style={{ color: '#ff453a', fontSize: '16px' }}> {mess}</p>
+                <p style={{ color: '#ff453a', fontSize: '1em' }}> {mess}</p>
                 <div className="group-buttons flex-row"
-                    style={{ display: 'flex', justifyContent: 'end', marginTop: '20px', gap: '1em' }}>
+                    style={{ display: 'flex', justifyContent: 'end', marginTop: '1.2em', gap: '1em' }}>
                     <div className="button" onClick={() => submitCvClick()}>
                         <i className="fa fa-paper-plane" aria-hidden="true"></i>
                         APPLY
@@ -606,13 +606,13 @@ const PostDetails = () => {
                     </div>
                     <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { closeFormReport() }} /></div>
                 </div>
-                <div style={{ display: 'flex', height: '30px', fontSize: '16px', color: "#6c6c6c" }}>
+                <div style={{ display: 'flex', height: '30px', fontSize: '1em', color: "#6c6c6c" }}>
                     {' * '}Let us know why you're reporting this post.
                 </div>
                 <ReactQuill value={reportMessage} onChange={onChangeReportMessage} />
-                <p style={{ color: '#ff453a', fontSize: '16px' }}> {mess}</p>
+                <p style={{ color: '#ff453a', fontSize: '1em' }}> {mess}</p>
                 <div className="group-buttons flex-row"
-                    style={{ display: 'flex', justifyContent: 'end', marginTop: '20px', gap: '1em' }}>
+                    style={{ display: 'flex', justifyContent: 'end', marginTop: '1.2em', gap: '1em' }}>
                     <div className="button" onClick={() => submitReport()}>
                         <i className="fa fa-paper-plane" aria-hidden="true"></i>
                         SEND

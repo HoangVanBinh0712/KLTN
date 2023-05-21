@@ -145,13 +145,13 @@ const JobPostingComponent = () => {
                     <div className='title-group-overal group-manager-post-title'>
                         Overal:
                     </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickAllPost() }}>
+                    <div className='title-group-overal group-manager-post' onClick={() => { onClickAllPost() }}>
                         <div>
                             <p>Total post</p>
                             <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>{allEmpPost.length}</span>
                         </div>
                     </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickApprovePost() }}>
+                    <div className='title-group-overal group-manager-post' onClick={() => { onClickApprovePost() }}>
                         <div>
                             <p>Approved</p>
                             <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>
@@ -159,7 +159,7 @@ const JobPostingComponent = () => {
                             </span>
                         </div>
                     </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickPendingPost() }}>
+                    <div className='title-group-overal group-manager-post' onClick={() => { onClickPendingPost() }}>
                         <div>
                             <p>Pending</p>
                             <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>
@@ -167,7 +167,7 @@ const JobPostingComponent = () => {
                             </span>
                         </div>
                     </div>
-                    <div className='title-group-overal group-manager-post button' onClick={() => { onClickUnacceptPost() }}>
+                    <div className='title-group-overal group-manager-post' onClick={() => { onClickUnacceptPost() }}>
                         <div>
                             <p>Denied</p>
                             <span style={{ color: "#0c62ad", fontFamily: " Roboto-Medium" }}>

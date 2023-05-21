@@ -56,7 +56,7 @@ const SingleUser = ({ user, refeshEmp }) => {
   }
 
   const checkFollow = (id, arr) => {
-    const index = arr.findIndex(e => e.user.id === id);
+    const index = arr.findIndex(e => e.user?.id === id);
     if (index !== -1) return true
     else return false
   }
@@ -88,7 +88,7 @@ const SingleUser = ({ user, refeshEmp }) => {
     <div className="cart">
       <img className="avatar"
         style={{ height: '100px', width: '100px', padding: '0' }}
-        src={logoIcon} alt=""
+        src={emp.user.avatar ? emp.user.avatar : logoIcon} alt=""
         onClick={() => onClickEmp(emp.user.id)}
       >
       </img>

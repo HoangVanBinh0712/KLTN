@@ -22,6 +22,8 @@ body {
     display: flex;
     height: 70px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    box-sizing: border-box;
 }
 
 .logo-home {
@@ -37,20 +39,20 @@ body {
 
 .menu-homepage {
     font-family: Arial, Helvetica, sans-serif;
-    padding-top: 20px;
+    padding-top: 1.2em;
     width: 65%;
     display: flex
 }
 
 .option-menu {
-    padding-right: 25px;
+    padding-right: 1.4em;
 
 }
 
 .option-a-menu {
     color: #0c62ad;
     text-decoration: none;
-    font-size: 22px;
+    font-size: 1.2em;
 }
 
 .mess-bell-homepage {
@@ -81,7 +83,7 @@ body {
     text-align: center;
     margin: 12% 10% 12% 2%;
     padding: 5% 0%;
-    font-size: 20px;
+    font-size: 1.2em;
     border: 2px solid #0c62ad;
     border-radius: 5px;
     cursor: pointer;
@@ -98,7 +100,6 @@ body {
 
 .menu-homepage-signed {
     font-family: Arial, Helvetica, sans-serif;
-    padding-top: 20px;
     width: 70%;
     display: flex
 }
@@ -111,7 +112,6 @@ body {
     max-width: 100%;
     overflow: hidden;
     position: relative;
-    z-index: -1;
 }
 
 .banner-top img {
@@ -166,7 +166,7 @@ body {
     border-radius: 3px;
     outline: none;
     padding: 0 0 0 15px;
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .custom-select {
@@ -180,7 +180,7 @@ body {
     border-radius: 3px;
     align-items: center;
     border: none;
-    font-size: 18px;
+    font-size: 1em;
     color: white;
     cursor: pointer;
     display: flex;
@@ -214,14 +214,14 @@ body {
 
 .post-bx-title {
     width: 85%;
-    font-size: 24px;
+    font-size: 1.4em;
     font-weight: 600;
     font-weight: Futura-Heavy;
 }
 
 .post-bx-title-ai {
     width: 15%;
-    font-size: 24px;
+    font-size: 1.4em;
     font-weight: 600;
     font-weight: Futura-Heavy;
 }
@@ -229,7 +229,7 @@ body {
 .round-recommend {
     width: 25%;
     border: 2px solid #0b5afc;
-    border-radius: 20px;
+    border-radius: 1.2em;
     padding-bottom: 5px;
     color: #0b5afc;
     font-family: Futura-Book;
@@ -245,7 +245,7 @@ body {
     text-align: end;
     color: #0b5afc;
     font-family: Futura-Book;
-    font-size: 20px;
+    font-size: 1.2em;
 }
 
 .post-bx-viewall-ai {
@@ -253,7 +253,7 @@ body {
     text-align: end;
     color: #0b5afc;
     font-family: Futura-Book;
-    font-size: 20px;
+    font-size: 1.2em;
 }
 
 .list-posts-homepage {
@@ -291,7 +291,7 @@ body {
 
 .post-title-homepage {
     font-family: Futura-Heavy;
-    font-size: 20px;
+    font-size: 1.2em;
     width: 90%;
     text-transform: uppercase;
 }
@@ -307,14 +307,14 @@ body {
     text-align: center;
     border-radius: 3px;
     color: #1d39cf;
-    font-size: 16px;
+    font-size: 1em;
     margin: 5px 0;
 }
 
 .locationg-company-homepage {
     font-family: Futura-Book;
     color: #787d8e;
-    font-size: 18px;
+    font-size: 1em;
     width: 90%;
 }
 
@@ -329,8 +329,8 @@ body {
 }
 
 .heart-icon {
-    height: 30px;
-    width: 30px;
+    height: 1.6em;
+    width: 1.6em;
     background-image: url("../../assets/icons/round-heart-icon.png");
     background-size: cover;
     cursor: pointer;
@@ -346,16 +346,16 @@ body {
     display: flex;
     padding: 2%;
     justify-content: center;
-    margin-top: 25px;
+    margin-top: 1.4em;
 }
 
 .circle-round {
-    height: 24px;
-    width: 24px;
+    height: 1.4em;
+    width: 1.4em;
     border: 2px solid #cfcfcf;
     border-radius: 100%;
     padding: 0px;
-    padding-left: 0.2%;
+    padding: 0.2%;
     margin: 0 5px;
     cursor: pointer;
 }
@@ -387,7 +387,7 @@ body {
 .top-emp-title {
     font-family: Futura-Heavy;
     color: white;
-    font-size: 22px;
+    font-size: 1.2em;
     padding: 2%;
 }
 
@@ -436,7 +436,7 @@ body {
     width: 50%;
     height: 83%;
     display: flex;
-    margin-top: 40px;
+    margin-top: 2em;
 }
 
 .logo-infooter {
@@ -450,27 +450,27 @@ body {
 }
 
 .name-school {
-    margin-left: 20px;
+    margin-left: 1.2em;
 }
 
 .name-school p {
     margin: 5px 0 0 0;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .thoa-thuan {
-    margin-top: 20px;
+    margin-top: 1.2em;
     padding-top: 5px;
     border-top: 1px solid #676767;
-    font-size: 17px;
+    font-size: 1em;
 }
 
 .footer-rightpart {
     width: 50%;
     height: 83%;
-    margin-top: 40px;
+    margin-top: 2em;
     margin-left: 20%;
 
 }
@@ -478,7 +478,7 @@ body {
 .contact-title {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .school-adress {
@@ -487,8 +487,8 @@ body {
 }
 
 .contact-icon {
-    height: 24px;
-    width: 24px;
+    height: 1.4em;
+    width: 1.4em;
 }
 
 .contact-icon img {
@@ -534,14 +534,14 @@ body {
     display: block;
     width: 20%;
     margin-top: 0.5%;
-    margin-right: 30px;
+    margin-right: 1.6em;
 }
 
 .dropdown-menu {
     position: absolute;
     z-index: 2;
     width: 20%;
-    padding-left: 20px;
+    padding-left: 1.2em;
     margin-top: -15px;
     background-color: white;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
@@ -579,21 +579,21 @@ body {
 }
 
 .n-user-in-dropbox {
-    height: 25px;
-    font-size: 20px;
+    height: 1.4em;
+    font-size: 1.2em;
     color: #0c62ad;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 .num-user-in-dropbox {
-    height: 20px;
+    height: 1.2em;
     font-size: 14px;
 }
 
 .drop-text {
     font-family: Roboto-regular;
-    font-size: 18px;
-    margin: 20px 0 10px 5px;
+    font-size: 1em;
+    margin: 1.2em 0 10px 5px;
     cursor: pointer;
 }
 
@@ -665,11 +665,13 @@ body {
 }
 
 .dropbox-tool-topbar {
+    position: absolute;
     display: block;
     margin: 5px 10px;
     padding: 5px 10px 10px 10px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255);
+    border-radius: 3px;
 }
 
 .option-dropdown {

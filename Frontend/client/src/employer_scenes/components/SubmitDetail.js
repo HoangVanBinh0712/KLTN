@@ -209,10 +209,10 @@ const SubmitDetail = () => {
                     </div>
                     <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { closeFormReport() }} /></div> */}
                 </div>
-                <div style={{ display: 'flex', height: '30px', fontSize: '16px', color: "#6c6c6c" }}>
+                <div style={{ display: 'flex', height: '30px', fontSize: '1em', color: "#6c6c6c" }}>
                     {' * '}Let us know why you're reporting this post.
                 </div>
-                {/* <p style={{ color: '#ff453a', fontSize: '16px' }}> {mess}</p>
+                {/* <p style={{ color: '#ff453a', fontSize: '1em' }}> {mess}</p>
                 <div className="group-buttons flex-row"
                     style={{ display: 'flex', justifyContent: 'end', marginTop: '20px', gap: '1em' }}>
                     <div className="button" onClick={() => submitReport()}>
@@ -235,11 +235,11 @@ const SubmitDetail = () => {
                     </div>
                     <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { closeAppointmentForm() }} /></div>
                 </div>
-                <div style={{ display: 'flex', height: '30px', fontSize: '16px', color: "#6c6c6c" }}>
+                <div style={{ display: 'flex', height: '30px', fontSize: '1em', color: "#6c6c6c" }}>
                     {' * '}Give the candidate some necessary information, or requirements for the candidate.
                 </div>
                 <ReactQuill value={noteAppoint} onChange={onChangeNoteAppointment} />
-                <div style={{ display: 'flex', height: '30px', fontSize: '16px', color: "#6c6c6c" }}>
+                <div style={{ display: 'flex', height: '30px', fontSize: '1em', color: "#6c6c6c" }}>
                     {' * '}Select a date for the meeting.
                 </div>
                 <input type="date" name="title"

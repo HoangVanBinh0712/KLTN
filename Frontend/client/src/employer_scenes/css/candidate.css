@@ -14,15 +14,15 @@
 
 .form-info-candidate-control {
     background-color: #fff;
-    padding: 20px;
+    padding: 1.2em;
     border-radius: 5px;
-    min-height: 680px;
+    /* min-height: 680px; */
 }
 
 .name-candidate {
     color: #6c6c6c;
-    padding-left: 20px;
-    font-size: 20px;
+    padding-left: 1.2em;
+    font-size: 1.2em;
     padding-top: 10px;
     padding-bottom: 5px;
     border-bottom: 1px solid #cfcfcf;
@@ -30,9 +30,9 @@
 }
 
 .exp-area {
-    font-size: 20px;
+    font-size: 1.2em;
     color: #6c6c6c;
-    padding-left: 20px;
+    padding-left: 1.2em;
     padding-top: 10px;
     min-height: 120px;
 }

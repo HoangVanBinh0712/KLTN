@@ -30,13 +30,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: calc(1rem + ((1vw - 10.24px) * 0.6944)) !important;
+    font-size: calc(0.8rem + ((1vw - 12.24px) * 0.6944)) !important;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     flex-direction: column;
 }
 
 #inp-add-post-page {
-    border: 1px solid rgb(175,175,175) !important;
+    border: 1px solid rgb(175, 175, 175) !important;
 }
 
 .header {
@@ -46,22 +46,22 @@ body {
 }
 
 .component-title {
-    padding: 26px 20px 20px 26px;
+    padding: 1.4em 1.2em 1.2em 1.4em;
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-    margin-bottom: 20px;
+    margin-bottom: 1.2em;
 }
 
 .component-title span {
     color: #0C62AD;
     font-family: Roboto-Bold;
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .content-wrapper {
     padding: 1px 0;
     width: 100%;
     display: flex;
-    column-gap: 20px;
+    column-gap: 1.2em;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
 }
 
@@ -82,7 +82,7 @@ body {
     align-items: center;
     column-gap: 10px;
     padding: 0 0 0 0.5em;
-    font-size: 20px;
+    font-size: 1.2em;
     font-family: Futura-Heavy;
 }
 
@@ -130,6 +130,7 @@ body {
     text-decoration: unset;
     flex: 1;
     height: 100%;
+    color: black;
 }
 
 .navbar-vertical .nav-item li img {
@@ -137,7 +138,7 @@ body {
 }
 
 .navbar-vertical .nav-item li a:visited {
-    color: unset;
+    color: black;
 }
 
 .navbar-vertical .nav-item li:hover {
@@ -177,7 +178,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: white;
-    padding: 25px;
+    padding: 1.4em;
     border-radius: 3px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
     margin-bottom: 1.5em;
@@ -357,6 +358,7 @@ small {
     box-sizing: border-box;
     width: 100%;
     background-color: #F2F7FF;
+    align-items: center;
 }
 
 .free-space .content-wrapper .cart .avatar {
@@ -375,7 +377,7 @@ small {
 
 .free-space .content-wrapper .cart .cart-info {
     width: 100%;
-    padding-left: 20px;
+    padding-left: 1.2em;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -451,8 +453,8 @@ small {
     border: 1px solid black;
     border-radius: 55%;
     box-shadow: 1px 1px 2px grey;
-    width: 35px;
-    height: 35px;
+    width: 1.8em;
+    height: 1.8em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -478,7 +480,7 @@ small {
 /*personal info*/
 .cover-and-avatar {
     background-color: white;
-    padding: 25px;
+    padding: 1.4em;
     border-radius: 3px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
     margin-bottom: 1.5em;
@@ -505,7 +507,7 @@ small {
 }
 
 .cover-and-avatar .avatar-wrapper {
-    padding: 20px 10px;
+    padding: 1.2em 10px;
     display: flex;
     gap: 1em;
     border-radius: 10px;
@@ -644,7 +646,7 @@ small {
     flex-wrap: wrap;
     background-color: #F2F7FF;
     width: 100%;
-    padding: 20px;
+    padding: 1.2em;
     gap: 1em;
     box-sizing: border-box;
 }
@@ -680,7 +682,7 @@ small {
 
 /*Verify email*/
 .free-space .content-wrapper .code-input {
-    margin-bottom: 20px;
+    margin-bottom: 1.2em;
     flex: 1;
 }
 
@@ -708,7 +710,7 @@ small {
 /*Achievement*/
 
 .content-wrapper .image-wrapper {
-    padding: 20px 0;
+    padding: 1.2em 0;
     display: flex;
     gap: 1em;
     border-radius: 5px;
@@ -818,7 +820,7 @@ small {
 }
 
 .name-achive {
-    font-size: 22px;
+    font-size: 1.2em;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -862,7 +864,11 @@ small {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white ;
+    background-color: white;
+}
+.chose-active:hover{
+    color: black;
+    background-color: coral;
 }
 
 .chose-update {
@@ -908,7 +914,7 @@ small {
     display: flex;
     align-items: center;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 1.6em;
 }
 
 .group-manager-post-title {
@@ -927,13 +933,14 @@ small {
     color: #000 !important;
     font-weight: 300 !important;
     padding: 0.4em !important;
+    text-align: center;
 }
 
 .group-manager-post p {
     font-family: Roboto-Medium !important;
     color: #000 !important;
     font-weight: 300 !important;
-    font-size: 20px;
+    font-size: 1.2em;
 }
 
 .select-filer-group {
@@ -944,7 +951,7 @@ small {
 .select-filer-row {
     display: flex;
     width: 100%;
-    margin-top: 18px;
+    margin-top: 1em;
     justify-content: space-between;
 }
 
@@ -968,7 +975,7 @@ small {
 
 .clear-select-item p {
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1em;
     color: inherit;
 }
 
@@ -999,8 +1006,8 @@ small {
     justify-content: space-between;
     font-family: Roboto-Medium;
     color: #000;
-    font-size: 18px;
-    padding: 25px;
+    font-size: 1em;
+    padding: 1.4em;
 }
 
 .row-data-listpost {
@@ -1008,16 +1015,16 @@ small {
     justify-content: space-between;
     font-family: Roboto-Light !important;
     color: #6c6c6c;
-    font-size: 18px;
+    font-size: 1em;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
-    padding: 16px 25px;
+    padding: 1em 1.4em;
     align-items: center;
     height: 62px;
 }
 
 .limit-title-post {
-    white-space: nowrap; 
-    overflow: hidden; 
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
 }
 
@@ -1047,13 +1054,13 @@ small {
 
 
 .others-btn {
-    height: 30px;
-    width: 30px;
+    height: 1.6em;
+    width: 1.6em;
     border: 1px solid #6c6c6c;
     border-radius: 100%;
     margin-right: 10px;
     cursor: pointer;
-    margin-left: 40px;
+    margin-left: 2em;
 }
 
 .three-dot-chose-post {
@@ -1061,5 +1068,3 @@ small {
     height: 100%;
     width: auto;
 }
-
-

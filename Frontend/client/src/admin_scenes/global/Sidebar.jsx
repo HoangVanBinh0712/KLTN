@@ -50,7 +50,7 @@ const Sidebar = () => {
           backgroundColor: "transparent !important",
         },
         "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",
+          padding: "5px 1.8em 5px 1.2em !important",
         },
         "& .pro-inner-item:hover": {
           color: "#868dfb !important",
@@ -67,7 +67,7 @@ const Sidebar = () => {
             onClick={() => setIsCollapsed(!isCollapsed)}
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
-              margin: "10px 0 20px 0",
+              margin: "10px 0 1.2em 0",
               color: colors.grey[100],
             }}
           >
@@ -127,7 +127,7 @@ const Sidebar = () => {
             <Typography
               variant="h6"
               color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
+              sx={{ m: "15px 0 5px 1.2em" }}
             >
               Management
             </Typography>
@@ -183,7 +183,7 @@ const Sidebar = () => {
             <Typography
               variant="h6"
               color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
+              sx={{ m: "15px 0 5px 1.2em" }}
             >
               Statistical
             </Typography>

@@ -182,9 +182,9 @@ const Login = () => {
                                 </div>
 
                                 <div className="login100-form-social-item">
-                                    <img src={ggIcon} alt="gg icon" width="18px" height="18px" />
+                                    <img src={ggIcon} alt="gg icon" width="1em" height="1em" />
                                     <a className="link-to-gg" href="https://career-website.herokuapp.com/oauth2/authorization/google"
-                                        style={{ fontSize: '18px' }}>
+                                        style={{ fontSize: '1em' }}>
                                         Continue with google
                                     </a>
                                 </div>

@@ -11,6 +11,7 @@ import applyIcon from "../../assets/icons/apply-icon.png";
 import heartIcon from "../../assets/icons/heart-icon.png";
 import searchIcon from "../../assets/icons/search-employee-icon.png";
 import followedIcon from "../../assets/icons/followed-icon.png";
+import Footer from "../../components/global/Footer";
 
 const UserAccount = () => {
   const activeClick = (id) => {
@@ -138,6 +139,7 @@ const UserAccount = () => {
 
         <Outlet />
       </div>
+      <Footer />
     </>
   );
 };

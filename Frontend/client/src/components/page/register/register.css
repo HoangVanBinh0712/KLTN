@@ -114,7 +114,7 @@ iframe {
   [ Text ]*/
 .txt1 {
   font-family: Poppins-Regular;
-  font-size: 18px;
+  font-size: 1em;
   line-height: 1.4;
   color: #207198;
   text-decoration: none;
@@ -123,7 +123,7 @@ iframe {
 
 .recruit {
   font-family: Poppins-Regular;
-  font-size: 18px;
+  font-size: 1em;
   line-height: 1.4;
   color: #207198;
 }
@@ -201,7 +201,7 @@ iframe {
   width: 100%;
   display: block;
   font-family: Poppins-Bold;
-  font-size: 25px;
+  font-size: 1.4em;
   color: #0E4A67;
   line-height: 1.2;
 }
@@ -227,7 +227,7 @@ iframe {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 1.2em;
   width: 100%;
   height: 50px;
   border-radius: 10px;
@@ -259,8 +259,8 @@ iframe {
 @media (max-width: 992px) {
   .login100-form {
     width: 50%;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 1.6em;
+    padding-right: 1.6em;
   }
 
   .login100-more {
@@ -298,7 +298,7 @@ iframe {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 1.2em;
   width: 100%;
   height: 50px;
   border-radius: 10px;
@@ -322,7 +322,7 @@ iframe {
 }
 
 .p-b-43 {
-  padding-bottom: 35px;
+  padding-bottom: 1.8em;
 }
 
 .flex-sb-m {
@@ -345,7 +345,7 @@ iframe {
 }
 
 .p-b-32 {
-  padding-bottom: 25px;
+  padding-bottom: 1.4em;
 }
 
 .text-center {
@@ -363,30 +363,30 @@ iframe {
 .input-reg {
   width: 100%;
   height: 60px;
-  padding: 12px 20px;
+  padding: 12px 1.2em;
   margin: 8px 0;
   box-sizing: border-box;
   border: 2px solid #207198;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 1em;
 }
 
 .select-reg {
   width: 100%;
   height: 60px;
-  padding: 12px 20px;
+  padding: 12px 1.2em;
   margin: 8px 0;
   box-sizing: border-box;
   border: 2px solid #207198;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 1em;
   color: #207198
 }
 
 .password {
   width: 100%;
   height: 60px;
-  padding: 12px 20px;
+  padding: 12px 1.2em;
   margin: 8px 0;
   box-sizing: border-box;
   border: 2px solid #207198;
@@ -429,7 +429,7 @@ i.fa-eye {
 
 .txt3 {
   font-family: Poppins-Regular;
-  font-size: 16px;
+  font-size: 1em;
   color: #207198;
   text-decoration: none;
   margin-left: 0px;
@@ -439,7 +439,7 @@ i.fa-eye {
 .password1 {
   width: 100%;
   height: 60px;
-  padding: 12px 20px;
+  padding: 12px 1.2em;
   margin: 8px 0;
   box-sizing: border-box;
   border: 2px solid #207198;
@@ -449,7 +449,7 @@ i.fa-eye {
 
 .lb-name {
   font-family: Poppins-Regular;
-  font-size: 18px;
+  font-size: 1em;
   color: #207198;
   display: block;
   margin: 0;
@@ -467,5 +467,5 @@ i.fa-eye {
 .link-to-login {
   color: #345adf;
   text-decoration: none !important;
-  font-size: 18px;
+  font-size: 1em;
 }

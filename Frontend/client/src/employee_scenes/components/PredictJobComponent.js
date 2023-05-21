@@ -105,7 +105,7 @@ const PredictJob = () => {
             <div className="row-flex">
               <select className="select-resume"
                 defaultValue="-1" name="" id=""
-                style={{ padding: "16px" }}
+                style={{ padding: "1em" }}
                 onChange={onChangeSelectResume}>
                 {allResume.length === 0 ?
                   (<option value="-1">You have not uploaded any profile yet</option>)

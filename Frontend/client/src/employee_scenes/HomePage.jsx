@@ -17,11 +17,11 @@ const HomePage = () => {
 
   return (
     <>
-      {!authloading && user && <ChatBox />}
+      {/* {!authloading && user && <ChatBox />} */}
 
       <TopBar />
       <Banner />
-      {/* <ListPostsHomepage
+      <ListPostsHomepage
         title={"Hot job"}
         isHaveAi={false}
         listPosts={postHot}
@@ -36,7 +36,8 @@ const HomePage = () => {
         title={"Attractive job"}
         isHaveAi={false}
         listPosts={postMostView}
-      /> */}
+      />
+      <Footer/>
     </>
   )
 }

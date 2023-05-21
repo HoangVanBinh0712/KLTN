@@ -3,7 +3,7 @@ body {
     padding: 0;
    /*  background-color: #f5f5f5; */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .body-container {
@@ -26,15 +26,15 @@ body {
 
 #arrow_below_banner{
     margin-top: 10px;
-    width: 40px;
-    height: 40px;
+    width: 2em;
+    height: 2em;
 }
 
 #our_service_title{
     font-weight: 800;
-    margin-top: 35px;
+    margin-top: 1.8em;
     color: black;
-    font-size: 30px;
+    font-size: 1.6em;
 }
 
 #our_service_explaination{
@@ -71,13 +71,13 @@ body {
 #service_name{
     font-weight: 800;
     color: black;
-    font-size: 30px;
+    font-size: 1.6em;
 }
 
 #service_price{
     color: #ff7d55;
     font-weight: 800;
-    font-size: 30px;
+    font-size: 1.6em;
 }
 
 #service_duration_wrapper{
@@ -105,7 +105,7 @@ body {
 }
 
 #service_checkbox{
-    width: 25px;
+    width: 1.4em;
     height: auto;
 }
 
@@ -114,12 +114,12 @@ body {
 }
 
 #btn_buy_now{
-    margin-top: 40px;
+    margin-top: 2em;
     border: 2px solid #0c62ad;
     border-radius: 8px;
     width: 132px;
     height: 49px;
     color: #2f70b3;
     padding: 0;
-    font-size: 18px;
+    font-size: 1em;
 }

@@ -1,8 +1,8 @@
 .post-title-intop {
     color: #414042;
-    font-size: 18px;
+    font-size: 1em;
     border-left: 3px solid #414042;
-    height: 18px;
+    height: 1em;
     padding-left: 8px;
     margin-left: 15px;
     align-items: center;
@@ -48,7 +48,7 @@
 
 .post-detail .post .post-info {
     width: 70%;
-    padding-left: 20px;
+    padding-left: 1.2em;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -74,7 +74,7 @@
 
 .post-deadline-submit {
     color: #6c6c6c;
-    font-size: 16px;
+    font-size: 1em;
 }
 
 .post-deadline-submit::before {
@@ -139,21 +139,21 @@
 }
 
 .post-detail .row-flex .item img {
-    width: 30px;
+    width: 1.6em;
     margin: 5px;
 }
 
 .post-detail .row-flex .item .item-detail p {
     margin: 0;
     color: #4c4b4b;
-    font-size: 16px;
+    font-size: 1em;
 }
 
 .post-detail .row-flex .item .item-detail h4 {
     margin: 0;
     font-weight: bold;
     color: black;
-    font-size: 20px;
+    font-size: 1.2em;
 }
 
 .post-detail .row-flex .button-copy {
@@ -204,7 +204,7 @@
 
 .post-detail .right-group {
     width: 26%;
-    padding: 10px 10px 10px 20px;
+    padding: 10px 10px 10px 1.2em;
     box-sizing: border-box;
     box-shadow: 0px 0px 5px #cfcfcf;
     border-radius: 3px;
@@ -253,7 +253,7 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.5em;
-    margin: 20px 0;
+    margin: 1.2em 0;
 }
 
 .post-detail div.button {
@@ -300,7 +300,7 @@
     background-color: #e5e5e5;
     width: max-content;
     border-radius: 3px;
-    font-size: 16px;
+    font-size: 1em;
 }
 
 .post-detail .mark:hover {
@@ -321,7 +321,7 @@
 
 .post-detail .content-footer h1 a {
     color: #0C62AD;
-    font-size: 18px;
+    font-size: 1em;
     font-family: Arial, Helvetica, sans-serif !important;
 }
 
@@ -427,7 +427,7 @@
 .workplace-inpost-detail {
     font-family: Arial, Helvetica, sans-serif;
     color: #414042;
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .workplace-inpost-detail::before {
@@ -449,7 +449,7 @@
 
 .form-submit-cv-control {
     background-color: #fff;
-    padding: 20px;
+    padding: 1.2em;
     border-radius: 5px;
     min-height: 500px;
     
@@ -457,12 +457,12 @@
 
 .form-submit-report-control {
     background-color: #fff;
-    padding: 20px;
+    padding: 1.2em;
     border-radius: 5px;
     min-height: 450px;
 }
 .name-post-submit {
-    margin-bottom: 20px;
+    margin-bottom: 1.2em;
     font-weight: 600;
     color: #0C62AD;
 }
@@ -475,7 +475,7 @@
 }
 
 .name-post-report {
-    margin-bottom: 20px;
+    margin-bottom: 1.2em;
     font-weight: 600;
     color: #0C62AD;
 }
@@ -493,7 +493,7 @@
     border-radius: 3px;
     color: #6c6c6c;
     width: 100%;
-    font-size: 16px;
+    font-size: 1em;
     padding-left: 10px;
 }
 

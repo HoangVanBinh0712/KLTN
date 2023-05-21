@@ -36,7 +36,7 @@ const EmployerProfile = () => {
     const [employerPost, setEmployerPost] = useState([])
 
     const checkFollow = (id, arr) => {
-        const index = arr.findIndex(e => e.user.id === id);
+        const index = arr.findIndex(e => e.user?.id === id);
         if (index !== -1) return true
         else return false
     }

@@ -7,7 +7,7 @@
     border-left: 2px solid #6c6c6c;
     padding-left: 5px;
     margin: 10px 0;
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .body-container {
@@ -61,13 +61,13 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    margin-bottom: 20px;
+    margin-bottom: 1.2em;
     margin-right: 15px;
     display: flex;
     align-items: center;
     background-color: white;
     border-radius: 5%;
-    padding-right: 20px;
+    padding-right: 1.2em;
     padding-left: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -76,9 +76,9 @@
 .profile-info {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.2em;
     top: -90px;
-    left: 25px;
+    left: 1.4em;
     position: relative;
 }
 
@@ -99,28 +99,28 @@
 
 #employer-seen-name{
     margin-bottom: 8px;
-    font-size: 22px;
+    font-size: 1.2em;
 }
 
 #company-name{
     margin-top: 8px;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1.2em;
 }
 
 #day-viewed{
     position: absolute;
     right:0;
     top:0;
-    margin-right: 25px;
-    margin-top: 20px;
+    margin-right: 1.4em;
+    margin-top: 1.2em;
     font-weight: 500;
     font-family: Futura-Book;
 }
 
 .info-employee-wrapper{
     display: flex;
-    margin-left: 25px;
+    margin-left: 1.4em;
     flex-direction: column;
     justify-content: center;
 }
@@ -131,8 +131,8 @@
 }
 
 #tick{
-    width: 20px;
-    height: 20px;
+    width: 1.2em;
+    height: 1.2em;
     border: 1px solid #0c62ad;
     border-radius: 100%;
     margin-left: 10px;
@@ -140,7 +140,7 @@
 
 .name-viewer-wrapper {
     display: flex;
-    margin-left: 25px;
+    margin-left: 1.4em;
     flex-direction: column;
     justify-content: center;
     align-self: flex-end;
@@ -156,8 +156,8 @@
 }
 
 #company-icon{
-    width: 25px;
-    height: 25px;
+    width: 1.4em;
+    height: 1.4em;
 }
 
 .follow-company{
@@ -165,15 +165,15 @@
     position: absolute;
     right: 0;
     top: 400px;
-    margin-right: 40px;
+    margin-right: 2em;
     margin-bottom: 50px;
-    padding: 10px 25px 10px 25px;
+    padding: 10px 1.4em 10px 1.4em;
     background-color: #0c62ad;
     cursor: pointer;
 }
 
 #total-empl-wrap{
-    margin-left: 20px;
+    margin-left: 1.2em;
 }
 
 .info{
@@ -181,7 +181,7 @@
 }
 
 .name {
-    font-size: 24px;
+    font-size: 1.4em;
     text-transform: uppercase;
     font-weight: normal;
 }
@@ -193,46 +193,46 @@
 
 .viewer-icon {
     margin-right: 5px;
-    width: 30px;
-    height: 30px;
+    width: 1.6em;
+    height: 1.6em;
     background-image: url('../../assets/icons/eye-icon.png');
     background-size: cover;
 }
 
 .viewer-count {
-    font-size: 18px;
+    font-size: 1em;
     color: black;
 }
 
 .content-wrapper{
-    margin-bottom: 35px;
+    margin-bottom: 1.8em;
     /* display: block; */
     box-shadow: none;
 }
 
 .info-area{
     position: relative;
-    padding-left: 25px;
+    padding-left: 1.4em;
     box-sizing: border-box;
     padding-top: 10px;
-    padding-right: 25px;
-    padding-bottom: 30px;
+    padding-right: 1.4em;
+    padding-bottom: 1.6em;
     height: fit-content;
     background-color: white;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15) ;
 }
 
 #employer-seen{
-    margin-top: 25px;
+    margin-top: 1.4em;
 }
 
 .area-title{
     border-left: 5px solid #0c62ad;
     padding-left: 7px;
     font-weight: 600;
-    font-size: 24px;
+    font-size: 1.2em;
     color: #414042 !important;
-    margin-bottom: 20px;
+    margin-bottom: 1.2em;
     margin-top: 5px;
 }
 
@@ -242,7 +242,7 @@
 
 .content-parent{
     position: relative;
-    margin-top: 20px;
+    margin-top: 1.2em;
 }
 
 .edit-button{
@@ -251,15 +251,15 @@
     right:0;
     margin-right: 10px;
     margin-top: 10px;
-    width: 30px;
-    height: 30px;
+    width: 1.6em;
+    height: 1.6em;
     background-size: cover;
     background-image: url('../../assets/icons/edit-icon.png');
 }
 
 #location-ping{
-    width: 20px;
-    height: 20px;
+    width: 1.2em;
+    height: 1.2em;
 }
 
 .right-side-content{
@@ -277,12 +277,12 @@
 }
 
 #achivement-area{
-    margin-top: 25px;
+    margin-top: 1.4em;
 }
 
 #achive-icon{
-    width: 40px;
-    height: 40px;
+    width: 2em;
+    height: 2em;
 }
 
 .achive-item{
@@ -297,8 +297,8 @@
 }
 
 #achive-more{
-    width: 30px;
-    height: 30px;
+    width: 1.6em;
+    height: 1.6em;
     right:0;
     position: absolute;
 }
@@ -309,12 +309,12 @@
 
 #clock-icon{
     margin-left: 10px;
-    width: 30px;
-    height: 30px;
+    width: 1.6em;
+    height: 1.6em;
 }
 
 #activities-area{
-    margin-top: 25px;
+    margin-top: 1.4em;
 }
 
 .title-include-add{
@@ -323,9 +323,9 @@
 }
 
 #add-button{
-    width: 40px;
-    height: 40px;
-    margin-left: 20px;
+    width: 2em;
+    height: 2em;
+    margin-left: 1.2em;
 }
 
 .background-grey-profile {
@@ -333,7 +333,7 @@
 }
 
 .area-content {
-    font-size: 20px;
+    font-size: 1em;
     color: #414042;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -356,7 +356,7 @@
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis;
-    font-size: 18px;
+    font-size: 1em;
 }
 
 .copy-icon {
@@ -386,13 +386,13 @@
 }
 
 .favorite{
-    width: 30px;
-    height: 30px;
+    width: 1.6em;
+    height: 1.6em;
     position: absolute;
     right: 0;
     bottom: 0;
-    margin-right: 25px;
-    margin-bottom: 25px;
+    margin-right: 1.4em;
+    margin-bottom: 1.4em;
     cursor: pointer;
 }
 
@@ -403,7 +403,7 @@
 
 .employer-seen-info{
     padding-top: 10px;
-    padding-bottom: 20px;
+    padding-bottom: 1.2em;
     padding-left: 10px;
     margin-bottom: 15px;
     padding-right: 10px;
@@ -421,8 +421,8 @@
     justify-content: center;
     color: #0c62ad;
     font-family: Futura-Book;
-    padding-top: 20px;
-    font-size: 24px;
+    padding-top: 1.2em;
+    font-size: 1.4em;
 }
 
 .view-all-click-link a {

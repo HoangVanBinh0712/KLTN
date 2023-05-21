@@ -180,7 +180,6 @@ const SearchCandidates = () => {
     return (
         <>
             <div className="search-page">
-
                 <img className="banner" src={bannerSearch} alt="" />
                 <div className="search-bar">
                     <div className="row-flex-horizon" style={{ marginBottom: '1em' }}>
@@ -252,7 +251,6 @@ const SearchCandidates = () => {
                             ))
                             }
                         </>) : (<></>)}
-                        {console.log(allPost)}
                         <div className="paging-post" style={{ marginTop: '15px' }}>
                             <div className="circle-round" onClick={toPreviousPage}>
                                 <img src={leftArrow} alt='icon' />
@@ -272,8 +270,11 @@ const SearchCandidates = () => {
 
                 </div>
             </div>
-            <div className='form-candidate-profile' style={isOpenProfile ? { display: 'block' } : { display: 'none' }}>
-                <div className='form-info-candidate-control'>
+            <div className='form-candidate-profile' onClick={(e)=>{
+                if(!document.getElementById('form-info-candidate-control').contains(e.target))
+                    setIsOpenProfile(false)
+            }} style={isOpenProfile ? { display: 'block' } : { display: 'none' }}>
+                <div className='form-info-candidate-control' id='form-info-candidate-control'>
                     <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
                         <div style={{ color: '#0c62ad' }}>
                             {`${candidateInfo.user.name}'s Infomation`}
@@ -310,7 +311,7 @@ const SearchCandidates = () => {
                         dangerouslySetInnerHTML={{ __html: candidateInfo.skillsAndKnowledges.length > 0 ? candidateInfo.skillsAndKnowledges : '' }}>
 
                     </div>
-                    <div style={{ display: 'flex', height: '30px', fontSize: '16px', color: "#6c6c6c", paddingLeft: '20px' }}>
+                    <div style={{ display: 'flex', height: '30px', fontSize: '1em', color: "#6c6c6c", paddingLeft: '20px' }}>
                         {' * '}Click on profile name to view.
                     </div>
                     <div className="cart-description-profile" style={{ cursor: 'pointer', paddingLeft: '20px' }}
@@ -320,7 +321,7 @@ const SearchCandidates = () => {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'end' }}>
                         <div className="button btn-close" onClick={() => { onClickCloseForm() }}>
-                            <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', }}></i>
+                            <i className="fa fa-times" aria-hidden="true"></i>
                             CLOSE
                         </div>
                     </div>
