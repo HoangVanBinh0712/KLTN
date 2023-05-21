@@ -21,8 +21,8 @@ const LoginPageAdmin = () => {
         event.preventDefault();
         try {
             const data = new FormData(event.currentTarget);
-            const response = await loginUser(data)
-            
+            const response = await loginUser(data, 'ROLE_ADMIN')
+            console.log(response)
             if (response.userInfo.role ==='ROLE_ADMIN') {
                 return <Navigate to ='/admin/dashboard'/>
             }
@@ -35,7 +35,7 @@ const LoginPageAdmin = () => {
         return (
             <Typography variant="body2" color="text.secondary" align="center" {...props}>
                 {'Copyright © '}
-                <Link color="inherit" href="http://localhost:3006">
+                <Link color="inherit" href="/">
                     HBQ Career
                 </Link>{' '}
                 {new Date().getFullYear()}
