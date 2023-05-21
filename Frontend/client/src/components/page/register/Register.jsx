@@ -8,6 +8,7 @@ import { useToast } from "../../../contexts/Toast";
 import axios from 'axios'
 import { apiUrl } from "../../../contexts/Constants";
 import { GlobalContext } from '../../../contexts/GlobalContext'
+import { Link } from 'react-router-dom'
 
 const Register = () => {
 
@@ -169,7 +170,7 @@ const Register = () => {
                 <div className="wrap-login100">
                     <div className="login100-more">
                         <div className='frame-logo-login'>
-                            <img className='logo-login' src={logoBHQ} alt="img logo" height="8%" />
+                            <Link to="/home"> <img className='logo-login' src={logoBHQ} alt="img logo" height="8%" /></Link>
                         </div>
                         <div className='picture-login-page'>
                             <img src={pt3Login} alt="img adv" height="680px" style={{ paddingBottom: "28px", margin: "0 13%" }} />
@@ -181,7 +182,7 @@ const Register = () => {
                         </span>
                         <div>
                             <p className="txt1">
-                                Already have an account? <a href="/user/login" className='link-to-login'>Login</a>
+                                Already have an account? <Link to="/user/login" className='link-to-login'>Login</Link>
                             </p>
                         </div>
                         <div >

@@ -3,7 +3,6 @@ import axios from "axios";
 import { AuthReducer } from "../reducers/AuthReducer";
 import { apiUrl, LOCAL_STORAGE_TOKEN_NAME, USER_ROLE } from "./Constants";
 import SetAuthToken from "../utlis/SetAuthToken";
-import { Navigate } from "react-router";
 
 export const AuthContext = createContext();
 
@@ -151,7 +150,7 @@ const AuthContextProvider = ({ children }) => {
         role: null,
       },
     });
-    window.location.href = "home";
+    window.location.href = "/home";
   };
 
   // auth user

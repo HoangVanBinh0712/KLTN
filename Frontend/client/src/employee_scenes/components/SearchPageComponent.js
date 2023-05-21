@@ -347,7 +347,7 @@ const SearchPageComponent = () => {
                         <select className="search-select option-select-page-search" onChange={onChangeSelectIndustry}>
                             <option value="" selected={selectIndustry === ''}>All industries</option>
                             {industries.map((i) => (
-                                <option key={i.id} value={i.id} selected={selectIndustry == i.id}>
+                                <option key={i.id} value={i.id} selected={selectIndustry === i.id}>
                                     {i.name}
                                 </option>
                             ))}
@@ -355,7 +355,7 @@ const SearchPageComponent = () => {
                         <select className="search-select option-select-page-search" onChange={onChangeInputCity}>
                             <option value="" selected={inputCity === ''}>All areas</option>
                             {cities.map((c) => (
-                                <option key={c.id} value={c.id} selected={inputCity == c.id}>
+                                <option key={c.id} value={c.id} selected={inputCity === c.id}>
                                     {c.name}
                                 </option>
                             ))}
@@ -455,7 +455,7 @@ const SearchPageComponent = () => {
                                         alt=""
                                         style={{ borderRadius: '5px', height: '100px', cursor: "pointer" }}
                                         onClick={() => onClickImagePost(postMostView[0].author.id)} />
-                                    <div className="cart-info">
+                                    <div className="cart-info" style={{width: "100%"}}>
                                         <p className="method">{getTypeJob(postMostView[0].method)}</p>
                                         <div className="cart-description">
                                             Công ty: {' '}{postMostView[0].author.name}
@@ -475,7 +475,7 @@ const SearchPageComponent = () => {
                             </div>
                         ) : (<></>)}
                         {postMostView.length > 1 ? (
-                            <div className="cart-v1">
+                            <div className="cart-v1" style={{width: "100%"}}> 
                                 <p className="title" style={{ cursor: "pointer" }}
                                     onClick={() => onClickPostTitle(postMostView[1].id)}>
                                     {postMostView[1].title}</p>
@@ -485,7 +485,7 @@ const SearchPageComponent = () => {
                                         alt=""
                                         style={{ borderRadius: '5px', height: '100px', cursor: "pointer" }}
                                         onClick={() => onClickImagePost(postMostView[1].author.id)} />
-                                    <div className="cart-info">
+                                    <div className="cart-info" style={{width: "100%"}}>
                                         <p className="method">{getTypeJob(postMostView[1].method)}</p>
                                         <div className="cart-description">
                                             Công ty: {' '}{postMostView[1].author.name}
@@ -516,7 +516,7 @@ const SearchPageComponent = () => {
                                         style={{ borderRadius: '5px', height: '100px', cursor: "pointer" }}
                                         onClick={() => onClickImagePost(postMostView[2].id)}
                                     />
-                                    <div className="cart-info">
+                                    <div className="cart-info" style={{width: "100%"}}>
                                         <p className="method">{getTypeJob(postMostView[2].method)}</p>
                                         <div className="cart-description">
                                             Công ty: {' '}{postMostView[2].author.name}

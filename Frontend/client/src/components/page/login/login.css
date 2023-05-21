@@ -186,9 +186,12 @@ iframe {
 
 .login100-form {
   width: 40%;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
   background-color: #ffffff;
-  padding: 60px 55px 55px 55px;
+  justify-content: center;
+  padding-right: 2em;
 }
 
 .login100-form-title {
