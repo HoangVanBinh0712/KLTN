@@ -239,14 +239,10 @@ const EmployerProfile = () => {
                             <div className="avatarTop"></div>
                             <div className="name-viewer-wrapper">
                                 <div className="name">{empInfo.name !== undefined ? empInfo.name : ''}</div>
-                                <div className="company-short-info">
-                                    <div className="wrapped-title">
-                                        <img src={earthIcon} alt='' id="company-icon" />
-                                        <div className="info">https://google.com</div>
-                                    </div>
-                                    <div className="wrapped-title" id="total-empl-wrap">
-                                        <img src={toweIcon} alt='' id="company-icon" />
-                                        <div className="info">50 - 100 employees</div>
+                                <div className="viewer-info">
+                                    <div className="viewer-icon"></div>
+                                    <div className="viewer-count">
+                                        {empInfo.city===null?('Not updated yet!'):(empInfo.city.name)}
                                     </div>
                                 </div>
                             </div>
