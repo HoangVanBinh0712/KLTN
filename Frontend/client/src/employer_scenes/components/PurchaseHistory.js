@@ -89,7 +89,7 @@ const PurchaseHistory = () => {
             <div className="free-space" id="free-space">
                 <div className='overal-group-chose'>
                     <div className='title-filter title-group-overal group-manager-post-title '>
-                        Overal:
+                        Overall:
                     </div>
                     <div className='title-group-overal group-manager-post over-all' onClick={() => { onClickAllService() }}>
                         <div>
