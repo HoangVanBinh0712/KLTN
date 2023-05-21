@@ -328,6 +328,64 @@ const PostContextProvider = ({ children }) => {
     }
 
 
+    // Ntd get statitics
+    const getEmpStatiticsView = async (year) => {
+        try {
+            const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+            if (recentToken !== undefined) {
+                const response = await axios.get(`${apiUrl}/employer/statistic/view-page?year=${year}`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${recentToken}`,
+                    },
+                });
+                return response;
+            } else throw new Error("Unauthorized !");
+        }
+        catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    }
+
+    const getEmpStatiticsSubmit = async (year) => {
+        try {
+            const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+            if (recentToken !== undefined) {
+                const response = await axios.get(`${apiUrl}/employer/statistic/cv-submit?year=${year}`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${recentToken}`,
+                    },
+                });
+                return response;
+            } else throw new Error("Unauthorized !");
+        }
+        catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    }
+
+    const getEmpStatiticsTotalViewPost = async (year) => {
+        try {
+            const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+            if (recentToken !== undefined) {
+                const response = await axios.get(`${apiUrl}/employer/statistic/view-post?year=${year}`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${recentToken}`,
+                    },
+                });
+                return response;
+            } else throw new Error("Unauthorized !");
+        }
+        catch (error) {
+            if (error.response.data) return error.response.data;
+            else return { success: false, message: error.message };
+        }
+    }
+
     //conxtext data
     const authPostData = {
         getPostById, getPostByIndustry,getPostByAnyFilter,
@@ -335,6 +393,7 @@ const PostContextProvider = ({ children }) => {
         followPost, unfollowPost,
         createPost, updatePost,
         getEmpPost,
+        getEmpStatiticsView,getEmpStatiticsSubmit,getEmpStatiticsTotalViewPost, 
         postState,
     };
 

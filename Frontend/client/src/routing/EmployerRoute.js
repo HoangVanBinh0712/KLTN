@@ -18,6 +18,7 @@ import CandidatesProfile from "../employer_scenes/components/CandidatesProfile";
 import PurchaseHistory from "../employer_scenes/components/PurchaseHistory";
 import CurrentService from "../employer_scenes/components/CurrentService";
 import SearchCandidates from "../employer_scenes/components/SearchCandidates";
+import StatiticsPage from "../employer_scenes/components/StatiticsPage";
 import { AuthContext } from "../contexts/AuthContext";
 
 
@@ -59,7 +60,7 @@ const EmployerRoute = ({ ...rest }) => {
           <Route path="purchase-history" element={<PurchaseHistory />} />
           <Route path="current-services" element={<CurrentService />} />
           <Route path="search-candidates" element={<SearchCandidates />} />
-          
+          <Route path="recruitment-statistics" element={<StatiticsPage />} />
         </Route>
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
