@@ -1,10 +1,12 @@
 import threeDotIcon from '../../assets/icons/3dot-icon.png'
 import { useContext, useEffect, useState } from 'react'
 import { PostContext } from '../../contexts/PostContext'
+import { useToast } from '../../contexts/Toast'
 
-const SingleRowPost = ({ post , num }) => {
+const SingleRowPost = ({ post, num, resetStatus }) => {
 
-    const { getCvSubmited } = useContext(PostContext)
+    const { getCvSubmited, upDatePostDeleted } = useContext(PostContext)
+    const { success, warn } = useToast()
 
     const [isOpen, setIsOpen] = useState(false)
     const [numCv, setNumCv] = useState(0)
@@ -41,22 +43,33 @@ const SingleRowPost = ({ post , num }) => {
     const statePost = (status) => {
         let body
         if (status === "ACTIVE")
-            body = (<div className="btn-state-post-acpt"> Accepted</div>)
+            body = (<div className="btn-state-post-acpt" style={{width:'80px', display:'flex', justifyContent:'center', alignItems:'center'}}> Accepted</div>)
         if (status === "WAIT_FOR_ACCEPT")
-            body = (<div className="btn-state-post-pending"> Pending</div>)
+            body = (<div className="btn-state-post-pending" style={{width:'80px', display:'flex', justifyContent:'center', alignItems:'center'}}> Pending</div>)
+        if (status === "DELETED")
+            body = (<div className="btn-state-post-denied" style={{width:'80px', display:'flex', justifyContent:'center', alignItems:'center', border:'1px solid red', color:'red'}}> Deleted</div>)
         if (status === "DELETED_BY_ADMIN")
-            body = (<div className="btn-state-post-denied"> Unaccept</div>)
+            body = (<div className="btn-state-post-denied" style={{width:'80px', display:'flex', justifyContent:'center', alignItems:'center'}}> Unaccept</div>)
         return body
     }
 
-    const viewSubmitClick = ()=>{
+    const viewSubmitClick = () => {
         window.location.href = `/employer/account/post-submitted/${post.id}`
+    }
+
+    const onClickDeletePost = async () => {
+        const res = await upDatePostDeleted(post.id)
+        if (res.success) {
+            resetStatus()
+            success('Deleted successfully!')
+        }
+        else warn(res.message)
     }
 
     return (
         <div className="row-data-listpost">
             <div style={{ width: "25px", fontFamily: "Roboto-Light" }}>
-                {num+1}.
+                {num + 1}.
             </div>
             <div style={{ width: "30%", fontFamily: "Roboto-Light" }} className="limit-title-post">
                 {post.title}
@@ -84,9 +97,9 @@ const SingleRowPost = ({ post , num }) => {
                     <div style={{ position: 'absolute', width: '100%', zIndex: "5" }}>
                         <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={viewPost}>
                             View Post</div>
-                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={()=>viewSubmitClick()}> 
+                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={() => viewSubmitClick()}>
                             Submited</div>
-                        <div className="chose-active chose-delete" style={{ marginLeft: "-15px" }}> 
+                        <div className="chose-active chose-delete" style={{ marginLeft: "-15px" }} onClick={() => onClickDeletePost()}>
                             Delete</div>
                     </div>
                 </>)}
