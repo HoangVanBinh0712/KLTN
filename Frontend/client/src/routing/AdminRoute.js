@@ -37,7 +37,7 @@ export const AdminRoute = ({ ...rest }) => {
     let body;
 
     if (currentUrl === "/") {
-        return <Navigate to="/user/home" />;
+        return <Navigate to="/home" />;
     }
     else if (currentUrl === "/admin") {
         return <Navigate to="/admin/login" />;

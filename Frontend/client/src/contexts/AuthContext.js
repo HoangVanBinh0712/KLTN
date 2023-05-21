@@ -3,7 +3,6 @@ import axios from "axios";
 import { AuthReducer } from "../reducers/AuthReducer";
 import { apiUrl, LOCAL_STORAGE_TOKEN_NAME, USER_ROLE } from "./Constants";
 import SetAuthToken from "../utlis/SetAuthToken";
-import { Navigate } from "react-router";
 
 export const AuthContext = createContext();
 
@@ -151,7 +150,7 @@ const AuthContextProvider = ({ children }) => {
         role: null,
       },
     });
-    window.location.href = "home";
+    window.location.href = "/user/login";
   };
 
   // auth user
@@ -373,9 +372,10 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const addResume = async (info, file) => {
+    console.log(file);
     try {
       var bodyFormData = new FormData();
-      bodyFormData.append("name", JSON.stringify(info));
+      bodyFormData.append("info", JSON.stringify(info));
       bodyFormData.append("CV", file);
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
@@ -476,9 +476,10 @@ const AuthContextProvider = ({ children }) => {
 
   const deleteSubmitedResume = async (info) => {
     try {
+      console.log(info);
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.delete(`${apiUrl}/user/submitcv`, info, {
+        const response = await axios.delete(`${apiUrl}/user/submitcv?postId=${info.postId}&mediaId=${info.mediaId}`,{
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,

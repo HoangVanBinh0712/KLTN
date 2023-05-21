@@ -50,15 +50,19 @@ const PostDetails = () => {
 
     const checkSubmit = async () => {
         const res = await checkSubmitedResume(id)
-        if (res.data !== null) return true
-        return false
+        if (res.data !== null) {
+            setSelectValue(res.data.mediaId)
+            setIsSubmited(true)
+        }
+        setIsSubmited(false)
+
     }
 
     useEffect(() => {
         getDataPost()
         if (isAuthenticated && role === "ROLE_USER") {
             getAllResume()
-            setIsSubmited(checkSubmit())
+            checkSubmit()
         }
 
     }, [user])
@@ -267,6 +271,7 @@ const PostDetails = () => {
             const res = await deleteSubmitedResume(info)
             if (res.success) {
                 success("Unapplied successfully!")
+                setIsSubmited(false)
             }
             else warn(res.message)
         }

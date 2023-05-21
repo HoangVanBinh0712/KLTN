@@ -249,7 +249,7 @@ const EmployerProfile = () => {
                         </div>
                         {isAuthenticated && role === "ROLE_USER" ? (<>
                             {isFollow ? (
-                                <div className="follow-company" onClick={() => onClicUnfollow(id)}>Unfollow company</div>
+                                <div className="follow-company" style={{backgroundColor: "coral"}} onClick={() => onClicUnfollow(id)}>Unfollow company</div>
                             ) : (
                                 <div className="follow-company" onClick={() => onClicFollow(id)}>Follow company</div>
                             )}

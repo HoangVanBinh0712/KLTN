@@ -170,6 +170,7 @@
     padding: 10px 1.4em 10px 1.4em;
     background-color: #0c62ad;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 #total-empl-wrap{
