@@ -331,7 +331,7 @@ const AddPostComponent = () => {
             </div>
             <div className="right" style={{ width: '48%' }}>
               <div className="text-area-group" style={{ marginBottom: '10px' }}>
-                <div className="label">Benifit <p style={{ color: '#ff453a' }}>{' '}{mess}</p></div>
+                <div className="label">Benefit <p style={{ color: '#ff453a' }}>{' '}{mess}</p></div>
                 <ReactQuill
                   value={benifit}
                   onChange={handleBenifitChange}
