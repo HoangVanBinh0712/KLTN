@@ -168,12 +168,9 @@ const EmployeeProfile = () => {
                         <div className="left-side-content">
                             <div className="info-area">
                                 <p className="area-title">Introduction</p>
-                                <div className="area-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                    Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                                <div className="area-content" dangerouslySetInnerHTML={{ __html: data.user.description }} >
+                                    
                                 </div>
-
                                 <div className="edit-button" style={{ display: 'none' }}></div>
                             </div>
                             <div id="employer-seen" className="info-area">
