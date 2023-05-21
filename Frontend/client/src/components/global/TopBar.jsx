@@ -218,7 +218,7 @@ const TopBar = () => {
                                     <a href='/employer/account/job-posting' className='color-a-dropdownbox'>My Job Posting</a>
                                 </div>
                                 <div className='drop-text search-cv-chose'>
-                                    <a href=' ' className='color-a-dropdownbox'>Looking for Candidates</a>
+                                    <a href='/employer/account/search-candidates' className='color-a-dropdownbox'>Looking for Candidates</a>
                                 </div>
                                 <div className='drop-text brand-promotion-chose'>
                                     <a href=' ' className='color-a-dropdownbox'>Brand Promotion</a>

@@ -137,7 +137,7 @@ const SearchCandidates = () => {
         setCurrentPage(page)
     }
 
-    const [isOpenProfile, setIsOpenProfile] = useState(true)
+    const [isOpenProfile, setIsOpenProfile] = useState(false)
 
     const initCandidate = {
         url: "https://res.cloudinary.com/dh0hs3o2a/image/upload/v1673146190/qvi636rtvl7jlfhjnu5f.pdf",
