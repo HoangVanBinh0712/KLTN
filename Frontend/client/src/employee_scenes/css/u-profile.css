@@ -160,9 +160,9 @@
 
 .viewer-icon {
     margin-right: 5px;
-    width: 1.6em;
-    height: 1.6em;
-    background-image: url('../../assets/icons/eye-icon.png');
+    width: 1.4em;
+    height: 1.4em;
+    background-image: url('../../assets/icons/location-ping.png');
     background-size: cover;
 }
 
@@ -261,6 +261,8 @@
 
 .achive-name{
     margin-left: 15px;
+    cursor: pointer;
+    color: #0c62ad;
 }
 
 #achive-more{

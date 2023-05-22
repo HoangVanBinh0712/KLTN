@@ -31,7 +31,6 @@ const StatiticsPage = () => {
 
     const getStaSubmitData = async() => {
         const res = await getEmpStatiticsSubmit(currentYear)
-        console.log(res.data)
         if(res.status ===200){
             setStatitcsSubmitData(res.data)
         }
@@ -39,7 +38,6 @@ const StatiticsPage = () => {
 
     const getStaViewPageData = async() => {
         const res = await  getEmpStatiticsView(currentYear)
-        console.log(res.data)
         if(res.status ===200){
             setStatitcsViewPageData(res.data)
         }
@@ -47,7 +45,6 @@ const StatiticsPage = () => {
 
     const getStaPostData = async() => {
         const res = await  getEmpStatiticsTotalViewPost(currentYear)
-        console.log(res.data)
         if(res.status ===200){
             setStatitcsPostData(res.data)
         } 

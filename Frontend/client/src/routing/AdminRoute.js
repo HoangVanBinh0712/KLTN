@@ -15,6 +15,9 @@ import Reports from "../admin_scenes/Reports";
 import Form from "../admin_scenes/Form";
 import Line from "../admin_scenes/Line";
 import Pie from "../admin_scenes/Pie";
+import PostStatitics from "../admin_scenes/PostStatitics";
+import UserStatitics from "../admin_scenes/UserStatitics";
+import RevenueStatitics from "../admin_scenes/RevenueStatitics";
 import PageNotFound from "../components/page/notfound/PageNotFound";
 import { webUrlActivity } from "../contexts/Constants";
 import LoginPageAdmin from '../admin_scenes/LoginPageAdmin';
@@ -80,6 +83,9 @@ export const AdminRoute = ({ ...rest }) => {
                                     <Route path="/admin/line" element={<Line />} />
                                     <Route path="/admin/industries" element={<Industries />} />
                                     <Route path="/admin/reports" element={<Reports />} />
+                                    <Route path="/admin/post-statitics" element={<PostStatitics />} />
+                                    <Route path="/admin/user-statitics" element={<UserStatitics />} />
+                                    <Route path="/admin/revenue-statitics" element={<RevenueStatitics />} />
 
                                 </Routes>
                             </main>

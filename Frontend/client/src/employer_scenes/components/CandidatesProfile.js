@@ -143,7 +143,7 @@ const CandidatesProfile = () => {
                             <p onClick={()=>onClickClearFilter()}>Clear selection </p>
                         </div>
                     </div>
-                    <div className='ex-button' style={{ width: "16%", height: "50px" }}>
+                    <div className='ex-button' style={{ width: "16%", height: "50px", display:'none' }}>
                         <div style={{ marginRight: "20px", justifyContent: "center", display: "flex", width: "100%" }}>Export list</div>
                     </div>
                 </div>

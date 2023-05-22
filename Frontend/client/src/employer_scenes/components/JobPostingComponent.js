@@ -135,6 +135,11 @@ const JobPostingComponent = () => {
         })
     }
 
+    const deletePost = ()=>{
+        const keyword = createSearchPararam(filter)
+        getallPost(keyword)
+    }
+
     return (
         <div style={{ width: "80%" }}>
             <div className="component-title">
@@ -143,7 +148,7 @@ const JobPostingComponent = () => {
             <div className="free-space" id="free-space">
                 <div className='overal-group-chose'>
                     <div className='title-group-overal group-manager-post-title'>
-                        Overal:
+                        Overall:
                     </div>
                     <div className='title-group-overal group-manager-post' onClick={() => { onClickAllPost() }}>
                         <div>
@@ -212,7 +217,7 @@ const JobPostingComponent = () => {
                             <p onClick={()=>onClickClearFilter()}>Clear selection </p>
                         </div>
                     </div>
-                    <div className='ex-button' style={{ width: "16%", height: "50px" }}>
+                    <div className='ex-button' style={{ width: "16%", height: "50px", display:'none' }}>
                         <div style={{ marginRight: "20px", justifyContent: "center", display: "flex", width: "100%" }}>Export list</div>
                     </div>
                 </div>
@@ -246,7 +251,7 @@ const JobPostingComponent = () => {
                     {postDisplay.length === 0 ? (
                         <div style={{ display: "flex", justifyContent: "center" }}> You don't have any posts yet</div>)
                         : (allPost[currentPage].map((p, id) => (
-                            <SingleRowPost post={p} key={id} num={id}/>))
+                            <SingleRowPost post={p} key={id} num={id} resetStatus={deletePost}/>))
                         )
                     }
 
