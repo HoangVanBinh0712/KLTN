@@ -20,7 +20,6 @@ body {
 
 .topbar-home {
     display: flex;
-    height: 70px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     align-items: center;
     box-sizing: border-box;
@@ -402,6 +401,7 @@ body {
 .logo-top-emp {
     width: 20%;
     height: auto;
+    padding: 1em;
 }
 
 .footer-homepage {
