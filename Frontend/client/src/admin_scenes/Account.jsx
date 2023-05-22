@@ -1,16 +1,75 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
+import SearchIcon from "@mui/icons-material/Search";
+import InputBase from "@mui/material/InputBase";
 import { mockDataTeam } from "../data/mockData";
 import Header from "../components/charts/Header";
 import { DeleteOutline } from "@mui/icons-material";
+import { useContext, useEffect, useState } from 'react'
+import { AuthContext } from "../contexts/AuthContext";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const { getListAccount } = useContext(AuthContext)
+
+  const [keySearch, setKeySearch] = useState('')
+  const [inputValue, setInputValue] = useState('')
+  const [listAccount, setListAccount] = useState([])
+
+
+  const getPostDate = (date) => {
+    const myDate = new Date(date);
+    const day = ("0" + myDate.getDate()).slice(-2);
+    const month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+    const year = myDate.getFullYear();
+    const min = String(myDate.getMinutes()).padStart(2, '0');
+    const hour = String(myDate.getHours()).padStart(2, '0');
+
+    return (`${min}:${hour} ${day}/${month}/${year}`)
+  }
+
+
+  const formatData = (arr) => {
+    let newData = [];
+    arr.map((a) =>
+      newData.push({
+        id: a.id,
+        name: a.name,
+        email: a.email,
+        createDate: a.createDate === null ? 'Updating' : getPostDate(a.createDate),
+        dateCreated: a.name,
+        role: a.role === "ROLE_USER" ? "Job seeker" : "Employer",
+        status: a.active,
+      }))
+    return newData;
+  };
+
+  const getAccount = async (key) => {
+    const res = await getListAccount(key)
+    if (res.success) {
+      setListAccount(res.data)
+    }
+  }
+
+  useEffect(() => {
+    const key = keySearch.length > 0 ? `?email=${keySearch}` : ''
+    getAccount(key)
+  }, [keySearch])
+
+
+  const onChangeInputSearch = (event) => setInputValue(event.target.value)
+  const onClickSearch = () => setKeySearch(inputValue)
+
+
+  // col title table
   const columns = [
-    {field: "id",
-    headerName: "ID"},
+    {
+      field: "id",
+      headerName: "ID"
+    },
     {
       field: "name",
       headerName: "Name",
@@ -26,8 +85,8 @@ const Team = () => {
       flex: 1,
     },
     {
-      field: "username",
-      headerName: "Username",
+      field: "createDate",
+      headerName: "Date created",
       flex: 1,
     },
     {
@@ -52,25 +111,17 @@ const Team = () => {
             p="5px"
             display="flex"
             justifyContent="center"
-            backgroundColor={
-              status === "active"
-                ? colors.greenAccent[700]
-                : status === "unactive"
-                ? colors.redAccent[700]
-                : colors.greenAccent[700]
-            }
+            backgroundColor={status ? colors.greenAccent[700] : colors.redAccent[700]}
             borderRadius="4px"
           >
-            {status === "UNACTIVE"}
-            {status === "ACTIVE"}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {status}
+            <Typography color={colors.grey[100]} sx={{ ml: "5px" }} style={{ cursor: 'pointer' }}>
+              {status ? 'Active' : 'Unactive'}
             </Typography>
           </Box>
         );
       },
     },
-    {
+    /* {
       field: "action",
       headerName: "Action",
       width: 50,
@@ -79,19 +130,33 @@ const Team = () => {
           <>
             <DeleteOutline
               className="userListDelete"
-              //onClick={() => handleDelete(params.row.id)}
+            //onClick={() => handleDelete(params.row.id)}
             />
           </>
         );
       },
-    }
+    } */
   ];
 
   return (
-    <Box m="20px">
-      <Header title="USER ACCOUNT" subtitle="User Account Management" />
+    <Box m="0 20px">
+      <div style={{ display: 'flex', justifyContent: 'space-between', height: '80px' }}>
+        <Header title="USER ACCOUNT" subtitle="User Account Management" />
+        <Box
+          display="flex"
+          backgroundColor={colors.primary[400]}
+          borderRadius="3px"
+          height='50px'
+          width='50%'
+        >
+          <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search by user email" onChange={onChangeInputSearch} />
+          <IconButton type="button" sx={{ p: 2 }} onClick={() => onClickSearch()}>
+            <SearchIcon />
+          </IconButton>
+        </Box>
+      </div>
       <Box
-        m="40px 0 0 0"
+        m="10px 0 0 0"
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
@@ -119,7 +184,7 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid checkboxSelection rows={formatData(listAccount)} columns={columns} />
       </Box>
     </Box>
   );

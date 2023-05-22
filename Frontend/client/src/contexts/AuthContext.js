@@ -747,6 +747,137 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+
+  // Admin
+  const getListAccount = async (keyword) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/admin/manage/account${keyword}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const getListPostAdmin = async (keyword) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/admin/post${keyword}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  // statitics admin
+  const getUserStaAdmin = async (year) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/admin/statistic/user?year=${year}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const getRevenueStaAdmin = async (year) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/admin/statistic/revenue?year=${year}&status=PAID`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const getPostStaAdmin = async (year) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/admin/statistic/post?year=${year}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const getReportStaAdmin = async (year) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/admin/statistic/report?year=${year}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  // active or unactive user
+  const setUserActiveByAdmin = async (uId, type) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.put(`${apiUrl}/admin/statistic/report?userId=1&active=true`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+  
+
   //conxtext data
   const authContextData = {
     loginUser,
@@ -783,6 +914,10 @@ const AuthContextProvider = ({ children }) => {
     getEmployerService,
     getUserProfileByAnyFilter,
     reportPost,
+
+    getListAccount,getListPostAdmin, 
+    getUserStaAdmin, getRevenueStaAdmin, getPostStaAdmin, getReportStaAdmin,
+    setUserActiveByAdmin,
     showToast,
     setShowToast,
     authState,

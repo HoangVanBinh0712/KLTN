@@ -117,6 +117,7 @@ const Sidebar = () => {
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
+              color='#fff'
               title="Dashboard"
               to="/admin/dashboard"
               icon={<HomeOutlinedIcon />}
@@ -189,32 +190,26 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="User Statistics"
-              to="/admin/line"
+              to="/admin/user-statitics"
               icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Post Statistics"
-              to="/admin/line"
+              to="/admin/post-statitics"
               icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            {/* <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
+            <Item
+              title="Revenue Statistics"
+              to="/admin/revenue-statitics"
+              icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            /> */}
-            {/* <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            /> */}
+            />
+
           </Box>
         </Menu>
       </ProSidebar>

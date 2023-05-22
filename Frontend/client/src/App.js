@@ -31,7 +31,7 @@ function App() {
 
   if (currentUrl.includes("/admin")) {
     body = (
-      <AdminRoute path="/admin/dashboard /admin/account /admin/post /admin/services /admin/form /admin/bar /admin/pie /admin/line /admin/industries /admin/reports /admin/form" />
+      <AdminRoute path="/admin/dashboard /admin/account /admin/post /admin/services /admin/form /admin/bar /admin/pie /admin/line /admin/industries /admin/reports /admin/form  /admin/user-statitics /admin/post-statitics /admin/revenue-statitics " />
     );
   } else if (currentUrl.includes("/employer"))
     body = <EmployerRoute path="/employer/login" />;
