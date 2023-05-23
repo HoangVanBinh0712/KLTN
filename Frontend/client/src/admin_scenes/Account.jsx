@@ -8,12 +8,14 @@ import Header from "../components/charts/Header";
 import { DeleteOutline } from "@mui/icons-material";
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from "../contexts/AuthContext";
+import { useToast } from "../contexts/Toast";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const { getListAccount } = useContext(AuthContext)
+  const { getListAccount, setUserActiveByAdmin } = useContext(AuthContext)
+  const { success, warn } = useToast()
 
   const [keySearch, setKeySearch] = useState('')
   const [inputValue, setInputValue] = useState('')
@@ -40,7 +42,7 @@ const Team = () => {
         name: a.name,
         email: a.email,
         createDate: a.createDate === null ? 'Updating' : getPostDate(a.createDate),
-        dateCreated: a.name,
+        emailConfirm: a.emailConfirm,
         role: a.role === "ROLE_USER" ? "Job seeker" : "Employer",
         status: a.active,
       }))
@@ -63,6 +65,19 @@ const Team = () => {
   const onChangeInputSearch = (event) => setInputValue(event.target.value)
   const onClickSearch = () => setKeySearch(inputValue)
 
+  const onChangeStateAccount = async (uId, type) => {
+    const status = !type ? "Unactive" : 'Active'
+    const confirm = window.confirm(`Are you sure you want to change user status to ${status}?`);
+    if (confirm) {
+      const res = await setUserActiveByAdmin(uId, type)
+      if (res.success) {
+        success(`Changed account status to ${status} successfully!`)
+        const key = keySearch.length > 0 ? `?email=${keySearch}` : ''
+        getAccount(key)
+      }
+      else warn(res.message)
+    }
+  }
 
   // col title table
   const columns = [
@@ -77,33 +92,38 @@ const Team = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "dateCreated",
-      headerName: "Date Created",
+      field: "email",
+      headerName: "Email",
+      flex: 1,
+    },
+    {
+      field: "emailConfirm",
+      headerName: "Email verification",
+      type: "date",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+    },
+    {
+      field: "createDate",
+      headerName: "Date created",
       type: "date",
       headerAlign: "left",
       align: "left",
       flex: 1,
     },
     {
-      field: "createDate",
-      headerName: "Date created",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
       field: "role",
       headerName: "Role",
+      headerAlign: "center",
       width: 100,
     },
     {
       field: "status",
       headerName: "Status",
+      headerAlign: "center",
       width: 100,
-      renderCell: ({ row: { status } }) => {
+      renderCell: ({ row: { status, id } }) => {
         return (
           <Box
             width="100%"
@@ -114,7 +134,8 @@ const Team = () => {
             backgroundColor={status ? colors.greenAccent[700] : colors.redAccent[700]}
             borderRadius="4px"
           >
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }} style={{ cursor: 'pointer' }}>
+            <Typography color={colors.grey[100]} sx={{ ml: "5px" }} style={{ cursor: 'pointer' }}
+              onClick={() => onChangeStateAccount(id, !status)}>
               {status ? 'Active' : 'Unactive'}
             </Typography>
           </Box>
@@ -184,7 +205,7 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={formatData(listAccount)} columns={columns} />
+        <DataGrid /* checkboxSelection */ disableRowSelectionOnClick rows={formatData(listAccount)} columns={columns} />
       </Box>
     </Box>
   );
