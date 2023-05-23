@@ -78,6 +78,8 @@ body {
     border: 1px solid gray;
     min-height: 200px;
     background-color: white;
+    color: black;
+    font-size: 0.8em;
 }
 
 .float-items .square-message .messages::-webkit-scrollbar {

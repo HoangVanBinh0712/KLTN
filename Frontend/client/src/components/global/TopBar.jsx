@@ -7,6 +7,7 @@ import logoBHQ from "../../assets/img/logo.png"
 import messIcon from '../../assets/icons/mess-icon.png'
 import bellIcon from '../../assets/icons/bell-grey-icon.png'
 import personIcon from "../../assets/img/personal.png"
+import ChatBox from './ChatBox';
 
 const TopBar = () => {
 

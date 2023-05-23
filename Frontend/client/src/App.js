@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Topbar from "./admin_scenes/global/Topbar";
 import Sidebar from "./admin_scenes/global/Sidebar";
@@ -15,14 +15,16 @@ import { ColorModeContext, useMode } from "./theme";
 import AdminRoute from "./routing/AdminRoute";
 import EmployeeRoute from "./routing/EmployeeRoute";
 import EmployerRoute from "./routing/EmployerRoute";
-import AuthContextProvider from "./contexts/AuthContext";
+import AuthContextProvider, { AuthContext } from "./contexts/AuthContext";
 import { ToastProvider } from './contexts/ToastProvider';
 import GlobalContextProvider from "./contexts/GlobalContext";
 import PostContextProvider from "./contexts/PostContext";
+import ChatBox from "./components/global/ChatBox";
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
+  const { authState: { user, authloading } } = useContext(AuthContext)
 
   const location = useLocation();
   const currentUrl = location.pathname;
@@ -41,15 +43,14 @@ function App() {
 
   return (
     <>
-      <AuthContextProvider>
         <PostContextProvider>
           <ToastProvider>
             <GlobalContextProvider>
               {body}
+              {/* {!authloading && user && <ChatBox />} */}
             </GlobalContextProvider>
           </ToastProvider>
         </PostContextProvider>
-      </AuthContextProvider>
     </>
   );
 }

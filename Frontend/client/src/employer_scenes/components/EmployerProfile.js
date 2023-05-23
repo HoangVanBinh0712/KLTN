@@ -242,7 +242,7 @@ const EmployerProfile = () => {
                                 <div className="viewer-info">
                                     <div className="viewer-icon"></div>
                                     <div className="viewer-count">
-                                        {empInfo.city===null?('Not updated yet!'):(empInfo.city.name)}
+                                        {empInfo.city===null?('Not updated yet!'):(empInfo.city?.name)}
                                     </div>
                                 </div>
                             </div>
