@@ -66,7 +66,7 @@ const TopBar = () => {
                         <Link className="option-a-menu" to="/user/account">Profile & CV</Link>
                     </div>
                     <div className="option-menu">
-                        <Link className="option-a-menu" to="#_">Company</Link>
+                        <Link className="option-a-menu" to="/highlight-company">Highligh Company</Link>
                     </div>
                     {/* <div className="option-menu">
                         <Link className="option-a-menu" to="#_" >Tools</Link>
@@ -97,7 +97,7 @@ const TopBar = () => {
                         <Link className="option-a-menu" to="/user/account">Profile & CV</Link>
                     </div>
                     <div className="option-menu">
-                        <Link className="option-a-menu" to="#_">Company</Link>
+                        <Link className="option-a-menu" to="/highlight-company">Highligh Company</Link>
                     </div>
                     {/* <div className="option-menu" ref={dropTooldownRef}>
                         <p className="option-a-menu" href="#_" onClick={toggleDropdownTool} style={{ cursor: 'pointer' }}>Tools</p>

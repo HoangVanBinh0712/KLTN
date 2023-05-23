@@ -11,13 +11,17 @@ import checkBoxIcon from "../../assets/icons/check-box-icon.png";
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import { apiUrl } from "../../contexts/Constants";
+import { LOCAL_STORAGE_TOKEN_NAME, apiUrl } from "../../contexts/Constants";
+import swal from "sweetalert";
 
 const ServicePage = () => {
   const [services, setServices] = useState([]);
   const [showMadal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
-
+  const [amount, setAmount] = useState(1);
+  const onAmountChange = (e) => {
+    setAmount(e.target.value);
+  };
   useEffect(() => {
     async function getData() {
       try {
@@ -28,10 +32,38 @@ const ServicePage = () => {
     getData();
   }, []);
 
+  const purchaseClick = async () => {
+    try {
+      const response = await axios.post(`${apiUrl}/pay?serviceId=${selectedService.id}&duration=${amount}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage[LOCAL_STORAGE_TOKEN_NAME]}`,
+        },
+      });
+      if (response.data.success) window.open(response.data.message);
+      else {
+        swal({
+          title: "Information",
+          text: response.data.message,
+          icon: "error",
+          dangerMode: true,
+        });
+      }
+      setShowModal(false);
+      setSelectedService(null);
+      setAmount(1);
+    } catch (e) {
+      swal({
+        title: "Information",
+        text: "Some thing went wrong ! Try again",
+        icon: "error",
+        dangerMode: true,
+      });
+    }
+  };
+
   return (
     <>
       <TopBar />
-
 
       <div style={{ width: "100%" }}>
         <img id="service-banner" src={serviceBaner} alt="" style={{ width: "100%", height: "auto" }} />
@@ -46,41 +78,45 @@ const ServicePage = () => {
         </div>
 
         <div id="service_list">
-
-        {showMadal && (
-        <div style={{ backgroundColor: "gray", position: "absolute", left: "10%", padding: "2em" ,width: "80%"}}>
-          <div style={{ width: "100%", margin: "auto" }}>
-            <div className="component-title">
-              <span>Buy/Extend your service</span>
-            </div>
-            <div className="free-space" id="free-space">
-              <div className="content-wrapper">
-                <div>{selectedService.name}</div>
-                <div className="input-wrapper ">
-                  <div className="label">Number of months: </div>
-                  <input className="coler-placeholder" type="text" name="amount"></input>
+          {showMadal && (
+            <div className="modal-wrapper">
+              <div className="free-space" id="free-space">
+                <div className="modal-title">
+                  <span>Buy/Extend your service</span>
                 </div>
-
-                <div className="group-buttons">
-                  <div
-                    class="button cancel"
-                    onClick={() => {
-                      console.log("here");
-                      setShowModal(false);
-                    }}
-                  >
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                    Cancel
+                <div className="content-wrapper">
+                  <div className="modal-label">Service: {selectedService.name}</div>
+                  <div className="modal-label">
+                    Price: {selectedService.price} {selectedService.currency}/Months
                   </div>
-                  <div className="button">
-                    <i className="fa fa-floppy-o" aria-hidden="true"></i>Confirm
+                  <div className="modal-label" style={{ color: "red" }}>
+                    Total: {selectedService.price * amount} {selectedService.currency}
+                  </div>
+                  <div className="input-wrapper">
+                    <div className="label">Number of months: </div>
+                    <input className="coler-placeholder" type="number" min={1} name="amount" value={amount} onChange={onAmountChange}></input>
+                  </div>
+
+                  <div className="group-buttons">
+                    <div
+                      class="button cancel"
+                      onClick={() => {
+                        setShowModal(false);
+                        setAmount(1);
+                        setSelectedService(null);
+                      }}
+                    >
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                      Cancel
+                    </div>
+                    <div className="button" onClick={purchaseClick}>
+                      <i className="fa fa-check" aria-hidden="true"></i>Purchase
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
           {services.map((s, index) => (
             <>
               <div class="service_item_wrapper" key={index}>
@@ -137,8 +173,6 @@ const ServicePage = () => {
               </div>
             </>
           ))}
-
-
         </div>
       </div>
       <Footer />
