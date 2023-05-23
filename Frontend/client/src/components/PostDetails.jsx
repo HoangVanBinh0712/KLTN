@@ -501,10 +501,10 @@ const PostDetails = () => {
 
                                         {checkFollow(id, postFollow) ? (
                                             <div className="button btn-save">
-                                                <i className="fa fa-heart" aria-hidden="true"></i>
+                                                <i className="fa fa-heart" aria-hidden="true" onClick={() => savePostClick(id)}></i>
                                                 UNSAVE
                                             </div>) : (<div className="button btn-save">
-                                                <i className="fa fa-heart-o" aria-hidden="true"></i>
+                                                <i className="fa fa-heart-o" aria-hidden="true" onClick={() => savePostClick(id)}></i>
                                                 SAVE
                                             </div>)
                                         }

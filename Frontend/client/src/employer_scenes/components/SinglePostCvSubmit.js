@@ -38,7 +38,7 @@ const SinglePostCvSubmit = ({ post, num }) => {
         window.open(`/employer/post/${post.id}`, "_blank");
     }
 
-    const viewSubmitClick = ()=>{
+    const viewSubmitClick = () => {
         window.location.href = `/employer/account/post-submitted/${post.id}`
     }
 
@@ -50,6 +50,8 @@ const SinglePostCvSubmit = ({ post, num }) => {
             body = (<div className="btn-state-post-pending"> Pending</div>)
         if (status === "DELETED_BY_ADMIN")
             body = (<div className="btn-state-post-denied"> Unaccept</div>)
+        if (status === "DELETED")
+            body = (<div className="btn-state-post-denied"> Deleted</div>)
         return body
     }
     return (
@@ -83,7 +85,7 @@ const SinglePostCvSubmit = ({ post, num }) => {
                     <div style={{ position: 'absolute', width: '100%', zIndex: "5" }}>
                         <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={viewPost}>
                             View Post</div>
-                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={()=>viewSubmitClick()}>
+                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={() => viewSubmitClick()}>
                             Submited</div>
                     </div>
                 </>)}

@@ -6,7 +6,6 @@ import ListPostsHomepage from './components/ListPostsHomepage';
 import TopEmployer from './components/TopEmployer';
 import { PostContext } from '../contexts/PostContext';
 import { GlobalContext } from '../contexts/GlobalContext';
-import ChatBox from '../components/global/ChatBox';
 import { AuthContext } from '../contexts/AuthContext';
 
 const HomePage = () => {
@@ -17,7 +16,6 @@ const HomePage = () => {
 
   return (
     <>
-
       <TopBar />
       <Banner />
       <ListPostsHomepage
