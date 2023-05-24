@@ -24,6 +24,7 @@ import SearchPageComponent from "../employee_scenes/components/SearchPageCompone
 import PageCustomerServices from "../components/PageCustomerServices";
 import { AuthContext } from "../contexts/AuthContext";
 import HighLightCompany from "../components/global/HighlightCompany";
+import ForgotPassword from "../components/page/login/ForgotPassword";
 
 const EmployeeRoute = ({ ...rest }) => {
   const {
@@ -73,6 +74,7 @@ const EmployeeRoute = ({ ...rest }) => {
     body = (
       <Routes>
         <Route path="/user/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login/:token" element={<LoginGG />} />
         <Route path="/user/register" element={<Register />} />
         <Route path="/home" element={<HomePage />} />

@@ -450,7 +450,7 @@ i.fa-eye {
 }
 
 .lb-name {
-
+  font-weight: bold;
   font-size: 1em;
   color: #207198;
   display: block;
