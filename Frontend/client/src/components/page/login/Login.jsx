@@ -187,7 +187,7 @@ const Login = () => {
                 </button>
               </div>
               <div>
-                <Link to="#_" className="txt3">
+                <Link to="/forgot-password" className="txt3">
                   Forgot a password?
                 </Link>
               </div>
