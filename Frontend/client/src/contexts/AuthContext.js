@@ -877,11 +877,11 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const getServiceByAdmin = async (type) => {
+  const getServiceByAdmin = async (keyword) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.get(`${apiUrl}/admin/service?active=${type}`, {
+        const response = await axios.get(`${apiUrl}/admin/service${keyword}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -899,7 +899,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const responsePost = await axios.put(`${apiUrl}/admin/post/unaccept/${postId}`, {
+        const responsePost = await axios.put(`${apiUrl}/admin/post/accept/${postId}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -917,7 +917,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const responsePost = await axios.put(`${apiUrl}/admin/post/accept/${postId}`, {
+        const responsePost = await axios.put(`${apiUrl}/admin/post/unaccept/${postId}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,

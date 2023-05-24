@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AuthContext } from "../contexts/AuthContext";
+import swal from "sweetalert";
 
 const LoginPageAdmin = () => {
 
@@ -27,7 +28,12 @@ const LoginPageAdmin = () => {
                 return <Navigate to ='/admin/dashboard'/>
             }
         } catch (error) {
-            console.log(error);
+            swal({
+                title: "Error",
+                icon: "warning",
+                text: error,
+                dangerMode: true,
+              });
         }
     };
 

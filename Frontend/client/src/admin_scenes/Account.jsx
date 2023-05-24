@@ -3,19 +3,16 @@ import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
-import { mockDataTeam } from "../data/mockData";
 import Header from "../components/charts/Header";
-import { DeleteOutline } from "@mui/icons-material";
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from "../contexts/AuthContext";
-import { useToast } from "../contexts/Toast";
+import swal from "sweetalert";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const { getListAccount, setUserActiveByAdmin } = useContext(AuthContext)
-  const { success, warn } = useToast()
 
   const [keySearch, setKeySearch] = useState('')
   const [inputValue, setInputValue] = useState('')
@@ -71,11 +68,21 @@ const Team = () => {
     if (confirm) {
       const res = await setUserActiveByAdmin(uId, type)
       if (res.success) {
-        success(`Changed account status to ${status} successfully!`)
+        swal({
+          title: "Success",
+          icon: "success",
+          text: `Changed account status to ${status} successfully!`,
+          dangerMode: false,
+        })
         const key = keySearch.length > 0 ? `?email=${keySearch}` : ''
         getAccount(key)
       }
-      else warn(res.message)
+      else swal({
+        title: "Error",
+        icon: "warning",
+        text: res.message,
+        dangerMode: true,
+      })
     }
   }
 

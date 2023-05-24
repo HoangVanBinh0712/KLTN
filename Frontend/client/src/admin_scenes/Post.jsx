@@ -7,19 +7,17 @@ import InputBase from "@mui/material/InputBase";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import Header from "../components/charts/Header";
-import { DeleteOutline } from "@mui/icons-material";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { useToast } from "../contexts/Toast";
 import './css/form-chang-statepost.css'
 import addIcon from '../assets/icons/add-icon.png'
+import swal from "sweetalert";
 
 const Post = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const { ucacceptPostByAdmin, acceptPostByAdmin, getListPostAdmin, getServiceByAdmin } = useContext(AuthContext)
-  const { success, warn } = useToast()
 
   const [listPost, setListPost] = useState([])
 
@@ -28,11 +26,12 @@ const Post = () => {
   const [listService, setListService] = useState([])
   const [isOpen, setIsOpen] = useState(false)
   const [typePost, setTypePost] = useState('')
-  const [check1,setCheck1] = useState(false)
-  const [check2,setCheck2] = useState(false)
+  const [check1, setCheck1] = useState(false)
+  const [check2, setCheck2] = useState(false)
   const [postChosen, setPostChosen] = useState({
     id: '',
     title: '',
+    status: '',
   })
   const [keyWord, setKeyWord] = useState({
     keyword: '',
@@ -70,11 +69,16 @@ const Post = () => {
   }
 
   const getAllService = async () => {
-    const res = await getServiceByAdmin(true)
+    const res = await getServiceByAdmin('')
     if (res.success) {
       setListService(res.data)
     }
-    else warn(res.message)
+    else swal({
+      title: "Error",
+      icon: "warning",
+      text: res.message,
+      dangerMode: true,
+    })
   }
 
   const getAllPost = async (keyword) => {
@@ -82,7 +86,12 @@ const Post = () => {
     if (res.success) {
       setListPost(res.data)
     }
-    else warn(res.message)
+    else swal({
+      title: "Error",
+      icon: "warning",
+      text: res.message,
+      dangerMode: true,
+    })
   }
 
   const createSearchPararam = (obj) => {
@@ -136,36 +145,98 @@ const Post = () => {
     return newData;
   };
 
-  const setFormChange = (id, name) => {
+  const setFormChange = (id, name, status) => {
     setPostChosen({
       id: id,
       name: name,
+      status: status,
     })
     setIsOpen(true)
   }
 
   const saveClickAdmin = async () => {
     if (typePost === 'ACTIVE') {
-      const res = await acceptPostByAdmin(postChosen.id)
-      if (res.success)
-        success("Acceped Successfulley")
-      else warn(res.message)
+      if (typePost !== postChosen.status) {
+        const res = await acceptPostByAdmin(postChosen.id)
+        if (res.success) {
+          swal({
+            title: "Success",
+            icon: "success",
+            text: "Acceped Successfulley",
+            dangerMode: false,
+          })
+          const query = createSearchPararam(keyWord)
+          getAllPost(query)
+        }
+        else swal({
+          title: "Error",
+          icon: "warning",
+          text: res.message,
+          dangerMode: true,
+        })
+      }
+      else swal({
+        title: "Error",
+        icon: "warning",
+        text: "This post was actived",
+        dangerMode: true,
+      })
     }
     if (typePost === 'DELETED_BY_ADMIN') {
-      const res = await ucacceptPostByAdmin(postChosen.id)
-      if (res.success)
-        success("Acceped Successfulley")
-      else warn(res.message)
+      if (typePost !== postChosen.status) {
+        const res = await ucacceptPostByAdmin(postChosen.id)
+        if (res.success) {
+          swal({
+            title: "Success",
+            icon: "success",
+            text: "Denined Successfulley",
+            dangerMode: false,
+          })
+          const query = createSearchPararam(keyWord)
+          getAllPost(query)
+        }
+        else swal({
+          title: "Error",
+          icon: "warning",
+          text: res.message,
+          dangerMode: true,
+        })
+      }
+      else swal({
+        title: "Error",
+        icon: "warning",
+        text: "This post was actived",
+        dangerMode: true,
+      })
     }
+    setIsOpen(false)
   }
 
-  const onChangeCheck1 = () => {
-    if(typePost==='ACTIVE'&&check1===true){
+  const onClickAcceptbtn = () => {
+    if (typePost === 'ACTIVE' && check1 === true) {
       setCheck1(false)
       setTypePost('')
     }
-    else setCheck1(true)
+    else {
+      setTypePost('ACTIVE')
+      setCheck1(true)
+      setCheck2(false)
+    }
   }
+
+
+  const onClickDeniedbtn = () => {
+    if (typePost === 'DELETED_BY_ADMIN' && check2 === true) {
+      setCheck2(false)
+      setTypePost('')
+    }
+    else {
+      setTypePost('DELETED_BY_ADMIN')
+      setCheck1(false)
+      setCheck2(true)
+    }
+  }
+
 
 
 
@@ -234,7 +305,11 @@ const Post = () => {
             }
             borderRadius="4px"
           >
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }} onClick={() => setFormChange(id, title)} style={{ cursor: 'pointer' }}>
+            <Typography color={colors.grey[100]} sx={{ ml: "5px" }} onClick={() => {
+              if (status !== "DELETED")
+                setFormChange(id, title, status)
+            }
+            } style={status !== "DELETED" ? { cursor: 'pointer' } : { cursor: 'default' }}>
               {status === 'ACTIVE' ? 'Active' : status === "WAIT_FOR_ACCEPT" ? 'Pending' : status === "DELETED_BY_ADMIN" ? 'Denied' : "Deleted"}
             </Typography>
           </Box>
@@ -276,7 +351,7 @@ const Post = () => {
             height='50px'
             width='50%'
           >
-            <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search by keyword" onChange={onChangeInputSearch} />
+            <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search by title" onChange={onChangeInputSearch} />
             <IconButton type="button" sx={{ p: 2 }} onClick={() => onClickSearch()}>
               <SearchIcon />
             </IconButton>
@@ -364,7 +439,7 @@ const Post = () => {
           },
         }}
       >
-        <DataGrid /* checkboxSelection */ disableRowSelectionOnClick  rows={formatData(listPost)} columns={columns} />
+        <DataGrid /* checkboxSelection */ disableRowSelectionOnClick rows={formatData(listPost)} columns={columns} />
       </Box>
       <div className='change-post-status-form' style={isOpen ? { display: 'block' } : { display: 'none' }}>
         <div className='form-change-state-control'>
@@ -374,7 +449,7 @@ const Post = () => {
           </div>
 
           <div className="gr-btn-status-post">
-            <div className="btn-accept-post-admin" onClick={() => setTypePost('ACTIVE')}>
+            <div className="btn-accept-post-admin" onClick={() => onClickAcceptbtn()}>
               <div className="name-type-state-admin" >
                 ACCEPT POST
               </div>
@@ -382,18 +457,20 @@ const Post = () => {
                 <input
                   type="checkbox"
                   value="accept"
+                  checked={check1}
                 />
               </div>
             </div>
 
-            <div className="btn-denied-post-admin" onClick={() => setTypePost('DELETED_BY_ADMIN')}>
+            <div className="btn-denied-post-admin" onClick={() => onClickDeniedbtn()}>
               <div className="name-type-state-admin" >
-                ACCEPT POST
+                DENIE POST
               </div>
               <div className="checkbox-state-post-admin">
                 <input
                   type="checkbox"
                   value="accept"
+                  checked={check2}
                 />
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -15,10 +15,12 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   return (
     <MenuItem
       active={selected === title}
@@ -39,6 +41,7 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const {authState:{user}} = useContext(AuthContext)
 
   return (
     <Box
@@ -106,7 +109,7 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Nguyen Sy Manh
+                  {user?.name}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Admin
