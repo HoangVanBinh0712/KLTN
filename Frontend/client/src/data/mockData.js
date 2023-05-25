@@ -186,7 +186,7 @@ export const mockHistory = [
 export const mockCategory = [
   {
     id: "01",
-    catName: "Relax",
+    name: "Relax",
     dateCreated: "2022-24-01",
     description:"Chuyên mục các bài viết thư giãn tâm hồn",
   },

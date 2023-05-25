@@ -967,7 +967,114 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const updateIndustryByAdmin = async (info) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.put(`${apiUrl}/admin/industry`,info, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
 
+  const createIndustryByAdmin = async (info) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.post(`${apiUrl}/admin/industry`,info, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const deleteIndustryByAdmin = async (id) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.delete(`${apiUrl}/admin/industry/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const getIndustryByAdmin = async () => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/industry`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  // get list report 
+  const getReportByAdmin = async (keyword) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/admin/report${keyword}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const changeReportHandleByAdmin = async (id, type) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.put(`${apiUrl}/admin/report?reportId=${id}&handle=${type}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
 
   //conxtext data
   const authContextData = {
@@ -1010,6 +1117,8 @@ const AuthContextProvider = ({ children }) => {
     getUserStaAdmin, getRevenueStaAdmin, getPostStaAdmin, getReportStaAdmin,
     setUserActiveByAdmin, getServiceByAdmin, putServiceByAdmin,createServiceByAdmin,
     ucacceptPostByAdmin, acceptPostByAdmin,
+    updateIndustryByAdmin,createIndustryByAdmin,deleteIndustryByAdmin,getIndustryByAdmin,
+    getReportByAdmin, changeReportHandleByAdmin,
     showToast,
     setShowToast,
     authState,

@@ -15,6 +15,8 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import FlagCircleIcon from '@mui/icons-material/FlagCircle';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import AddchartIcon from '@mui/icons-material/Addchart';
 import { AuthContext } from "../../contexts/AuthContext";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -194,7 +196,7 @@ const Sidebar = () => {
             <Item
               title="User Statistics"
               to="/admin/user-statitics"
-              icon={<TimelineOutlinedIcon />}
+              icon={<AddchartIcon />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -208,14 +210,14 @@ const Sidebar = () => {
             <Item
               title="Revenue Statistics"
               to="/admin/revenue-statitics"
-              icon={<TimelineOutlinedIcon />}
+              icon={<AttachMoneyIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Report Statistics"
               to="/admin/report-statitics"
-              icon={<TimelineOutlinedIcon />}
+              icon={<FlagCircleIcon />}
               selected={selected}
               setSelected={setSelected}
             />

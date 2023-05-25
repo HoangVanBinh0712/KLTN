@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme, IconButton } from "@mui/material";
+import { Box, useTheme, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import AddIcon from '@mui/icons-material/Add';

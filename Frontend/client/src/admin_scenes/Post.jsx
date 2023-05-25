@@ -340,7 +340,7 @@ const Post = () => {
         justifyContent='space-between'
         padding='5px'
       >
-        <Header title="LIST POSTS" subtitle="Manage job postings" />
+        <Header title="LIST OF POSTS" subtitle="Manage job postings" />
         <Box
           style={{ display: 'flex', alignItems: 'center' }}
         >
