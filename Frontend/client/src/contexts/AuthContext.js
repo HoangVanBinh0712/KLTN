@@ -295,7 +295,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.put(`${apiUrl}/user/password`, pw,{
+        const response = await axios.put(`${apiUrl}/user/password`, pw, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -479,7 +479,7 @@ const AuthContextProvider = ({ children }) => {
       console.log(info);
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.delete(`${apiUrl}/user/submitcv?postId=${info.postId}&mediaId=${info.mediaId}`,{
+        const response = await axios.delete(`${apiUrl}/user/submitcv?postId=${info.postId}&mediaId=${info.mediaId}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -661,7 +661,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.put(`${apiUrl}/employer/password`, pw,{
+        const response = await axios.put(`${apiUrl}/employer/password`, pw, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -895,6 +895,42 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const createServiceByAdmin = async (info) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.post(`${apiUrl}/admin/service`, info, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const putServiceByAdmin = async (info) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const response = await axios.put(`${apiUrl}/admin/service`, info, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return response.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
   const acceptPostByAdmin = async (postId) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
@@ -931,7 +967,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  
+
 
   //conxtext data
   const authContextData = {
@@ -970,9 +1006,10 @@ const AuthContextProvider = ({ children }) => {
     getUserProfileByAnyFilter,
     reportPost,
 
-    getListAccount,getListPostAdmin, 
+    getListAccount, getListPostAdmin,
     getUserStaAdmin, getRevenueStaAdmin, getPostStaAdmin, getReportStaAdmin,
-    setUserActiveByAdmin,getServiceByAdmin,ucacceptPostByAdmin, acceptPostByAdmin,
+    setUserActiveByAdmin, getServiceByAdmin, putServiceByAdmin,createServiceByAdmin,
+    ucacceptPostByAdmin, acceptPostByAdmin,
     showToast,
     setShowToast,
     authState,

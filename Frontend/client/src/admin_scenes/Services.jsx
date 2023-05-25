@@ -1,7 +1,7 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
-import { mockSevices } from "../data/mockData";
+import AddIcon from '@mui/icons-material/Add';
 import Header from "../components/charts/Header";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -17,13 +17,12 @@ const Services = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const { getServiceByAdmin } = useContext(AuthContext)
+  const { getServiceByAdmin, putServiceByAdmin, createServiceByAdmin } = useContext(AuthContext)
 
   const [keySearch, setKeySearch] = useState('')
-  const [inputValue, setInputValue] = useState('')
   const [listService, setListService] = useState([])
   const [serviceChosen, setServiceChosen] = useState({
-    id: '',
+    id: 0,
     name: '',
     description: '',
     type: '',
@@ -38,24 +37,29 @@ const Services = () => {
   const [isUpdateService, setIsUpdateService] = useState(false)
 
   const getListServices = async (keyword) => {
-    const res = await getServiceByAdmin(keyword)
-    if (res.success) {
-      setListService(res.data)
+    try {
+      const res = await getServiceByAdmin(keyword)
+      if (res.success) {
+        setListService(res.data)
+      }
+      else setListService([])
     }
-    else swal({
-      title: "Error",
-      icon: "warning",
-      text: res.message,
-      dangerMode: true,
-    })
+    catch (error) {
+      swal({
+        title: "Error",
+        icon: "warning",
+        text: error,
+        dangerMode: true,
+      })
+    }
   }
 
   useEffect(() => {
     const key = keySearch.length > 0 ? `?active=${keySearch}` : ''
     getListServices(key)
-  }, [])
+  }, [keySearch])
 
-  const onChangeInputSearch = (event) => setInputValue(event.target.value)
+  const onChangeInputSearch = (event) => setKeySearch(event.target.value)
 
   const onClickView = (data) => {
     setServiceChosen({
@@ -166,7 +170,73 @@ const Services = () => {
     })
   }
 
+  const onChangActiveCkeckbox = (event) => {
+    setServiceChosen({
+      ...serviceChosen,
+      active: event.target.checked
 
+    })
+  }
+
+  const onChangSeachCvCkeckbox = (event) => setServiceChosen({
+    ...serviceChosen,
+    canSearchCV: event.target.checked
+  })
+
+  const onChangFilterCkeckbox = (event) => setServiceChosen({
+    ...serviceChosen,
+    canFilterCVSubmit: event.target.checked
+  })
+
+  const onClickCreateService = async () => {
+    const res = await createServiceByAdmin(serviceChosen)
+    if (res.success) {
+      swal({
+        title: "Success",
+        icon: "success",
+        text: 'Created new service successfully!',
+        dangerMode: true,
+      })
+      const key = keySearch.length > 0 ? `?active=${keySearch}` : ''
+      getListServices(key)
+    }
+    else swal({
+      title: "Error",
+      icon: "warning",
+      text: res.message,
+      dangerMode: true,
+    })
+  }
+
+  const onClickUpdateService = async () => {
+    const res = await putServiceByAdmin(serviceChosen)
+    if (res.success) {
+      swal({
+        title: "Success",
+        icon: "success",
+        text: 'Updated service successfully!',
+        dangerMode: true,
+      })
+      const key = keySearch.length > 0 ? `?active=${keySearch}` : ''
+      getListServices(key)
+    }
+    else swal({
+      title: "Error",
+      icon: "warning",
+      text: res.message,
+      dangerMode: true,
+    })
+  }
+
+  const onClickSave = () => {
+    if (serviceChosen.id > 0) onClickUpdateService()
+    else onClickCreateService()
+  }
+
+  const onClickAddIcon = () => {
+    setIsUpdateService(true)
+    setInfoForm(true)
+  }
 
   const columns = [
     {
@@ -245,13 +315,23 @@ const Services = () => {
     <Box m="2px 20px 20px 20px">
 
       <div style={{ display: 'flex', justifyContent: 'space-between', height: '80px' }}>
-        <Header title="Services list" subtitle="Services management" />
+        <Box style={{ display: 'flex' }}>
+          <Header title="Services list" subtitle="Services management" />
+          <Box style={{ display: 'flex', alignItems: 'center', marginLeft: '40px' }}>
+            <IconButton onClick={() => onClickAddIcon()}>
+              <AddIcon
+                sx={{ fontSize: "40px", color: '#fff' }}
+              />
+            </IconButton>
+          </Box>
+        </Box>
+
         <FormControl sx={{ m: 1, minWidth: 180 }}>
           <Select
             style={{
               border: '1px solid #fff'
             }}
-            value={inputValue}
+            value={keySearch}
             onChange={onChangeInputSearch}
             displayEmpty
             inputProps={{ 'aria-label': 'Without label' }}
@@ -299,20 +379,42 @@ const Services = () => {
         <div className='form-change-service-control'>
           <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
             <div style={{ color: "#0c62ad", fontSize: '18px', fontWeight: '500' }}>{`Service name: ${serviceChosen.name}`}</div>
-            <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { setInfoForm(false) }} /></div>
+            <div><img src={addIcon} className='close-form-submit' alt=''
+              onClick={() => {
+                setInfoForm(false)
+                setServiceChosen({
+                  id: 0,
+                  name: '',
+                  description: '',
+                  type: '',
+                  price: '',
+                  currency: '',
+                  postDuration: '',
+                  active: '',
+                  canSearchCV: '',
+                  canFilterCVSubmit: '',
+                })
+              }
+              } /></div>
           </div>
 
           <div className="fram-info-services">
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
               <div className="gr-int-value">
                 <div>Name:</div>
-                <input type="text" value={serviceChosen.name} className="input-services" disabled={!isUpdateService}></input>
+                <input type="text"
+                  value={serviceChosen.name}
+                  className="input-services"
+                  disabled={!isUpdateService}
+                  onChange={onChangInputName}></input>
               </div>
               <div className="gr-int-value">
                 <div>Type:</div>
-                <select value={serviceChosen.description}
+                <select defaultValue={serviceChosen.description}
                   className="input-services"
-                  disabled={!isUpdateService}>
+                  disabled={!isUpdateService}
+                  onChange={onChangInputType}>
+                  <option value=''>Chose type</option>
                   <option value='BASIC'>Basic</option>
                   <option value='PREMIUM'>Premium</option>
                 </select>
@@ -322,18 +424,24 @@ const Services = () => {
               <div>Description:</div>
               <textarea value={serviceChosen.description}
                 className="input-services"
-                disabled={!isUpdateService}></textarea>
+                disabled={!isUpdateService}
+                onChange={onChangInputDesc}></textarea>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
               <div className="gr-int-value">
                 <div>Price:</div>
-                <input type="number" value={serviceChosen.price} className="input-services" disabled={!isUpdateService}></input>
+                <input type="number" value={serviceChosen.price}
+                  className="input-services"
+                  disabled={!isUpdateService}
+                  onChange={onChangInputPrice}></input>
               </div>
               <div className="gr-int-value">
                 <div>Currency:</div>
-                <select value={serviceChosen.description}
+                <select defaultValue={serviceChosen.description}
                   className="input-services"
-                  disabled={!isUpdateService}>
+                  disabled={!isUpdateService}
+                  onChange={onChangInputCur}>
+                  <option value=''>Chose currency</option>
                   <option value='BASIC'>USD</option>
                   <option value='PREMIUM'>VND</option>
                 </select>
@@ -344,7 +452,8 @@ const Services = () => {
               <input type="number" value={serviceChosen.postDuration}
                 className="input-services"
                 disabled={!isUpdateService}
-                style={{ width: '50%' }}></input>
+                style={{ width: '50%' }}
+                onChange={onChangInputDuration}></input>
             </div>
             <div className="row" style={{ justifyContent: 'flex-start', marginBottom: '5px' }}>
               <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
@@ -353,28 +462,33 @@ const Services = () => {
                   type="checkbox"
                   name="active"
                   style={{ width: '15%' }}
-                  defaultChecked
-                  onChange={'onChangeCurencyType'}
+                  disabled={!isUpdateService}
+                  checked={serviceChosen.active}
+                  onChange={onChangActiveCkeckbox}
                 />
-                <label for="currency1" style={{ width: '120px', marginLeft: '5px', }}>Normal</label>
+                <label for="currency1" style={{ width: '120px', marginLeft: '5px', }}>Active</label>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                 <input
+                  checked={serviceChosen.canSearchCV}
                   className="inp-radio-add-post-page"
                   type="checkbox"
                   name="searchCv"
                   style={{ width: '15%' }}
-                  onChange={'onChangeCurencyType'}
+                  disabled={!isUpdateService}
+                  onChange={onChangSeachCvCkeckbox}
                 />
                 <label for="currency2" style={{ width: '120px', marginLeft: '5px', }}>Search CV</label>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                 <input
+                  checked={serviceChosen.canFilterCVSubmit}
                   className="inp-radio-add-post-page"
                   type="checkbox"
                   name="filterCv"
                   style={{ width: '15%' }}
-                  onChange={'onChangeCurencyType'}
+                  disabled={!isUpdateService}
+                  onChange={onChangFilterCkeckbox}
                 />
                 <label for="currency3" style={{ width: '160px', marginLeft: '5px', }}>Filter CV submit</label>
               </div>
@@ -383,11 +497,34 @@ const Services = () => {
           </div>
           <div className="group-buttons flex-row "
             style={{ display: 'flex', justifyContent: 'end', marginTop: '1.2em', gap: '1em' }}>
-            <div className="button al-content-btn" onClick={() => 'saveClickAdmin()'}>
-              <i className="fa fa-file-text-o" aria-hidden="true" ></i>
-              SAVE
-            </div>
-            <div className="button btn-close al-content-btn" onClick={() => { 'setIsOpen(false)' }}>
+            {isUpdateService ? (
+              <div className="button al-content-btn" onClick={() => onClickSave()}>
+                <i className="fa fa-file-text-o" aria-hidden="true" ></i>
+                SAVE
+              </div>
+            ) : (
+              <div className="button al-content-btn" onClick={() => setIsUpdateService(true)}>
+                <i className="fa fa-file-text-o" aria-hidden="true" ></i>
+                Edit
+              </div>
+            )}
+
+            <div className="button btn-close al-content-btn"
+              onClick={() => {
+                setInfoForm(false)
+                setServiceChosen({
+                  id: 0,
+                  name: '',
+                  description: '',
+                  type: '',
+                  price: '',
+                  currency: '',
+                  postDuration: '',
+                  active: '',
+                  canSearchCV: '',
+                  canFilterCVSubmit: '',
+                })
+              }}>
               <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', marginTop: '10px' }}></i>
               CLOSE
             </div>
