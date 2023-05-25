@@ -1,13 +1,10 @@
-import React from 'react'
 import { useState, useContext, useRef, useEffect } from "react";
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
 import "../../employee_scenes/css/Homepage.css"
 import logoBHQ from "../../assets/img/logo.png"
-import messIcon from '../../assets/icons/mess-icon.png'
-import bellIcon from '../../assets/icons/bell-grey-icon.png'
 import personIcon from "../../assets/img/personal.png"
-import ChatBox from './ChatBox';
+import swal from 'sweetalert';
 
 const TopBar = () => {
 
@@ -16,7 +13,6 @@ const TopBar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleDropdown = () => setIsOpen(!isOpen);
     const dropdownRef = useRef(null);
-
     const [isOpenTool, setIsOpenTool] = useState(false);
     const toggleDropdownTool = () => setIsOpenTool(!isOpenTool);
     const dropTooldownRef = useRef(null);
@@ -43,10 +39,16 @@ const TopBar = () => {
     };
 
     const logout = () => {
-        const confirm = window.confirm("Are you sure you want to logout?");
-        if (confirm) {
-            logoutSection()
-        }
+  
+        swal({
+            title: "Info",
+            icon: "info",
+            text: "Do you want to logout ? ",
+          }).then((click) => {
+            if (click) {
+                logoutSection()
+            }
+          });
     }
 
 
@@ -129,7 +131,7 @@ const TopBar = () => {
                         <div className="dropdown-menu">
                             <div className='user-dropbox'>
                                 <div className='avt-in-dropbox'>
-                                    <img src={personIcon} alt="avt" />
+                                    <img src={user.urlAvatar ? user.urlAvatar : personIcon} alt="avt" />
                                 </div>
                                 <div className='name-in-dropbox'>
                                     <div className='n-user-in-dropbox'>{user.name}</div>
@@ -201,7 +203,7 @@ const TopBar = () => {
                         <div className="dropdown-menu">
                             <div className='user-dropbox'>
                                 <div className='avt-in-dropbox'>
-                                    <img src={personIcon} alt="avt" />
+                                    <img src={user.urlAvatar ? user.urlAvatar : personIcon} alt="avt" />
                                 </div>
                                 <div className='name-in-dropbox'>
                                     <div className='n-user-in-dropbox'>{user.name}</div>

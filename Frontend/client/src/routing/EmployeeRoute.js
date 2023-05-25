@@ -70,39 +70,7 @@ const EmployeeRoute = ({ ...rest }) => {
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     );
-  } else {
-    body = (
-      <Routes>
-        <Route path="/user/login" element={<Login />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/login/:token" element={<LoginGG />} />
-        <Route path="/user/register" element={<Register />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/highlight-company" element={<HighLightCompany />} />
-
-        <Route path="/post/:id" element={<PostDetails />} />
-        <Route path="/posts" element={<SearchPageComponent />} />
-        <Route path="/posts/:keyword" element={<SearchPageComponent />} />
-        <Route path="/recruiter/:id" element={<EmployerProfile />} />
-        <Route path="/customer-services" element={<PageCustomerServices />} />
-        <Route path="/user/account" element={<EmployeeAccountPage />}>
-          <Route path="personal-info" element={<PersonalInfoComponent />} />
-          <Route path="achievement" element={<UserAchievement />} />
-          <Route path="add-resume" element={<AddResume />} />
-          <Route path="change-password" element={<ChangePassword />} />
-          <Route path="post-followed" element={<PostFollowed />} />
-          <Route path="post-submitted" element={<PostSubmitted />} />
-          <Route path="predict-job" element={<PredictJob />} />
-          <Route path="recruiter-followed" element={<RecruiterFollowed />} />
-          <Route path="resume-viewer" element={<ResumeViewer />} />
-          <Route path="update-resume" element={<UpdateResume />} />
-          <Route path="verify-email" element={<VerifyEmail />} />
-        </Route>
-        <Route path="/*" element={<PageNotFound />} />
-      </Routes>
-    );
   }
-
   return <>{body}</>;
 };
 

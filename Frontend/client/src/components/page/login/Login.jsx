@@ -93,10 +93,6 @@ const Login = () => {
             icon: "warning",
             text: userLoginData.message,
             dangerMode: true,
-          }).then((click) => {
-            if (click) {
-              swal("asdjhasdl");
-            }
           });
         }
       } catch (error) {
@@ -201,7 +197,7 @@ const Login = () => {
 
                   <div className="login100-form-social-item">
                     <img src={ggIcon} alt="gg icon" width="20px" height="20px" />
-                    <a className="link-to-gg"  href="https://career-website.herokuapp.com/oauth2/authorization/google" style={{ fontSize: "1em" }}>
+                    <a className="link-to-gg" href="https://career-website.herokuapp.com/oauth2/authorization/google" style={{ fontSize: "1em" }}>
                       Continue with google
                     </a>
                   </div>

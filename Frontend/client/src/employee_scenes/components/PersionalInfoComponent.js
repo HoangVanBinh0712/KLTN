@@ -10,7 +10,7 @@ const UserPersonalInfo = () => {
   const {
     authState: { user },
     getUser,
-    updateUserInfo,
+    updateUserInfo,setUser
   } = useContext(AuthContext);
   const {
     globalState: { cities, industries },
@@ -129,6 +129,8 @@ const UserPersonalInfo = () => {
       const reponseData = await updateUserInfo(infoData, avatar, cover);
       if (reponseData.success) {
         success("Update information successfully!");
+        setUser(reponseData.data)
+
       } else {
         warn(reponseData.message + ": " + Object.keys(reponseData.data) + " " + reponseData.data[0]);
       }

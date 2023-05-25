@@ -3,6 +3,7 @@ import axios from "axios";
 import { AuthReducer } from "../reducers/AuthReducer";
 import { apiUrl, LOCAL_STORAGE_TOKEN_NAME, USER_ROLE } from "./Constants";
 import SetAuthToken from "../utlis/SetAuthToken";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -14,11 +15,24 @@ const AuthContextProvider = ({ children }) => {
     role: null,
   });
 
+  const navigate = useNavigate();
+
   const [showToast, setShowToast] = useState({
     show: false,
     message: "",
     type: null,
   });
+  const setUser = (user) => {
+    if (user)
+      dispatch({
+        type: "SET_AUTH",
+        payload: {
+          isAuthenticated: true,
+          user: user,
+          role: user.role,
+        },
+      });
+  };
   // auth user
   const loadUser = async (user) => {
     if (user === undefined) user = localStorage[USER_ROLE];
@@ -150,7 +164,7 @@ const AuthContextProvider = ({ children }) => {
         role: null,
       },
     });
-    window.location.href = "/user/login";
+    navigate("/user/login");
   };
 
   // auth user
@@ -747,7 +761,6 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-
   // Admin
   const getListAccount = async (keyword) => {
     try {
@@ -971,7 +984,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const responsePost = await axios.put(`${apiUrl}/admin/industry`,info, {
+        const responsePost = await axios.put(`${apiUrl}/admin/industry`, info, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -989,7 +1002,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const responsePost = await axios.post(`${apiUrl}/admin/industry`,info, {
+        const responsePost = await axios.post(`${apiUrl}/admin/industry`, info, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -1039,7 +1052,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  // get list report 
+  // get list report
   const getReportByAdmin = async (keyword) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
@@ -1113,15 +1126,28 @@ const AuthContextProvider = ({ children }) => {
     getUserProfileByAnyFilter,
     reportPost,
 
-    getListAccount, getListPostAdmin,
-    getUserStaAdmin, getRevenueStaAdmin, getPostStaAdmin, getReportStaAdmin,
-    setUserActiveByAdmin, getServiceByAdmin, putServiceByAdmin,createServiceByAdmin,
-    ucacceptPostByAdmin, acceptPostByAdmin,
-    updateIndustryByAdmin,createIndustryByAdmin,deleteIndustryByAdmin,getIndustryByAdmin,
-    getReportByAdmin, changeReportHandleByAdmin,
+    getListAccount,
+    getListPostAdmin,
+    getUserStaAdmin,
+    getRevenueStaAdmin,
+    getPostStaAdmin,
+    getReportStaAdmin,
+    setUserActiveByAdmin,
+    getServiceByAdmin,
+    putServiceByAdmin,
+    createServiceByAdmin,
+    ucacceptPostByAdmin,
+    acceptPostByAdmin,
+    updateIndustryByAdmin,
+    createIndustryByAdmin,
+    deleteIndustryByAdmin,
+    getIndustryByAdmin,
+    getReportByAdmin,
+    changeReportHandleByAdmin,
     showToast,
     setShowToast,
     authState,
+    setUser
   };
 
   //return

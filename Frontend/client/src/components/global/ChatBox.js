@@ -10,6 +10,7 @@ import userIcon from "../../assets/user.png";
 import { useRef } from "react";
 import Stomp from "stompjs";
 import { apiWS } from "../../contexts/Constants";
+import swal from "sweetalert";
 const ChatBox = () => {
   const {
     authState: { user, authLoading },
@@ -19,6 +20,9 @@ const ChatBox = () => {
 
   const [view, setView] = useState(true);
   const [listRoom, setListRoom] = useState([]);
+  const [gptOpen, setGptOpen] = useState(false);
+  const [gptMessage, setGptMessage] = useState([{ user: null, message: "How can i help you ?" }]);
+  const [gptInput, setGptInput] = useState("");
   /*
     Room of listroom
         const singleRoomChat = {
@@ -48,6 +52,9 @@ const ChatBox = () => {
       else if (ref.scrollTop === 0) ref.scrollTop = 30;
       else ref.scrollTop = ref.scrollHeight;
     }
+  };
+  const handleMessagesGPTRef = (ref) => {
+    if (ref) ref.scrollTop = ref.scrollHeight;
   };
 
   const auth_headers = {
@@ -171,9 +178,9 @@ const ChatBox = () => {
 
   function sendMessage(roomId) {
     const mess = getElementById(`${roomId}-input-message`);
-
+    console.log(mess, roomId);
     if (!mess.value.trim()) {
-      alert("Must type something !");
+      swal({ title: "Infor", icon: "warning", text: "Must type something !" });
       return;
     }
     const stClient = Stomp.client(`ws://${apiWS}/chat`);
@@ -226,6 +233,7 @@ const ChatBox = () => {
 
   function keyUpMessage(e, roomId) {
     if (e.keyCode === 13) {
+      console.log(e.target.value);
       sendMessage(roomId);
     }
   }
@@ -392,6 +400,43 @@ const ChatBox = () => {
     return listOpenRoom.some((x) => x.roomId === roomId);
   };
 
+  const sendMessageToChatGPT = async (message) => {
+    try {
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: message }],
+          max_tokens: 300, // Adjust the desired response length
+          temperature: 0.7, // Adjust the creativity level (higher values = more random)
+          n: 1, // Number of responses to generate
+          stop: ["\n"], // Stop generating tokens after newline character
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer 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`, // Replace with your actual API key
+          },
+        }
+      );
+
+      return response.data.choices[0]?.message?.content;
+    } catch (error) {}
+  };
+
+  const onClickSendMessageGpt = async () => {
+    const lstMessamge = [...gptMessage, { user: true, message: gptInput }];
+    const message = gptInput;
+    setGptMessage(lstMessamge);
+    setGptInput("");
+    const mess = await sendMessageToChatGPT(message);
+    if (mess) {
+      setGptMessage([...lstMessamge, { user: null, message: mess }]);
+    } else {
+      setGptMessage([...lstMessamge, { user: null, message: "Sory ! You can try again later !" }]);
+    }
+  };
+
   return (
     <div className="float-items">
       <div className="square-message">
@@ -399,6 +444,26 @@ const ChatBox = () => {
           <div className="messages-info" id="messages-info">
             <h4>Your chats !</h4>
             <div className="messages" id="listRoom">
+              <div
+                class="room "
+                id="room-gpt"
+                onClick={() => {
+                  //Open chat GPT room
+                  setGptOpen(true);
+                }}
+              >
+                <img
+                  class="avatar"
+                  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhst4ldgBOg9rtbkICkI7VFyOe407LtYYCjVv0cfHh44OfJXH2V8huGuxGKV1Q0skZQiPiSrlAZjfpfRW1mQoOYMXc_M30p_eSarCnCCKF8ukhOMKoTCSiKIREJHCtsNfpzMAvZ5Lk83zOuk_21Au7LVzOwH5E0kPFPuV1bObJWc29Vp_IeeCJn0QDmew/s640/chat-gpt-logo.jpg"
+                  width="50px"
+                  height="50px"
+                  alt=""
+                />
+                <div class="info">
+                  <p class="chat-header">Chat GPT</p>
+                </div>
+              </div>
+
               {listRoom.map((chat_room, index) => (
                 <div
                   key={index}
@@ -438,6 +503,59 @@ const ChatBox = () => {
         </div>
       </div>
       <div id="messengers">
+        {gptOpen && (
+          <div class="chat-wrapper" id="chat-wrapper-gpt">
+            <div class="chat-room" id="chat-room-gpt">
+              <div class="chat-header" id="chat-room-gpt-header">
+                <img
+                  class="avatar"
+                  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhst4ldgBOg9rtbkICkI7VFyOe407LtYYCjVv0cfHh44OfJXH2V8huGuxGKV1Q0skZQiPiSrlAZjfpfRW1mQoOYMXc_M30p_eSarCnCCKF8ukhOMKoTCSiKIREJHCtsNfpzMAvZ5Lk83zOuk_21Au7LVzOwH5E0kPFPuV1bObJWc29Vp_IeeCJn0QDmew/s640/chat-gpt-logo.jpg"
+                  alt=""
+                />
+                <p id="chat-room-1-name">Chat GPT</p>
+                <button
+                  onClick={() => {
+                    setGptOpen(false);
+                    setGptInput("");
+                    setGptMessage([{ user: null, message: "How can i help you ?" }]);
+                  }}
+                >
+                  X
+                </button>
+              </div>
+              <div class="chat-content" id="table-gpt-container">
+                <div class="table-chat" id="chat-room-gpt-table" ref={(ref) => handleMessagesGPTRef(ref)}>
+                  {gptMessage.map((m) => (
+                    <div class={`${m.user ? "yours" : ""}`}>
+                      <span>{m.message}</span>
+                    </div>
+                  ))}
+                </div>
+                <div class="chat-footer">
+                  <div class="item"></div>
+                  <div class="group-input">
+                    <input
+                      type="text"
+                      id="gpt-input-message"
+                      value={gptInput}
+                      onChange={(e) => {
+                        setGptInput(e.target.value);
+                      }}
+                      onKeyUp={(e) => {
+                        if (e.keyCode === 13)
+                          //enter
+                          onClickSendMessageGpt();
+                      }}
+                    />
+                    <button id="gpt-send" onClick={onClickSendMessageGpt}>
+                      <i class="fa fa-paper-plane-o"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {listOpenRoom.map((table, index) => (
           <div key={index} className="chat-wrapper" id={`chat-wrapper-${table.roomId}`}>
             <div className="chat-room" id={`chat-room-${table.roomId}`}>
@@ -479,9 +597,7 @@ const ChatBox = () => {
                   })}
                 </div>
                 <div className="chat-footer">
-                  <div className="item">
-                    <i className="fa fa-file-image-o" aria-hidden="true"></i>
-                  </div>
+                  <div className="item"></div>
                   <div className="group-input">
                     <input
                       type="text"
