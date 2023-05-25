@@ -19,12 +19,22 @@ const Reports = () => {
   const { changeReportHandleByAdmin, getReportByAdmin } = useContext(AuthContext)
 
   const maxDate = new Date()
+  const getPostDate = (date) => {
+    const myDate = new Date(date);
+    const day = ("0" + myDate.getDate()).slice(-2);
+    const month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+    const year = myDate.getFullYear();
+    return (`${year}-${month}-${day}`)
+  }
 
   const [searchKey, setSearchKey] = useState({
     postId: '',
     handle: '',
     date: '',
   })
+  const [inputPostId, setInputPostId] = useState('')
+  const [inputDateReport, setInputDateReport] = useState('')
+
   const [listRp, setListRp] = useState([])
 
   const createSearchPararam = (obj) => {
@@ -60,9 +70,9 @@ const Reports = () => {
   useEffect(() => {
     const query = createSearchPararam(searchKey)
     getRpList(query)
-  }, [])
+  }, [searchKey])
 
-
+  
 
   const DropdownBox = ({ onClick1, onClick2, index, indus }) => {
 
@@ -78,7 +88,7 @@ const Reports = () => {
         />
         {isOpen && (
           <Box className="dropdown-options"
-            style={{ top: `${40 + (index + 1) * 40}px`, right: '20px' }}>
+            style={{ top: `${40 + (index + 1) * 40}px`, right: '10px' }}>
             <Box
               className="dropdown-option"
               onClick={() => onClick1(indus)}
@@ -114,6 +124,31 @@ const Reports = () => {
     setIsUpdateService(true)
     setInfoForm(true) */
   }
+
+  const onChangInputPostId = (event) => {
+    setInputPostId(event.target.value)
+  }
+
+  const onChangInputDate = (event) => {
+    setInputDateReport(event.target.value)
+  }
+
+  const onChangeSelectReportStatus = (event) => {
+    setSearchKey({
+      ...searchKey,
+      handle:event.target.value
+    })
+  }
+
+  const onClickSearchID = () => setSearchKey({
+    ...searchKey,
+    postId:inputPostId
+  })
+
+  const onClickSearchIDDate = () => setSearchKey({
+    ...searchKey,
+    date:inputDateReport.length>0?getPostDate(inputDateReport):''
+  })
 
   const columns = [
     {
@@ -177,7 +212,7 @@ const Reports = () => {
       renderCell: ({ row: { handle } }) => {
         return (
           <Box
-            width="100%"
+            width="80%"
             m="0 auto"
             p="5px"
             display="flex"
@@ -217,7 +252,7 @@ const Reports = () => {
   ];
 
   return (
-    <Box m="0 20px 20px 20px">
+    <Box m="2px 20px 20px 20px">
       <Box
         display='flex'
         justifyContent='space-between'
@@ -231,11 +266,11 @@ const Reports = () => {
             display="flex"
             backgroundColor={colors.primary[400]}
             borderRadius="3px"
-            height='50px'
+            height='56px'
             width='50%'
           >
-            <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search by post ID" onChange={'onChangeInputSearch'} />
-            <IconButton type="button" sx={{ p: 2 }} onClick={() => 'onClickSearch'()}>
+            <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search by post ID" onChange={onChangInputPostId} />
+            <IconButton type="button" sx={{ p: 2 }} onClick={() => onClickSearchID()}>
               <SearchIcon />
             </IconButton>
           </Box>
@@ -243,15 +278,18 @@ const Reports = () => {
             display="flex"
             backgroundColor={colors.primary[400]}
             borderRadius="3px"
-            height='50px'
+            height='56px'
             width='50%'
             marginLeft='10px'
           >
             <InputBase sx={{ ml: 2, flex: 1 }} 
             placeholder="Search by date" 
-            onChange={'onChangSelectNtd'} 
-            type="date" max='2023-05-26'/>
-            <IconButton type="button" sx={{ p: 2 }} onClick={() => 'onClickSearchNtd'()}>
+            onChange={onChangInputDate} 
+            type="date" 
+            inputProps={{
+              max: getPostDate(maxDate),
+            }}/>
+            <IconButton type="button" sx={{ p: 2 }} onClick={() => onClickSearchIDDate()}>
               <SearchIcon />
             </IconButton>
           </Box>
@@ -261,7 +299,7 @@ const Reports = () => {
                 border: '1px solid #fff'
               }}
               value={''}
-              onChange={'onChangSelectService'}
+              onChange={onChangeSelectReportStatus}
               displayEmpty
               inputProps={{ 'aria-label': 'Without label' }}
             >
