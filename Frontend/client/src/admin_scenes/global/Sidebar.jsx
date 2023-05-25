@@ -212,6 +212,13 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Item
+              title="Report Statistics"
+              to="/admin/report-statitics"
+              icon={<TimelineOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
 
           </Box>
         </Menu>

@@ -1,4 +1,4 @@
-import { Box, useTheme, IconButton  } from "@mui/material";
+import { Box, IconButton, useTheme } from "@mui/material";
 import { tokens } from "../theme";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
@@ -8,12 +8,12 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import swal from "sweetalert";
 
-const PostStatitics = () => {
+const ReportStatitics = () => {
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const { getPostStaAdmin } = useContext(AuthContext)
+    const { getReportStaAdmin } = useContext(AuthContext)
 
     const currentDate = new Date()
     const dataDefault = [
@@ -82,7 +82,7 @@ const PostStatitics = () => {
                 if (obj === undefined) {
                     newData.splice(12 - highMonth, 0, { x: m[i - 1], y: 0 });
                 } else {
-                    newData.splice(12 - highMonth, 0, { x: m[i - 1], y: obj.value });
+                    newData.splice(12 - highMonth, 0, { x: m[i - 1], y: obj.count });
                 }
             }
         }
@@ -90,7 +90,7 @@ const PostStatitics = () => {
     };
 
     const getStatiticsAccount = async (year) => {
-        const res = await getPostStaAdmin(year)
+        const res = await getReportStaAdmin(year)
         if (res.status === 200) {
             const sta = formatData(res.data)
             setStaccount(sta)
@@ -134,7 +134,7 @@ const PostStatitics = () => {
     return (
         <Box m="0 20px 20px 20px">
             <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Header title="Post Statitics" subtitle="Statistics of the number of job postings by month." />
+                <Header title="Report Statitics" subtitle="Statistics of user reports with employers, posts." />
                 <Box
                     display="flex"
                     backgroundColor={colors.primary[400]}
@@ -152,7 +152,7 @@ const PostStatitics = () => {
             </Box>
             <Box height="75vh">
                 <LineChart dataLine={[{
-                    id: "The number of post",
+                    id: "Report Statitics",
                     color: tokens("dark").greenAccent[500],
                     data: staAccount
                 },]} />
@@ -160,4 +160,4 @@ const PostStatitics = () => {
         </Box>
     );
 };
-export default PostStatitics
+export default ReportStatitics

@@ -18,6 +18,7 @@ import Pie from "../admin_scenes/Pie";
 import PostStatitics from "../admin_scenes/PostStatitics";
 import UserStatitics from "../admin_scenes/UserStatitics";
 import RevenueStatitics from "../admin_scenes/RevenueStatitics";
+import ReportStatitics from "../admin_scenes/ReportStatitics";
 import PageNotFound from "../components/page/notfound/PageNotFound";
 import { webUrlActivity } from "../contexts/Constants";
 import LoginPageAdmin from '../admin_scenes/LoginPageAdmin';
@@ -86,6 +87,7 @@ export const AdminRoute = ({ ...rest }) => {
                                     <Route path="/admin/post-statitics" element={<PostStatitics />} />
                                     <Route path="/admin/user-statitics" element={<UserStatitics />} />
                                     <Route path="/admin/revenue-statitics" element={<RevenueStatitics />} />
+                                    <Route path="/admin/report-statitics" element={<ReportStatitics />} />
 
                                 </Routes>
                             </main>
