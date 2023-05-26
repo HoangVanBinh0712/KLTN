@@ -48,8 +48,9 @@ function App() {
     body = (
       <AdminRoute path="/admin/dashboard /admin/account /admin/post /admin/services /admin/form /admin/bar /admin/pie /admin/line /admin/industries /admin/reports /admin/form  /admin/user-statitics /admin/post-statitics /admin/revenue-statitics /admin/report-statitics " />
     );
-  } else if (currentUrl.includes("/employer")) body = <EmployerRoute path="/employer/login" />;
-  else if (currentUrl.includes("/user")) {
+  } 
+  else if (currentUrl.includes("/employer")) body = <EmployerRoute path="/employer/login" />;
+  else {
     body = <EmployeeRoute path="/user/login " />;
   }
 
@@ -71,7 +72,6 @@ function App() {
               <Route path="/posts/:keyword" element={<SearchPageComponent />} />
               <Route path="/recruiter/:id" element={<EmployerProfile />} />
               <Route path="/customer-services" element={<PageCustomerServices />} />
-              <Route path="/*" element={<PageNotFound />} />
             </Routes>
             {!authloading && user && <ChatBox />}
           </GlobalContextProvider>

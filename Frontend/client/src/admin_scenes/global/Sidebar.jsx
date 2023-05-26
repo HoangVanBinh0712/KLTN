@@ -172,7 +172,7 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+            {/* <Item
               title="Notifications Management"
               to="/admin/reports"
               icon={<CircleNotificationsIcon />}
@@ -185,7 +185,7 @@ const Sidebar = () => {
               icon={<MonetizationOnIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
             <Typography
               variant="h6"
               color={colors.grey[300]}

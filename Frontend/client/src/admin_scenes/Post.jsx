@@ -3,6 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import SearchIcon from "@mui/icons-material/Search";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import InputBase from "@mui/material/InputBase";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
@@ -21,6 +22,49 @@ const Post = () => {
 
   const [listPost, setListPost] = useState([])
 
+  const postDefault = {
+    id: '',
+    title: "",
+    description: "",
+    method: "",
+    position: "",
+    experience: "",
+    gender: "",
+    requirement: "",
+    benifit: "",
+    contact: "",
+    salary: null,
+    currency: "",
+    location: "",
+    recruit: 0,
+    createDate: "2023-01-07 10:56:01",
+    expirationDate: "2023-06-06 00:00:00",
+    author: {
+      id: 0,
+      email: "",
+      emailConfirm: false,
+      name: "",
+      phone: "",
+      city: { id: 1, name: "TP Hồ Chí Minh" },
+      industry: { id: 1, name: "IT" },
+      urlAvatar: null,
+      urlCover: null,
+      address: "",
+      description: "",
+      role: "",
+      createDate: "2023-01-07 00:00:00",
+      active: true,
+    },
+    industry: { id: 1, name: "IT" },
+    city: { id: 1, name: "TP Hồ Chí Minh" },
+    status: "ACTIVE",
+    viewCount: 45,
+    service: {
+      id: 3,
+      name: "Premiun Serivce",
+    },
+  }
+
   const [inputValue, setInputValue] = useState('')
   const [inputUserId, setInputUserId] = useState('')
   const [listService, setListService] = useState([])
@@ -28,11 +72,9 @@ const Post = () => {
   const [typePost, setTypePost] = useState('')
   const [check1, setCheck1] = useState(false)
   const [check2, setCheck2] = useState(false)
-  const [postChosen, setPostChosen] = useState({
-    id: '',
-    title: '',
-    status: '',
-  })
+  const [isViewPostDetails, setIsViewPostDetails] = useState(false)
+  const [postChosen, setPostChosen] = useState(postDefault)
+
   const [keyWord, setKeyWord] = useState({
     keyword: '',
     authorId: '',
@@ -128,22 +170,15 @@ const Post = () => {
 
   }
 
-  const formatData = (arr) => {
-    let newData = [];
-    arr.map((a) =>
-      newData.push({
-        id: a.id,
-        title: a.title,
-        username: a.author.name,
-        dateCreated: getPostDate(a.createDate, false),
-        industry: a.industry.name,
-        services: a.service.name,
-        expiration: getPostDate(a.expirationDate, false),
-        status: a.status,
-        city: a.city.name,
-      }))
-    return newData;
-  };
+  const getPostTime = (date) => {
+    const myDate = new Date(date);
+    const day = ("0" + myDate.getDate()).slice(-2);
+    const month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+    const year = myDate.getFullYear();
+    const min = String(myDate.getMinutes()).padStart(2, '0');
+    const hour = String(myDate.getHours()).padStart(2, '0');
+    return (`${min}:${hour} ${day}-${month}-${year}`)
+  }
 
   const setFormChange = (id, name, status) => {
     setPostChosen({
@@ -237,9 +272,37 @@ const Post = () => {
     }
   }
 
+  const DropdownBox = ({ onClick1, index, post }) => {
 
+    const [isOpen, setIsOpen] = useState(false);
 
+    return (
+      <Box className="dropdown-box"
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
+      >
+        <MoreVertIcon
+          className="serListDelete"
+        />
+        {isOpen && (
+          <Box className="dropdown-options"
+            style={{ top: `${40 + (index + 1) * 40}px`, right: '0px' }}>
+            <Box
+              className="dropdown-option"
+              onClick={() => onClick1(post)}
+            >
+              View Detail
+            </Box>
+          </Box>
+        )}
+      </Box>
+    )
+  }
 
+  const onClickViewPostDetail = (data) => {
+    setPostChosen(data)
+    setIsViewPostDetails(true)
+  }
 
   const columns = [
     { field: "id", headerName: "ID" },
@@ -253,24 +316,52 @@ const Post = () => {
       field: "username",
       headerName: "Employer",
       flex: 1,
+      renderCell: ({ row: { author } }) => {
+        return (
+          <Box>
+            {author.name}
+          </Box>
+        );
+      },
     },
     {
-      field: "dateCreated",
+      field: "createDate",
       headerName: "Date created",
       type: "date",
       headerAlign: "left",
       align: "left",
       flex: 1,
+      renderCell: ({ row: { createDate } }) => {
+        return (
+          <Box>
+            {getPostDate(createDate, false)}
+          </Box>
+        );
+      },
     },
     {
       field: "city",
       headerName: "City",
       flex: 1,
+      renderCell: ({ row: { city } }) => {
+        return (
+          <Box>
+            {city.name}
+          </Box>
+        );
+      },
     },
     {
       field: "services",
       headerName: "Services",
       width: 100,
+      renderCell: ({ row: { service } }) => {
+        return (
+          <Box>
+            {service.name}
+          </Box>
+        );
+      },
     },
     {
       field: "industry",
@@ -278,15 +369,30 @@ const Post = () => {
       headerAlign: "center",
       align: "center",
       flex: 1,
+      renderCell: ({ row: { industry } }) => {
+        return (
+          <Box>
+            {industry.name}
+          </Box>
+        );
+      },
     },
     {
-      field: "expiration",
+      field: "expirationDate",
       headerName: "Expiration date",
       flex: 1,
+      renderCell: ({ row: { expirationDate } }) => {
+        return (
+          <Box>
+            {getPostDate(expirationDate, false)}
+          </Box>
+        );
+      },
     },
     {
       field: "status",
       headerName: "State",
+      headerAlign: 'center',
       width: 100,
       renderCell: ({ row: { status, id, title } }) => {
         return (
@@ -316,6 +422,20 @@ const Post = () => {
         );
       },
     },
+    {
+      field: "action",
+      headerName: "Action",
+      headerAlign: 'center',
+      align: 'center',
+      width: 100,
+      renderCell: (params) => {
+        return (
+          <>
+            <DropdownBox onClick1={onClickViewPostDetail} index={params.rowIndex} post={params.row} />
+          </>
+        );
+      },
+    }
     /* {
       field: "zdelete",
       headerName: "Delete",
@@ -439,7 +559,7 @@ const Post = () => {
           },
         }}
       >
-        <DataGrid /* checkboxSelection */ disableRowSelectionOnClick rows={formatData(listPost)} columns={columns} />
+        <DataGrid /* checkboxSelection */ disableRowSelectionOnClick rows={listPost} columns={columns} />
       </Box>
       <div className='change-post-status-form' style={isOpen ? { display: 'block' } : { display: 'none' }}>
         <div className='form-change-state-control'>
@@ -483,6 +603,153 @@ const Post = () => {
               SAVE
             </div>
             <div className="button btn-close al-content-btn" onClick={() => { setIsOpen(false) }}>
+              <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', marginTop: '10px' }}></i>
+              CLOSE
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {/* Post detail */}
+      <div className='change-report-info-form'
+        style={isViewPostDetails ? { display: 'block', overflowY: 'auto', paddingTop: '3%' }
+          : { display: 'none', overflowY: 'auto', paddingTop: '3%' }}>
+        <div className='form-change-report-control'>
+          <div style={{ display: 'flex', justifyContent: 'space-between', height: '40px' }}>
+            <div style={{ display: 'flex' }}>
+              <div style={{ color: "#0c62ad", fontSize: '18px', fontWeight: '500' }}>
+                {`Post ID: ${postChosen.id}  -`}
+              </div>
+              <div style={{ color: "#3da58a", fontSize: '18px', fontWeight: '500', textTransform: 'uppercase' }}>
+                {` ${postChosen.service.name}`}
+              </div>
+              <div style={{ color: "#6c6c6c", fontSize: '16px', paddingLeft: '40px' }}>
+                {`View: ${postChosen.viewCount}`}
+              </div>
+            </div>
+            <div><img src={addIcon} className='close-form-submit' alt=''
+              onClick={() => {
+                setIsViewPostDetails(false)
+              }
+              } /></div>
+          </div>
+          <div className="fram-info-report" style={{ marginTop: '5px' }}>
+            <div className="gr-int-value">
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Post title:</div>
+                <input value={postChosen.title}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+                <div style={{ width: '50%', display: 'flex', justifyContent: 'end', color: '#0c62ad' }}>
+                  {`Created time: ${getPostTime(postChosen.createDate)}`}
+                </div>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
+                <div style={{ width: '12%' }}>Description:</div>
+                <textarea value={postChosen.description} disabled
+                  className="textarea-view-post-details"
+                  id='desc-post-report-view'
+                  style={{ width: '88%' }}></textarea>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
+                <div style={{ width: '12%' }}>Requirement:</div>
+                <textarea value={postChosen.requirement} disabled
+                  className="textarea-view-post-details"
+                  id='desc-post-report-view'
+                  style={{ width: '88%' }}></textarea>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
+                <div style={{ width: '12%' }}>Benefit:</div>
+                <textarea value={postChosen.benifit} disabled
+                  className="textarea-view-post-details"
+                  id='desc-post-report-view'
+                  style={{ width: '88%' }}></textarea>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>
+                  {`Salary ${postChosen.currency !== 'AGREEMENT' ? `(${postChosen.currency})` : ''}:`}
+                </div>
+                <input
+                  value={postChosen.currency !== 'AGREEMENT' ? postChosen.salary : postChosen.currency}
+                  disabled className="input-view-post-details"
+                  style={{ width: '40%' }}>
+
+                </input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Method:</div>
+                <input value={postChosen.method}
+                  disabled className="input-view-post-details"
+                  style={{ width: '21%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Position:</div>
+                <input value={postChosen.position}
+                  disabled className="input-view-post-details"
+                  style={{ width: '21%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Experience:</div>
+                <input value={postChosen.experience}
+                  disabled className="input-view-post-details"
+                  style={{ width: '22%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Recruit:</div>
+                <input value={postChosen.recruit}
+                  disabled className="input-view-post-details"
+                  style={{ width: '21%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Gender:</div>
+                <input value={postChosen.gender}
+                  disabled className="input-view-post-details"
+                  style={{ width: '21%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Expiration:</div>
+                <input value={postChosen.expiration}
+                  type="date"
+                  disabled className="input-view-post-details"
+                  style={{ width: '22%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Location:</div>
+                <input value={postChosen.location}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Contact:</div>
+                <input value={postChosen.contact}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Industry:</div>
+                <input value={postChosen.industry.name}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>City:</div>
+                <input value={postChosen.city.name}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+              </div>
+            </div>
+            <div className="gr-int-value">
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0 5px 0' }}>
+                <div>Post by:</div>
+
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Employer Name:</div>
+                <input value={postChosen.author.name}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Email:</div>
+                <input value={postChosen.author.email}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+              </div>
+            </div>
+          </div>
+          <div className="group-buttons flex-row "
+            style={{ display: 'flex', justifyContent: 'end', marginTop: '1.2em', gap: '1em' }}>
+            <div className="button btn-close al-content-btn"
+              onClick={() => {
+                setIsViewPostDetails(false)
+              }}>
               <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', marginTop: '10px' }}></i>
               CLOSE
             </div>
