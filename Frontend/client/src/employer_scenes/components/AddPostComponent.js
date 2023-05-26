@@ -314,7 +314,7 @@ const AddPostComponent = () => {
                     type="radio"
                     id="currency3"
                     name="currency"
-                    value="AGGREEMENT"
+                    value="AGREEMENT"
                     style={{ width: '15%' }}
                     onChange={onChangeCurencyType}
                   />
