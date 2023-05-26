@@ -76,3 +76,9 @@ body,
 .landing-inner p {
 	color: white;
 }
+
+.chat-now{
+  position: absolute;
+  top: 70%;
+  right: 5%;
+}

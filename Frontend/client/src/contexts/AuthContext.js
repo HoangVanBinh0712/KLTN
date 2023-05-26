@@ -14,6 +14,7 @@ const AuthContextProvider = ({ children }) => {
     user: null,
     role: null,
   });
+  const [openRoomFromProfile, setOpenRoomFromProfile] = useState(null);
 
   const navigate = useNavigate();
 
@@ -1147,7 +1148,9 @@ const AuthContextProvider = ({ children }) => {
     showToast,
     setShowToast,
     authState,
-    setUser
+    setUser,
+    openRoomFromProfile, 
+    setOpenRoomFromProfile
   };
 
   //return

@@ -21,10 +21,10 @@ import SearchCandidates from "../employer_scenes/components/SearchCandidates";
 import StatiticsPage from "../employer_scenes/components/StatiticsPage";
 import { AuthContext } from "../contexts/AuthContext";
 
-
 const EmployerRoute = ({ ...rest }) => {
-
-  const {authState:{authloading, role}}=useContext(AuthContext)
+  const {
+    authState: { authloading, role },
+  } = useContext(AuthContext);
   const location = useLocation();
   const currentUrl = location.pathname;
 
@@ -34,12 +34,11 @@ const EmployerRoute = ({ ...rest }) => {
     return <Navigate to="/home" />;
   }
   if (currentUrl === "/employer/login") {
-    return <Navigate to="/user/login"/>
+    return <Navigate to="/user/login" />;
   }
   //Check if user logged in
-  if (currentUrl === "/employer/account")
-    return <Navigate to="/employer/account/employer-info" />;
-  else if(!authloading && role==="ROLE_EMPLOYER"){
+  if (currentUrl === "/employer/account") return <Navigate to="/employer/account/employer-info" />;
+  else if (!authloading && role === "ROLE_EMPLOYER") {
     body = (
       <Routes>
         <Route path="/employer/login" element={<Login />} />
@@ -48,36 +47,25 @@ const EmployerRoute = ({ ...rest }) => {
         <Route path="/post/:id" element={<PostDetails />} />
         <Route path="/employer/post/:id" element={<PostDetails />} />
         <Route path="/employer/candidates/:id" element={<EmployeeProfile />} />
-        <Route path="/employer/account" element={!authloading && role === "ROLE_EMPLOYER" ? (<EmployerAccount />)
-          :(<Navigate to="/user/login" />)}>
-          <Route path="employer-info"  element={!authloading && role === "ROLE_EMPLOYER" ? (<EmployerInfo />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="change-password" element={!authloading && role === "ROLE_EMPLOYER" ? (<EmployerChangePassword />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="verify-email"  element={!authloading && role === "ROLE_EMPLOYER" ? (<EmployerVerifyEmail />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="add-post"  element={!authloading && role === "ROLE_EMPLOYER" ? (<AddPostComponent />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="job-posting"  element={!authloading && role === "ROLE_EMPLOYER" ? (<JobPostingComponent />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="cus-service"  element={!authloading && role === "ROLE_EMPLOYER" ? (<PageCustomerServices />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="post-submitted"  element={!authloading && role === "ROLE_EMPLOYER" ? (<CandidatesProfile />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="post-submitted/:id"  element={!authloading && role === "ROLE_EMPLOYER" ? (<SubmitDetail />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="purchase-history"  element={!authloading && role === "ROLE_EMPLOYER" ? (<PurchaseHistory />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="current-services"  element={!authloading && role === "ROLE_EMPLOYER" ? (<CurrentService />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="search-candidates"  element={!authloading && role === "ROLE_EMPLOYER" ? (<SearchCandidates />)
-          :(<Navigate to="/user/login" />)}/>
-          <Route path="recruitment-statistics"  element={!authloading && role === "ROLE_EMPLOYER" ? (<StatiticsPage />)
-          :(<Navigate to="/user/login" />)}/>
+        <Route path="/employer/account" element={!authloading && role === "ROLE_EMPLOYER" ? <EmployerAccount /> : <Navigate to="/user/login" />}>
+          <Route path="employer-info" element={!authloading && role === "ROLE_EMPLOYER" ? <EmployerInfo /> : <Navigate to="/user/login" />} />
+          <Route path="change-password" element={!authloading && role === "ROLE_EMPLOYER" ? <EmployerChangePassword /> : <Navigate to="/user/login" />} />
+          <Route path="verify-email" element={!authloading && role === "ROLE_EMPLOYER" ? <EmployerVerifyEmail /> : <Navigate to="/user/login" />} />
+          <Route path="add-post" element={!authloading && role === "ROLE_EMPLOYER" ? <AddPostComponent /> : <Navigate to="/user/login" />} />
+          <Route path="job-posting" element={!authloading && role === "ROLE_EMPLOYER" ? <JobPostingComponent /> : <Navigate to="/user/login" />} />
+          <Route path="cus-service" element={!authloading && role === "ROLE_EMPLOYER" ? <PageCustomerServices /> : <Navigate to="/user/login" />} />
+          <Route path="post-submitted" element={!authloading && role === "ROLE_EMPLOYER" ? <CandidatesProfile /> : <Navigate to="/user/login" />} />
+          <Route path="post-submitted/:id" element={!authloading && role === "ROLE_EMPLOYER" ? <SubmitDetail /> : <Navigate to="/user/login" />} />
+          <Route path="purchase-history" element={!authloading && role === "ROLE_EMPLOYER" ? <PurchaseHistory /> : <Navigate to="/user/login" />} />
+          <Route path="current-services" element={!authloading && role === "ROLE_EMPLOYER" ? <CurrentService /> : <Navigate to="/user/login" />} />
+          <Route path="search-candidates" element={!authloading && role === "ROLE_EMPLOYER" ? <SearchCandidates /> : <Navigate to="/user/login" />} />
+          <Route path="recruitment-statistics" element={!authloading && role === "ROLE_EMPLOYER" ? <StatiticsPage /> : <Navigate to="/user/login" />} />
         </Route>
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     );
+  } else {
+    return <Navigate to="/user/login" />;
   }
 
   return <>{body}</>;

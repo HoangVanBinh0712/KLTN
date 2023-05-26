@@ -70,6 +70,8 @@ const EmployeeRoute = ({ ...rest }) => {
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     );
+  }else {
+    return <Navigate to="/user/login" />;
   }
   return <>{body}</>;
 };

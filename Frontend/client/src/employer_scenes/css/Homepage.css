@@ -300,8 +300,8 @@ body {
 }
 
 .type-of-work {
-    width: 20%;
-    border: 1px solid #adc6ff;
+    width: max-content;
+    padding: 2px;    border: 1px solid #adc6ff;
     text-align: center;
     border-radius: 3px;
     color: #1d39cf;
