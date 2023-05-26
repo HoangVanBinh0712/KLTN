@@ -11,6 +11,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from "../contexts/AuthContext";
 import swal from "sweetalert";
+import addIcon from '../assets/icons/add-icon.png'
 
 const Reports = () => {
   const theme = useTheme();
@@ -19,12 +20,105 @@ const Reports = () => {
   const { changeReportHandleByAdmin, getReportByAdmin } = useContext(AuthContext)
 
   const maxDate = new Date()
+  const getPostDate = (date, reverse) => {
+    const myDate = new Date(date);
+    const day = ("0" + myDate.getDate()).slice(-2);
+    const month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+    const year = myDate.getFullYear();
+    if (reverse)
+      return (`${year}-${month}-${day}`)
+    return (`${day}-${month}-${year}`)
+  }
 
+  const getPostTime = (date) => {
+    const myDate = new Date(date);
+    const day = ("0" + myDate.getDate()).slice(-2);
+    const month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+    const year = myDate.getFullYear();
+    const min = String(myDate.getMinutes()).padStart(2, '0');
+    const hour = String(myDate.getHours()).padStart(2, '0');
+    return (`${min}:${hour} ${day}-${month}-${year}`)
+  }
+
+  const defaultRp = {
+    id: 4,
+    name: "string",
+    phone: "0329548930",
+    email: "strings@gmail.com",
+    reportContent: "string string string string string string string string",
+    handle: false,
+    date: "2023-05-14 01:58:18",
+    post: {
+      id: '',
+      title: "",
+      description: "",
+      method: "",
+      position: "",
+      experience: "",
+      gender: "",
+      requirement: "",
+      benifit: "",
+      contact: "",
+      salary: null,
+      currency: "",
+      location: "",
+      recruit: 0,
+      createDate: "2023-01-07 10:56:01",
+      expirationDate: "",
+      author: {
+        id: '',
+        email: "",
+        emailConfirm: false,
+        name: "",
+        phone: "",
+        city: {
+          id: 0,
+          name: ""
+        },
+        industry: {
+          id: 0,
+          name: ""
+        },
+        urlAvatar: null,
+        urlCover: null,
+        address: "",
+        description: "",
+        role: "",
+        createDate: "2023-01-07 00:00:00",
+        active: false,
+        service: {
+          id: 0,
+          name: "Premiun Serivce",
+        },
+        serviceExpirationDate: "2025-01-07 00:00:00"
+      },
+      industry: {
+        id: 0,
+        name: ""
+      },
+      city: {
+        id: 0,
+        name: ""
+      },
+      status: "",
+      viewCount: 0,
+      service: {
+        id: 0,
+        name: "Premiun Serivce",
+      },
+    }
+  }
   const [searchKey, setSearchKey] = useState({
     postId: '',
     handle: '',
     date: '',
   })
+  const [inputPostId, setInputPostId] = useState('')
+  const [inputDateReport, setInputDateReport] = useState('')
+  const [isViewDetail, setIsViewDetail] = useState(false)
+  const [isViewPostDetails, setIsViewPostDetails] = useState(false)
+  const [reportChosen, setReportChosen] = useState(defaultRp)
+
   const [listRp, setListRp] = useState([])
 
   const createSearchPararam = (obj) => {
@@ -60,11 +154,11 @@ const Reports = () => {
   useEffect(() => {
     const query = createSearchPararam(searchKey)
     getRpList(query)
-  }, [])
+  }, [searchKey])
 
 
 
-  const DropdownBox = ({ onClick1, onClick2, index, indus }) => {
+  const DropdownBox = ({ onClick1, onClick2, index, report }) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -81,13 +175,24 @@ const Reports = () => {
             style={{ top: `${40 + (index + 1) * 40}px`, right: '20px' }}>
             <Box
               className="dropdown-option"
-              onClick={() => onClick1(indus)}
+              onClick={() => onClick1(report)}
             >
               View Detail
             </Box>
             <Box
               className="dropdown-option"
-              onClick={() => onClick2(indus)}
+              onClick={() => swal({
+                title: "Are you sure you want to change this report status?",
+                icon: "warning",
+                text: `This action will be cgange status to ${!report.handle ? "Solved" : 'Not resolve'}.`,
+                buttons: {
+                  cancel: "No, cancel",
+                  confirm: "Yes, proceed"
+                },
+                dangerMode: true
+              }).then((isConfirmed) => {
+                if (isConfirmed) onClick2(report.id, !report.handle)
+              })}
             >
               Mark as solved
             </Box>
@@ -98,22 +203,53 @@ const Reports = () => {
   }
 
   const onClickView = (data) => {
-    /* setIndustryChosen({
-      id: data.id,
-      name: data.name,
-    })
-    setIsUpdateService(false)
-    setInfoForm(true) */
+    setReportChosen(data)
+    setIsViewDetail(true)
   }
 
-  const onClicSetHandle = (data) => {
-    /* setIndustryChosen({
-      id: data.id,
-      name: data.name,
+  const onClicSetHandle = async (id, handle) => {
+    const res = await changeReportHandleByAdmin(id, handle)
+    if (res.success) {
+      swal({
+        title: "Success",
+        icon: "success",
+        text: reportChosen.handle ? 'Report status was changed to solved successfully!' : 'Report status was changed to Not resolved successfully!',
+      })
+      const query = createSearchPararam(searchKey)
+      getRpList(query)
+    }
+    else swal({
+      title: "Error",
+      icon: "warning",
+      text: res.message,
+      dangerMode: true,
     })
-    setIsUpdateService(true)
-    setInfoForm(true) */
   }
+
+  const onChangInputPostId = (event) => {
+    setInputPostId(event.target.value)
+  }
+
+  const onChangInputDate = (event) => {
+    setInputDateReport(event.target.value)
+  }
+
+  const onChangeSelectReportStatus = (event) => {
+    setSearchKey({
+      ...searchKey,
+      handle: event.target.value
+    })
+  }
+
+  const onClickSearchID = () => setSearchKey({
+    ...searchKey,
+    postId: inputPostId
+  })
+
+  const onClickSearchIDDate = () => setSearchKey({
+    ...searchKey,
+    date: inputDateReport.length > 0 ? getPostDate(inputDateReport, true) : ''
+  })
 
   const columns = [
     {
@@ -177,7 +313,7 @@ const Reports = () => {
       renderCell: ({ row: { handle } }) => {
         return (
           <Box
-            width="100%"
+            width="80%"
             m="0 auto"
             p="5px"
             display="flex"
@@ -209,7 +345,7 @@ const Reports = () => {
       renderCell: (params) => {
         return (
           <>
-            <DropdownBox onClick1={onClickView} onClick2={onClicSetHandle} index={params.rowIndex} indus={params.row} />
+            <DropdownBox onClick1={onClickView} onClick2={onClicSetHandle} index={params.rowIndex} report={params.row} />
           </>
         );
       },
@@ -217,7 +353,7 @@ const Reports = () => {
   ];
 
   return (
-    <Box m="0 20px 20px 20px">
+    <Box m="2px 20px 20px 20px">
       <Box
         display='flex'
         justifyContent='space-between'
@@ -231,11 +367,11 @@ const Reports = () => {
             display="flex"
             backgroundColor={colors.primary[400]}
             borderRadius="3px"
-            height='50px'
+            height='56px'
             width='50%'
           >
-            <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search by post ID" onChange={'onChangeInputSearch'} />
-            <IconButton type="button" sx={{ p: 2 }} onClick={() => 'onClickSearch'()}>
+            <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search by post ID" onChange={onChangInputPostId} />
+            <IconButton type="button" sx={{ p: 2 }} onClick={() => onClickSearchID()}>
               <SearchIcon />
             </IconButton>
           </Box>
@@ -243,15 +379,18 @@ const Reports = () => {
             display="flex"
             backgroundColor={colors.primary[400]}
             borderRadius="3px"
-            height='50px'
+            height='56px'
             width='50%'
             marginLeft='10px'
           >
-            <InputBase sx={{ ml: 2, flex: 1 }} 
-            placeholder="Search by date" 
-            onChange={'onChangSelectNtd'} 
-            type="date" max='2023-05-26'/>
-            <IconButton type="button" sx={{ p: 2 }} onClick={() => 'onClickSearchNtd'()}>
+            <InputBase sx={{ ml: 2, flex: 1 }}
+              placeholder="Search by date"
+              onChange={onChangInputDate}
+              type="date"
+              inputProps={{
+                max: getPostDate(maxDate, true),
+              }} />
+            <IconButton type="button" sx={{ p: 2 }} onClick={() => onClickSearchIDDate()}>
               <SearchIcon />
             </IconButton>
           </Box>
@@ -261,7 +400,7 @@ const Reports = () => {
                 border: '1px solid #fff'
               }}
               value={''}
-              onChange={'onChangSelectService'}
+              onChange={onChangeSelectReportStatus}
               displayEmpty
               inputProps={{ 'aria-label': 'Without label' }}
             >
@@ -309,6 +448,249 @@ const Reports = () => {
       >
         <DataGrid /* checkboxSelection */ disableRowSelectionOnClick rows={listRp} columns={columns} />
       </Box>
+      <div className='change-report-info-form' style={isViewDetail ? { display: 'block' } : { display: 'none' }}>
+        <div className='form-change-report-control'>
+          <div style={{ display: 'flex', justifyContent: 'space-between', height: '40px' }}>
+            <div style={{ color: "#0c62ad", fontSize: '18px', fontWeight: '500' }}>{`Report ID: ${reportChosen.id}`}</div>
+            <div><img src={addIcon} className='close-form-submit' alt=''
+              onClick={() => {
+                setIsViewPostDetails(false)
+              }
+              } /></div>
+          </div>
+          <label style={reportChosen.handle ? { color: '#3da58a' } : { color: '#f8bc6e' }}>{reportChosen.handle ? 'Solved' : '*Not resolve'}</label>
+          <div className="fram-info-report">
+            <div className="gr-int-value">
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '10px' }}>
+                <div>Report by:</div>
+                <div style={{ color: "#0c62ad" }}>{`Report date: ${getPostDate(reportChosen.date)}`}</div>
+              </div>
+              <div className="report-by-form-info">
+                <div>
+                  <label>{`Name: ${reportChosen.name}`}</label>
+                </div>
+                <div>
+                  <label>{`Email: ${reportChosen.email}`}</label>
+                </div>
+              </div>
+            </div>
+            <div className="gr-int-value">
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0 5px 0' }}>
+                <div>Post by:</div>
+
+              </div>
+              <div className="report-by-form-info">
+                <div>
+                  <label>{`Name: ${reportChosen.post.author.name}`}</label>
+                </div>
+                <div>
+                  <label>{`Email: ${reportChosen.post.author.email}`}</label>
+                </div>
+                <div>
+                  <label>{`Phone: ${reportChosen.post.author.phone}`}</label>
+                </div>
+                <div>
+                  <label>{`Role: ${reportChosen.post.author.role}`}</label>
+                </div>
+                <div style={{ color: "#0c62ad" }}>
+                  {`The date the post was posted: ${getPostDate(reportChosen.post.createDate)}`}
+                </div>
+              </div>
+            </div>
+            <div className="gr-int-value">
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0 5px 0' }}>
+                <div>Reason for reporting:</div>
+                <div className="view-post-btn-form-report"
+                  onClick={() => setIsViewPostDetails(true)}
+                > View post details</div>
+              </div>
+              <div className="report-by-form-info">
+                <div>
+                  <label style={{ color: '#f8bc6e' }}>{`${reportChosen.reportContent}`}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="group-buttons flex-row "
+            style={{ display: 'flex', justifyContent: 'end', marginTop: '1.2em', gap: '1em' }}>
+            {reportChosen.handle ? (
+              <div className="button al-content-btn" onClick={() => swal({
+                title: "Are you sure you want to change this report status?",
+                icon: "warning",
+                text: `This action will be cgange status to ${!reportChosen.handle ? "Solved" : 'Not resolve'}.`,
+                buttons: {
+                  cancel: "No, cancel",
+                  confirm: "Yes, proceed"
+                },
+                dangerMode: true
+              }).then((isConfirmed) => {
+                if (isConfirmed) {
+                  onClicSetHandle(reportChosen.id, !reportChosen.handle)
+                  setIsViewPostDetails(false)
+                }
+              })}>
+                <i className="fa fa-file-text-o" aria-hidden="true" ></i>
+                Change to Pending solve
+              </div>
+            ) : (
+              <div className="button al-content-btn" onClick={() => swal({
+                title: "Are you sure you want to change this report status?",
+                icon: "warning",
+                text: `This action will be cgange status to ${!reportChosen.handle ? "Solved" : 'Not resolve'}.`,
+                buttons: {
+                  cancel: "No, cancel",
+                  confirm: "Yes, proceed"
+                },
+                dangerMode: true
+              }).then((isConfirmed) => {
+                if (isConfirmed) {
+                  onClicSetHandle(reportChosen.id, !reportChosen.handle)
+                  setIsViewPostDetails(false)
+                }
+              })}>
+                <i className="fa fa-file-text-o" aria-hidden="true" ></i>
+                Change to Solved
+              </div>
+            )}
+
+            <div className="button btn-close al-content-btn"
+              onClick={() => {
+                setIsViewDetail(false)
+              }}>
+              <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', marginTop: '10px' }}></i>
+              CLOSE
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Post detail */}
+      <div className='change-report-info-form' style={isViewPostDetails ? { display: 'block' } : { display: 'none' }}>
+        <div className='form-change-report-control'>
+          <div style={{ display: 'flex', justifyContent: 'space-between', height: '40px' }}>
+            <div style={{ display: 'flex' }}>
+              <div style={{ color: "#0c62ad", fontSize: '18px', fontWeight: '500' }}>
+                {`Post ID: ${reportChosen.post.id}  -`}
+              </div>
+              <div style={{ color: "#3da58a", fontSize: '18px', fontWeight: '500', textTransform: 'uppercase' }}>
+                {` ${reportChosen.post.service.name}`}
+              </div>
+              <div style={{ color: "#6c6c6c", fontSize: '16px', paddingLeft: '40px' }}>
+                {`View: ${reportChosen.post.viewCount}`}
+              </div>
+            </div>
+            <div><img src={addIcon} className='close-form-submit' alt=''
+              onClick={() => {
+                setIsViewPostDetails(false)
+              }
+              } /></div>
+          </div>
+          <div className="fram-info-report" style={{ marginTop: '5px' }}>
+            <div className="gr-int-value">
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Post title:</div>
+                <input value={reportChosen.post.title}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+                <div style={{ width: '50%', display: 'flex', justifyContent: 'end', color: '#0c62ad' }}>
+                  {`Created time: ${getPostTime(reportChosen.post.createDate)}`}
+                </div>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
+                <div style={{ width: '12%' }}>Description:</div>
+                <textarea value={reportChosen.post.description} disabled
+                  className="textarea-view-post-details"
+                  id='desc-post-report-view'
+                  style={{ width: '88%' }}></textarea>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
+                <div style={{ width: '12%' }}>Requirement:</div>
+                <textarea value={reportChosen.post.requirement} disabled
+                  className="textarea-view-post-details"
+                  id='desc-post-report-view'
+                  style={{ width: '88%' }}></textarea>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
+                <div style={{ width: '12%' }}>Benefit:</div>
+                <textarea value={reportChosen.post.benifit} disabled
+                  className="textarea-view-post-details"
+                  id='desc-post-report-view'
+                  style={{ width: '88%' }}></textarea>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>
+                  {`Salary ${reportChosen.post.currency !== 'AGREEMENT' ? `(${reportChosen.post.currency})` : ''}:`}
+                </div>
+                <input
+                  value={reportChosen.post.currency !== 'AGREEMENT' ? reportChosen.post.salary : reportChosen.post.currency}
+                  disabled className="input-view-post-details"
+                  style={{ width: '40%' }}>
+
+                </input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Method:</div>
+                <input value={reportChosen.post.method}
+                  disabled className="input-view-post-details"
+                  style={{ width: '21%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Position:</div>
+                <input value={reportChosen.post.position}
+                  disabled className="input-view-post-details"
+                  style={{ width: '21%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Experience:</div>
+                <input value={reportChosen.post.experience}
+                  disabled className="input-view-post-details"
+                  style={{ width: '22%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Recruit:</div>
+                <input value={reportChosen.post.recruit}
+                  disabled className="input-view-post-details"
+                  style={{ width: '21%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Gender:</div>
+                <input value={reportChosen.post.gender}
+                  disabled className="input-view-post-details"
+                  style={{ width: '21%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Expiration:</div>
+                <input value={reportChosen.post.expiration}
+                  type="date"
+                  disabled className="input-view-post-details"
+                  style={{ width: '22%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Location:</div>
+                <input value={reportChosen.post.location}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>Contact:</div>
+                <input value={reportChosen.post.contact}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '12%' }}>Industry:</div>
+                <input value={reportChosen.post.industry.name}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+                <div style={{ width: '12%', padding: '0 0 0 20px' }}>City:</div>
+                <input value={reportChosen.post.city.name}
+                  disabled className="input-view-post-details"
+                  style={{ width: '38%' }}></input>
+              </div>
+            </div>
+          </div>
+          <div className="group-buttons flex-row "
+            style={{ display: 'flex', justifyContent: 'end', marginTop: '1.2em', gap: '1em' }}>
+            <div className="button btn-close al-content-btn"
+              onClick={() => {
+                setIsViewPostDetails(false)
+              }}>
+              <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', marginTop: '10px' }}></i>
+              CLOSE
+            </div>
+          </div>
+        </div>
+      </div>
     </Box>
   );
 };

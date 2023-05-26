@@ -23,7 +23,6 @@ const LoginPageAdmin = () => {
         try {
             const data = new FormData(event.currentTarget);
             const response = await loginUser(data, 'ROLE_ADMIN')
-            console.log(response)
             if (response.userInfo.role ==='ROLE_ADMIN') {
                 return <Navigate to ='/admin/dashboard'/>
             }

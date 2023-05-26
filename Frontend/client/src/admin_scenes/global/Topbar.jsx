@@ -24,6 +24,10 @@ const Topbar = () => {
       title: "Info",
       icon: "info",
       text: "Do you want to logout ? ",
+      buttons: {
+        cancel: "No, cancel",
+        confirm: "Yes, proceed"
+      },
     }).then((click) => {
       if (click) {
         logoutSection();
