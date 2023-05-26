@@ -610,7 +610,6 @@ const Post = () => {
         </div>
       </div>
 
-
       {/* Post detail */}
       <div className='change-report-info-form'
         style={isViewPostDetails ? { display: 'block', overflowY: 'auto', paddingTop: '3%' }
