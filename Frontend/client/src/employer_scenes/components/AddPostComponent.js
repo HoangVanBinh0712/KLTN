@@ -323,7 +323,7 @@ const AddPostComponent = () => {
               </div>
               <div className="input-wrapper" style={{ width: '100%' }}>
                 <div className="label">Salary</div>
-                <input type="number" name="title" value={salary}
+                <input type="number" name="title" value={salary} disabled={currency==="AGREEMEMT"}
                   id="inp-add-post-page"
                   onChange={onChangeSalary}
                 ></input>
