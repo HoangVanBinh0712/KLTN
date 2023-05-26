@@ -318,12 +318,12 @@ const AddPostComponent = () => {
                     style={{ width: '15%' }}
                     onChange={onChangeCurencyType}
                   />
-                  <label for="currency3" style={{ width: '120px', marginLeft: '5px', }}>Aggreement</label>
+                  <label for="currency3" style={{ width: '120px', marginLeft: '5px', }}>Agreement</label>
                 </div>
               </div>
               <div className="input-wrapper" style={{ width: '100%' }}>
                 <div className="label">Salary</div>
-                <input type="number" name="title" value={salary} disabled={currency==="AGREEMEMT"}
+                <input type="number" name="title" value={salary} disabled={currency==="AGREEMENT"}
                   id="inp-add-post-page"
                   onChange={onChangeSalary}
                 ></input>
