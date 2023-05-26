@@ -163,7 +163,7 @@ const SubmitDetail = () => {
             empId: user.id,
             userId: jskIdSubmit,
             note: noteAppoint,
-            startTime: new Date(appointmentTime),
+            startTime: appointmentTime,
         }
         const res = await createAppointment(info)
         console.log(res)
@@ -262,7 +262,7 @@ const SubmitDetail = () => {
                     Personality is guessed based on the cover letter:
                 </p>
                 <div style={{ color: '#0c62ad', padding: '0 10px' }}>
-                    {findPersonalityDesc(predictData.personality)}
+                    {`${predictData.personality}: ${findPersonalityDesc(predictData.personality)}`}
                 </div>
                 <div className="group-buttons flex-row"
                     style={{ display: 'flex', justifyContent: 'end', marginTop: '20px', gap: '1em' }}>
