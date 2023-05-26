@@ -53,7 +53,9 @@ const EmployeeRoute = ({ ...rest }) => {
         <Route path="/post/:id" element={<PostDetails />} />
         <Route path="/posts" element={<SearchPageComponent />} />
         <Route path="/posts/:keyword" element={<SearchPageComponent />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/recruiter/:id" element={<EmployerProfile />} />
+        <Route path="/highlight-company" element={<HighLightCompany />} />
         <Route path="/user/account" element={!authloading && role === "ROLE_USER" ? <EmployeeAccountPage /> : <Navigate to="/user/login" />}>
           <Route path="personal-info" element={!authloading && role === "ROLE_USER" ? <PersonalInfoComponent /> : <Navigate to="/user/login" />} />
           <Route path="achievement" element={!authloading && role === "ROLE_USER" ? <UserAchievement /> : <Navigate to="/user/login" />} />
@@ -82,6 +84,8 @@ const EmployeeRoute = ({ ...rest }) => {
         <Route path="/posts" element={<SearchPageComponent />} />
         <Route path="/posts/:keyword" element={<SearchPageComponent />} />
         <Route path="/recruiter/:id" element={<EmployerProfile />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/highlight-company" element={<HighLightCompany />} />
         <Route path="/user/account" element={!authloading && role === "ROLE_USER" ? <EmployeeAccountPage /> : <Navigate to="/user/login" />}>
           <Route path="personal-info" element={!authloading && role === "ROLE_USER" ? <PersonalInfoComponent /> : <Navigate to="/user/login" />} />
         </Route>
