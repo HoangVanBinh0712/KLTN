@@ -71,6 +71,25 @@ const EmployeeRoute = ({ ...rest }) => {
       </Routes>
     );
   }
+  else {
+    body = (
+      <Routes>
+        <Route path="/user/login" element={<Login />} />
+        <Route path="/login/:token" element={<LoginGG />} />
+        <Route path="/user/register" element={<Register />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/post/:id" element={<PostDetails />} />
+        <Route path="/posts" element={<SearchPageComponent />} />
+        <Route path="/posts/:keyword" element={<SearchPageComponent />} />
+        <Route path="/recruiter/:id" element={<EmployerProfile />} />
+        <Route path="/user/account" element={!authloading && role === "ROLE_USER" ? <EmployeeAccountPage /> : <Navigate to="/user/login" />}>
+          <Route path="personal-info" element={!authloading && role === "ROLE_USER" ? <PersonalInfoComponent /> : <Navigate to="/user/login" />} />
+        </Route>
+        <Route path="/*" element={<PageNotFound />} />
+      </Routes>
+    );
+  }
+
   return <>{body}</>;
 };
 

@@ -8,14 +8,39 @@ import { SingleRowSubmit } from './SingleRowSubmit'
 import { useContext, useEffect, useState } from 'react';
 import { PostContext } from '../../contexts/PostContext';
 import { useToast } from '../../contexts/Toast';
+import { AuthContext } from '../../contexts/AuthContext';
 
 
 const SubmitDetail = () => {
 
     let { id } = useParams();
+    const { authState: { user }, createAppointment } = useContext(AuthContext)
     const { getCvSubmited, getPostById } = useContext(PostContext)
-    const {warn, success} = useToast()
+    const { warn, success } = useToast()
 
+    const personnalityArr = [
+        { name: 'INTJ', desc: 'Imaginative and strategic thinkers, with a plan for everything' },
+        { name: 'INTP', desc: 'Innovative inventor; insatiable thirst for knowledge' },
+        { name: 'ENTJ', desc: 'Imaginative, strong willed, and always able to find a way' },
+        { name: 'ENTP', desc: 'Smart and curious who cannot resist an intellectual challenge' },
+        { name: 'INFJ', desc: 'Quiet, inspiring, tireless idealist' },
+        { name: 'INFP', desc: 'Poetic, kind and altruistic, eager to help a good cause' },
+        { name: 'ENFJ', desc: 'Charismatic and inspiring, able to mesmerize listeners' },
+        { name: 'ENFP', desc: 'Enthusiastic, creative and free spirited; always finds a reason to smile' },
+        { name: 'ISTJ', desc: 'Practical and fact-minded; reliable' },
+        { name: 'ISFJ', desc: 'Dedicated and warm protector; ready to defend their loved ones' },
+        { name: 'ESTJ', desc: 'Great at managing things or people, excellent administrators' },
+        { name: 'ESFJ', desc: 'Caring, social, popular with people; always eager to help' },
+        { name: 'ISTP', desc: 'Bold and practical experimenters' },
+        { name: 'ISFP', desc: 'Flexible and charming artist; always looking for new experiences' },
+        { name: 'ESTP', desc: 'abcSmart, energetic, and very perceptive; loves living on the edge' },
+        { name: 'ESFP', desc: 'Spontaneous and enthusiastic; life of the party' },
+    ]
+
+    const findPersonalityDesc = (name) => {
+        const result = personnalityArr.find(personality => personality.name === name);
+        return result ? result.desc : null;
+    }
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
@@ -24,6 +49,7 @@ const SubmitDetail = () => {
     const [listSubmittion, setListSubmiition] = useState([])
     const [postCurrent, setPostCurrent] = useState({})
     const [isPredict, setIsPredict] = useState(false)
+    const [predictData, setPredictData] = useState('')
     const [isAppointment, setIsAppointment] = useState(false)
     const [jskIdSubmit, setJskSubmit] = useState(0)
     const [noteAppoint, setNoteAppoint] = useState('')
@@ -54,6 +80,11 @@ const SubmitDetail = () => {
         setJskSubmit(id)
     }
 
+    const openPredictPersonal = (data) => {
+        setPredictData(data)
+        setIsPredict(true)
+    }
+
     const allSubmit = chuckPosts(listSubmittion, 8)
 
     const [currentPage, setCurrentPage] = useState(0)
@@ -67,7 +98,7 @@ const SubmitDetail = () => {
     if (listSubmittion.length > 0) {
         listData = (<>
             {allSubmit[currentPage].map((sub, id) => (
-                <SingleRowSubmit submit={sub} num={id} position={postCurrent.position} key={id} openAppointment={openAndSetId} />
+                <SingleRowSubmit submit={sub} num={id} position={postCurrent.position} key={id} openAppointment={openAndSetId} predict={openPredictPersonal} />
             ))
             }
         </>)
@@ -128,10 +159,16 @@ const SubmitDetail = () => {
     }
 
     const onClickCreateAppoint = async () => {
+        const info = {
+            empId: user.id,
+            userId: jskIdSubmit,
+            note: noteAppoint,
+            startTime: new Date(appointmentTime),
+        }
+        const res = await createAppointment(info)
+        console.log(res)
         success('Created Appointment successfully!')
-        setTimeout(() => {
-            setIsAppointment(false)
-          }, 2000)
+        setIsAppointment(false)
     }
 
     const onChangeAppointmentDate = (event) => {
@@ -201,32 +238,46 @@ const SubmitDetail = () => {
                 </div>
             </div>
         </div>
+
+
         <div className='form-submit-cv' style={isPredict ? { display: 'block' } : { display: 'none' }}>
             <div className='form-submit-report-control'>
-                <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
-                    {/* <div className='name-post-report'>
-                        {data.title}
+                <div style={{ display: 'flex', justifyContent: 'space-between', height: '40px' }}>
+                    <div style={{ color: '#0c62ad', fontWeight: 600 }}>
+                        Information about job seekers
                     </div>
-                    <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { closeFormReport() }} /></div> */}
+                    <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { setIsPredict(false) }} /></div>
                 </div>
                 <div style={{ display: 'flex', height: '30px', fontSize: '1em', color: "#6c6c6c" }}>
-                    {' * '}Let us know why you're reporting this post.
+                    {' * '}Here is the introduction that the candidate wants to show you.
                 </div>
-                {/* <p style={{ color: '#ff453a', fontSize: '1em' }}> {mess}</p>
+                <p style={{ color: '#000', fontSize: '1em', fontWeight: 500 }}> Introduction:</p>
+                <textarea value={predictData.coverLetter}
+                    style={{
+                        padding: '5px 10px', width: '100%', minHeight: '250px', border: "1px solid #6c6c6c",
+                        borderRadius: '3px', color: '#6c6c6c'
+                    }}
+                > </textarea>
+                <p style={{ color: '#000', fontSize: '1em', fontWeight: 500, paddingTop: '20px' }}>
+                    Personality is guessed based on the cover letter:
+                </p>
+                <div style={{ color: '#0c62ad', padding: '0 10px' }}>
+                    {findPersonalityDesc(predictData.personality)}
+                </div>
                 <div className="group-buttons flex-row"
                     style={{ display: 'flex', justifyContent: 'end', marginTop: '20px', gap: '1em' }}>
-                    <div className="button" onClick={() => submitReport()}>
-                        <i className="fa fa-paper-plane" aria-hidden="true"></i>
-                        SEND
-                    </div>
-                    <div className="button btn-close" onClick={() => { closeFormReport() }}>
+
+                    <div className="button btn-close" onClick={() => { setIsPredict(false) }}>
                         <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', }}></i>
                         CLOSE
                     </div>
-                </div> */}
+                </div>
 
             </div>
         </div>
+
+
+
         <div className='form-submit-cv' style={isAppointment ? { display: 'block' } : { display: 'none' }}>
             <div className='form-submit-report-control'>
                 <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
