@@ -443,7 +443,7 @@ const ChatBox = () => {
         {view && (
           <div className="messages-info" id="messages-info">
             <h4>Your chats !</h4>
-            <div className="messages" id="listRoom">
+            <div className="messages" id="listRoom" style={{borderRadius:'0 7px 2px 7px'}}>
               <div
                 class="room "
                 id="room-gpt"
@@ -506,7 +506,7 @@ const ChatBox = () => {
         {gptOpen && (
           <div class="chat-wrapper" id="chat-wrapper-gpt">
             <div class="chat-room" id="chat-room-gpt">
-              <div class="chat-header" id="chat-room-gpt-header">
+              <div class="chat-header" id="chat-room-gpt-header" style={{borderRadius:'5px 5px 0 0'}}>
                 <img
                   class="avatar"
                   src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhst4ldgBOg9rtbkICkI7VFyOe407LtYYCjVv0cfHh44OfJXH2V8huGuxGKV1Q0skZQiPiSrlAZjfpfRW1mQoOYMXc_M30p_eSarCnCCKF8ukhOMKoTCSiKIREJHCtsNfpzMAvZ5Lk83zOuk_21Au7LVzOwH5E0kPFPuV1bObJWc29Vp_IeeCJn0QDmew/s640/chat-gpt-logo.jpg"
@@ -559,7 +559,7 @@ const ChatBox = () => {
         {listOpenRoom.map((table, index) => (
           <div key={index} className="chat-wrapper" id={`chat-wrapper-${table.roomId}`}>
             <div className="chat-room" id={`chat-room-${table.roomId}`}>
-              <div className="chat-header" id={`chat-room-${table.roomId}-header`}>
+              <div className="chat-header" id={`chat-room-${table.roomId}-header`} style={{borderRadius:'5px 5px 0 0'}}>
                 <img
                   className="avatar"
                   src={getRoomImage(table.roomId) ? getRoomImage(table.roomId) : userIcon}
