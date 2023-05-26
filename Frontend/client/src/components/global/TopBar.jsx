@@ -54,38 +54,7 @@ const TopBar = () => {
 
     let body
 
-    if (authloading) {
-        body = (
-            <div className="topbar-home">
-                <div className="logo-home">
-                    <Link to='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></Link>
-                </div>
-                <div className="menu-homepage" style={{width:'70%'}}>
-                    <div className="option-menu">
-                        <Link className="option-a-menu" to="/posts">Job</Link>
-                    </div>
-                    <div className="option-menu">
-                        <Link className="option-a-menu" to="/user/account">Profile & CV</Link>
-                    </div>
-                    <div className="option-menu">
-                        <Link className="option-a-menu" to="/highlight-company">Highligh Company</Link>
-                    </div>
-                    {/* <div className="option-menu">
-                        <Link className="option-a-menu" to="#_" >Tools</Link>
-                    </div> */}
-                </div>
-                
-                <div className="signipup-homepage ">
-                    <Link to='/user/login'><div className="login-reg-topbar signin-blue">Sign In</div></Link>
-                </div>
-                <div className="signipup-homepage ">
-                    <Link to='/user/register'><div className="login-reg-topbar signup-white">Sign up</div></Link>
-                </div>
-            </div>
-        )
-    }
-
-    else if (!authloading && role === "ROLE_USER") {
+    if (!authloading && role === "ROLE_USER") {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
@@ -223,9 +192,9 @@ const TopBar = () => {
                                 <div className='drop-text search-cv-chose'>
                                     <Link to='/employer/account/search-candidates' className='color-a-dropdownbox'>Looking for Candidates</Link>
                                 </div>
-                                <div className='drop-text brand-promotion-chose'>
+                                {/* <div className='drop-text brand-promotion-chose'>
                                     <Link to=' ' className='color-a-dropdownbox'>Brand Promotion</Link>
-                                </div>
+                                </div> */}
                                 <div className='drop-text change-pwd-chose'>
                                     <Link to='/employer/account/change-password' className='color-a-dropdownbox'>Change Password</Link>
                                 </div>
@@ -238,6 +207,38 @@ const TopBar = () => {
             </div>
         )
     }
+    else if (authloading) {
+        body = (
+            <div className="topbar-home">
+                <div className="logo-home">
+                    <Link to='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></Link>
+                </div>
+                <div className="menu-homepage" style={{width:'70%'}}>
+                    <div className="option-menu">
+                        <Link className="option-a-menu" to="/posts">Job</Link>
+                    </div>
+                    <div className="option-menu">
+                        <Link className="option-a-menu" to="/user/account">Profile & CV</Link>
+                    </div>
+                    <div className="option-menu">
+                        <Link className="option-a-menu" to="/highlight-company">Highligh Company</Link>
+                    </div>
+                    {/* <div className="option-menu">
+                        <Link className="option-a-menu" to="#_" >Tools</Link>
+                    </div> */}
+                </div>
+                
+                <div className="signipup-homepage ">
+                    <Link to='/user/login'><div className="login-reg-topbar signin-blue">Sign In</div></Link>
+                </div>
+                <div className="signipup-homepage ">
+                    <Link to='/user/register'><div className="login-reg-topbar signup-white">Sign up</div></Link>
+                </div>
+            </div>
+        )
+    }
+
+    
 
     return (
         <>

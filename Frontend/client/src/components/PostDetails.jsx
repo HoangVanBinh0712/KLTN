@@ -27,11 +27,85 @@ const PostDetails = () => {
     const { postState: { postFollow }, getPostById, followPost, unfollowPost, } = useContext(PostContext)
     const { success, warn } = useToast()
 
+    const data = {
+        id: 0,
+        title: "",
+        description: "",
+        method: "",
+        position: "",
+        experience: "",
+        gender: "",
+        requirement: "",
+        benifit: "",
+        contact: "",
+        salary: null,
+        currency: "",
+        location: "",
+        recruit: 0,
+        createDate: "2023-01-07 10:56:01",
+        expirationDate: "2023-06-06 00:00:00",
+        author: {
+            id: 0,
+            email: "",
+            emailConfirm: true,
+            name: "",
+            phone: "",
+            city: {
+                id: 1,
+                name: "TP Hồ Chí Minh"
+            },
+            industry: {
+                id: 1,
+                name: "IT"
+            },
+            urlAvatar: null,
+            urlCover: null,
+            address: "",
+            description: "",
+            role: "",
+            service: {
+                id: 0,
+                name: "",
+                description: "",
+                type: "",
+                price: 0,
+                currency: "",
+                postDuration: 2,
+                active: true,
+                canSearchCV: true,
+                canFilterCVSubmit: true
+            },
+            serviceExpirationDate: "2025-01-07 00:00:00"
+        },
+        industry: {
+            id: 1,
+            name: "IT"
+        },
+        city: {
+            id: 1,
+            name: "TP Hồ Chí Minh"
+        },
+        status: "ACTIVE",
+        viewCount: 7,
+        service: {
+            id: 3,
+            name: "Premiun Serivce",
+            description: "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
+            type: "PREMIUM",
+            price: 30,
+            currency: "USD",
+            postDuration: 2,
+            active: true,
+            canSearchCV: true,
+            canFilterCVSubmit: true
+        }
+    }
+
     const [isSubmitFormOpen, setSubmitForm] = useState(false)
     const [isReportFormOpen, setReportForm] = useState(false)
     const [isSubmited, setIsSubmited] = useState(false)
     const [allResume, setAllResume] = useState([])
-    const [dataPost, setDataPost] = useState({})
+    const [dataPost, setDataPost] = useState(data)
 
     const getAllResume = async () => {
         const res = await getResume()
@@ -66,80 +140,6 @@ const PostDetails = () => {
         }
 
     }, [user])
-
-    const data = dataPost.author === undefined ? {
-        "id": 1,
-        "title": "Second title",
-        "description": "Mặc áo vào thứ anh cần là nụ cười của em ?",
-        "method": "FULL_TIME",
-        "position": "Manager",
-        "experience": "THREE_YEAR",
-        "gender": "MALE",
-        "requirement": "Toeic 650+ or Ielts 6.0+",
-        "benifit": "Bao hiem suc khoe",
-        "contact": "MrBinh: 0337445599",
-        "salary": null,
-        "currency": "AGREEMENT",
-        "location": "Binh An, Di an",
-        "recruit": 15,
-        "createDate": "2023-01-07 10:56:01",
-        "expirationDate": "2023-06-06 00:00:00",
-        "author": {
-            "id": 3,
-            "email": "19110170@student.hcmute.edu.vn",
-            "emailConfirm": true,
-            "name": "Binh Company",
-            "phone": "0337445596",
-            "city": {
-                "id": 1,
-                "name": "TP Hồ Chí Minh"
-            },
-            "industry": {
-                "id": 1,
-                "name": "IT"
-            },
-            "urlAvatar": null,
-            "urlCover": null,
-            "address": "Ba Ria",
-            "description": "Phiên bản V583 - Lễ Hội Giáng Sinh sẽ được cập nhật vào ngày 22/12/2022 với các tính năng được mở rộng cùng trang bị mới với sức mạnh chiến đấu lớn. Nhanh tay tham gia cùng Võ Lâm Chi Mộng trải nghiệm các hoạt động mới.",
-            "role": "ROLE_EMPLOYER",
-            "service": {
-                "id": 3,
-                "name": "Premiun Serivce",
-                "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-                "type": "PREMIUM",
-                "price": 30,
-                "currency": "USD",
-                "postDuration": 2,
-                "active": true,
-                "canSearchCV": true,
-                "canFilterCVSubmit": true
-            },
-            "serviceExpirationDate": "2025-01-07 00:00:00"
-        },
-        "industry": {
-            "id": 1,
-            "name": "IT"
-        },
-        "city": {
-            "id": 1,
-            "name": "TP Hồ Chí Minh"
-        },
-        "status": "ACTIVE",
-        "viewCount": 7,
-        "service": {
-            "id": 3,
-            "name": "Premiun Serivce",
-            "description": "Premium service will allow employer to post a job recruitment and allow job seeker to submit their Resume to the post. Beside that employer are able to search for job seeker public resume and filter resume submit to their job recruitment.",
-            "type": "PREMIUM",
-            "price": 30,
-            "currency": "USD",
-            "postDuration": 2,
-            "active": true,
-            "canSearchCV": true,
-            "canFilterCVSubmit": true
-        }
-    } : dataPost
 
     const getPostDate = (date) => {
         const myDate = new Date(date);
@@ -339,18 +339,18 @@ const PostDetails = () => {
     return (<>
         <TopBar />
         <div className="post-detail">
-            <div className='post-title-intop'>{data.title}</div>
+            <div className='post-title-intop'>{dataPost.title}</div>
             <div className="post">
-                <img className="avatar" src={data.author.urlAvatar===null?logoIcon:data.author.urlAvatar} alt="" 
+                <img className="avatar" src={dataPost.author.urlAvatar===null?logoIcon:dataPost.author.urlAvatar} alt="" 
                 style={{ height: '100%', width: 'auto', cursor:'pointer' }} 
                 onClick={()=>ocClickToNTDProfile()}/>
                 <div className="post-info">
-                    <p className="title">{data.title}</p>
+                    <p className="title">{dataPost.title}</p>
                     <div className="post-description" onClick={()=>ocClickToNTDProfile()} style={{width:"140px", cursor:'pointer'}}>
-                        {data.author.name}
+                        {dataPost.author.name}
                     </div>
                     <div className="post-deadline-submit">
-                        Deadline for submission: {' '}{getPostDate(data.expirationDate)}
+                        Deadline for submission: {' '}{getPostDate(dataPost.expirationDate)}
                     </div>
                 </div>
                 {role !== "ROLE_EMPLOYER" ? (
@@ -392,7 +392,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Salary</h4>
-                                        <p>{data.salary !== null ? data.salary : ''}{' '}{data.currency}</p>
+                                        <p>{dataPost.salary !== null ? dataPost.salary : ''}{' '}{dataPost.currency}</p>
                                     </div>
                                 </div>
                                 <div className="item" style={{ backgroundColor: "inherit" }} >
@@ -401,7 +401,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Quantity</h4>
-                                        <p>{data.recruit} people</p>
+                                        <p>{dataPost.recruit} people</p>
                                     </div>
                                 </div>
                                 <div className="item" style={{ backgroundColor: "inherit" }}>
@@ -410,7 +410,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Type of work</h4>
-                                        <p>{getTypeJob(data.method)}</p>
+                                        <p>{getTypeJob(dataPost.method)}</p>
                                     </div>
                                 </div>
                                 <div className="item" style={{ backgroundColor: "inherit" }}>
@@ -419,7 +419,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Level</h4>
-                                        <p>{data.position}</p>
+                                        <p>{dataPost.position}</p>
                                     </div>
                                 </div>
                                 <div className="item" style={{ backgroundColor: "inherit" }}>
@@ -428,7 +428,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Gender</h4>
-                                        <p>{getGender(data.gender)}</p>
+                                        <p>{getGender(dataPost.gender)}</p>
                                     </div>
                                 </div>
                                 <div className="item" style={{ backgroundColor: "inherit" }}>
@@ -437,7 +437,7 @@ const PostDetails = () => {
                                     </div>
                                     <div className="item-detail">
                                         <h4>Experience</h4>
-                                        <p>{getExp(data.experience)}</p>
+                                        <p>{getExp(dataPost.experience)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -467,20 +467,20 @@ const PostDetails = () => {
 
                             <div className="left-group">
                                 <h3 style={{ fontWeight: "600" }}>Workplace</h3>
-                                <div className='workplace-inpost-detail'> {data.location}</div>
+                                <div className='workplace-inpost-detail'> {dataPost.location}</div>
                             </div>
                             <div className="detail">
                                 <h3 style={{ fontSize: "1.2em" }}>Description</h3>
-                                <p style={{ fontSize: "1em" }}>{data.description}</p>
+                                <div dangerouslySetInnerHTML={{__html: dataPost.description}} style={{ fontSize: "1em" }}></div>
 
                             </div>
                             <div className="detail">
                                 <h3 style={{ fontSize: "1.2em" }}>Requirement</h3>
-                                <p style={{ fontSize: "1em" }}>{data.requirement}</p>
+                                <div dangerouslySetInnerHTML={{__html: dataPost.requirement}} style={{ fontSize: "1em" }}></div>
                             </div>
                             <div className="detail">
                                 <h3 style={{ fontSize: "1.2em" }}>Benifit</h3>
-                                <p style={{ fontSize: "1em" }}>{data.benifit}</p>
+                                <div dangerouslySetInnerHTML={{__html: dataPost.benifit}} style={{ fontSize: "1em" }}></div>
                             </div>
                             <div className="detail">
                                 <h3 style={{ fontSize: "1.2em" }}>How to apply</h3>
@@ -511,7 +511,7 @@ const PostDetails = () => {
                                     </div>
                                 ) : (<></>)}
                                 <div className="post-deadline-submit">
-                                    Deadline for submission: {' '}{getPostDate(data.expirationDate)}
+                                    Deadline for submission: {' '}{getPostDate(dataPost.expirationDate)}
                                 </div>
                             </div>
                         </div>
@@ -527,20 +527,20 @@ const PostDetails = () => {
                             <div>
                                 <h3 style={{ fontSize: "1.2em", fontWeight: 700 }}>Industry</h3>
                                 <div className="mark">
-                                    {data.industry.name}
+                                    {dataPost.industry.name}
                                 </div>
                                 <h3 style={{ fontSize: "1.2em", fontWeight: 700 }}>Area</h3>
                                 <div className="mark">
-                                    {data.city.name}
+                                    {dataPost.city.name}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="content-footer">
-                    <h1 style={{ fontSize: '1.4em', fontWeight: "600" }}>{data.author.name} information
+                    <h1 style={{ fontSize: '1.4em', fontWeight: "600" }}>{dataPost.author.name} information
                         <span>
-                            <a href={`/recruiter/${data.author.id}`}>View company {" >>"}</a>
+                            <a href={`/recruiter/${dataPost.author.id}`}>View company {" >>"}</a>
                         </span>
                     </h1>
 
@@ -561,7 +561,7 @@ const PostDetails = () => {
                             </div>
                             <div className="item-detail">
                                 <h4>Headquarters</h4>
-                                <p>{data.author.address}</p>
+                                <p>{dataPost.author.address}</p>
                             </div>
                         </div>
                     </div>
@@ -569,7 +569,7 @@ const PostDetails = () => {
                         <img src={workIcon} alt="" />
                         <h3 style={{ fontSize: "1.2em", fontWeight: 600 }}>Jobs with the company</h3>
                         <span>
-                            <a href={`/recruiter/${data.author.id}`} style={{ fontSize: '1.2em', color: '#0c62ad' }}>View More</a>
+                            <a href={`/recruiter/${dataPost.author.id}`} style={{ fontSize: '1.2em', color: '#0c62ad' }}>View More</a>
                         </span>
                     </div>
                 </div>
@@ -579,7 +579,7 @@ const PostDetails = () => {
             <div className='form-submit-cv-control'>
                 <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
                     <div className='name-post-submit'>
-                        {data.title}
+                        {dataPost.title}
                     </div>
                     <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { closeFormClick() }} /></div>
                 </div>
