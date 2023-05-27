@@ -324,7 +324,7 @@ const TopBar = () => {
                     <Link to="/user/login"><div className="login-reg-topbar signin-blue">Sign In</div></Link>
                 </div>
                 <div className="signipup-homepage ">
-                    <Link to="/user/login"><div className="login-reg-topbar signup-white">Sign up</div></Link>
+                    <Link to="/user/register"><div className="login-reg-topbar signup-white">Sign up</div></Link>
                 </div>
             </div>
         )
