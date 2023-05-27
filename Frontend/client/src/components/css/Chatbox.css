@@ -340,6 +340,7 @@ button {
     display: flex;
     flex-direction: row-reverse;
     align-items: end;
+    z-index: 2;
 }
 
 .float-items .square-message {

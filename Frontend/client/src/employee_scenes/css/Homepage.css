@@ -136,6 +136,7 @@ body {
     padding: 10px;
     border-radius: 5px;
     align-items: center;
+    z-index: 1;
 }
 
 .keyword-search-inhome {
@@ -267,10 +268,10 @@ body {
 .post-item {
     width: 46%;
     background-color: #f2f7ff;
-    height: 165px;
     margin-right: 4%;
     display: flex;
     margin-top: 10px;
+    border-radius: 5px;
 }
 
 .logo-emp-post {
@@ -280,7 +281,7 @@ body {
 
 .img-inpost-homepage {
     max-height: 100%;
-    width: auto;
+    width: 100px;
 }
 
 .info-post-homepage {
@@ -294,6 +295,9 @@ body {
     font-size: 1.2em;
     width: 90%;
     text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .post-title-homepage a {
@@ -331,8 +335,8 @@ body {
 .heart-icon {
     height: 1.6em;
     width: 1.6em;
-    background-image: url("../../assets/icons/round-heart-icon.png");
-    background-size: cover;
+    /* background-image: url("../../assets/icons/round-heart-icon.png"); */
+    /* background-size: cover; */
     cursor: pointer;
 }
 

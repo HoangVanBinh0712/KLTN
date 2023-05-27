@@ -1,6 +1,6 @@
 import roundheartIcon from "../../assets/icons/round-heart-icon.png"
 import heartIcon from "../../assets/icons/heart-icon.png"
-import logoPost from "../../assets/icons/logo.png"
+import logoPost from "../../assets/icons/logo-company.png"
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { PostContext } from "../../contexts/PostContext";
@@ -81,6 +81,7 @@ const SinglePost = ({ post }) => {
 
 
   return (
+    
     <div className="cart">
       <img className="avatar"
       style={{border:'none', padding:'0'}}

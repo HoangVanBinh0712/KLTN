@@ -9,7 +9,6 @@ import { AuthContext } from "../contexts/AuthContext";
 import swal from "sweetalert";
 
 const PostStatitics = () => {
-
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 

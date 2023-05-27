@@ -270,6 +270,7 @@ body {
     margin-right: 4%;
     display: flex;
     margin-top: 10px;
+    border-radius: 5px;
 }
 
 .logo-emp-post {
@@ -279,7 +280,7 @@ body {
 
 .img-inpost-homepage {
     max-height: 100%;
-    width: auto;
+    width: 100px;
 }
 
 .info-post-homepage {
@@ -292,6 +293,10 @@ body {
     font-family: Futura-Heavy;
     font-size: 1em;
     width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
 }
 
 .post-title-homepage a {

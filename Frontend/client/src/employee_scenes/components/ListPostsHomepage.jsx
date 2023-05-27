@@ -5,7 +5,7 @@ import roundheartIcon from "../../assets/icons/round-heart-icon.png"
 import heartIcon from "../../assets/icons/heart-icon.png"
 import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
-import logoPost from "../../assets/icons/logo.png"
+import logoPost from "../../assets/icons/logo-company.png"
 import { PostContext } from '../../contexts/PostContext'
 import { AuthContext } from '../../contexts/AuthContext'
 import swal from "sweetalert";
@@ -112,6 +112,10 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                     <div className="info-post-homepage">
                         <div className="post-title-homepage">
                             <a href={`/post/${p.id}`}>{p.title}</a>
+                            <div className="heart-icon" style={role !== "ROLE_EMPLOYER" ? { display: 'block' } : { display: 'none' }} onClick={() => heartClick(p.id)}>
+                                {checkFollow(p.id, postFollow) ? (<img className="icon-hear-follow" src={heartIcon} alt="heart icon" />)
+                                    : (<img className="icon-hear-follow" src={roundheartIcon} alt="heart icon" />)}
+                            </div>
                         </div>
                         <div className="type-of-work">
                             {p.method === "FULL_TIME" ? "Full time" : "Part time"}
@@ -120,10 +124,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                             {p.location}
                         </div>
                         <div className="follow-post-heart">
-                            <div className="heart-icon" style={role !== "ROLE_EMPLOYER" ? { display: 'block' } : { display: 'none' }} onClick={() => heartClick(p.id)}>
-                                {checkFollow(p.id, postFollow) ? (<img className="icon-hear-follow" src={heartIcon} alt="heart icon" />)
-                                    : (<img className="icon-hear-follow" src={roundheartIcon} alt="heart icon" />)}
-                            </div>
+                    
                         </div>
                     </div>
                 </div>

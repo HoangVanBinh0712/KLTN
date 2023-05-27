@@ -21,7 +21,7 @@ const ChatBox = () => {
 
   const userJwtToken = localStorage.getItem("user-token");
 
-  const [view, setView] = useState(true);
+  const [view, setView] = useState(false);
   const [listRoom, setListRoom] = useState([]);
   const [gptOpen, setGptOpen] = useState(false);
   const [gptMessage, setGptMessage] = useState([{ user: null, message: "How can i help you ?" }]);
