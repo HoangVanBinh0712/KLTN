@@ -18,7 +18,6 @@ function App() {
   const currentUrl = location.pathname;
 
   let body;
-
   if (currentUrl.includes("/admin")) {
     body = <AdminRoute path="/admin/dashboard /admin/account /admin/post /admin/services /admin/form /admin/bar /admin/pie /admin/line /admin/industries /admin/reports /admin/form" />;
   } else if (currentUrl.includes("/employer")) body = <EmployerRoute path="/employer/login" />;

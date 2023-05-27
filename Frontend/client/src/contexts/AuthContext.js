@@ -165,7 +165,7 @@ const AuthContextProvider = ({ children }) => {
         role: null,
       },
     });
-    navigate("/login");
+    navigate("/user/login");
   };
 
   // auth user

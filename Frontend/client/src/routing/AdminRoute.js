@@ -72,21 +72,21 @@ export const AdminRoute = ({ ...rest }) => {
                             <main className="content">
                                 <Topbar setIsSidebar={setIsSidebar} />
                                 <Routes>
-                                    <Route path="/admin/dashboard"  element={isAdmin ? <Dashboard/> : <Navigate to="/login" />} />
-                                    <Route path="/admin/account" element={isAdmin ? <Account/> : <Navigate to="/login" />} />
-                                    <Route path="/admin/post" element={isAdmin ? <Post /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/services" element={isAdmin ? <Services /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/revenues" element={isAdmin ? <Revenues /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/form" element={isAdmin ? <Form /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/bar" element={isAdmin ? <Bar /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/pie" element={isAdmin ? <Pie /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/line" element={isAdmin ? <Line /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/industries" element={isAdmin ? <Industries /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/reports" element={isAdmin ? <Reports /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/post-statitics" element={isAdmin ? <PostStatitics /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/user-statitics" element={isAdmin ? <UserStatitics /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/revenue-statitics" element={isAdmin ? <RevenueStatitics /> : <Navigate to="/login" />} />
-                                    <Route path="/admin/report-statitics" element={isAdmin ? <ReportStatitics /> : <Navigate to="/login" />} />
+                                    <Route path="/admin/dashboard"  element={isAdmin ? <Dashboard/> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/account" element={isAdmin ? <Account/> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/post" element={isAdmin ? <Post /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/services" element={isAdmin ? <Services /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/revenues" element={isAdmin ? <Revenues /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/form" element={isAdmin ? <Form /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/bar" element={isAdmin ? <Bar /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/pie" element={isAdmin ? <Pie /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/line" element={isAdmin ? <Line /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/industries" element={isAdmin ? <Industries /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/reports" element={isAdmin ? <Reports /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/post-statitics" element={isAdmin ? <PostStatitics /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/user-statitics" element={isAdmin ? <UserStatitics /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/revenue-statitics" element={isAdmin ? <RevenueStatitics /> : <Navigate to="/user/login" />} />
+                                    <Route path="/admin/report-statitics" element={isAdmin ? <ReportStatitics /> : <Navigate to="/user/login" />} />
 
                                 </Routes>
                             </main>

@@ -16,7 +16,7 @@ const ProtectedEmplyeeRoute =({element: Element, ...rest}) => {
     )
   else {
     return (
-      <Navigate to="/login" />
+      <Navigate to="/user/login" />
     )
   }
 }

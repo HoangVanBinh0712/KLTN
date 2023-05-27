@@ -28,6 +28,7 @@ const EmployerRoute = ({ ...rest }) => {
   const currentUrl = location.pathname;
 
   if (currentUrl === "/employer/account") return <Navigate to="/employer/account/employer-info" />;
+  if (currentUrl === "/employer/") return <Navigate to="/employer/home" />;
   // else if (!authloading && role === "ROLE_EMPLOYER") {
   //   body = (
   //     <Routes>
