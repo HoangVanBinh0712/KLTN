@@ -455,7 +455,7 @@ const ChatBox = () => {
               <h4>Your chats !</h4>
               <div className="messages" id="listRoom">
                 <div
-                  class="room "
+                  className="room "
                   id="room-gpt"
                   onClick={() => {
                     //Open chat GPT room
@@ -463,14 +463,14 @@ const ChatBox = () => {
                   }}
                 >
                   <img
-                    class="avatar"
+                    className="avatar"
                     src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhst4ldgBOg9rtbkICkI7VFyOe407LtYYCjVv0cfHh44OfJXH2V8huGuxGKV1Q0skZQiPiSrlAZjfpfRW1mQoOYMXc_M30p_eSarCnCCKF8ukhOMKoTCSiKIREJHCtsNfpzMAvZ5Lk83zOuk_21Au7LVzOwH5E0kPFPuV1bObJWc29Vp_IeeCJn0QDmew/s640/chat-gpt-logo.jpg"
                     width="50px"
                     height="50px"
                     alt=""
                   />
-                  <div class="info">
-                    <p class="chat-header">Chat GPT</p>
+                  <div className="info">
+                    <p className="chat-header">Chat GPT</p>
                   </div>
                 </div>
 
@@ -514,11 +514,11 @@ const ChatBox = () => {
         </div>
         <div id="messengers">
           {gptOpen && (
-            <div class="chat-wrapper" id="chat-wrapper-gpt">
-              <div class="chat-room" id="chat-room-gpt">
-                <div class="chat-header" id="chat-room-gpt-header">
+            <div className="chat-wrapper" id="chat-wrapper-gpt">
+              <div className="chat-room" id="chat-room-gpt">
+                <div className="chat-header" id="chat-room-gpt-header">
                   <img
-                    class="avatar"
+                    className="avatar"
                     src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhst4ldgBOg9rtbkICkI7VFyOe407LtYYCjVv0cfHh44OfJXH2V8huGuxGKV1Q0skZQiPiSrlAZjfpfRW1mQoOYMXc_M30p_eSarCnCCKF8ukhOMKoTCSiKIREJHCtsNfpzMAvZ5Lk83zOuk_21Au7LVzOwH5E0kPFPuV1bObJWc29Vp_IeeCJn0QDmew/s640/chat-gpt-logo.jpg"
                     alt=""
                   />
@@ -534,17 +534,17 @@ const ChatBox = () => {
                     X
                   </button>
                 </div>
-                <div class="chat-content" id="table-gpt-container">
-                  <div class="table-chat" id="chat-room-gpt-table" ref={(ref) => handleMessagesGPTRef(ref)}>
+                <div className="chat-content" id="table-gpt-container">
+                  <div className="table-chat" id="chat-room-gpt-table" ref={(ref) => handleMessagesGPTRef(ref)}>
                     {gptMessage.map((m) => (
-                      <div class={`${m.user ? "yours" : ""}`}>
+                      <div className={`${m.user ? "yours" : ""}`}>
                         <span>{m.message}</span>
                       </div>
                     ))}
                   </div>
-                  <div class="chat-footer">
-                    <div class="item"></div>
-                    <div class="group-input">
+                  <div className="chat-footer">
+                    <div className="item"></div>
+                    <div className="group-input">
                       <input
                         type="text"
                         id="gpt-input-message"
@@ -559,7 +559,7 @@ const ChatBox = () => {
                         }}
                       />
                       <button id="gpt-send" onClick={onClickSendMessageGpt}>
-                        <i class="fa fa-paper-plane-o"></i>
+                        <i className="fa fa-paper-plane-o"></i>
                       </button>
                     </div>
                   </div>
@@ -587,7 +587,7 @@ const ChatBox = () => {
                       setShowMeetingRoom(true);
                     }}
                   >
-                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    <i className="fa fa-phone" aria-hidden="true"></i>
                   </div>
                   <p id="chat-room-1-name">{table.recieverName}</p>
                   <button

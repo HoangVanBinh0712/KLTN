@@ -766,7 +766,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const responsePost = await axios.post(`${apiUrl}/employer/appointment`,info, {
+        const responsePost = await axios.post(`${apiUrl}/employer/appointment`, info, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
@@ -1157,11 +1157,10 @@ const AuthContextProvider = ({ children }) => {
         return responsePost.data;
       } else throw new Error("Unauthorized !");
     } catch (error) {
-      if (error.response.data) return error.response.data;
-      else return { success: false, message: error.message };
+      return null;
     }
   };
-  
+
   //conxtext data
   const authContextData = {
     loginUser,
@@ -1225,8 +1224,8 @@ const AuthContextProvider = ({ children }) => {
     setShowToast,
     authState,
     setUser,
-    openRoomFromProfile, 
-    setOpenRoomFromProfile
+    openRoomFromProfile,
+    setOpenRoomFromProfile,
   };
 
   //return

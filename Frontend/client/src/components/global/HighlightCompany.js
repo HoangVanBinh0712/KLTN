@@ -23,21 +23,21 @@ const HighLightCompany = () => {
   return (
     <>
       <TopBar />
-      <div class="hightlight-company">
+      <div className="hightlight-company">
         <h1>List of hightlights company</h1>
-        <div class="list-company">
+        <div className="list-company">
           {companies.map((com, key) => (
-            <div class="single-company" key={key}>
+            <div className="single-company" key={key}>
               <div
-                class="single-company-wrapper"
+                className="single-company-wrapper"
                 onClick={() => {
                   window.open(`/recruiter/${com.id}`);
                 }}
               >
-                <img src={com.urlCover ? com.urlCover : defCover} alt="Cover" class="cover" />
-                <img src={com.urlAvatar ? com.urlAvatar : defAavatar} alt="Avatar" class="avatar" />
+                <img src={com.urlCover ? com.urlCover : defCover} alt="Cover" className="cover" />
+                <img src={com.urlAvatar ? com.urlAvatar : defAavatar} alt="Avatar" className="avatar" />
                 <h3>{com.name}</h3>
-                <div class="description" dangerouslySetInnerHTML={{ __html: com.description }}></div>
+                <div className="description" dangerouslySetInnerHTML={{ __html: com.description }}></div>
               </div>
             </div>
           ))}

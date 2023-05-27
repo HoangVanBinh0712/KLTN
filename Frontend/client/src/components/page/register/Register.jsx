@@ -255,11 +255,11 @@ const Register = () => {
               </div>
             </div>
             <div id="Company" style={createEMP ? { display: "block" } : { display: "none" }}>
-              <label for="text" className="lb-name">
+              <label htmlFor="text" className="lb-name">
                 Phone number
               </label>
               <input type="text" className="input-reg" onChange={onChangePhoneNumber} value={phoneNumber} placeholder={mess} />
-              <label for="text" className="lb-name">
+              <label htmlFor="text" className="lb-name">
                 Industry
               </label>
               <select className="select-reg" onChange={onChangeIndustry}>
@@ -272,7 +272,7 @@ const Register = () => {
                   </option>
                 ))}
               </select>
-              <label for="text" className="lb-name">
+              <label htmlFor="text" className="lb-name">
                 City
               </label>
               <select className="select-reg" onChange={onChangeCity}>
@@ -285,7 +285,7 @@ const Register = () => {
                   </option>
                 ))}
               </select>
-              <label for="text" className="lb-name">
+              <label htmlFor="text" className="lb-name">
                 Address
               </label>
               <input type="text" className="input-reg" onChange={onChangeAddress} value={address} placeholder={mess} />

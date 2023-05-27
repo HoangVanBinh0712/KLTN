@@ -78,7 +78,7 @@ const ChangePassword = () => {
             <div className="input-wrapper ">
               <div className="label">Old Password</div>
               <input className="coler-placeholder" type={showPassword ? "text" : "password"} name="oldPassword" value={oldPassword} onChange={onFormChange} placeholder={mess}></input>
-              <label className="label-error-message" for="email">
+              <label className="label-error-message" htmlFor="email">
                 {formErrors?.oldPassword}
               </label>
             </div>
@@ -86,14 +86,14 @@ const ChangePassword = () => {
             <div className="input-wrapper">
               <div className="label">New Password</div>
               <input className="coler-placeholder" type={showPassword ? "text" : "password"} name="newPassword" value={newPassword} onChange={onFormChange} placeholder={mess}></input>
-              <label className="label-error-message" for="email">
+              <label className="label-error-message" htmlFor="email">
                 {formErrors?.newPassword}
               </label>
             </div>
             <div className="input-wrapper">
               <div className="label">Confirm password</div>
               <input className="coler-placeholder" type={showPassword ? "text" : "password"} name="confirmPassword" value={confirmPassword} onChange={onFormChange} placeholder={mess}></input>
-              <label className="label-error-message" for="email">
+              <label className="label-error-message" htmlFor="email">
                 {formErrors?.confirmPassword}
               </label>
             </div>

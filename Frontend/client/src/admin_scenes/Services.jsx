@@ -466,7 +466,7 @@ const Services = () => {
                   checked={serviceChosen.active}
                   onChange={onChangActiveCkeckbox}
                 />
-                <label for="currency1" style={{ width: '120px', marginLeft: '5px', }}>Active</label>
+                <label htmlFor="currency1" style={{ width: '120px', marginLeft: '5px', }}>Active</label>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                 <input
@@ -478,7 +478,7 @@ const Services = () => {
                   disabled={!isUpdateService}
                   onChange={onChangSeachCvCkeckbox}
                 />
-                <label for="currency2" style={{ width: '120px', marginLeft: '5px', }}>Search CV</label>
+                <label htmlFor="currency2" style={{ width: '120px', marginLeft: '5px', }}>Search CV</label>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                 <input
@@ -490,7 +490,7 @@ const Services = () => {
                   disabled={!isUpdateService}
                   onChange={onChangFilterCkeckbox}
                 />
-                <label for="currency3" style={{ width: '160px', marginLeft: '5px', }}>Filter CV submit</label>
+                <label htmlFor="currency3" style={{ width: '160px', marginLeft: '5px', }}>Filter CV submit</label>
               </div>
             </div>
 

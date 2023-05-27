@@ -13,6 +13,8 @@ import actIcon from '../../assets/icons/activities.png'
 import addIcon from '../../assets/icons/add-icon.png'
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import { useEffect } from 'react';
+import coverImage from "../../assets/picture-banner/service-banner.png";
 
 
 const EmployeeProfile = () => {
@@ -42,16 +44,19 @@ const EmployeeProfile = () => {
 
     const [listJskRec, setListJskRec] = useState([])
 
-    const getJSK = async () => {
-        const res = await getUserProfileJSK(id)
-        setJskInfo(res)
-        const key = res.user.industry !== null ? `?industryId=${res.user.industry.id}` : ''
-        const resP = await getUserProfileByAnyFilter(key)
-        if (resP.success) {
-            setListJskRec(resP.data)
+    useEffect(()=>{
+        const getJSK = async () => {
+            const res = await getUserProfileJSK(id)
+            setJskInfo(res)
+            const key = res.user.industry !== null ? `?industryId=${res.user.industry.id}` : ''
+            const resP = await getUserProfileByAnyFilter(key)
+            if (resP.success) {
+                setListJskRec(resP.data)
+            }
         }
-    }
-    getJSK()
+        getJSK()
+        console.log("errff");
+    },[])
 
     const onClickAchiName = (url) => {
         window.open(url, "_blank")
@@ -107,14 +112,18 @@ const EmployeeProfile = () => {
                     <p id="notice">{`${jskInfo.user.name} information`}</p>
                     <div className="profile-head">
                         <div className="cover">
-                            <div id="change-image" style={{ display: 'none' }}>
+                        <img className="cover-image" src={jskInfo.user.urlCover === null ? coverImage : jskInfo.user.urlCover} alt="" />
+
+                            {/* <div id="change-image" style={{ display: 'none' }}>
                                 <img id="camera-icon" src={cameraIcon} alt='' />
                                 <div>Change image</div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="profile-info">
                             <div className="avatarTop" >
-                                <div className="transparent-camera" style={{ display: 'none' }}><img id="camera-icon" src={cameraIcon} alt='' /></div>
+                                {/* <div className="transparent-camera" style={{ display: 'none' }}><img id="camera-icon" src={cameraIcon} alt='' /></div> */}
+                                <img className="avatar" src={jskInfo.user.urlAvatar === null ? logoIcon : jskInfo.user.urlAvatar} alt="" />
+
                             </div>
                             <div className="name-viewer-wrapper">
                                 <div className="name">{jskInfo.user.name}</div>

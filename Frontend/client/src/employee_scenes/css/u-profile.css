@@ -24,15 +24,15 @@
 }
 
 .cover {
-    background-image: url('../../assets/picture-banner/service-banner.png');
-    background-size: cover;
+    /* background-image: url('../../assets/picture-banner/service-banner.png');
+    background-size: cover; */
     height: 70%;
     position: relative;
 }
 
 .avatarTop {
-    background-image: url('../../assets/picture-banner/question.png');
-    background-size: cover;
+    /* background-image: url('../../assets/picture-banner/question.png');
+    background-size: cover; */
     border-radius: 5%;
     height: 178px;
     width: 178px;

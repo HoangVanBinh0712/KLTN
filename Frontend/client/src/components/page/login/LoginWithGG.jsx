@@ -136,7 +136,7 @@ const LoginGG = () => {
                                     </p>
                                 </div>
                                 <div >
-                                    <label className="lb-name" for="email" style={{ color: "#207198" }}>Email</label>
+                                    <label className="lb-name" htmlFor="email" style={{ color: "#207198" }}>Email</label>
                                     <input className="input-text-login"
                                         type="email"
                                         id="email"
@@ -149,7 +149,7 @@ const LoginGG = () => {
                                     />
                                 </div>
                                 <div >
-                                    <label className="lb-name" for="password" style={{ color: "#207198" }}>Password</label>
+                                    <label className="lb-name" htmlFor="password" style={{ color: "#207198" }}>Password</label>
                                     <div className="group-password" >
                                         <div style={{ width: '92%' }}>
                                             <input className="input-text-login password"

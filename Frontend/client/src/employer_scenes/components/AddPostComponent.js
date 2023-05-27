@@ -223,7 +223,7 @@ const AddPostComponent = () => {
                     defaultChecked
                     onChange={onChangeWokType}
                   />
-                  <label for="type2" style={{ width: '120px', marginLeft: '5px', }}>Full time</label>
+                  <label htmlFor="type2" style={{ width: '120px', marginLeft: '5px', }}>Full time</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -235,7 +235,7 @@ const AddPostComponent = () => {
                     style={{ width: '15%' }}
                     onChange={onChangeWokType}
                   />
-                  <label for="type1" style={{ width: '120px', marginLeft: '5px', }}>Part time</label>
+                  <label htmlFor="type1" style={{ width: '120px', marginLeft: '5px', }}>Part time</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -247,7 +247,7 @@ const AddPostComponent = () => {
                     style={{ width: '15%' }}
                     onChange={onChangeWokType}
                   />
-                  <label for="type3" style={{ width: '120px', marginLeft: '5px', }}>Intern</label>
+                  <label htmlFor="type3" style={{ width: '120px', marginLeft: '5px', }}>Intern</label>
                 </div>
               </div>
               <b style={{ color: '#0c62ad' }}>Gender</b>
@@ -262,7 +262,7 @@ const AddPostComponent = () => {
                     style={{ width: '15%' }}
                     onChange={onChangegenderType}
                   />
-                  <label for="gender1" style={{ width: '120px', marginLeft: '5px', }}>Male</label>
+                  <label htmlFor="gender1" style={{ width: '120px', marginLeft: '5px', }}>Male</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -274,7 +274,7 @@ const AddPostComponent = () => {
                     style={{ width: '15%' }}
                     onChange={onChangegenderType}
                   />
-                  <label for="gender2" style={{ width: '120px', marginLeft: '5px', }}>Female</label>
+                  <label htmlFor="gender2" style={{ width: '120px', marginLeft: '5px', }}>Female</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -287,7 +287,7 @@ const AddPostComponent = () => {
                     defaultChecked
                     onChange={onChangegenderType}
                   />
-                  <label for="gender3" style={{ width: '130px', marginLeft: '5px', }}>No require</label>
+                  <label htmlFor="gender3" style={{ width: '130px', marginLeft: '5px', }}>No require</label>
                 </div>
               </div>
               <b style={{ color: '#0c62ad' }}>Currency</b>
@@ -303,7 +303,7 @@ const AddPostComponent = () => {
                     defaultChecked
                     onChange={onChangeCurencyType}
                   />
-                  <label for="currency1" style={{ width: '120px', marginLeft: '5px', }}>VNĐ</label>
+                  <label htmlFor="currency1" style={{ width: '120px', marginLeft: '5px', }}>VNĐ</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -315,7 +315,7 @@ const AddPostComponent = () => {
                     style={{ width: '15%' }}
                     onChange={onChangeCurencyType}
                   />
-                  <label for="currency2" style={{ width: '120px', marginLeft: '5px', }}>USD</label>
+                  <label htmlFor="currency2" style={{ width: '120px', marginLeft: '5px', }}>USD</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -327,7 +327,7 @@ const AddPostComponent = () => {
                     style={{ width: '15%' }}
                     onChange={onChangeCurencyType}
                   />
-                  <label for="currency3" style={{ width: '120px', marginLeft: '5px', }}>Agreement</label>
+                  <label htmlFor="currency3" style={{ width: '120px', marginLeft: '5px', }}>Agreement</label>
                 </div>
               </div>
               <div className="input-wrapper" style={{ width: '100%' }}>

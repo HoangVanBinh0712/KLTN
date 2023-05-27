@@ -735,7 +735,9 @@ body {
     margin-right: 4%;
     margin-bottom: 10px;
 }
-
+.single-notice-in-dropbox:hover{
+    background-color: #dfdfdf;
+}
 .gr-title-date-notice {
     width: 90%;
 }
@@ -749,4 +751,8 @@ body {
 
 .single-notice-in-dropbox-date {
     color: #6c6c6c;
+}
+
+.href-notification{
+    text-decoration: none !important;
 }

@@ -68,7 +68,7 @@ const ServicePage = () => {
       <div style={{ width: "100%" }}>
         <img id="service-banner" src={serviceBaner} alt="" style={{ width: "100%", height: "auto" }} />
       </div>
-      <div class="body-container" style={{ height: "auto" }}>
+      <div className="body-container" style={{ height: "auto" }}>
         <div id="arrow_wrapper">
           <img id="arrow_below_banner" src={vShapeIcon} alt="" />
           <div id="our_service_title">OUR SERVICES</div>
@@ -99,14 +99,14 @@ const ServicePage = () => {
 
                   <div className="group-buttons">
                     <div
-                      class="button cancel"
+                      className="button cancel"
                       onClick={() => {
                         setShowModal(false);
                         setAmount(1);
                         setSelectedService(null);
                       }}
                     >
-                      <i class="fa fa-times" aria-hidden="true"></i>
+                      <i className="fa fa-times" aria-hidden="true"></i>
                       Cancel
                     </div>
                     <div className="button" onClick={purchaseClick}>
@@ -119,7 +119,7 @@ const ServicePage = () => {
           )}
           {services.map((s, index) => (
             <>
-              <div class="service_item_wrapper" key={index}>
+              <div className="service_item_wrapper" key={index}>
                 <div style={{ width: "50%", order: index % 2 === 0 ? "0" : "2" }}>
                   <img id="service_logo" src={homeService1} alt="" />
                 </div>

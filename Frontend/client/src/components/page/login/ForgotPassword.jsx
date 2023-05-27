@@ -171,7 +171,7 @@ const ForgotPassword = () => {
               </p>
             </div>
             <div className="div-line-input">
-              <label className="lb-name" for="email">
+              <label className="lb-name" htmlFor="email">
                 Email
               </label>
               <div className="send-code-email">
@@ -186,24 +186,24 @@ const ForgotPassword = () => {
                   Send code
                 </div>
               </div>
-              <label className="label-error-message" for="email">
+              <label className="label-error-message" htmlFor="email">
                 {formErrors?.email}
               </label>
             </div>
             {sendCodeClicked && (
               <div>
                 <div className="div-line-input">
-                  <label className="lb-name" for="code">
+                  <label className="lb-name" htmlFor="code">
                     Code
                   </label>
                   <input className="input-text-login" type="code" id="code" name="code" value={code} placeholder={mess} onChange={onFormChange} style={{ fontSize: "20px" }} required />
-                  <label className="label-error-message" for="code">
+                  <label className="label-error-message" htmlFor="code">
                     {formErrors?.code}
                   </label>
                 </div>
 
                 <div className="div-line-input">
-                  <label className="lb-name" for="password">
+                  <label className="lb-name" htmlFor="password">
                     Password
                   </label>
                   <div className="group-password">
@@ -234,13 +234,13 @@ const ForgotPassword = () => {
                       <i className="fa fa-eye" onClick={onClick}></i>
                     </div>
                   </div>
-                  <label className="label-error-message" for="password">
+                  <label className="label-error-message" htmlFor="password">
                     {formErrors?.password}
                   </label>
                 </div>
 
                 <div className="div-line-input">
-                  <label className="lb-name" for="password">
+                  <label className="lb-name" htmlFor="password">
                     Confirm Password
                   </label>
                   <div className="group-password">
@@ -271,7 +271,7 @@ const ForgotPassword = () => {
                       <i className="fa fa-eye" onClick={onClick}></i>
                     </div>
                   </div>
-                  <label className="label-error-message" for="password">
+                  <label className="label-error-message" htmlFor="password">
                     {formErrors?.confirmPassword}
                   </label>
                 </div>

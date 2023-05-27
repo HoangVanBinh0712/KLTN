@@ -131,16 +131,16 @@ const Login = () => {
                 </p>
               </div>
               <div>
-                <label className="lb-name" for="email" style={{ color: "#207198" }}>
+                <label className="lb-name" htmlFor="email" style={{ color: "#207198" }}>
                   Email{" "}
                 </label>
                 <input className="input-text-login" type="email" id="email" name="email" value={email} placeholder={mess} onChange={onFormLoginChange} style={{ fontSize: "20px" }} required />
-                <label className="lb-name" for="email" style={{ color: "red", fontSize: "0.8em" }}>
+                <label className="lb-name" htmlFor="email" style={{ color: "red", fontSize: "0.8em" }}>
                   {formErrors?.email}{" "}
                 </label>
               </div>
               <div>
-                <label className="lb-name" for="password" style={{ color: "#207198" }}>
+                <label className="lb-name" htmlFor="password" style={{ color: "#207198" }}>
                   Password
                 </label>
                 <div className="group-password">
@@ -161,7 +161,7 @@ const Login = () => {
                     <i className="fa fa-eye" onClick={onClick}></i>
                   </div>
                 </div>
-                <label className="lb-name" for="password" style={{ color: "red", fontSize: "0.8em" }}>
+                <label className="lb-name" htmlFor="password" style={{ color: "red", fontSize: "0.8em" }}>
                   {formErrors?.password}{" "}
                 </label>
               </div>

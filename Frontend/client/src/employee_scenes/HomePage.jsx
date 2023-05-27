@@ -13,7 +13,7 @@ const HomePage = () => {
   const { postState: { posts, postHot, postMostView, postsAi } } = useContext(PostContext)
   const { globalState: { highlightCompany } } = useContext(GlobalContext)
   const { authState: { user, authloading } } = useContext(AuthContext)
-
+  
   return (
     <>
       <TopBar />
@@ -24,7 +24,7 @@ const HomePage = () => {
         listPosts={postHot}
       />
       <TopEmployer listCompanies={highlightCompany} />
-      {!authloading && user.role === "ROLE_USER" ? (
+      {!authloading && user && user.role === "ROLE_USER" ? (
         <ListPostsHomepage
           title={"Suitable job"}
           isHaveAi={true}

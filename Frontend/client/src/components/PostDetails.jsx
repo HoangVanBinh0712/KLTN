@@ -303,7 +303,7 @@ const PostDetails = () => {
     }
 
     const checkFollow = (id, arr) => {
-        const index = arr.findIndex(post => post.id == id);
+        const index = arr.findIndex(post => post.id === id);
         if (index !== -1) return true
         else return false
     }
@@ -333,7 +333,8 @@ const PostDetails = () => {
     }
 
     const ocClickToNTDProfile = () =>{
-        window.location.href=`/recruiter/${data.author.id}`
+        console.log(data);
+        window.location.href=`/recruiter/${dataPost.author.id}`
     }
 
     return (<>
@@ -341,9 +342,9 @@ const PostDetails = () => {
         <div className="post-detail">
             <div className='post-title-intop'>{dataPost.title}</div>
             <div className="post">
-                <img className="avatar" src={data.author.urlAvatar===null?logoIcon:data.author.urlAvatar} alt="" 
-                style={{cursor:'pointer' }} 
-                onClick={()=>ocClickToNTDProfile()}/>
+                <a href={`/recruiter/${dataPost.author.id}`}>
+                <img className="avatar" src={dataPost.author.urlAvatar===null?logoIcon:dataPost.author.urlAvatar} alt="" />
+                </a>
                 <div className="post-info">
                     <p className="title">{dataPost.title}</p>
                     <div className="post-description" onClick={()=>ocClickToNTDProfile()} style={{width:"140px", cursor:'pointer'}}>
@@ -613,7 +614,7 @@ const PostDetails = () => {
             <div className='form-submit-report-control'>
                 <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
                     <div className='name-post-report'>
-                        {data.title}
+                        {dataPost.title}
                     </div>
                     <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { closeFormReport() }} /></div>
                 </div>

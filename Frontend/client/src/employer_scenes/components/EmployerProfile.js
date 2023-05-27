@@ -337,7 +337,7 @@ const EmployerProfile = () => {
                       }}
                     >
                       <div className="button">
-                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                        <i className="fa fa-paper-plane-o" aria-hidden="true"></i>
                         Chat now !
                       </div>
                     </div>
