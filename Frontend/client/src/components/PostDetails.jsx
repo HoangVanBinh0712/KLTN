@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import TopBar from './global/TopBar';
 import Footer from './global/Footer';
 import ReactQuill from 'react-quill';
@@ -26,6 +26,7 @@ const PostDetails = () => {
         getResume, deleteSubmitedResume, submitResume, checkSubmitedResume, reportPost } = useContext(AuthContext)
     const { postState: { postFollow }, getPostById, followPost, unfollowPost, } = useContext(PostContext)
     const { success, warn } = useToast()
+    const navigate = useNavigate();
 
     const data = {
         id: 0,
@@ -220,7 +221,7 @@ const PostDetails = () => {
             setSubmitForm(true)
 
         }
-        else window.location.href = '/user/login'
+        else navigate('/user/login')
     }
 
     const closeFormClick = () => {
@@ -230,7 +231,7 @@ const PostDetails = () => {
     const reportClick = () => {
         if (isAuthenticated)
             setReportForm(true)
-        else window.location.href = '/user/login'
+        else navigate('/user/login')
 
     }
 
@@ -310,7 +311,7 @@ const PostDetails = () => {
 
     const savePostClick = async (id) => {
         if (!isAuthenticated) {
-            window.location.href = 'user/login'
+            navigate('/user/login')
         }
         else {
             if (role === "ROLE_USER") {

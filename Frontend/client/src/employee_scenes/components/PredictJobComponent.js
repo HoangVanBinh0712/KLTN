@@ -138,7 +138,7 @@ const PredictJob = () => {
               </div>) : (listIndustryPre.map((r, id) => (
                 <div className="single-result" style={{ width: "32%" }} key={id}>
                   <div className="pipe">
-                    <div className="value text-in-value-bar" style={{ width: `${resumePre[r]}` }}>{r}</div>
+                    <div className="value text-in-value-bar" style={{ width: `${resumePre[r]}`, color: "red" }}>{r}</div>
                   </div>
                   <div className="value-text">{resumePre[r]}</div>
                 </div>)

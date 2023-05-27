@@ -3,14 +3,14 @@ import { useContext, useEffect, useState } from "react";
 import { PostContext } from "../../contexts/PostContext";
 import { useToast } from "../../contexts/Toast";
 import swal from "sweetalert";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SingleRowPost = ({ post, num, resetStatus }) => {
   const { getCvSubmited, upDatePostDeleted } = useContext(PostContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const [numCv, setNumCv] = useState(0);
-
+  const navigate = useNavigate();
   const getCv = async () => {
     const res = await getCvSubmited(post.id);
     if (res.success) setNumCv(res.data.length);
@@ -37,7 +37,7 @@ const SingleRowPost = ({ post, num, resetStatus }) => {
   };
 
   const viewPost = () => {
-    window.location.href = `/employer/post/${post.id}`;
+    navigate(`/employer/post/${post.id}`);
   };
 
   const statePost = (status) => {
@@ -71,10 +71,6 @@ const SingleRowPost = ({ post, num, resetStatus }) => {
         </div>
       );
     return body;
-  };
-
-  const viewSubmitClick = () => {
-    window.location.href = `/employer/account/post-submitted/${post.id}`;
   };
 
   const onClickDeletePost = async () => {
@@ -118,7 +114,10 @@ const SingleRowPost = ({ post, num, resetStatus }) => {
                 View Post
               </div>
               <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
-                <Link to={`/employer/account/post-submitted/${post.id}`} className="href-customized"> Submited</Link>
+                <Link to={`/employer/account/post-submitted/${post.id}`} className="href-customized">
+                  {" "}
+                  Submited
+                </Link>
               </div>
               {post.status === "DELETED" ? (
                 <></>

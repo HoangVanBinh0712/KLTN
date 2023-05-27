@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { PostContext } from "../../contexts/PostContext";
 import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 
 const SinglePost = ({ post }) => {
 
@@ -12,6 +13,7 @@ const SinglePost = ({ post }) => {
   const { postState: { postFollow }, followPost, unfollowPost, } = useContext(PostContext)
 
   const aPost = post
+  const navigate = useNavigate();
 
   const onClickImagePost = (empId) => {
     window.location.href = `/recruiter/${empId}`
@@ -37,7 +39,7 @@ const SinglePost = ({ post }) => {
 
   const heartClick = async (id) => {
     if (authloading) {
-      window.location.href = 'user/login'
+      navigate('/user/login')
     }
     else {
       if (role === "ROLE_USER") {

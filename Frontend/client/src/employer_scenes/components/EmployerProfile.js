@@ -1,5 +1,5 @@
 import "../css/emp-profile.css";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import TopBar from "../../components/global/TopBar";
 import Footer from "../../components/global/Footer";
 import coverImage from "../../assets/picture-banner/service-banner.png";
@@ -88,6 +88,7 @@ const EmployerProfile = () => {
   }
 
   const allPost = chuckPosts(employerPost, 3);
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -176,7 +177,7 @@ const EmployerProfile = () => {
 
   const heartClick = async (id) => {
     if (!isAuthenticated) {
-      window.location.href = "user/login";
+      navigate('/user/login')
     } else {
       if (role === "ROLE_USER") {
         if (checkFollow(id, postFollow)) {

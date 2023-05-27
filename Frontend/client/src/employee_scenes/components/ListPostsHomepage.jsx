@@ -9,11 +9,13 @@ import logoPost from "../../assets/icons/logo-company.png"
 import { PostContext } from '../../contexts/PostContext'
 import { AuthContext } from '../../contexts/AuthContext'
 import swal from "sweetalert";
+import { useNavigate } from 'react-router-dom'
 
 const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
 
     const { authState: { authloading, role } } = useContext(AuthContext)
     const { postState: { postFollow }, followPost, unfollowPost } = useContext(PostContext)
+    const navigate = useNavigate();
 
     const post = listPosts
 
@@ -54,7 +56,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
 
     const heartClick = async (id) => {
         if (authloading) {
-            window.location.href = 'user/login'
+            navigate('/user/login')
         }
         else {
             if (role === "ROLE_USER") {
@@ -98,7 +100,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
     }
 
     const onClickToAllPost = () => {
-        window.location.href = "/posts";
+        navigate("/posts") ;
     }
 
     let postInBox

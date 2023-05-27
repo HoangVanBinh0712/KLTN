@@ -10,7 +10,7 @@ import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 
 
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useState, useContext, useEffect } from 'react'
 import { PostContext } from '../../contexts/PostContext'
 import { GlobalContext } from '../../contexts/GlobalContext'
@@ -26,6 +26,7 @@ const SearchPageComponent = () => {
     // single-time read
     const params = Object.fromEntries([...searchParams]);
     const [listPostReult, setListPostResult] = useState([])
+    const navigate = useNavigate();
 
     const [searchInfo, setSearchInfo] = useState({
         keyword: '',
@@ -202,7 +203,7 @@ const SearchPageComponent = () => {
             window.location.href = '/employer/account'
         }
         else {
-            window.location.href = '/user/login'
+            navigate('/user/login')
         }
     }
 
@@ -237,7 +238,7 @@ const SearchPageComponent = () => {
 
     const heartClick = async (id) => {
         if (authloading) {
-            window.location.href = 'user/login'
+            navigate('/user/login')
         }
         else {
             if (role === "ROLE_USER") {
