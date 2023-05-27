@@ -15,7 +15,8 @@ import WaitingRoom from "./WaitingRoom";
 import swal from "sweetalert";
 const ChatBox = () => {
   const {
-    authState: { user, authLoading }, openRoomFromProfile,
+    authState: { user, authLoading },
+    openRoomFromProfile,
     setOpenRoomFromProfile,
   } = useContext(AuthContext);
 
@@ -72,14 +73,12 @@ const ChatBox = () => {
 
   const maxRoom = 3;
 
-
   useEffect(() => {
     listOpenRoomRef.current = listOpenRoom;
     listRoomRef.current = listRoom;
   }, [listOpenRoom, listRoom]);
 
   useEffect(() => {
-
     const stClient = Stomp.client(`ws://${apiWS}/chat`);
     if (!authLoading && user) {
       keyUpJwt(userJwtToken);
@@ -135,7 +134,7 @@ const ChatBox = () => {
           }
         });
       });
-      functionOpenRoom(openRoomFromProfile)
+      functionOpenRoom(openRoomFromProfile);
     }
 
     return () => {
@@ -447,202 +446,206 @@ const ChatBox = () => {
 
   return (
     <>
-      {showMeetingRoom && <MeetingRoom roomId={meetingRoomId} setShowMeetingRoom={setShowMeetingRoom} setMeetingRoomId={setMeetingRoomId} />}
-      <div className="float-items">
-        <div className="square-message">
-          {view && (
-            <div className="messages-info" id="messages-info">
-              <h4>Your chats !</h4>
-              <div className="messages" id="listRoom">
-                <div
-                  className="room "
-                  id="room-gpt"
-                  onClick={() => {
-                    //Open chat GPT room
-                    setGptOpen(true);
-                  }}
-                >
-                  <img
-                    className="avatar"
-                    src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhst4ldgBOg9rtbkICkI7VFyOe407LtYYCjVv0cfHh44OfJXH2V8huGuxGKV1Q0skZQiPiSrlAZjfpfRW1mQoOYMXc_M30p_eSarCnCCKF8ukhOMKoTCSiKIREJHCtsNfpzMAvZ5Lk83zOuk_21Au7LVzOwH5E0kPFPuV1bObJWc29Vp_IeeCJn0QDmew/s640/chat-gpt-logo.jpg"
-                    width="50px"
-                    height="50px"
-                    alt=""
-                  />
-                  <div className="info">
-                    <p className="chat-header">Chat GPT</p>
-                  </div>
-                </div>
-
-                {listRoom.map((chat_room, index) => (
-                  <div
-                    key={index}
-                    className={`room ${isRoomOpened(chat_room.room.id) ? "room-opened" : ""}`}
-                    id={`room-${chat_room.room.id}`}
-                    onClick={() => {
-                      functionOpenRoom(chat_room.room.id);
-                    }}
-                  >
-                    <img className="avatar" src={chat_room.user.urlAvatar ? chat_room.user.urlAvatar : userIcon} width="50px" height="50px" alt="" />
-                    <div className="info">
-                      <p className="chat-header">
-                        {chat_room.user.id} - {chat_room.user.name}
-                      </p>
-                      <div className="unread-wrapper">
-                        <p id={`room-${chat_room.room.id}-message`} className={`unread-message  ${!chat_room.seen ? "unread" : ""}`}>
-                          <span id={`room-${chat_room.room.id}-time`}>{chat_room.unread}</span>
-                        </p>
-                        <p id={`room-${chat_room.room.id}-time`} className="unread-time">
-                          <span id={`room-${chat_room.room.id}-time`}>{chat_room.unread_time}</span>
-                        </p>
+      {user && (
+        <>
+          {showMeetingRoom && <MeetingRoom roomId={meetingRoomId} setShowMeetingRoom={setShowMeetingRoom} setMeetingRoomId={setMeetingRoomId} />}
+          <div className="float-items">
+            <div className="square-message">
+              {view && (
+                <div className="messages-info" id="messages-info">
+                  <h4>Your chats !</h4>
+                  <div className="messages" id="listRoom">
+                    <div
+                      className="room "
+                      id="room-gpt"
+                      onClick={() => {
+                        //Open chat GPT room
+                        setGptOpen(true);
+                      }}
+                    >
+                      <img
+                        className="avatar"
+                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhst4ldgBOg9rtbkICkI7VFyOe407LtYYCjVv0cfHh44OfJXH2V8huGuxGKV1Q0skZQiPiSrlAZjfpfRW1mQoOYMXc_M30p_eSarCnCCKF8ukhOMKoTCSiKIREJHCtsNfpzMAvZ5Lk83zOuk_21Au7LVzOwH5E0kPFPuV1bObJWc29Vp_IeeCJn0QDmew/s640/chat-gpt-logo.jpg"
+                        width="50px"
+                        height="50px"
+                        alt=""
+                      />
+                      <div className="info">
+                        <p className="chat-header">Chat GPT</p>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          <div
-            className="circle-float"
-            id="circle-message"
-            onClick={() => {
-              setView(!view);
-            }}
-          >
-            <i className="fa  fa-comments-o"></i>
-          </div>
-        </div>
-        <div id="messengers">
-          {gptOpen && (
-            <div className="chat-wrapper" id="chat-wrapper-gpt">
-              <div className="chat-room" id="chat-room-gpt">
-                <div className="chat-header" id="chat-room-gpt-header">
-                  <img
-                    className="avatar"
-                    src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhst4ldgBOg9rtbkICkI7VFyOe407LtYYCjVv0cfHh44OfJXH2V8huGuxGKV1Q0skZQiPiSrlAZjfpfRW1mQoOYMXc_M30p_eSarCnCCKF8ukhOMKoTCSiKIREJHCtsNfpzMAvZ5Lk83zOuk_21Au7LVzOwH5E0kPFPuV1bObJWc29Vp_IeeCJn0QDmew/s640/chat-gpt-logo.jpg"
-                    alt=""
-                  />
-                  <p id="chat-room-1-name">Chat GPT</p>
-                  <button
-                    className="chat-header-item"
-                    onClick={() => {
-                      setGptOpen(false);
-                      setGptInput("");
-                      setGptMessage([{ user: null, message: "How can i help you ?" }]);
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
-                <div className="chat-content" id="table-gpt-container">
-                  <div className="table-chat" id="chat-room-gpt-table" ref={(ref) => handleMessagesGPTRef(ref)}>
-                    {gptMessage.map((m) => (
-                      <div className={`${m.user ? "yours" : ""}`}>
-                        <span>{m.message}</span>
+
+                    {listRoom.map((chat_room, index) => (
+                      <div
+                        key={index}
+                        className={`room ${isRoomOpened(chat_room.room.id) ? "room-opened" : ""}`}
+                        id={`room-${chat_room.room.id}`}
+                        onClick={() => {
+                          functionOpenRoom(chat_room.room.id);
+                        }}
+                      >
+                        <img className="avatar" src={chat_room.user.urlAvatar ? chat_room.user.urlAvatar : userIcon} width="50px" height="50px" alt="" />
+                        <div className="info">
+                          <p className="chat-header">
+                            {chat_room.user.id} - {chat_room.user.name}
+                          </p>
+                          <div className="unread-wrapper">
+                            <p id={`room-${chat_room.room.id}-message`} className={`unread-message  ${!chat_room.seen ? "unread" : ""}`}>
+                              <span id={`room-${chat_room.room.id}-time`}>{chat_room.unread}</span>
+                            </p>
+                            <p id={`room-${chat_room.room.id}-time`} className="unread-time">
+                              <span id={`room-${chat_room.room.id}-time`}>{chat_room.unread_time}</span>
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
-                  <div className="chat-footer">
-                    <div className="item"></div>
-                    <div className="group-input">
-                      <input
-                        type="text"
-                        id="gpt-input-message"
-                        value={gptInput}
-                        onChange={(e) => {
-                          setGptInput(e.target.value);
-                        }}
-                        onKeyUp={(e) => {
-                          if (e.keyCode === 13)
-                            //enter
-                            onClickSendMessageGpt();
-                        }}
-                      />
-                      <button id="gpt-send" onClick={onClickSendMessageGpt}>
-                        <i className="fa fa-paper-plane-o"></i>
-                      </button>
-                    </div>
-                  </div>
                 </div>
+              )}
+              <div
+                className="circle-float"
+                id="circle-message"
+                onClick={() => {
+                  setView(!view);
+                }}
+              >
+                <i className="fa  fa-comments-o"></i>
               </div>
             </div>
-          )}
-          {listOpenRoom.map((table, index) => (
-            <div key={index} className="chat-wrapper" id={`chat-wrapper-${table.roomId}`}>
-              <div className="chat-room" id={`chat-room-${table.roomId}`}>
-                <div className="chat-header" id={`chat-room-${table.roomId}-header`}>
-                  <img
-                    className="avatar"
-                    src={getRoomImage(table.roomId) ? getRoomImage(table.roomId) : userIcon}
-                    alt=""
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = userIcon;
-                    }}
-                  />
-                  <div
-                    className="chat-header-item"
-                    onClick={() => {
-                      setMeetingRoomId(table.roomId?.toString());
-                      setShowMeetingRoom(true);
-                    }}
-                  >
-                    <i className="fa fa-phone" aria-hidden="true"></i>
-                  </div>
-                  <p id="chat-room-1-name">{table.recieverName}</p>
-                  <button
-                    className="chat-header-item"
-                    onClick={() => {
-                      closeRoom(table.roomId);
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
-                <div className="chat-content" id={`table-${table.roomId}-container`}>
-                  <div
-                    className="table-chat"
-                    id={`chat-room-${table.roomId}-table`}
-                    onScroll={(e) => {
-                      onTableScroll(e, table.roomId, table.chatContent[0]?.id);
-                    }}
-                    ref={(ref) => handleMessagesRef(ref, table.chatContent.length)}
-                  >
-                    {table.chatContent.map((c, index) => {
-                      return (
-                        <div key={index} className={`${c.senderId === user.id ? "yours" : ""}`}>
-                          <span>{c.content}</span>
-                          <div className="hidden-time">{c.time.toString()}</div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div className="chat-footer">
-                    <div className="item"></div>
-                    <div className="group-input">
-                      <input
-                        type="text"
-                        id={`${table.roomId}-input-message`}
-                        onKeyUp={(event) => {
-                          keyUpMessage(event, table.roomId);
-                        }}
+            <div id="messengers">
+              {gptOpen && (
+                <div className="chat-wrapper" id="chat-wrapper-gpt">
+                  <div className="chat-room" id="chat-room-gpt">
+                    <div className="chat-header" id="chat-room-gpt-header">
+                      <img
+                        className="avatar"
+                        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhst4ldgBOg9rtbkICkI7VFyOe407LtYYCjVv0cfHh44OfJXH2V8huGuxGKV1Q0skZQiPiSrlAZjfpfRW1mQoOYMXc_M30p_eSarCnCCKF8ukhOMKoTCSiKIREJHCtsNfpzMAvZ5Lk83zOuk_21Au7LVzOwH5E0kPFPuV1bObJWc29Vp_IeeCJn0QDmew/s640/chat-gpt-logo.jpg"
+                        alt=""
                       />
+                      <p id="chat-room-1-name">Chat GPT</p>
                       <button
-                        id={`${table.roomId}-send`}
+                        className="chat-header-item"
                         onClick={() => {
-                          sendMessage(table.roomId);
+                          setGptOpen(false);
+                          setGptInput("");
+                          setGptMessage([{ user: null, message: "How can i help you ?" }]);
                         }}
                       >
-                        <i className="fa fa-paper-plane-o"></i>
+                        X
                       </button>
+                    </div>
+                    <div className="chat-content" id="table-gpt-container">
+                      <div className="table-chat" id="chat-room-gpt-table" ref={(ref) => handleMessagesGPTRef(ref)}>
+                        {gptMessage.map((m) => (
+                          <div className={`${m.user ? "yours" : ""}`}>
+                            <span>{m.message}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="chat-footer">
+                        <div className="item"></div>
+                        <div className="group-input">
+                          <input
+                            type="text"
+                            id="gpt-input-message"
+                            value={gptInput}
+                            onChange={(e) => {
+                              setGptInput(e.target.value);
+                            }}
+                            onKeyUp={(e) => {
+                              if (e.keyCode === 13)
+                                //enter
+                                onClickSendMessageGpt();
+                            }}
+                          />
+                          <button id="gpt-send" onClick={onClickSendMessageGpt}>
+                            <i className="fa fa-paper-plane-o"></i>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
+              {listOpenRoom.map((table, index) => (
+                <div key={index} className="chat-wrapper" id={`chat-wrapper-${table.roomId}`}>
+                  <div className="chat-room" id={`chat-room-${table.roomId}`}>
+                    <div className="chat-header" id={`chat-room-${table.roomId}-header`}>
+                      <img
+                        className="avatar"
+                        src={getRoomImage(table.roomId) ? getRoomImage(table.roomId) : userIcon}
+                        alt=""
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = userIcon;
+                        }}
+                      />
+                      <div
+                        className="chat-header-item"
+                        onClick={() => {
+                          setMeetingRoomId(table.roomId?.toString());
+                          setShowMeetingRoom(true);
+                        }}
+                      >
+                        <i className="fa fa-phone" aria-hidden="true"></i>
+                      </div>
+                      <p id="chat-room-1-name">{table.recieverName}</p>
+                      <button
+                        className="chat-header-item"
+                        onClick={() => {
+                          closeRoom(table.roomId);
+                        }}
+                      >
+                        X
+                      </button>
+                    </div>
+                    <div className="chat-content" id={`table-${table.roomId}-container`}>
+                      <div
+                        className="table-chat"
+                        id={`chat-room-${table.roomId}-table`}
+                        onScroll={(e) => {
+                          onTableScroll(e, table.roomId, table.chatContent[0]?.id);
+                        }}
+                        ref={(ref) => handleMessagesRef(ref, table.chatContent.length)}
+                      >
+                        {table.chatContent.map((c, index) => {
+                          return (
+                            <div key={index} className={`${c.senderId === user.id ? "yours" : ""}`}>
+                              <span>{c.content}</span>
+                              <div className="hidden-time">{c.time.toString()}</div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <div className="chat-footer">
+                        <div className="item"></div>
+                        <div className="group-input">
+                          <input
+                            type="text"
+                            id={`${table.roomId}-input-message`}
+                            onKeyUp={(event) => {
+                              keyUpMessage(event, table.roomId);
+                            }}
+                          />
+                          <button
+                            id={`${table.roomId}-send`}
+                            onClick={() => {
+                              sendMessage(table.roomId);
+                            }}
+                          >
+                            <i className="fa fa-paper-plane-o"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

@@ -118,7 +118,7 @@ const SingleRowPost = ({ post, num, resetStatus }) => {
                 View Post
               </div>
               <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
-                <Link to={`/employer/account/post-submitted/${post.id}`}> Submited</Link>
+                <Link to={`/employer/account/post-submitted/${post.id}`} className="href-customized"> Submited</Link>
               </div>
               {post.status === "DELETED" ? (
                 <></>

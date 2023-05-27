@@ -423,9 +423,7 @@ small {
 
 .row-flex .item:hover {
     cursor: pointer;
-    background-color: coral !important;
-    color: white !important;
-
+    background-color: #dfdfdf !important;
 }
 
 .row-flex select {

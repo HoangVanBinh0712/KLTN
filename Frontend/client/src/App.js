@@ -64,22 +64,14 @@ import RevenueStatitics from "./admin_scenes/RevenueStatitics";
 import ReportStatitics from "./admin_scenes/ReportStatitics";
 import Account from "./admin_scenes/Account";
 import LoginPageAdmin from "./admin_scenes/LoginPageAdmin";
-import ChatBox from './components/global/ChatBox'
+import ChatBox from "./components/global/ChatBox";
 function App() {
   const {
-    authState: {user, authloading, role },
+    authState: { user, authloading, role },
   } = useContext(AuthContext);
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
 
-  const location = useLocation();
-  const currentUrl = location.pathname;
-  //Some url need to be navigated
-  if (currentUrl === "/admin") return <Navigate to="/admin/login" />;
-  if (currentUrl === "/") return <Navigate to="/home" />;
-  if (currentUrl === "/employer/") return <Navigate to="/employer/home" />;
-  if (currentUrl === "/user/account") return <Navigate to="/user/account/personal-info" />;
-  if (currentUrl === "/employer/account") return <Navigate to="/employer/account/employer-info" />;
   let body;
 
   if (authloading) {
@@ -88,6 +80,13 @@ function App() {
     console.log(role);
     body = (
       <Routes>
+        {/*Redirect path*/}
+        <Route exac path="/admin" element={<Navigate to="/admin/login" />} />
+        <Route exac path="/" element={<Navigate to="home" />} />
+        <Route exac path="/employer/" element={<Navigate to={"/employer/home"} />} />
+        <Route exac path="/user/account/" element={<Navigate to={"/user/account/personal-info"} />} />
+        <Route exac path="/employer/account/" element={<Navigate to={"/employer/account/employer-info"} />} />
+
         {/*Public API */}
         <Route path="/user/login" element={<Login />} />
         <Route path="/login/:token" element={<LoginGG />} />

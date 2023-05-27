@@ -154,7 +154,7 @@ const TopBar = () => {
 
               <div>
                 <div className="drop-text my-account-chose">
-                  <Link to="/user/account" className="color-a-dropdownbox">
+                  <Link to="/user/account/personal-info" className="color-a-dropdownbox">
                     My Account
                   </Link>
                 </div>
@@ -291,7 +291,7 @@ const TopBar = () => {
               </div>
               <div>
                 <div className="drop-text my-account-chose">
-                  <Link to="/employer/account" className="color-a-dropdownbox">
+                  <Link to="/employer/account/recruitment-statistics" className="color-a-dropdownbox">
                     My Account
                   </Link>
                 </div>
