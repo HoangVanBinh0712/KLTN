@@ -4,13 +4,12 @@ import 'react-quill/dist/quill.snow.css';
 import logoIcon from "../../assets/picture-banner/logo.png";
 import { AuthContext } from "../../contexts/AuthContext";
 import { GlobalContext } from "../../contexts/GlobalContext";
-import { useToast } from "../../contexts/Toast";
+import swal from "sweetalert";
 
 const EmployerInfo = () => {
 
   const { authState: { user }, getUser, updateEmpInfo,setUser } = useContext(AuthContext)
   const { globalState: { cities, industries } } = useContext(GlobalContext)
-  const { warn, success } = useToast();
 
   const [userInfo, setUserinfor] = useState({
     email: user !== null ? user.email : "",
@@ -126,11 +125,21 @@ const EmployerInfo = () => {
       const infoData = { email, name, phone, address, cityId, industryId, description:desc }
       const responseData = await updateEmpInfo(infoData, avatar, cover)
       if (responseData.success) {
-        success('Update information successfully!')
+        swal({
+          title: "Success",
+          icon: "success",
+          text: "Updated information Successfully!",
+          dangerMode: false,
+        })
         setUser(responseData.data)
       }
       else {
-        warn(responseData.message)
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: responseData.message,
+          dangerMode: true,
+        })
       }
 
     }
@@ -142,10 +151,19 @@ const EmployerInfo = () => {
   }
 
   const onCancelClick = () => {
-    const confirm = window.confirm("Are you sure you want to cancel, the information you changed will not be saved?");
-    if (confirm) {
-      getUserInfo()
-    }
+    swal({
+      title: "Are you sure you want to cancel?",
+      icon: "info",
+      text: "The information you changed will not be saved",
+      buttons: {
+        cancel: "No, cancel",
+        confirm: "Yes, proceed"
+      },
+    }).then((click) => {
+      if (click) {
+        getUserInfo();
+      }
+    });
   }
 
   let body
@@ -223,7 +241,7 @@ const EmployerInfo = () => {
           <div className="double-select">
             <div className="select">
               <div className="label">Location</div>
-              <select name="city" id="" onChange={onChangeUserInfo}>
+              <select name="cityId" id="" onChange={onChangeUserInfo}>
                 {cities.lenght !== 0 ?
                   (cities.map((c) => (
                     <option key={c.id} value={c.id} selected={cityId === c.id}>
@@ -243,7 +261,7 @@ const EmployerInfo = () => {
             </div>
             <div className="select">
               <div className="label">Industry</div>
-              <select name="industry" id="" onChange={onChangeUserInfo}>
+              <select name="industryId" id="" onChange={onChangeUserInfo}>
                 {industries.lenght !== 0 ?
                   (industries.map((c) => (
                     <option key={c.id} value={c.id} selected={industryId === c.id}>

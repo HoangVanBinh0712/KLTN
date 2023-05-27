@@ -165,7 +165,7 @@ const AuthContextProvider = ({ children }) => {
         role: null,
       },
     });
-    navigate("/user/login");
+    navigate("/login");
   };
 
   // auth user
@@ -1108,6 +1108,60 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const getCountAllPost = async () => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/admin/post/get-count-all-post`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const getStatiticsOder = async (type) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/admin/statistic/order?page=1&status=${type}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+
+  const getRecentNotice = async () => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/notification?page=1&limit=24`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, message: error.message };
+    }
+  };
+  
   //conxtext data
   const authContextData = {
     loginUser,
@@ -1145,8 +1199,10 @@ const AuthContextProvider = ({ children }) => {
     getUserProfileByAnyFilter,
     reportPost,
     createAppointment,
+    getRecentNotice,
 
     getListAccount,
+    getStatiticsOder,
     getListPostAdmin,
     getUserStaAdmin,
     getRevenueStaAdmin,
@@ -1164,6 +1220,7 @@ const AuthContextProvider = ({ children }) => {
     getIndustryByAdmin,
     getReportByAdmin,
     changeReportHandleByAdmin,
+    getCountAllPost,
     showToast,
     setShowToast,
     authState,

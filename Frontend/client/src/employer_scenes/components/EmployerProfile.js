@@ -3,11 +3,9 @@ import { useParams, useLocation } from "react-router-dom";
 import TopBar from "../../components/global/TopBar";
 import Footer from "../../components/global/Footer";
 
-import earthIcon from "../../assets/icons/earth-icon.png";
 import logoIcon from "../../assets/icons/logo.png";
 import copyicon from "../../assets/icons/copy-icon.png";
 import locationIcon from "../../assets/icons/location-ping.png";
-import toweIcon from "../../assets/icons/tower-icon.png";
 import heartIcon from "../../assets/icons/round-heart-icon.png";
 import heartBleIcon from "../../assets/icons/heart-icon.png";
 import faceIcon from "../../assets/icons/face-icon.png";
@@ -41,7 +39,6 @@ const EmployerProfile = () => {
     unfollowPost,
     followPost,
   } = useContext(PostContext);
-  const { warn, success } = useToast();
 
   const location = useLocation();
   const currentUrl = location.pathname;
@@ -108,23 +105,48 @@ const EmployerProfile = () => {
     tempInput.select();
     document.execCommand("copy");
     document.body.removeChild(tempInput);
-    success("Copied!");
+    swal({
+      title: "Success",
+      icon: "success",
+      text: "Copied!",
+      dangerMode: false,
+    })
   }
 
   const onClicUnfollow = async (id) => {
     const res = await unFollowEmp(id);
     if (res.success) {
-      success("The recruiter has been removed from the favorites list.");
+      swal({
+        title: "Success",
+        icon: "success",
+        text: "The recruiter has been removed from the favorites list.",
+        dangerMode: false,
+      })
       setIsFollow(false);
-    } else warn(res.message);
+    } else swal({
+      title: "Error",
+      icon: "warning",
+      text: res.message,
+      dangerMode: true,
+    })
   };
 
   const onClicFollow = async (id) => {
     const res = await followEmp(id);
     if (res.success) {
-      success("The recruiter has been added to favorites.");
+      swal({
+        title: "Success",
+        icon: "success",
+        text: "The recruiter has been added to favorites list.",
+        dangerMode: false,
+      })
       setIsFollow(true);
-    } else warn(res.message);
+    } else swal({
+      title: "Error",
+      icon: "warning",
+      text: res.message,
+      dangerMode: true,
+    })
   };
 
   const toPreviousPage = () => {
@@ -158,13 +180,33 @@ const EmployerProfile = () => {
         if (checkFollow(id, postFollow)) {
           const res = await unfollowPost(id);
           if (res.success) {
-            success("The post has been removed from the favorites list.");
-          } else warn(res.message);
+            swal({
+              title: "Success",
+              icon: "success",
+              text: "The post has been removed from the favorites list.",
+              dangerMode: false,
+            })
+          } else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+          })
         } else {
           const res = await followPost(id);
           if (res.success) {
-            success("The article has been added to favorites.");
-          } else warn(res.message);
+            swal({
+              title: "Success",
+              icon: "success",
+              text: "The post has been added to favorites list.",
+              dangerMode: false,
+            })
+          } else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+          })
         }
       }
     }

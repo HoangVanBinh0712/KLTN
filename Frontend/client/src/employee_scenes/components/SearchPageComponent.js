@@ -12,10 +12,10 @@ import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 
 import { useSearchParams } from 'react-router-dom'
 import { useState, useContext, useEffect } from 'react'
-import { useToast } from '../../contexts/Toast'
 import { PostContext } from '../../contexts/PostContext'
 import { GlobalContext } from '../../contexts/GlobalContext'
 import { AuthContext } from '../../contexts/AuthContext'
+import swal from "sweetalert";
 
 const SearchPageComponent = () => {
 
@@ -23,7 +23,6 @@ const SearchPageComponent = () => {
     const { postState: { postFollow, postMostView }, getPostByAnyFilter, followPost, unfollowPost, } = useContext(PostContext)
     const { globalState: { cities, industries } } = useContext(GlobalContext)
     const [searchParams, setSearchParams] = useSearchParams();
-    const { warn, success } = useToast()
     // single-time read
     const params = Object.fromEntries([...searchParams]);
     const [listPostReult, setListPostResult] = useState([])
@@ -101,7 +100,12 @@ const SearchPageComponent = () => {
         if (res.success) {
             setListPostResult(res.data)
         }
-        else warn(res.message)
+        else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+          })
     }
 
     function chuckPosts(arr, len) {
@@ -240,16 +244,36 @@ const SearchPageComponent = () => {
                 if (checkFollow(id, postFollow)) {
                     const res = await unfollowPost(id)
                     if (res.success) {
-                        success('The post has been removed from the favorites list.')
+                        swal({
+                            title: "Success",
+                            icon: "success",
+                            text: "The post has been removed from the favorites list.",
+                            dangerMode: false,
+                          })
                     }
-                    else warn(res.message)
+                    else swal({
+                        title: "Error",
+                        icon: "warning",
+                        text: res.message,
+                        dangerMode: true,
+                      })
                 }
                 else {
                     const res = await followPost(id)
                     if (res.success) {
-                        success('The article has been added to favorites.')
+                        swal({
+                            title: "Success",
+                            icon: "success",
+                            text: "The post has been added to the favorites list.",
+                            dangerMode: false,
+                          })
                     }
-                    else warn(res.message)
+                    else swal({
+                        title: "Error",
+                        icon: "warning",
+                        text: res.message,
+                        dangerMode: true,
+                      })
                 }
             }
         }

@@ -3,12 +3,11 @@ import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { useToast } from '../../contexts/Toast';
+import swal from "sweetalert";
 
 const ResumeViewer = () => {
 
   const { getResume, getEmpViewCv, } = useContext(AuthContext)
-  const { warn, success } = useToast();
 
   const [allResume, setAllResume] = useState([])
   const [currentResumeId, setCurrentResumeId] = useState(-1)
@@ -19,7 +18,12 @@ const ResumeViewer = () => {
     if (res.success) {
       setAllEmployer(res.data);
     }
-    else warn(res.message)
+    else swal({
+      title: "Error",
+      icon: "warning",
+      text: res.message,
+      dangerMode: true,
+    })
   }
 
   const getAllResume = async () => {

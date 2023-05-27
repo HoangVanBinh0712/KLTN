@@ -2,14 +2,13 @@ import { useContext, useState, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useToast } from "../../contexts/Toast";
 import { PostContext } from "../../contexts/PostContext";
+import swal from "sweetalert";
 
 const AddPostComponent = () => {
 
   const { authState: { user }, } = useContext(AuthContext);
   const { createPost } = useContext(PostContext)
-  const { warn, success } = useToast();
   const [mess, setMess] = useState('')
 
   const today = new Date();
@@ -124,7 +123,12 @@ const AddPostComponent = () => {
     if (checkPostInfo(postInfo)) {
       const res = await createPost(postInfo)
       if (res.success) {
-        success("Created new post successfully!")
+        swal({
+          title: "Success",
+          icon: "success",
+          text: "Created new post successfully",
+          dangerMode: false,
+        })
         setTitle(initialPostInfo.title)
         setDescription(initialPostInfo.description)
         setMethod(initialPostInfo.method)
@@ -138,7 +142,12 @@ const AddPostComponent = () => {
         setRecruit(initialPostInfo.recruit)
         setExpirationDate(initialPostInfo.expirationDate)
       }
-      else warn(res.message)
+      else swal({
+        title: "Error",
+        icon: "warning",
+        text: res.message,
+        dangerMode: true,
+      })
     }
     else {
       setMess("*Required...")

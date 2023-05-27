@@ -716,3 +716,33 @@ body {
     font-weight: bold;
     font-size: 1em;
 }
+
+.notification-topbar-header {
+    padding: 10px 0;
+    color: #0C62AD;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.single-notice-in-dropbox {
+    display: flex;
+    border-bottom:1px solid #cfcfcf;
+    padding:0 2% 2% 10px;
+    margin-right: 4%;
+    margin-bottom: 10px;
+}
+
+.gr-title-date-notice {
+    width: 90%;
+}
+
+.single-notice-in-dropbox-title {
+    color: #000;
+    font-size: 18px;
+    font-weight: 500;
+
+}
+
+.single-notice-in-dropbox-date {
+    color: #6c6c6c;
+}

@@ -3,12 +3,10 @@ import SinglePostCvSubmit from "./SinglePostCvSubmit";
 import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import { PostContext } from "../../contexts/PostContext";
-import { useToast } from "../../contexts/Toast";
 
 const CandidatesProfile = () => {
 
     const { getEmpPost } = useContext(PostContext)
-    const { warn, success } = useToast()
 
     const [filter, setFilter]= useState({
         method:'',

@@ -4,7 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import logoIcon from "../../assets/picture-banner/logo.png";
 import { AuthContext } from "../../contexts/AuthContext";
 import { GlobalContext } from "../../contexts/GlobalContext";
-import { useToast } from "../../contexts/Toast";
+import swal from "sweetalert";
 
 const UserPersonalInfo = () => {
   const {
@@ -15,7 +15,6 @@ const UserPersonalInfo = () => {
   const {
     globalState: { cities, industries },
   } = useContext(GlobalContext);
-  const { warn, success } = useToast();
 
   const [userInfo, setUserinfor] = useState({
     email: "",
@@ -123,16 +122,26 @@ const UserPersonalInfo = () => {
     });
   };
 
-  const onUpdateUserClick = async (event) => {
+  const onUpdateUserClick = async () => {
     try {
       const infoData = { email, name, phone, address, cityId, industryId, description };
       const reponseData = await updateUserInfo(infoData, avatar, cover);
       if (reponseData.success) {
-        success("Update information successfully!");
+        swal({
+          title: "Success",
+          icon: "success",
+          text: "Updated information Successfully!",
+          dangerMode: false,
+        })
         setUser(reponseData.data)
 
       } else {
-        warn(reponseData.message + ": " + Object.keys(reponseData.data) + " " + reponseData.data[0]);
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: reponseData.message,
+          dangerMode: true,
+        })
       }
     } catch (error) {
       if (error.response.data) {
@@ -142,10 +151,20 @@ const UserPersonalInfo = () => {
   };
 
   const onCancelClick = () => {
-    const confirm = window.confirm("Are you sure you want to cancel, the information you changed will not be saved?");
-    if (confirm) {
-      getUserInfo();
-    }
+    swal({
+      title: "Are you sure you want to cancel?",
+      icon: "info",
+      text: "The information you changed will not be saved",
+      buttons: {
+        cancel: "Cancel",
+        confirm: "Yes"
+      },
+    }).then((click) => {
+      if (click) {
+        getUserInfo();
+      }
+    });
+    
   };
 
   let body;

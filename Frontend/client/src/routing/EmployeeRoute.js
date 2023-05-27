@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
-import HomePage from "../employee_scenes/HomePage";
 import PageNotFound from "../components/page/notfound/PageNotFound";
 import EmployeeAccountPage from "../employee_scenes/EmployeeAccountPage";
 import PersonalInfoComponent from "../employee_scenes/components/PersionalInfoComponent";
@@ -15,32 +14,24 @@ import RecruiterFollowed from "../employee_scenes/components/RecruiterFollowedCo
 import UpdateResume from "../employee_scenes/components/UpdateResumeComponent";
 import VerifyEmail from "../employee_scenes/components/VerifyEmailComponent";
 import ResumeViewer from "../employee_scenes/components/ResumeViewerComponent";
+import { AuthContext } from "../contexts/AuthContext";
 import Login from "../components/page/login/Login";
 import LoginGG from "../components/page/login/LoginWithGG";
-import Register from "../components/page/register/Register";
+import HomePage from "../employee_scenes/HomePage";
 import PostDetails from "../components/PostDetails";
-import EmployerProfile from "../employer_scenes/components/EmployerProfile";
 import SearchPageComponent from "../employee_scenes/components/SearchPageComponent";
-import PageCustomerServices from "../components/PageCustomerServices";
-import { AuthContext } from "../contexts/AuthContext";
+import EmployerProfile from "../employer_scenes/components/EmployerProfile";
 import HighLightCompany from "../components/global/HighlightCompany";
-import ForgotPassword from "../components/page/login/ForgotPassword";
-
+import PageCustomerServices from "../components/PageCustomerServiceNoneTopbar";
+import Register from "../components/page/register"
+import ForgotPassword from "../components/page/ForgotPassword"
 const EmployeeRoute = ({ ...rest }) => {
   const {
     authState: { authloading, role },
   } = useContext(AuthContext);
   const location = useLocation();
   const currentUrl = location.pathname;
-
-  let body;
-
-  if (currentUrl === "/") {
-    return <Navigate to="/home" />;
-  }
-  if (currentUrl === "/user") {
-    return <Navigate to="/home" />;
-  }
+  let body
   if (currentUrl === "/user/account") return <Navigate to="/user/account/personal-info" />;
   //Check if user login here
   else if (!authloading && role === "ROLE_USER") {

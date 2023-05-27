@@ -9,12 +9,12 @@ import { useState, useContext, useEffect } from 'react'
 import { useToast } from '../../contexts/Toast'
 import { GlobalContext } from '../../contexts/GlobalContext'
 import { AuthContext } from '../../contexts/AuthContext'
+import swal from "sweetalert";
 
 const SearchCandidates = () => {
 
     const { getUserProfileByAnyFilter } = useContext(AuthContext)
     const { globalState: { cities, industries } } = useContext(GlobalContext)
-    const { warn, success } = useToast()
     // single-time read
     const [listProfileResult, setListProfileResult] = useState([])
 
@@ -66,7 +66,12 @@ const SearchCandidates = () => {
         if (res.success) {
             setListProfileResult(res.data)
         }
-        else warn(res.message)
+        else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+          })
     }
 
     function chuckPosts(arr, len) {

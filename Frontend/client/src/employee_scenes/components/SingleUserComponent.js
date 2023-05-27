@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import logoIcon from "../../assets/picture-banner/logo.png";
-import { useToast } from "../../contexts/Toast";
 import { AuthContext } from "../../contexts/AuthContext";
+import swal from "sweetalert";
 
 const SingleUser = ({ user, refeshEmp }) => {
 
   const { getEmpFollow, followEmp, unFollowEmp } = useContext(AuthContext)
-  const { warn, success } = useToast()
 
   const emp = user
 
@@ -65,18 +64,38 @@ const SingleUser = ({ user, refeshEmp }) => {
     if (checkFollow(id, listEmpFollow)) {
       const res = await unFollowEmp(emp.user.id)
       if (res.success) {
-        success('The recruiter has been removed from the favorites list.')
+        swal({
+          title: "Success",
+          icon: "success",
+          text: "The post has been removed from the favorites list.",
+          dangerMode: false,
+        })
         refeshEmp()
       }
-      else warn(res.message)
+      else swal({
+        title: "Error",
+        icon: "warning",
+        text: res.message,
+        dangerMode: true,
+      })
     }
     else {
       const res = await followEmp(emp.user.id)
       if (res.success) {
-        success('The recruiter has been added to favorites.')
+        swal({
+          title: "Success",
+          icon: "success",
+          text: "The post has been added to the favorites list.",
+          dangerMode: false,
+        })
         refeshEmp()
       }
-      else warn(res.message)
+      else swal({
+        title: "Error",
+        icon: "warning",
+        text: res.message,
+        dangerMode: true,
+      })
     }
   }
 

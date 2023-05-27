@@ -2,11 +2,11 @@ import threeDotIcon from '../../assets/icons/3dot-icon.png'
 import { useContext, useEffect, useState } from 'react'
 import { PostContext } from '../../contexts/PostContext'
 import { useToast } from '../../contexts/Toast'
+import swal from "sweetalert";
 
 const SingleRowPost = ({ post, num, resetStatus }) => {
 
     const { getCvSubmited, upDatePostDeleted } = useContext(PostContext)
-    const { success, warn } = useToast()
 
     const [isOpen, setIsOpen] = useState(false)
     const [numCv, setNumCv] = useState(0)
@@ -61,9 +61,19 @@ const SingleRowPost = ({ post, num, resetStatus }) => {
         const res = await upDatePostDeleted(post.id)
         if (res.success) {
             resetStatus()
-            success('Deleted successfully!')
+            swal({
+                title: "Success",
+                icon: "success",
+                text: "Deleted successfully",
+                dangerMode: false,
+              })
         }
-        else warn(res.message)
+        else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+          })
     }
 
     return (
