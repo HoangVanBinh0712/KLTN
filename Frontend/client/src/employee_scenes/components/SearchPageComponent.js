@@ -5,7 +5,7 @@ import bannerSearch from '../../assets/picture-banner/banner-search.png'
 import roundheartIcon from "../../assets/icons/round-heart-icon.png"
 import heartIcon from "../../assets/icons/heart-icon.png"
 import updPic from '../../assets/picture-banner/update-cv.png'
-import logoPost from "../../assets/icons/logo.png"
+import logoPost from "../../assets/icons/logo-company.png"
 import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 

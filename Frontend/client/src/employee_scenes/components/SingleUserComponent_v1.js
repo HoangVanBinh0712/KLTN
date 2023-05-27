@@ -3,11 +3,11 @@ import logoIcon from "../../assets/picture-banner/logo.png";
 import { AuthContext } from "../../contexts/AuthContext";
 import swal from "sweetalert";
 
-const SingleUser = ({ user, refeshEmp }) => {
+const SingleUserV1 = ({ user, refeshEmp }) => {
 
   const { getEmpFollow, followEmp, unFollowEmp } = useContext(AuthContext)
 
-  const emp = user
+  const emp = {user: user.viewer, date: user.date}
 
   const [listEmpFollow, setList] = useState([])
 
@@ -17,7 +17,7 @@ const SingleUser = ({ user, refeshEmp }) => {
       setList(res.data);
     }
   }
-  console.log(user,emp,emp.user);
+
   useEffect(() => {
     getAllEmployer()
   }, [])
@@ -62,6 +62,7 @@ const SingleUser = ({ user, refeshEmp }) => {
 
   const onClickHeart = async (id) => {
     if (checkFollow(id, listEmpFollow)) {
+      console.log(emp.user.id);
       const res = await unFollowEmp(emp.user.id)
       if (res.success) {
         swal({
@@ -141,4 +142,4 @@ const SingleUser = ({ user, refeshEmp }) => {
   );
 };
 
-export default SingleUser;
+export default SingleUserV1;

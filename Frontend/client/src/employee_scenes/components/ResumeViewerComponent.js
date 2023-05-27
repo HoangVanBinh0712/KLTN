@@ -4,6 +4,7 @@ import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import swal from "sweetalert";
+import SingleUserV1 from "./SingleUserComponent_v1";
 
 const ResumeViewer = () => {
 
@@ -14,16 +15,22 @@ const ResumeViewer = () => {
   const [allEmployer, setAllEmployer] = useState([])
 
   const getAllEmployer = async (mediaId) => {
-    const res = await getEmpViewCv(mediaId)
-    if (res.success) {
-      setAllEmployer(res.data);
-    }
-    else swal({
-      title: "Error",
-      icon: "warning",
-      text: res.message,
-      dangerMode: true,
-    })
+    
+      const res = await getEmpViewCv(mediaId)
+      if (res.success === false) {
+          swal({
+          title: "Error",
+          icon: "warning",
+          text: res.message,
+          dangerMode: true,
+        })
+        setAllEmployer([]);
+
+      }else {
+        setAllEmployer(res);
+      }
+    
+    
   }
 
   const getAllResume = async () => {
@@ -79,7 +86,7 @@ const ResumeViewer = () => {
   if (allEmployer.length > 0) {
     postInResultBox = (<>
       {allEmp[currentPage].map((emp, id) => (
-        <SingleUser user={emp} refeshEmp={()=>getAllEmployer()} key={id} />
+        <SingleUserV1 user={emp} refeshEmp={()=>getAllEmployer()} key={id} />
       ))
       }
     </>

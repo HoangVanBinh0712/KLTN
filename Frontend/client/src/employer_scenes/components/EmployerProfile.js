@@ -2,8 +2,8 @@ import "../css/emp-profile.css";
 import { useParams, useLocation } from "react-router-dom";
 import TopBar from "../../components/global/TopBar";
 import Footer from "../../components/global/Footer";
-
-import logoIcon from "../../assets/icons/logo.png";
+import coverImage from "../../assets/picture-banner/service-banner.png";
+import logoIcon from "../../assets/icons/logo-company.png";
 import copyicon from "../../assets/icons/copy-icon.png";
 import locationIcon from "../../assets/icons/location-ping.png";
 import heartIcon from "../../assets/icons/round-heart-icon.png";
@@ -110,7 +110,7 @@ const EmployerProfile = () => {
       icon: "success",
       text: "Copied!",
       dangerMode: false,
-    })
+    });
   }
 
   const onClicUnfollow = async (id) => {
@@ -121,14 +121,15 @@ const EmployerProfile = () => {
         icon: "success",
         text: "The recruiter has been removed from the favorites list.",
         dangerMode: false,
-      })
+      });
       setIsFollow(false);
-    } else swal({
-      title: "Error",
-      icon: "warning",
-      text: res.message,
-      dangerMode: true,
-    })
+    } else
+      swal({
+        title: "Error",
+        icon: "warning",
+        text: res.message,
+        dangerMode: true,
+      });
   };
 
   const onClicFollow = async (id) => {
@@ -139,14 +140,15 @@ const EmployerProfile = () => {
         icon: "success",
         text: "The recruiter has been added to favorites list.",
         dangerMode: false,
-      })
+      });
       setIsFollow(true);
-    } else swal({
-      title: "Error",
-      icon: "warning",
-      text: res.message,
-      dangerMode: true,
-    })
+    } else
+      swal({
+        title: "Error",
+        icon: "warning",
+        text: res.message,
+        dangerMode: true,
+      });
   };
 
   const toPreviousPage = () => {
@@ -185,13 +187,14 @@ const EmployerProfile = () => {
               icon: "success",
               text: "The post has been removed from the favorites list.",
               dangerMode: false,
-            })
-          } else swal({
-            title: "Error",
-            icon: "warning",
-            text: res.message,
-            dangerMode: true,
-          })
+            });
+          } else
+            swal({
+              title: "Error",
+              icon: "warning",
+              text: res.message,
+              dangerMode: true,
+            });
         } else {
           const res = await followPost(id);
           if (res.success) {
@@ -200,13 +203,14 @@ const EmployerProfile = () => {
               icon: "success",
               text: "The post has been added to favorites list.",
               dangerMode: false,
-            })
-          } else swal({
-            title: "Error",
-            icon: "warning",
-            text: res.message,
-            dangerMode: true,
-          })
+            });
+          } else
+            swal({
+              title: "Error",
+              icon: "warning",
+              text: res.message,
+              dangerMode: true,
+            });
         }
       }
     }
@@ -306,9 +310,13 @@ const EmployerProfile = () => {
         <div className="body-container">
           <p id="notice">{empInfo.name !== undefined ? empInfo.name : ""} information</p>
           <div className="profile-head">
-            <div className="cover"></div>
+            <div className="cover">
+              <img className="cover-image" src={empInfo.urlCover === null ? coverImage : empInfo.urlCover} alt="" />
+            </div>
             <div className="profile-info">
-              <div className="avatarTop"></div>
+              <div className="avatarTop">
+                <img className="avatar" src={empInfo.urlAvatar === null ? logoIcon : empInfo.urlAvatar} alt="" />
+              </div>
               <div className="name-viewer-wrapper">
                 <div className="name">
                   {empInfo.name !== undefined ? empInfo.name : ""}
