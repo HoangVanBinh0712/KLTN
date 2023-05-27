@@ -4,20 +4,42 @@ import { AuthContext } from "../../contexts/AuthContext";
 import "../../employee_scenes/css/Homepage.css"
 import logoBHQ from "../../assets/img/logo.png"
 import personIcon from "../../assets/img/personal.png"
+import bellIcon from '../../assets/icons/bell-grey-icon.png'
 import swal from 'sweetalert';
 
 const TopBar = () => {
 
-    const { authState: { authloading, role, user }, logoutSection } = useContext(AuthContext)
+    const { authState: { authloading, role, user }, logoutSection, getRecentNotice } = useContext(AuthContext)
 
     const [isOpen, setIsOpen] = useState(false);
-    const toggleDropdown = () => setIsOpen(!isOpen);
+    const [isOpenNotice, setIsOpentNotice] = useState(false)
+    const toggleDropdown = () => {
+        setIsOpentNotice(false);
+        setIsOpen(!isOpen);
+    }
+    const toggleDropdownNotice = () => {
+        setIsOpen(false);
+        setIsOpentNotice(!isOpenNotice);
+    }
     const dropdownRef = useRef(null);
     const [isOpenTool, setIsOpenTool] = useState(false);
     const toggleDropdownTool = () => setIsOpenTool(!isOpenTool);
     const dropTooldownRef = useRef(null);
+    const [listNotice, setListNotice] = useState([])
+
+    const getListNotification = async () => {
+        const res = await getRecentNotice()
+        if (res.success) setListNotice(res.data)
+        else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+        })
+    }
 
     useEffect(() => {
+        getListNotification()
         document.addEventListener("click", handleClickOutside);
         document.addEventListener("click", handleClickOutsideTool);
         return () => {
@@ -29,6 +51,7 @@ const TopBar = () => {
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setIsOpen(false);
+            setIsOpentNotice(false);
         }
     };
 
@@ -39,18 +62,29 @@ const TopBar = () => {
     };
 
     const logout = () => {
-  
+
         swal({
             title: "Info",
             icon: "info",
             text: "Do you want to logout ? ",
-          }).then((click) => {
+        }).then((click) => {
             if (click) {
                 logoutSection()
             }
-          });
+        });
     }
 
+    const getPostDate = (date, isGetTime) => {
+        const myDate = new Date(date);
+        const day = ("0" + myDate.getDate()).slice(-2);
+        const month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+        const year = myDate.getFullYear();
+        const hour = String(myDate.getHours()).padStart(2, '0')
+        const min = String(myDate.getMinutes()).padStart(2, '0')
+        if (isGetTime)
+            return (`${hour}:${min}${' '}${day}/${month}/${year}`)
+        else return (`${day}/${month}/${year}`)
+    }
 
     let body
 
@@ -82,12 +116,12 @@ const TopBar = () => {
                 </div>
                 <div className="dropdown-container" ref={dropdownRef}>
                     <div className='option-account'>
-                       {/*  <div className="signed-homepage">
+                        {/* <div className="signed-homepage">
                             <img className="messbell-intopbar" src={messIcon} alt="mess" />
-                        </div>
-                        <div className="signed-homepage">
-                            <img className="messbell-intopbar" src={bellIcon} alt="bell" />
                         </div> */}
+                        <div className="signed-homepage" onClick={toggleDropdownNotice}>
+                            <img className="messbell-intopbar" src={bellIcon} alt="bell" />
+                        </div>
                         <div className="signed-homepage">
                             <img className="messbell-intopbar" src={user.urlAvatar === null ? personIcon : user.urlAvatar}
                                 onClick={toggleDropdown}
@@ -118,6 +152,35 @@ const TopBar = () => {
                                 <div className='drop-text change-pwd-chose'><Link to='/user/account/change-password' className='color-a-dropdownbox'>Change Password</Link></div>
                                 <div className='drop-text logout-chose' onClick={logout}>Logout</div>
                             </div>
+                        </div>
+                    )}
+
+                    {isOpenNotice && (
+                        <div className="dropdown-menu" style={{ minHeight: '300px', width: '25%', right: '5px', maxHeight: '500px', overflow: 'auto' }}>
+                            <div className="notification-topbar-header">
+                                Notifications
+                            </div>
+
+                            {listNotice.length > 0 ? (<>
+                                {listNotice.map((notice, id) => (
+                                    <div className="single-notice-in-dropbox" key={id}>
+                                        <div style={{ width: '15px', marginTop: '10px', marginRight: '5px' }}>
+                                            <i class="fa fa-circle"
+                                                aria-hidden="true"
+                                                style={{ fontSize: '10px', display: 'flex', alignItems: 'center', color: '#0c62ad' }}></i>
+                                        </div>
+                                        <div className="gr-title-date-notice">
+                                            <div className="single-notice-in-dropbox-title">
+                                                {notice?.title}
+                                            </div>
+                                            <div className="single-notice-in-dropbox-date"> {getPostDate(notice.date, true)}</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </>) : (
+                                <div> You don't have any notifications yet</div>
+                            )}
+
                         </div>
                     )}
                 </div>
@@ -156,10 +219,10 @@ const TopBar = () => {
                     <div className='option-account'>
                         {/* <div className="signed-homepage">
                             <img className="messbell-intopbar" src={messIcon} alt="mess" />
-                        </div>
+                        </div> */}
                         <div className="signed-homepage">
                             <img className="messbell-intopbar" src={bellIcon} alt="bell" />
-                        </div> */}
+                        </div>
                         <div className="signed-homepage">
                             <img className="messbell-intopbar" src={user.urlAvatar === null ? personIcon : user.urlAvatar}
                                 onClick={toggleDropdown}
@@ -203,17 +266,46 @@ const TopBar = () => {
                             </div>
                         </div>
                     )}
+
+                    {isOpenNotice && (
+                        <div className="dropdown-menu" style={{ minHeight: '300px', width: '25%', right: '5px', maxHeight: '500px', overflow: 'auto' }}>
+                            <div className="notification-topbar-header">
+                                Notifications
+                            </div>
+
+                            {listNotice.length > 0 ? (<>
+                                {listNotice.map((notice, id) => (
+                                    <div className="single-notice-in-dropbox" key={id}>
+                                        <div style={{ width: '15px', marginTop: '10px', marginRight: '5px' }}>
+                                            <i class="fa fa-circle"
+                                                aria-hidden="true"
+                                                style={{ fontSize: '10px', display: 'flex', alignItems: 'center', color: '#0c62ad' }}></i>
+                                        </div>
+                                        <div className="gr-title-date-notice">
+                                            <div className="single-notice-in-dropbox-title">
+                                                {notice?.title}
+                                            </div>
+                                            <div className="single-notice-in-dropbox-date"> {getPostDate(notice.date, true)}</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </>) : (
+                                <div> You don't have any notifications yet</div>
+                            )}
+
+                        </div>
+                    )}
                 </div>
             </div>
         )
     }
-    else if (authloading) {
+    else {
         body = (
             <div className="topbar-home">
                 <div className="logo-home">
                     <Link to='/home'><img className="logo-intopbar" src={logoBHQ} alt="logo" /></Link>
                 </div>
-                <div className="menu-homepage" style={{width:'70%'}}>
+                <div className="menu-homepage" style={{ width: '70%' }}>
                     <div className="option-menu">
                         <Link className="option-a-menu" to="/posts">Job</Link>
                     </div>
@@ -227,18 +319,18 @@ const TopBar = () => {
                         <Link className="option-a-menu" to="#_" >Tools</Link>
                     </div> */}
                 </div>
-                
+
                 <div className="signipup-homepage ">
-                    <Link to='/user/login'><div className="login-reg-topbar signin-blue">Sign In</div></Link>
+                    <Link to='/login'><div className="login-reg-topbar signin-blue">Sign In</div></Link>
                 </div>
                 <div className="signipup-homepage ">
-                    <Link to='/user/register'><div className="login-reg-topbar signup-white">Sign up</div></Link>
+                    <Link to='/register'><div className="login-reg-topbar signup-white">Sign up</div></Link>
                 </div>
             </div>
         )
     }
 
-    
+
 
     return (
         <>

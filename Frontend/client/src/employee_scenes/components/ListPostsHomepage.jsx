@@ -8,13 +8,12 @@ import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import logoPost from "../../assets/icons/logo.png"
 import { PostContext } from '../../contexts/PostContext'
 import { AuthContext } from '../../contexts/AuthContext'
-import { useToast } from '../../contexts/Toast'
+import swal from "sweetalert";
 
 const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
 
     const { authState: { authloading, role } } = useContext(AuthContext)
     const { postState: { postFollow }, followPost, unfollowPost } = useContext(PostContext)
-    const { success, warn } = useToast()
 
     const post = listPosts
 
@@ -62,16 +61,37 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                 if (checkFollow(id, postFollow)) {
                     const res = await unfollowPost(id)
                     if (res.success) {
-                        success('The post has been removed from the favorites list.')
+                        swal({
+                            title: "Success",
+                            icon: "success",
+                            text: "The post has been removed from the favorites list.",
+                            dangerMode: false,
+                          })
                     }
-                    else warn(res.message)
+                    else swal({
+                        title: "Error",
+                        icon: "warning",
+                        text: res.message,
+                        dangerMode: true,
+                      })
                 }
                 else {
                     const res = await followPost(id)
                     if (res.success) {
-                        success('The article has been added to favorites.')
+                        swal({
+                            title: "Success",
+                            icon: "success",
+                            text: "The post has been added to the favorites list.",
+                            dangerMode: false,
+                          })
+                        
                     }
-                    else warn(res.message)
+                    else swal({
+                        title: "Error",
+                        icon: "warning",
+                        text: res.message,
+                        dangerMode: true,
+                      })
                 }
             }
         }

@@ -2,11 +2,11 @@ import { useContext, useEffect, useState, useRef } from "react";
 import cameraIcon from "../../assets/picture-banner/camera.png";
 import SingleAchivement from "./SingleAchivement";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useToast } from "../../contexts/Toast";
+import swal from "sweetalert";
+
 
 const UserAchievement = () => {
   const { getUserAchive, updateUserAchive, createUserAchive, deleteUserAchive } = useContext(AuthContext);
-  const { warn, success } = useToast();
 
   const [dataAchive, setDataAchive] = useState([]);
 
@@ -86,10 +86,20 @@ const UserAchievement = () => {
     const imageData = image;
     const response = await updateUserAchive(id, infoData, imageData);
     if (response.success) {
-      success("Updated achivement successfully!");
+      swal({
+        title: "Success",
+        icon: "success",
+        text: "Updated achivement Successfully!",
+        dangerMode: false,
+      })
       getDataAchive();
     } else {
-      warn(response.message);
+      swal({
+        title: "Error",
+        icon: "warning",
+        text: response.message,
+        dangerMode: true,
+      })
     }
   };
 
@@ -98,10 +108,20 @@ const UserAchievement = () => {
     const imageData = image;
     const response = await createUserAchive(infoData, imageData);
     if (response.success) {
-      success("Created achivement successfully!");
+      swal({
+        title: "Success",
+        icon: "success",
+        text: "Created achivement Successfully!",
+        dangerMode: false,
+      })
       getDataAchive();
     } else {
-      warn(response.message);
+      swal({
+        title: "Error",
+        icon: "warning",
+        text: response.message,
+        dangerMode: true,
+      })
     }
   };
 
@@ -110,43 +130,77 @@ const UserAchievement = () => {
     if (confirm) {
       const response = await deleteUserAchive(idACh);
       if (response.success) {
-        success("Deleted achivement successfully!");
+        swal({
+          title: "Success",
+          icon: "success",
+          text: "Deleted achivement Successfully!",
+          dangerMode: false,
+        })
         setDataAchive(dataAchive.filter((a) => a.id !== id));
       } else {
-        warn(response.message);
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: response.message,
+          dangerMode: true,
+        })
       }
     }
   };
 
   const onClickDeleteButton = async () => {
     if (id === null) {
-      warn("You need to choose an achievement");
+      swal({
+        title: "Info",
+        icon: "info",
+        text: "You need to choose an achievement",
+        dangerMode: true,
+      })
     } else {
       const confirm = window.confirm("Are you sure you want to delete this Achivement?");
       if (confirm) {
         const response = await deleteUserAchive(id);
         if (response.success) {
-          success("Deleted achivement successfully!");
+          swal({
+            title: "Success",
+            icon: "success",
+            text: "Deleted achivement Successfully!",
+            dangerMode: false,
+          })
           setDataAchive(dataAchive.filter((a) => a.id !== id));
         } else {
-          warn(response.message);
+          swal({
+            title: "Error",
+            icon: "warning",
+            text: response.message,
+            dangerMode: true,
+          })
         }
       }
     }
   };
 
   const onCancelClick = () => {
-    const confirm = window.confirm("Change is not saved ! Still want to cancel?");
-    if (confirm) {
-      setCurrentAchive({
-        ...currentAchive,
-        id: "",
-        name: "",
-        type: "ACTIVITY",
-        url: "",
-        imageUrl: "",
-      });
-    }
+    swal({
+      title: "Are you sure you want to cancel?",
+      icon: "info",
+      text: "The information you changed will not be saved",
+      buttons: {
+        cancel: "Cancel",
+        confirm: "Yes"
+      },
+    }).then((click) => {
+      if (click) {
+        setCurrentAchive({
+          ...currentAchive,
+          id: "",
+          name: "",
+          type: "ACTIVITY",
+          url: "",
+          imageUrl: "",
+        })
+      }
+    });
   };
 
   return (

@@ -3,12 +3,11 @@ import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import SinglePost from "./SinglePostComponent";
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { useToast } from '../../contexts/Toast';
+import swal from "sweetalert";
 
 const PredictJob = () => {
 
   const { getResume, predictResume, } = useContext(AuthContext)
-  const { warn, success } = useToast();
 
   const [allResume, setAllResume] = useState([])
   const [currentResumeId, setCurrentResumeId] = useState(-1)
@@ -22,9 +21,19 @@ const PredictJob = () => {
       SetResumePredict(res.predictResult)
       setListPostPre(res.data);
       setlistIndustryPre(Object.keys(res.predictResult))
-      success("Successfully! Now you can see your predictions for this CV.")
+      swal({
+        title: "Success",
+        icon: "success",
+        text: "Successfully! Now you can see your predictions for this CV.",
+        dangerMode: false,
+      })
     }
-    else warn(res.message)
+    else swal({
+      title: "Error",
+      icon: "warning",
+      text: res.message,
+      dangerMode: true,
+    })
   }
 
   const getAllResume = async () => {

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate, Router } from "react-router-dom";
 import { useMode } from "./theme";
 import AdminRoute from "./routing/AdminRoute";
 import EmployeeRoute from "./routing/EmployeeRoute";
@@ -20,10 +20,11 @@ import EmployerProfile from "./employer_scenes/components/EmployerProfile";
 import PageCustomerServices from "./components/PageCustomerServices";
 import PageNotFound from "./components/page/notfound/PageNotFound";
 import Login from "./components/page/login/Login";
+import ProtectedEmplyerRoute from "./routing/auth/ProtectEployerRoute";
+import ServicePage from "./employer_scenes/components/ServicePage";
+
 
 function App() {
-  const [theme, colorMode] = useMode();
-  const [isSidebar, setIsSidebar] = useState(true);
   const {
     authState: { user, authloading },
   } = useContext(AuthContext);
@@ -31,21 +32,25 @@ function App() {
   const location = useLocation();
   const currentUrl = location.pathname;
   let body;
-  const freeUrl = ["/user/login", "/forgot-password", "/login", "/user/register", "/home", "/highlight-company", "/post", "/posts", "/recruiter", "/customer-services"];
-  function isInclude() {
-    return freeUrl.some((u) => currentUrl.includes(u));
+  
+  if (currentUrl.includes("/admin")) {
+    body = (
+      <AdminRoute path="/admin/dashboard /admin/account /admin/post /admin/services /admin/form /admin/bar /admin/pie /admin/line /admin/industries /admin/reports /admin/form  /admin/user-statitics /admin/post-statitics /admin/revenue-statitics /admin/report-statitics " />
+    );
   }
-  if (currentUrl === "/") {
-    return <Navigate to="/home" />;
+  else if (currentUrl.includes("/employer"))
+    body = <EmployerRoute path="/employer/home" />;
+  else if (currentUrl.includes("/user")) {
+    body = <EmployeeRoute path="/user/login " />;
   }
-  if (isInclude) {
-    console.log(currentUrl);
+  else {
     body = (
       <Routes>
-        <Route path="/user/login" element={<Login />} />
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/login/:token" element={<LoginGG />} />
-        <Route path="/user/register" element={<Register />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/highlight-company" element={<HighLightCompany />} />
         <Route path="/post/:id" element={<PostDetails />} />
@@ -56,13 +61,6 @@ function App() {
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
     );
-  } else if (currentUrl.includes("/admin")) {
-    body = (
-      <AdminRoute path="/admin/dashboard /admin/account /admin/post /admin/services /admin/form /admin/bar /admin/pie /admin/line /admin/industries /admin/reports /admin/form  /admin/user-statitics /admin/post-statitics /admin/revenue-statitics /admin/report-statitics " />
-    );
-  } else if (currentUrl.includes("/employer")) body = <EmployerRoute path="/employer/login" />;
-  else if (currentUrl.includes("/user")) {
-    body = <EmployeeRoute path="/user/login " />;
   }
 
   return (
@@ -71,7 +69,6 @@ function App() {
         <ToastProvider>
           <GlobalContextProvider>
             {body}
-
             {!authloading && user && <ChatBox />}
           </GlobalContextProvider>
         </ToastProvider>

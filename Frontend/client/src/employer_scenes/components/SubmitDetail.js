@@ -9,14 +9,13 @@ import { useContext, useEffect, useState } from 'react';
 import { PostContext } from '../../contexts/PostContext';
 import { useToast } from '../../contexts/Toast';
 import { AuthContext } from '../../contexts/AuthContext';
-
+import swal from "sweetalert";
 
 const SubmitDetail = () => {
 
     let { id } = useParams();
     const { authState: { user }, createAppointment } = useContext(AuthContext)
     const { getCvSubmited, getPostById } = useContext(PostContext)
-    const { warn, success } = useToast()
 
     const personnalityArr = [
         { name: 'INTJ', desc: 'Imaginative and strategic thinkers, with a plan for everything' },
@@ -167,7 +166,12 @@ const SubmitDetail = () => {
         }
         const res = await createAppointment(info)
         console.log(res)
-        success('Created Appointment successfully!')
+        swal({
+            title: "Success",
+            icon: "success",
+            text: "Created Appointment successfully!",
+            dangerMode: false,
+          })
         setIsAppointment(false)
     }
 

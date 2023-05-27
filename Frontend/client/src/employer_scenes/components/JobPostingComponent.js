@@ -2,13 +2,12 @@ import { useContext, useEffect, useState } from "react"
 import SingleRowPost from "./SingleRowPost";
 import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
+import swal from "sweetalert";
 import { PostContext } from "../../contexts/PostContext";
-import { useToast } from "../../contexts/Toast";
 
 const JobPostingComponent = () => {
 
     const { getEmpPost } = useContext(PostContext)
-    const { warn, success } = useToast()
 
     const [filter, setFilter]= useState({
         method:'',
@@ -90,19 +89,34 @@ const JobPostingComponent = () => {
         if (postGroups.ACTIVE !== undefined) {
             setPostDisplay(postGroups.ACTIVE)
         }
-        else warn('There are no posts in this category!');
+        else swal({
+            title: "Error",
+            icon: "warning",
+            text: 'There are no posts in this category!',
+            dangerMode: true,
+          })
     }
     const onClickPendingPost = () => {
         if (postGroups.WAIT_FOR_ACCEPT !== undefined) {
             setPostDisplay(postGroups.WAIT_FOR_ACCEPT)
         }
-        else warn('There are no posts in this category!');
+        else swal({
+            title: "Error",
+            icon: "warning",
+            text: 'There are no posts in this category!',
+            dangerMode: true,
+          })
     }
     const onClickUnacceptPost = () => {
         if (postGroups.DELETED_BY_ADMIN !== undefined) {
             setPostDisplay(postGroups.DELETED_BY_ADMIN)
         }
-        else warn('There are no posts in this category!');
+        else swal({
+            title: "Error",
+            icon: "warning",
+            text: 'There are no posts in this category!',
+            dangerMode: true,
+          })
     }
 
     const onChangeSelectPost = (event) => {

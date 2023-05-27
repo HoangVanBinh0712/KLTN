@@ -127,7 +127,7 @@ const Login = () => {
               <div>
                 <p className="txt1">
                   Don’t have an account?
-                  <Link className="link-to-register" to="/user/register">
+                  <Link className="link-to-register" to="/register">
                     {" Create now"}
                   </Link>
                 </p>

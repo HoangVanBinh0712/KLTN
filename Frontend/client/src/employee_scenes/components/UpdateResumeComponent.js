@@ -2,11 +2,10 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { useToast } from '../../contexts/Toast';
+import swal from "sweetalert";
 
 const UpdateResume = () => {
   const { updateResume, getResume, deleteResume } = useContext(AuthContext)
-  const { warn, success } = useToast();
 
   const [allResume, setAllResume] = useState([])
 
@@ -86,9 +85,19 @@ const UpdateResume = () => {
         }
         const res = await updateResume(currentResume)
         if (res.success) {
-          success(res.message)
+          swal({
+            title: "Success",
+            icon: "success",
+            text: "Updated successfully",
+            dangerMode: false,
+          })
         }
-        else warn(res.message)
+        else swal({
+          title: "Error",
+          icon: "warning",
+          text: res.message,
+          dangerMode: true,
+        })
       }
     }
   }
@@ -112,14 +121,33 @@ const UpdateResume = () => {
 
   const onClickDelete = async () => {
     if (mediaId !== -1) {
-      const confirm = window.confirm("Are you sure you want to delete this resume?");
-      if (confirm) {
-        const res= await deleteResume(mediaId)
+      swal({
+        title: "Are you sure you want to cancel?",
+        icon: "info",
+        text: "The information you changed will not be saved",
+        buttons: {
+          cancel: "Cancel",
+          confirm: "Yes"
+        },
+      }).then(async (click) => {
+        if (click) {
+          const res= await deleteResume(mediaId)
         if (res.success) {
-          success(res.message)
+          swal({
+            title: "Success",
+            icon: "success",
+            text: "Deleted successfully",
+            dangerMode: false,
+          })
         }
-        else warn(res.message)
-      }
+        else swal({
+          title: "Error",
+          icon: "warning",
+          text: res.message,
+          dangerMode: true,
+        })
+        }
+      });
     }
   }
 

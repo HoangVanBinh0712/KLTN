@@ -1,16 +1,15 @@
 import roundheartIcon from "../../assets/icons/round-heart-icon.png"
 import heartIcon from "../../assets/icons/heart-icon.png"
 import logoPost from "../../assets/icons/logo.png"
-import { useToast } from "../../contexts/Toast";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { PostContext } from "../../contexts/PostContext";
+import swal from "sweetalert";
 
 const SinglePost = ({ post }) => {
 
   const { authState: { authloading, role } } = useContext(AuthContext)
   const { postState: { postFollow }, followPost, unfollowPost, } = useContext(PostContext)
-  const { warn, success } = useToast()
 
   const aPost = post
 
@@ -45,16 +44,36 @@ const SinglePost = ({ post }) => {
         if (checkFollow(id, postFollow)) {
           const res = await unfollowPost(id)
           if (res.success) {
-            success('The post has been removed from the favorites list.')
+            swal({
+              title: "Success",
+              icon: "success",
+              text: "The post has been removed from the favorites list.",
+              dangerMode: false,
+            })
           }
-          else warn(res.message)
+          else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+          })
         }
         else {
           const res = await followPost(id)
           if (res.success) {
-            success('The article has been added to favorites.')
+            swal({
+              title: "Success",
+              icon: "success",
+              text: "The post has been added to the favorites list.",
+              dangerMode: false,
+            })
           }
-          else warn(res.message)
+          else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+          })
         }
       }
     }

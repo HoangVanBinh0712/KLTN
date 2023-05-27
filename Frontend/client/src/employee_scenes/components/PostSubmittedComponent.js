@@ -3,12 +3,11 @@ import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import SinglePost from "./SinglePostComponent";
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { useToast } from '../../contexts/Toast';
+import swal from "sweetalert";
 
 const PostSubmitted = () => {
 
   const { getResume, getPostSubmitedByResume, } = useContext(AuthContext)
-  const { warn, success } = useToast();
 
   const [allResume, setAllResume] = useState([])
   const [currentResumeId, setCurrentResumeId] = useState(-1)
@@ -21,7 +20,12 @@ const PostSubmitted = () => {
     }
     else {
       setListPostSubmited([]);
-      warn("*Your profile has not applied for any jobs yet")
+      swal({
+        title: "Error",
+        icon: "warning",
+        text: "*Your profile has not applied for any jobs yet",
+        dangerMode: true,
+      })
     } 
   }
 

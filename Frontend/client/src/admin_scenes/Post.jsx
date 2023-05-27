@@ -621,7 +621,7 @@ const Post = () => {
                 {`Post ID: ${postChosen.id}  -`}
               </div>
               <div style={{ color: "#3da58a", fontSize: '18px', fontWeight: '500', textTransform: 'uppercase' }}>
-                {` ${postChosen.service.name}`}
+                {` ${postChosen.service?.name}`}
               </div>
               <div style={{ color: "#6c6c6c", fontSize: '16px', paddingLeft: '40px' }}>
                 {`View: ${postChosen.viewCount}`}
@@ -717,11 +717,11 @@ const Post = () => {
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
                 <div style={{ width: '12%' }}>Industry:</div>
-                <input value={postChosen.industry.name}
+                <input value={postChosen.industry?.name}
                   disabled className="input-view-post-details"
                   style={{ width: '38%' }}></input>
                 <div style={{ width: '12%', padding: '0 0 0 20px' }}>City:</div>
-                <input value={postChosen.city.name}
+                <input value={postChosen.city?.name}
                   disabled className="input-view-post-details"
                   style={{ width: '38%' }}></input>
               </div>
@@ -733,11 +733,11 @@ const Post = () => {
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
                 <div style={{ width: '12%' }}>Employer Name:</div>
-                <input value={postChosen.author.name}
+                <input value={postChosen.author?.name}
                   disabled className="input-view-post-details"
                   style={{ width: '38%' }}></input>
                 <div style={{ width: '12%', padding: '0 0 0 20px' }}>Email:</div>
-                <input value={postChosen.author.email}
+                <input value={postChosen.author?.email}
                   disabled className="input-view-post-details"
                   style={{ width: '38%' }}></input>
               </div>

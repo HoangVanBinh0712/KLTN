@@ -1,15 +1,6 @@
-import React, { useState } from "react";
 import certificateIcon from "../../assets/icons/certificate-blue-icon.png";
 
 const SingleAchivement = ({ achive, onUpdateClick, onDeleteClick }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const onMouseEnter = () => {
-    setIsOpen(true);
-  };
-  const onMouseOver = () => {
-    setIsOpen(false);
-  };
 
   const onClickUpdate = () => {
     onUpdateClick(achive);
@@ -45,7 +36,7 @@ const SingleAchivement = ({ achive, onUpdateClick, onDeleteClick }) => {
           {date.getFullYear()}{" "}
         </div>
       </div>
-      <div className="mana-achive" onMouseEnter={onMouseEnter} onMouseLeave={onMouseOver}>
+      <div className="mana-achive" >
         <div className="chose-active chose-update" onClick={onClickUpdate}>
           Update
         </div>

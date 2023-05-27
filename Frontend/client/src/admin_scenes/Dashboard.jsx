@@ -13,7 +13,7 @@ const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const { getListPostAdmin, getUserStaAdmin, getListAccount } = useContext(AuthContext)
+  const { getListPostAdmin, getUserStaAdmin, getListAccount, getCountAllPost } = useContext(AuthContext)
 
   const dataDefault = [
     {
@@ -69,6 +69,7 @@ const Dashboard = () => {
   const [staAccount, setStaccount] = useState(dataDefault)
   const [listPostThisMonth, setListPostThisMonth] = useState([])
   const [listPostLastMonth, setListPostLastMonth] = useState([])
+  const [countAllPost, setCountAllPost] = useState(0)
 
   const formatData = (arr) => {
     const m = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -116,6 +117,11 @@ const Dashboard = () => {
     }
   }
 
+  const getCountAllPostByAdmin = async () => {
+    const res = await getCountAllPost()
+    if(res.success)setCountAllPost(res.data)
+  }
+
   const getPostDate = (date, reflect) => {
     const myDate = new Date(date);
     const day = ("0" + myDate.getDate()).slice(-2);
@@ -134,10 +140,11 @@ const Dashboard = () => {
     currentDate.setMonth(currentDate.getMonth() - 1)
     getAllPostLastMonth(getPostDate(currentDate, true))
     getStatiticsAccount(currentDate.getFullYear())
+    getCountAllPostByAdmin()
   }, [])
 
   const getPtvalue = (v1, v2) => {
-    if (v2 === 0) return 0
+    if (v2 === 0||v1===0) return 0
     else return v2 / v1
   }
 
@@ -169,7 +176,7 @@ const Dashboard = () => {
             title={listPostThisMonth.length}
             subtitle="Post created is this month"
             progress={getPtvalue(listPostThisMonth.length, listPostLastMonth.length)}
-            increase={`+${getPtvalue(listPostThisMonth.length, listPostLastMonth.length) * 100}% increase from last month`}
+            increase={`+${getPtvalue(listPostThisMonth.length, countAllPost) * 100}% increase`}
             icon={
               <ArticleIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}

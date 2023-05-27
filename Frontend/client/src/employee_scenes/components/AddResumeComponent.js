@@ -2,11 +2,10 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useState, useRef, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useToast } from "../../contexts/Toast";
+import swal from "sweetalert";
 
 const AddResume = () => {
   const { addResume } = useContext(AuthContext);
-  const { warn, success } = useToast();
 
   const [history, setHistory] = useState("");
   const [fileName, setFileName] = useState("");
@@ -82,23 +81,42 @@ const AddResume = () => {
       };
       const res = await addResume(info, cV);
       if (res.success) {
-        success(res.message);
-      } else warn(res.message);
+        swal({
+          title: "Success",
+          icon: "success",
+          text: "Created new CV successfully",
+          dangerMode: true,
+        });
+      } else swal({
+        title: "Error",
+        icon: "warning",
+        text: res.message,
+        dangerMode: true,
+      });
     }
   };
 
   const onClickCancel = async () => {
-    const confirm = window.confirm("Are you sure you want to cancel, the information you changed will not be saved?");
-    if (confirm) {
-      setHistory("");
-      setSkill("");
-      setName("");
-      setExperience("NONE");
-      setPosition("Staff");
-      setMethod("INTERN");
-      setIsPublic(false);
-      setCV(null);
-    }
+    swal({
+      title: "Are you sure you want to cancel?",
+      icon: "info",
+      text: "The information you changed will not be saved",
+      buttons: {
+        cancel: "Cancel",
+        confirm: "Yes"
+      },
+    }).then((click) => {
+      if (click) {
+        setHistory("");
+        setSkill("");
+        setName("");
+        setExperience("NONE");
+        setPosition("Staff");
+        setMethod("INTERN");
+        setIsPublic(false);
+        setCV(null);
+      }
+    });
   };
 
   return (
