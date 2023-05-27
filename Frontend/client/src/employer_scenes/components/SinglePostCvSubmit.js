@@ -1,6 +1,7 @@
 import threeDotIcon from '../../assets/icons/3dot-icon.png'
 import { useContext, useEffect, useState } from 'react'
 import { PostContext } from '../../contexts/PostContext'
+import { Link } from 'react-router-dom'
 
 const SinglePostCvSubmit = ({ post, num }) => {
 
@@ -38,9 +39,6 @@ const SinglePostCvSubmit = ({ post, num }) => {
         window.open(`/employer/post/${post.id}`, "_blank");
     }
 
-    const viewSubmitClick = () => {
-        window.location.href = `/employer/account/post-submitted/${post.id}`
-    }
 
     const statePost = (status) => {
         let body
@@ -85,8 +83,10 @@ const SinglePostCvSubmit = ({ post, num }) => {
                     <div style={{ position: 'absolute', width: '100%', zIndex: "5" }}>
                         <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={viewPost}>
                             View Post</div>
-                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={() => viewSubmitClick()}>
-                            Submited</div>
+                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
+                          <Link to={`/employer/account/post-submitted/${post.id}`} > Submited</Link>
+                            
+                            </div>
                     </div>
                 </>)}
             </div>

@@ -5,7 +5,7 @@ import Footer from './global/Footer';
 import ReactQuill from 'react-quill';
 import "./css/postdetail.css"
 
-import logoIcon from '../assets/icons/logo.png'
+import logoIcon from '../assets/icons/logo-company.png'
 import salaryIcon from '../assets/icons/money-blue-icon.png'
 import accIcon from '../assets/icons/account-icon.png'
 import workIcon from '../assets/icons/work-blue-icon.png'

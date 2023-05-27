@@ -272,7 +272,7 @@ const SubmitDetail = () => {
                     style={{ display: 'flex', justifyContent: 'end', marginTop: '20px', gap: '1em' }}>
 
                     <div className="button btn-close" onClick={() => { setIsPredict(false) }}>
-                        <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', }}></i>
+                        <i className="fa fa-times" aria-hidden="true"></i>
                         CLOSE
                     </div>
                 </div>
@@ -310,7 +310,7 @@ const SubmitDetail = () => {
                         SEND
                     </div>
                     <div className="button btn-close" onClick={() => { closeAppointmentForm() }}>
-                        <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', }}></i>
+                        <i className="fa fa-times" aria-hidden="true"></i>
                         CLOSE
                     </div>
                 </div>

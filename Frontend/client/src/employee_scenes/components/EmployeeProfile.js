@@ -45,10 +45,8 @@ const EmployeeProfile = () => {
     const getJSK = async () => {
         const res = await getUserProfileJSK(id)
         setJskInfo(res)
-        console.log(res)
         const key = res.user.industry !== null ? `?industryId=${res.user.industry.id}` : ''
         const resP = await getUserProfileByAnyFilter(key)
-        console.log(resP)
         if (resP.success) {
             setListJskRec(resP.data)
         }
