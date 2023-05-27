@@ -77,11 +77,10 @@ function App() {
   if (authloading) {
     body = <Spinning />;
   } else if (role !== "ROLE_ADMIN") {
-    console.log(role);
+    {/*May not logged in */}
     body = (
       <Routes>
         {/*Redirect path*/}
-        <Route exac path="/admin" element={<Navigate to="/admin/login" />} />
         <Route exac path="/" element={<Navigate to="home" />} />
         <Route exac path="/employer/" element={<Navigate to={"/employer/home"} />} />
         <Route exac path="/user/account/" element={<Navigate to={"/user/account/personal-info"} />} />
@@ -137,7 +136,7 @@ function App() {
       </Routes>
     );
   } else if (role === "ROLE_ADMIN") {
-    /*ADMIN API */
+    /*ADMIN API Logged in*/
     body = (
       <AuthContextProvider>
         <ColorModeContext.Provider value={colorMode}>
@@ -148,6 +147,8 @@ function App() {
               <main className="content">
                 <Topbar setIsSidebar={setIsSidebar} />
                 <Routes>
+                  <Route path="/admin/login" element={<Navigate to="/admin/dashboard" />} />
+
                   <Route path="/admin/dashboard" element={<Dashboard />} />
                   <Route path="/admin/account" element={<Account />} />
                   <Route path="/admin/post" element={<Post />} />
@@ -163,6 +164,8 @@ function App() {
                   <Route path="/admin/user-statitics" element={<UserStatitics />} />
                   <Route path="/admin/revenue-statitics" element={<RevenueStatitics />} />
                   <Route path="/admin/report-statitics" element={<ReportStatitics />} />
+                  <Route exac path="/admin/" element={<Navigate to="/admin/dashboard" />} />
+
                   <Route path="/*" element={<PageNotFound />} />
                 </Routes>
               </main>
