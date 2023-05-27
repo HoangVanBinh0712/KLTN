@@ -19,6 +19,7 @@ import PostStatitics from "../admin_scenes/PostStatitics";
 import UserStatitics from "../admin_scenes/UserStatitics";
 import RevenueStatitics from "../admin_scenes/RevenueStatitics";
 import ReportStatitics from "../admin_scenes/ReportStatitics";
+import Revenues from '../admin_scenes/Revenues';
 import PageNotFound from "../components/page/notfound/PageNotFound";
 import { webUrlActivity } from "../contexts/Constants";
 import LoginPageAdmin from '../admin_scenes/LoginPageAdmin';
@@ -75,6 +76,7 @@ export const AdminRoute = ({ ...rest }) => {
                                     <Route path="/admin/account" element={isAdmin ? <Account/> : <Navigate to="/login" />} />
                                     <Route path="/admin/post" element={isAdmin ? <Post /> : <Navigate to="/login" />} />
                                     <Route path="/admin/services" element={isAdmin ? <Services /> : <Navigate to="/login" />} />
+                                    <Route path="/admin/revenues" element={isAdmin ? <Revenues /> : <Navigate to="/login" />} />
                                     <Route path="/admin/form" element={isAdmin ? <Form /> : <Navigate to="/login" />} />
                                     <Route path="/admin/bar" element={isAdmin ? <Bar /> : <Navigate to="/login" />} />
                                     <Route path="/admin/pie" element={isAdmin ? <Pie /> : <Navigate to="/login" />} />

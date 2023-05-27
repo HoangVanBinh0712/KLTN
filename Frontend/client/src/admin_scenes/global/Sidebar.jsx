@@ -178,14 +178,14 @@ const Sidebar = () => {
               icon={<CircleNotificationsIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
             <Item
               title="Revenue management"
-              to="/admin/reports"
+              to="/admin/revenues"
               icon={<MonetizationOnIcon />}
               selected={selected}
               setSelected={setSelected}
-            /> */}
+            />
             <Typography
               variant="h6"
               color={colors.grey[300]}
