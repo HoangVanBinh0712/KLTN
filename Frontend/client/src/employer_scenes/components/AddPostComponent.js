@@ -298,7 +298,7 @@ const AddPostComponent = () => {
                     type="radio"
                     id="currency1"
                     name="currency"
-                    value="USD"
+                    value="VND"
                     style={{ width: '15%' }}
                     defaultChecked
                     onChange={onChangeCurencyType}
