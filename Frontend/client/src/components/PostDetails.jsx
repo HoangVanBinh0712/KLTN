@@ -342,7 +342,7 @@ const PostDetails = () => {
             <div className='post-title-intop'>{data.title}</div>
             <div className="post">
                 <img className="avatar" src={data.author.urlAvatar===null?logoIcon:data.author.urlAvatar} alt="" 
-                style={{ height: '100%', width: 'auto', cursor:'pointer' }} 
+                style={{cursor:'pointer' }} 
                 onClick={()=>ocClickToNTDProfile()}/>
                 <div className="post-info">
                     <p className="title">{data.title}</p>

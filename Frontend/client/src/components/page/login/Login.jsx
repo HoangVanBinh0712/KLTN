@@ -53,8 +53,6 @@ const Login = () => {
       errors.email = "Email is required!";
     } else if (!regex.test(formLogin.email)) {
       errors.email = "This is not a valid email format !";
-    } else if (formLogin.email.length < 20) {
-      errors.email = "This is must be 20 !";
     }
 
     if (!formLogin.password) {

@@ -20,6 +20,11 @@ import CurrentService from "../employer_scenes/components/CurrentService";
 import SearchCandidates from "../employer_scenes/components/SearchCandidates";
 import StatiticsPage from "../employer_scenes/components/StatiticsPage";
 import { AuthContext } from "../contexts/AuthContext";
+import LoginGG from "../components/page/login/LoginWithGG";
+import HomePage from "../employee_scenes/HomePage";
+import HighLightCompany from "../components/global/HighlightCompany";
+import SearchPageComponent from "../employee_scenes/components/SearchPageComponent";
+import EmployerProfile from "../employer_scenes/components/EmployerProfile";
 
 const EmployerRoute = ({ ...rest }) => {
   const {
@@ -65,7 +70,21 @@ const EmployerRoute = ({ ...rest }) => {
       </Routes>
     );
   } else {
-    return <Navigate to="/user/login" />;
+    body = (
+      <Routes>
+        <Route path="/user/login" element={<Login />} />
+        <Route path="/login/:token" element={<LoginGG />} />
+        <Route path="/user/register" element={<Register />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/highlight-company" element={<HighLightCompany />} />
+        <Route path="/post/:id" element={<PostDetails />} />
+        <Route path="/posts" element={<SearchPageComponent />} />
+        <Route path="/posts/:keyword" element={<SearchPageComponent />} />
+        <Route path="/recruiter/:id" element={<EmployerProfile />} />
+        <Route path="/customer-services" element={<PageCustomerServices />} />
+        <Route path="/*" element={<PageNotFound />} />
+      </Routes>
+    );
   }
 
   return <>{body}</>;
