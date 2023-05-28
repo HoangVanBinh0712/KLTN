@@ -91,7 +91,7 @@ const StatiticsPage = () => {
                     </div>
                     <div className='title-group-overal group-manager-post button' onClick={() => { onClickPost() }}>
                         <div>
-                            <p>Post Statistics</p>
+                            <p>View Post</p>
                         </div>
                     </div>
                     <div className='title-group-overal group-manager-post button' onClick={() => {  onClickView() }}>
@@ -107,7 +107,7 @@ const StatiticsPage = () => {
                 </div>
                 <div className='gr-chart' style={isPostSta?{display:'block'}:{display:'none'}} >
                     <div className='chart-frame-statitics'>
-                        <LineChart arr={statiticsPostData} title={`Number of posts per month in ${currentYear}`} />
+                        <LineChart arr={statiticsPostData} title={`Number of post's views  per month in ${currentYear}`} />
                     </div>
                     <div style={{display:'flex', justifyContent:'center'}}>Statistical chart of the number views of posts by month.</div>
                 </div>
