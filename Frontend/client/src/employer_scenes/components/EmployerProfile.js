@@ -388,7 +388,7 @@ const EmployerProfile = () => {
                 <div className="area-content" id="share-company">
                   <div style={{ fontFamily: "Arial", fontSize: "22px" }}>Copy link:</div>
                   <div className="link-area">
-                    <div className="paste-link">http://ten-deploy{currentUrl}</div>
+                    <div className="paste-link">http://localhost:3000{currentUrl}</div>
                     <div style={{ width: "50px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                       <img className="copy-icon" src={copyicon} alt="" onClick={() => handleCopyClick()} />
                     </div>

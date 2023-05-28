@@ -5,9 +5,11 @@ import { apiUrl } from "../../contexts/Constants";
 import "../css/highlight-company.css";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
+import Logo from '../../assets/icons/logo-company.png'
+import Cover from '../../assets/picture-banner/banner-highlight.jpg'
+
 const HighLightCompany = () => {
-  const defCover = "https://timviec365.vn/pictures/news/2022/03/12/sqx1647056215.jpg";
-  const defAavatar = "https://yt3.ggpht.com/a/AATXAJz7Dr0Z8WKXpTwzvIx3dFSr-34go39Fe5l9MA=s900-c-k-c0xffffffff-no-rj-mo";
+
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
@@ -34,8 +36,8 @@ const HighLightCompany = () => {
                   window.open(`/recruiter/${com.id}`);
                 }}
               >
-                <img src={com.urlCover ? com.urlCover : defCover} alt="Cover" className="cover" />
-                <img src={com.urlAvatar ? com.urlAvatar : defAavatar} alt="Avatar" className="avatar" />
+                <img src={com.urlCover ? com.urlCover : Cover} alt="Cover" className="cover" />
+                <img src={com.urlAvatar ? com.urlAvatar : Logo} alt="Avatar" className="avatar" />
                 <h3>{com.name}</h3>
                 <div className="description" dangerouslySetInnerHTML={{ __html: com.description }}></div>
               </div>
