@@ -386,7 +386,7 @@ const SearchPageComponent = () => {
                             ))}
                         </select>
                         <div className="button styling-btn-search" onClick={() => { onClickSearch() }}>
-                            <i className="fa fa-search" aria-hidden="true" style={{ color: 'white' }}></i>
+                            <i className="fa fa-search" aria-hidden="true"></i>
                             Search
                         </div>
                     </div>

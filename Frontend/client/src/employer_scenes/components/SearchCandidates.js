@@ -65,6 +65,7 @@ const SearchCandidates = () => {
         const res = await getUserProfileByAnyFilter(searchQr)
         if (res.success) {
             setListProfileResult(res.data)
+            setAllPost(chuckPosts(res.data,6))
         }
         else swal({
             title: "Error",
@@ -84,8 +85,8 @@ const SearchCandidates = () => {
         return chunks;
     }
 
-    const allPost = chuckPosts(listProfileResult, 6)
 
+    const [allPost, setAllPost]= useState([])
     const [currentPage, setCurrentPage] = useState(0)
 
     useEffect(() => {
@@ -181,7 +182,7 @@ const SearchCandidates = () => {
         setIsOpenProfile(false)
         setCandidateInfo(initCandidate)
     }
-
+    console.log(allPost);
     return (
         <>
             <div className="search-page" style={{width: "80%"}}>
@@ -209,7 +210,7 @@ const SearchCandidates = () => {
                             ))}
                         </select>
                         <div className="button styling-btn-search" onClick={() => { onClickSearch() }}>
-                            <i className="fa fa-search" aria-hidden="true" style={{ color: 'white' }}></i>
+                            <i className="fa fa-search" aria-hidden="true"></i>
                             Search
                         </div>
                     </div>

@@ -48,7 +48,7 @@ import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Sidebar from "./admin_scenes/global/Sidebar";
 import Topbar from "./admin_scenes/global/Topbar";
-import { Dashboard } from "@mui/icons-material";
+import Dashboard from "./admin_scenes/Dashboard";
 import Post from "./admin_scenes/Post";
 import Services from "./admin_scenes/Services";
 import Revenues from "./admin_scenes/Revenues";
@@ -77,7 +77,9 @@ function App() {
   if (authloading) {
     body = <Spinning />;
   } else if (role !== "ROLE_ADMIN") {
-    {/*May not logged in */}
+    {
+      /*May not logged in */
+    }
     body = (
       <Routes>
         {/*Redirect path*/}
@@ -138,41 +140,39 @@ function App() {
   } else if (role === "ROLE_ADMIN") {
     /*ADMIN API Logged in*/
     body = (
-      <AuthContextProvider>
-        <ColorModeContext.Provider value={colorMode}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <div className="app">
-              <Sidebar isSidebar={isSidebar} />
-              <main className="content">
-                <Topbar setIsSidebar={setIsSidebar} />
-                <Routes>
-                  <Route path="/admin/login" element={<Navigate to="/admin/dashboard" />} />
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <div className="app">
+            <Sidebar isSidebar={isSidebar} />
+            <main className="content">
+              <Topbar setIsSidebar={setIsSidebar} />
+              <Routes>
+                <Route path="/admin/login" element={<Navigate to="/admin/dashboard" />} />
 
-                  <Route path="/admin/dashboard" element={<Dashboard />} />
-                  <Route path="/admin/account" element={<Account />} />
-                  <Route path="/admin/post" element={<Post />} />
-                  <Route path="/admin/services" element={<Services />} />
-                  <Route path="/admin/revenues" element={<Revenues />} />
-                  <Route path="/admin/form" element={<Form />} />
-                  <Route path="/admin/bar" element={<Bar />} />
-                  <Route path="/admin/pie" element={<Pie />} />
-                  <Route path="/admin/line" element={<Line />} />
-                  <Route path="/admin/industries" element={<Industries />} />
-                  <Route path="/admin/reports" element={<Reports />} />
-                  <Route path="/admin/post-statitics" element={<PostStatitics />} />
-                  <Route path="/admin/user-statitics" element={<UserStatitics />} />
-                  <Route path="/admin/revenue-statitics" element={<RevenueStatitics />} />
-                  <Route path="/admin/report-statitics" element={<ReportStatitics />} />
-                  <Route exac path="/admin/" element={<Navigate to="/admin/dashboard" />} />
+                <Route path="/admin/dashboard" element={<Dashboard />} />
+                <Route path="/admin/account" element={<Account />} />
+                <Route path="/admin/post" element={<Post />} />
+                <Route path="/admin/services" element={<Services />} />
+                <Route path="/admin/revenues" element={<Revenues />} />
+                <Route path="/admin/form" element={<Form />} />
+                <Route path="/admin/bar" element={<Bar />} />
+                <Route path="/admin/pie" element={<Pie />} />
+                <Route path="/admin/line" element={<Line />} />
+                <Route path="/admin/industries" element={<Industries />} />
+                <Route path="/admin/reports" element={<Reports />} />
+                <Route path="/admin/post-statitics" element={<PostStatitics />} />
+                <Route path="/admin/user-statitics" element={<UserStatitics />} />
+                <Route path="/admin/revenue-statitics" element={<RevenueStatitics />} />
+                <Route path="/admin/report-statitics" element={<ReportStatitics />} />
+                <Route exac path="/admin/" element={<Navigate to="/admin/dashboard" />} />
 
-                  <Route path="/*" element={<PageNotFound />} />
-                </Routes>
-              </main>
-            </div>
-          </ThemeProvider>
-        </ColorModeContext.Provider>
-      </AuthContextProvider>
+                <Route path="/*" element={<PageNotFound />} />
+              </Routes>
+            </main>
+          </div>
+        </ThemeProvider>
+      </ColorModeContext.Provider>
     );
   }
   return (

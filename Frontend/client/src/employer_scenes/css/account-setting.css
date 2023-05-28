@@ -276,7 +276,7 @@ body {
 div.button {
     display: flex;
     align-items: center;
-    border: 1px solid #0C62AD;
+    border: 2px solid #0C62AD;
     color: #0C62AD;
     padding: 0.5em;
     gap: 0.5em;
@@ -288,6 +288,7 @@ div.button {
     border-radius: 3px;
     text-align: center;
     justify-content: center;
+    transition: 0.3s ease;
 }
 
 .background-opacity {
@@ -297,15 +298,15 @@ div.button {
 
 div.button:hover {
     cursor: pointer;
-    background-color: coral !important;
+    background-color: #0C62AD !important;
     color: white !important;
-    border: 1px solid coral !important;
+    border: 2px solid #0E4A67 !important;
 }
 
 div.button.cancel {
 
     color: #7E7E7E;
-    border: 1px solid #7E7E7E;
+    border: 2px solid #7E7E7E;
 
 }
 
@@ -315,9 +316,9 @@ div.button.delete {
 
 }
 
-div.button i {
+/* div.button i {
     margin-top: 3px;
-}
+} */
 
 small {
     color: red;
@@ -942,7 +943,7 @@ small {
 
 .group-manager-post p {
     font-family: Roboto-Medium !important;
-    color: #000 !important;
+    /* color: #000 !important; */
     font-weight: 300 !important;
     font-size: 1.2em;
 }

@@ -46,6 +46,7 @@ const SingleCandidateProfile = ({ data, openClick }) => {
         urlAvatar: data.user.urlAvatar
       },
     };
+    console.log("Here",candidateData);
 
     setCandidateInfo(candidateData);
   }, []);

@@ -11,8 +11,7 @@ import { AuthContext } from "../contexts/AuthContext";
 
 const Dashboard = () => {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
+  const colors = tokens(theme.palette.mode);  
   const { getListPostAdmin, getUserStaAdmin, getListAccount, getCountAllPost } = useContext(AuthContext)
 
   const dataDefault = [
