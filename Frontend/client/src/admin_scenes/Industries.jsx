@@ -243,7 +243,7 @@ const Industries = () => {
             border: "none",
           },
           "& .MuiDataGrid-cell": {
-            borderBottom: "none",
+            /* borderBottom: "none", */
           },
           "& .name-column--cell": {
             color: colors.greenAccent[300],

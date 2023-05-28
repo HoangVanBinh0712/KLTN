@@ -154,7 +154,8 @@ function App() {
               <Topbar setIsSidebar={setIsSidebar} />
               <Routes>
                 <Route path="/admin/login" element={<Navigate to="/admin/dashboard" />} />
-
+                <Route path="/" element={<Navigate to="/admin/dashboard" />} />
+                
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route path="/admin/account" element={<Account />} />
                 <Route path="/admin/post" element={<Post />} />

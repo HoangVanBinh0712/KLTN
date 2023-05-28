@@ -1,4 +1,4 @@
-import { Box, useTheme, IconButton  } from "@mui/material";
+import { Box, useTheme, IconButton } from "@mui/material";
 import { tokens } from "../theme";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
@@ -70,11 +70,21 @@ const RevenueStatitics = () => {
     const [inputYear, setInputYear] = useState('')
     const [yearGetUser, setYearGetUser] = useState(currentDate.getFullYear())
     const [staAccount, setStaccount] = useState(dataDefault)
+    const [totalRevenue, setTotalRevenue] = useState(0)
+
+    const getTotalRevenue = (objs) => {
+        let total = 0
+        if (objs.length !== 0)
+            for (var i = 0; i < objs.length; i++) {
+                total += objs[i]['total'];
+            }
+        setTotalRevenue(total)
+    }
 
     const formatData = (arr) => {
         const m = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let newData = [];
-        let highMonth = new Date().getMonth()+1;
+        let highMonth = new Date().getMonth() + 1;
 
         for (let i = 12; i > 0; i--) {
             if (i > highMonth) newData.unshift({ x: m[i - 1], y: 0 });
@@ -95,6 +105,7 @@ const RevenueStatitics = () => {
         if (res.status === 200) {
             const sta = formatData(res.data)
             setStaccount(sta)
+            getTotalRevenue(res.data)
         }
     }
 
@@ -104,24 +115,24 @@ const RevenueStatitics = () => {
 
     const onChangeInputYear = (event) => setInputYear(event.target.value)
 
-    const  isValidYear =(year) =>{
+    const isValidYear = (year) => {
         var currentYear = new Date().getFullYear();
         var minYear = 2023;
-        
+
         if (year >= minYear && year <= currentYear) {
-          return {success:true,message:''};
-        } 
-        else {
-          return {
-            success:false,
-            message:'This website has not been active this year!'
-        };
+            return { success: true, message: '' };
         }
-      }
+        else {
+            return {
+                success: false,
+                message: 'This website has not been active this year!'
+            };
+        }
+    }
 
     const onClickViewSta = () => {
         const checkYear = isValidYear(inputYear)
-        if(checkYear.success){
+        if (checkYear.success) {
             setYearGetUser(inputYear)
         }
         else swal({
@@ -129,13 +140,13 @@ const RevenueStatitics = () => {
             icon: "warning",
             text: checkYear.message,
             dangerMode: true,
-          })
+        })
     }
 
     return (
         <Box m="0 20px 20px 20px">
             <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Header title="Revenue Statitics" subtitle="Monthly revenue statistics - USD" />
+                <Header title="Revenue Statitics" subtitle={`Total revenue of the last 12 months: ${totalRevenue}`} />
                 <Box
                     display="flex"
                     backgroundColor={colors.primary[400]}

@@ -46,12 +46,22 @@ const Revenues = () => {
     paymentUrl: ""
   },)
   const [openInfoForm, setInfoForm] = useState(false)
+  const [totalRevenue, setTotalRevenue] = useState(0)
 
+  const getTotalRevenue = (objs) => {
+    let total = 0
+    if (objs.length !== 0)
+      for (var i = 0; i < objs.length; i++) {
+        total += objs[i]['total'];
+      }
+    setTotalRevenue(total)
+  }
   const getListRevenues = async (keyword) => {
     try {
       const res = await getStatiticsOder(keyword)
       if (res.status === 200) {
         setListRevenue(res.data)
+        getTotalRevenue(res.data)
       }
       else setListRevenue([])
     }
@@ -151,9 +161,9 @@ const Revenues = () => {
       flex: 1,
       renderCell: ({ row: { service } }) => {
         return (
-          <>
+          <Box style={{overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap'}}>
             {service?.description}
-          </>
+          </Box>
         );
       },
     },
@@ -164,8 +174,8 @@ const Revenues = () => {
       width: 100,
       renderCell: ({ row: { duration } }) => {
         return (
-          <Box style={{paddingLeft:'10px'}}>
-            {`${duration} ${duration> 1 ? 'months' : 'month'}`}
+          <Box style={{ paddingLeft: '10px' }}>
+            {`${duration} ${duration > 1 ? 'months' : 'month'}`}
           </Box>
         );
       },
@@ -244,7 +254,7 @@ const Revenues = () => {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', height: '80px' }}>
         <Box style={{ display: 'flex' }}>
-          <Header title="Services list" subtitle="Services management" />
+          <Header title="List of Revenue" subtitle={`Total revenue: ${totalRevenue}`} />
         </Box>
 
         <FormControl sx={{ m: 1, minWidth: 180 }}>
@@ -311,7 +321,7 @@ const Revenues = () => {
                   disabled className="input-view-post-details"
                   style={{ width: '38%' }}></input>
                 <div style={{ width: '50%', display: 'flex', justifyContent: 'end', color: '#0c62ad' }}>
-                  {`Created time: ${getPostDate(revenueChosen.createDate,true)}`}
+                  {`Created time: ${getPostDate(revenueChosen.createDate, true)}`}
                 </div>
               </div>
             </div>

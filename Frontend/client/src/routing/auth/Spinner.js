@@ -1,7 +1,16 @@
-import React from 'react';
+import './spinner.css'
 
 const Spinning = () => {
-  return <h1>Xoay Xoay</h1>;
+
+  return (<>
+    <div id="loading-page">
+      <div class="loader"></div>
+      <div id="content" >
+        Loading...
+      </div>
+    </div>
+  </>
+  )
 };
 
 export default Spinning;
