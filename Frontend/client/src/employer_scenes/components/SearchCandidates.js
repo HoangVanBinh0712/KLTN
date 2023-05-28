@@ -182,7 +182,6 @@ const SearchCandidates = () => {
         setIsOpenProfile(false)
         setCandidateInfo(initCandidate)
     }
-    console.log(allPost);
     return (
         <>
             <div className="search-page" style={{width: "80%"}}>

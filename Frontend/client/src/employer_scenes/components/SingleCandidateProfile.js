@@ -46,10 +46,9 @@ const SingleCandidateProfile = ({ data, openClick }) => {
         urlAvatar: data.user.urlAvatar
       },
     };
-    console.log("Here",candidateData);
 
     setCandidateInfo(candidateData);
-  }, []);
+  }, [data]);
 
   const onClickImagePost = (empId) => {
     window.open(`/employer/candidates/${empId}`, "_blank");
