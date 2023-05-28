@@ -310,7 +310,7 @@ const Reports = () => {
       headerName: "Processing status",
       flex: 1,
       cellClassName: "name-column--cell",
-      renderCell: ({ row: { handle } }) => {
+      renderCell: ({ row: { handle, id } }) => {
         return (
           <Box
             width="80%"
@@ -324,8 +324,23 @@ const Reports = () => {
             borderRadius="4px"
           >
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }} onClick={() => {
-              if (!handle) {
-
+              if (!handle ===true) {
+               
+                swal({
+                  title: "Are you sure you want to change this report status?",
+                  icon: "warning",
+                  text: `This action will be cgange status to ${!reportChosen.handle ? "Solved" : 'Not resolve'}.`,
+                  buttons: {
+                    cancel: "No, cancel",
+                    confirm: "Yes, proceed"
+                  },
+                  dangerMode: true
+                }).then((isConfirmed) => {
+                  if (isConfirmed) {
+                    onClicSetHandle(id, !handle)
+                    setIsViewPostDetails(false)
+                  }
+                })
               }
               /* setFormChange(id, title, status) */
             }}

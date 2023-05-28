@@ -54,7 +54,10 @@ const Team = () => {
   }
 
   useEffect(() => {
-    const key = keySearch.length > 0 ? `?email=${keySearch}` : ''
+    let key 
+    if(keySearch.length > 0)
+    key =`?email=${keySearch}&limit=100`
+    else key ='?limit=100'
     getAccount(key)
   }, [keySearch])
 

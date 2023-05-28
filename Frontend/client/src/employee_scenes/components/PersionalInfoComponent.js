@@ -229,7 +229,7 @@ const UserPersonalInfo = () => {
           </div>
           <div className="text-area-group">
             <div className="label">Description</div>
-            <ReactQuill value={description} onChange={handleDescChange} disabled={!isUpdate} style={{}} />
+            <ReactQuill value={description} onChange={handleDescChange} readOnly={!isUpdate} style={{}} />
           </div>
           <div className="double-select">
             <div className="select">

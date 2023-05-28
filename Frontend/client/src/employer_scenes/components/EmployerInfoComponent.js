@@ -22,6 +22,8 @@ const EmployerInfo = () => {
     urlAvatar: user !== null ? user.urlAvatar : null,
   })
   const { email, name, phone, address, cityId, industryId, urlCover, urlAvatar } = userInfo
+  const [isUpdate, setIsUpdate] = useState(false)
+
 
   const [desc, setDesc] = useState('');
   const handleDescChange = (newValue) => {
@@ -181,6 +183,7 @@ const EmployerInfo = () => {
               Upload image
               <input
                 ref={fileCoverInput}
+                disabled={!isUpdate}
                 id="file-upload"
                 type="file"
                 accept=".jpg,.jpeg,.png"
@@ -200,6 +203,7 @@ const EmployerInfo = () => {
                 Upload image
                 <input
                   ref={fileAvtInput}
+                  disabled={!isUpdate}
                   id="file-upload"
                   type="file"
                   accept=".jpg,.jpeg,.png"
@@ -221,27 +225,27 @@ const EmployerInfo = () => {
             </div>
             <div className="input-wrapper">
               <div className="label">Name</div>
-              <input type="text" name="name" value={name} onChange={onChangeUserInfo}></input>
+              <input type="text" name="name" value={name} disabled={!isUpdate} onChange={onChangeUserInfo}></input>
             </div>
           </div>
           <div className="row">
             <div className="input-wrapper">
               <div className="label">Phone</div>
-              <input type="text" name="phone" value={phone} onChange={onChangeUserInfo}></input>
+              <input type="text" name="phone" value={phone} disabled={!isUpdate} onChange={onChangeUserInfo}></input>
             </div>
             <div className="input-wrapper">
               <div className="label">Address</div>
-              <input type="text" name="address" value={address} onChange={onChangeUserInfo}></input>
+              <input type="text" name="address" value={address} disabled={!isUpdate} onChange={onChangeUserInfo}></input>
             </div>
           </div>
           <div className="text-area-group">
             <div className="label">Description</div>
-            <ReactQuill value={desc} onChange={handleDescChange} style={{}} />
+            <ReactQuill value={desc} onChange={handleDescChange} readOnly={!isUpdate} style={{}} />
           </div>
           <div className="double-select">
             <div className="select">
               <div className="label">Location</div>
-              <select name="cityId" id="" onChange={onChangeUserInfo}>
+              <select name="cityId" id="" disabled={!isUpdate} onChange={onChangeUserInfo}>
                 {cities.lenght !== 0 ?
                   (cities.map((c) => (
                     <option key={c.id} value={c.id} selected={cityId === c.id}>
@@ -261,7 +265,7 @@ const EmployerInfo = () => {
             </div>
             <div className="select">
               <div className="label">Industry</div>
-              <select name="industryId" id="" onChange={onChangeUserInfo}>
+              <select name="industryId" id="" disabled={!isUpdate} onChange={onChangeUserInfo}>
                 {industries.lenght !== 0 ?
                   (industries.map((c) => (
                     <option key={c.id} value={c.id} selected={industryId === c.id}>
@@ -281,10 +285,17 @@ const EmployerInfo = () => {
             </div>
           </div>
           <div className="group-buttons">
-            <div className="button" onClick={onUpdateUserClick}>
-              <i className="fa fa-floppy-o" aria-hidden="true"></i>
-              Confirm
-            </div>
+          {isUpdate ? (
+              <div className="button" onClick={onUpdateUserClick}>
+                <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                Confirm
+              </div>
+            ) : (
+              <div className="button al-content-btn" onClick={() => setIsUpdate(true)}>
+                <i className="fa fa-file-text-o" aria-hidden="true" ></i>
+                Edit
+              </div>
+            )}
             <div className="button cancel" onClick={onCancelClick}>
               <i className="fa fa-times" aria-hidden="true"></i>
               Cancel

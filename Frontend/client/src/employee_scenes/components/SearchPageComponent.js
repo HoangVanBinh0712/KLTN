@@ -281,11 +281,11 @@ const SearchPageComponent = () => {
     }
 
     const onClickImagePost = (empId) => {
-        window.location.href = `/recruiter/${empId}`
+        navigate(`/recruiter/${empId}`)
     }
 
     const onClickPostTitle = (postId) => {
-        window.location.href = `/post/${postId}`
+        navigate(`/post/${postId}`)
     }
 
     const getTypeJob = (type) => {
@@ -531,7 +531,7 @@ const SearchPageComponent = () => {
                         ) : (<></>)}
                         {postMostView.length > 2 ? (
                             <div className="cart-v1">
-                                <p className="title" style={{ cursor: "pointer" }} onClick={() => onClickPostTitle(postMostView[2].author.id)}>
+                                <p className="title" style={{ cursor: "pointer" }} onClick={() => onClickPostTitle(postMostView[2].id)}>
                                     {postMostView[2].title}
                                 </p>
                                 <div className="row-flex-horizon align-items-unset">
@@ -539,7 +539,7 @@ const SearchPageComponent = () => {
                                         src={postMostView[2].author.urlAvatar !== null ? postMostView[2].author.urlAvatar : logoPost}
                                         alt=""
                                         style={{ borderRadius: '5px', height: '100px', cursor: "pointer" }}
-                                        onClick={() => onClickImagePost(postMostView[2].id)}
+                                        onClick={() => onClickImagePost(postMostView[2].author.id)}
                                     />
                                     <div className="cart-info" style={{width: "100%"}}>
                                         <p className="method">{getTypeJob(postMostView[2].method)}</p>
