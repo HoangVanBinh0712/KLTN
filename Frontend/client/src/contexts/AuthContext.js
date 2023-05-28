@@ -61,7 +61,6 @@ const AuthContextProvider = ({ children }) => {
         }
       } else throw new Error("Unauthorized !");
     } catch (error) {
-      console.log(error);
       localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
       localStorage.removeItem(USER_ROLE);
       SetAuthToken(null);
@@ -121,7 +120,7 @@ const AuthContextProvider = ({ children }) => {
             u_role = "admin";
           }
           localStorage.setItem(USER_ROLE, u_role);
-          await loadUser(localStorage[USER_ROLE]);
+          window.location.href = "/home"
         } else return { success: false, message: "Username or password is incorrect!" };
       }
       return response.data;

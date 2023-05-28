@@ -60,7 +60,7 @@ const TopBar = () => {
 
   const logout = () => {
     swal({
-      title: "Info",
+      title: "Information",
       icon: "info",
       text: "Do you want to logout ? ",
     }).then((click) => {

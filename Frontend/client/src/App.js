@@ -65,6 +65,7 @@ import ReportStatitics from "./admin_scenes/ReportStatitics";
 import Account from "./admin_scenes/Account";
 import LoginPageAdmin from "./admin_scenes/LoginPageAdmin";
 import ChatBox from "./components/global/ChatBox";
+import RoomPage from "./components/global/MeetingRoomPublic";
 function App() {
   const {
     authState: { user, authloading, role },
@@ -74,12 +75,15 @@ function App() {
 
   let body;
 
+  const currentUrl = window.location.pathname;
+  
+  const excludesAPI = ["login", "register", "room"];
+
   if (authloading) {
     body = <Spinning />;
   } else if (role !== "ROLE_ADMIN") {
-    {
-      /*May not logged in */
-    }
+    /*May not logged in */
+
     body = (
       <Routes>
         {/*Redirect path*/}
@@ -89,6 +93,7 @@ function App() {
         <Route exac path="/employer/account/" element={<Navigate to={"/employer/account/employer-info"} />} />
 
         {/*Public API */}
+        <Route path="/room/:roomId" element={<RoomPage />} />
         <Route path="/user/login" element={<Login />} />
         <Route path="/login/:token" element={<LoginGG />} />
         <Route path="/user/register" element={<Register />} />
@@ -182,7 +187,7 @@ function App() {
           <ToastProvider>
             <GlobalContextProvider>
               {body}
-              {!authloading && user && role !== "ROLE_ADMIN" && <ChatBox />}
+              {!excludesAPI.some((url) => currentUrl.includes(url)) &&  user && role !== "ROLE_ADMIN" && <ChatBox />}
             </GlobalContextProvider>
           </ToastProvider>
         </PostContextProvider>

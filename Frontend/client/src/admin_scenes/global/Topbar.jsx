@@ -16,7 +16,7 @@ const Topbar = () => {
 
   const logoutAdmin = () => {
     swal({
-      title: "Info",
+      title: "Information",
       icon: "info",
       text: "Do you want to logout ? ",
       buttons: {

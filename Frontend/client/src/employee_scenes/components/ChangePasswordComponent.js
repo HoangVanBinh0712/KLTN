@@ -48,7 +48,7 @@ const ChangePassword = () => {
       setFormErrors({});
 
       swal({
-        title: "Info",
+        title: "Information",
         icon: "info",
         text: "Are you sure to update your password ?",
       }).then(async (click) => {

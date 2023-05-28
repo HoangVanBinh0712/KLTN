@@ -24,7 +24,7 @@ const MeetingRoom = ({ roomId, setShowMeetingRoom, setMeetingRoomId, sendMessage
       sharedLinks: [
         {
           name: "Copy Link",
-          url: `http://localhost:3000/room/${roomId}`,
+          url: `${process.env.REACT_APP_API_FE}/room/${roomId}`,
         },
       ],
       scenario: {

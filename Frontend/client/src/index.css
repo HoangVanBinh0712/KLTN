@@ -93,3 +93,8 @@ body,
 .href-customized:visited {
   color: inherit;
 }
+
+.page-meeting{
+  width: 100%;
+  height: 100%;
+}

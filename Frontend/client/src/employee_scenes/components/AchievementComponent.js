@@ -151,7 +151,7 @@ const UserAchievement = () => {
   const onClickDeleteButton = async () => {
     if (id === null) {
       swal({
-        title: "Info",
+        title: "Information",
         icon: "info",
         text: "You need to choose an achievement",
         dangerMode: true,

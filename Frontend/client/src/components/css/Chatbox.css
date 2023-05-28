@@ -35,6 +35,10 @@ body {
     border-radius: 10px;
 }
 
+.float-items .square-message .messages-info .header-box {
+    position: relative;
+}
+
 .float-items .square-message .messages-info {
     border-radius: 10px;
     background-color: #1877F2;
@@ -189,11 +193,13 @@ body {
 }
 
 .float-items .chat-room .chat-header img {
-    width: 1.4em;
-    height: 1.4em;
+    width: 2em;
+    height: 2em;
     border-radius: 50%;
 }
-
+.float-items .chat-room .chat-header img:hover{
+    cursor: pointer;
+}
 .float-items .chat-room .chat-header p {
     margin: 0;
     padding: 0;
@@ -330,6 +336,10 @@ button {
     padding: 8px 12px;
     max-width: 70%;
     color: white;
+    word-break: break-word;
+}
+.float-items .chat-room .chat-content .table-chat div span a:visited{
+    color: inherit;
 }
 
 
@@ -391,13 +401,27 @@ button {
     height: 100%;
     top: 10%;
 }
-.D9WLyEQaARfWqCTyVrpU{
+
+.D9WLyEQaARfWqCTyVrpU {
     width: 100% !important;
     height: 100% !important;
 }
-.VNZilENM9Pb7KbRFOkYR:last-of-type{
+
+.VNZilENM9Pb7KbRFOkYR:last-of-type {
     width: max-content !important;
 }
-.sJcgXLqA2Va2eqymgksg{
+
+.sJcgXLqA2Va2eqymgksg {
     width: 50% !important;
+}
+
+.icon-meeting:hover {
+    cursor: pointer;
+}
+
+.icon-meeting {
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    transform: translateY(-50%);
 }

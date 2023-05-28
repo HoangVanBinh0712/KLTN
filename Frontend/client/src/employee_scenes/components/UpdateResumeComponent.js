@@ -71,52 +71,66 @@ const UpdateResume = () => {
 
   const onClickConfirm = async () => {
     if (mediaId !== -1) {
-      const confirm = window.confirm("Are you sure you want to update infomation of this resume?");
-      if (confirm) {
-        const currentResume = {
-          mediaId: mediaId,
-          isPublic: isPublic,
-          name: name,
-          workExperiences: workExperiences,
-          skillsAndKnowledges: skillsAndKnowledges,
-          experience: experience,
-          position: position,
-          method: method,
-        }
-        const res = await updateResume(currentResume)
-        if (res.success) {
-          swal({
-            title: "Success",
-            icon: "success",
-            text: "Updated successfully",
-            dangerMode: false,
+      swal({
+        title: "Information",
+        icon: "warning",
+        text: "Are you sure you want to update infomation of this resume?",
+        dangerMode: false,
+        buttons: true,
+      }).then(async (click) => {
+        if(click){
+          const currentResume = {
+            mediaId: mediaId,
+            isPublic: isPublic,
+            name: name,
+            workExperiences: workExperiences,
+            skillsAndKnowledges: skillsAndKnowledges,
+            experience: experience,
+            position: position,
+            method: method,
+          }
+          const res = await updateResume(currentResume)
+          if (res.success) {
+            swal({
+              title: "Success",
+              icon: "success",
+              text: "Updated successfully",
+              dangerMode: false,
+            })
+          }
+          else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
           })
         }
-        else swal({
-          title: "Error",
-          icon: "warning",
-          text: res.message,
-          dangerMode: true,
-        })
-      }
+      })
     }
   }
 
   const onClickCancel = () => {
-    const confirm = window.confirm("Are you sure you want to cancel, the information you changed will not be saved?");
-    if (confirm) {
-      const result = allResume.find(item => item.mediaId == mediaId);
-      if (result !== undefined) {
-        setMediaId(result.mediaId)
-        setIsPublic(result.isPublic)
-        setName(result.name)
-        setWorkExperiences(result.workExperiences)
-        setSkillsAndKnowledges(result.skillsAndKnowledges)
-        setExperience(result.experience)
-        setPosition(result.position)
-        setMethod(result.method)
-      }
-    }
+    swal({
+      title: "Information",
+      icon: "warning",
+      text: "Are you sure you want to cancel, the information you changed will not be saved?",
+      dangerMode: false,
+      buttons: true,
+    }).then(async (click) => {
+      if(click){
+        const result = allResume.find(item => item.mediaId == mediaId);
+        if (result !== undefined) {
+          setMediaId(result.mediaId)
+          setIsPublic(result.isPublic)
+          setName(result.name)
+          setWorkExperiences(result.workExperiences)
+          setSkillsAndKnowledges(result.skillsAndKnowledges)
+          setExperience(result.experience)
+          setPosition(result.position)
+          setMethod(result.method)
+        }
+      }})
+
   }
 
   const onClickDelete = async () => {

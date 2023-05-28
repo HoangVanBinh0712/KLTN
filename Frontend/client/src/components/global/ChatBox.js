@@ -187,7 +187,7 @@ const ChatBox = () => {
     const mess = getElementById(`${roomId}-input-message`);
     console.log(mess, roomId);
     if (!mess.value.trim()) {
-      swal({ title: "Infor", icon: "warning", text: "Must type something !" });
+      swal({ title: "Information", icon: "warning", text: "Must type something !" });
       return;
     }
     const stClient = Stomp.client(`ws://${apiWS}/chat`);
@@ -402,6 +402,16 @@ const ChatBox = () => {
       return room.user.urlAvatar;
     }
   };
+  const getRoomUserUrl = (roomId) => {
+    const room = filterListRoom(roomId, true)[0];
+    if (room) {
+      if (room.user.role === "ROLE_EMPLOYER") {
+        return "/recruiter/" + room.user.id;
+      } else if (room.user.role === "ROLE_USER") {
+        return "/employer/candidates/" + room.user.id;
+      }
+    }
+  };
 
   const isRoomOpened = (roomId) => {
     return listOpenRoom.some((x) => x.roomId === roomId);
@@ -422,7 +432,7 @@ const ChatBox = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer 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`, // Replace with your actual API key
+            Authorization: `Bearer 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`, // Replace with your actual API key
           },
         }
       );
@@ -443,6 +453,11 @@ const ChatBox = () => {
       setGptMessage([...lstMessamge, { user: null, message: "Sory ! You can try again later !" }]);
     }
   };
+  function detectURLs(string) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urls = string.match(urlRegex);
+    return urls ? urls : false;
+  }
 
   return (
     <>
@@ -453,7 +468,32 @@ const ChatBox = () => {
             <div className="square-message">
               {view && (
                 <div className="messages-info" id="messages-info">
-                  <h4>Your chats !</h4>
+                  <h4 className="header-box">
+                    Your chats !{" "}
+                    <div
+                      className="icon-meeting"
+                      onClick={() => {
+                        //Clicked open new chat
+                        function generateRandomString(length) {
+                          let result = "";
+                          const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                          const charactersLength = characters.length;
+
+                          for (let i = 0; i < length; i++) {
+                            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                          }
+
+                          return result;
+                        }
+                        const randomString = generateRandomString(10);
+
+                        window.open(`${process.env.REACT_APP_API_FE}/room/${randomString}`, "_blank");
+                      }}
+                    >
+                      {" "}
+                      <i className="fa fa-video-camera" style={{ fontSize: "2em" }} aria-hidden="true"></i>
+                    </div>{" "}
+                  </h4>
                   <div className="messages" id="listRoom">
                     <div
                       className="room "
@@ -580,6 +620,13 @@ const ChatBox = () => {
                           e.target.onerror = null;
                           e.target.src = userIcon;
                         }}
+                        onClick={() => {
+                          //open user profile
+                          const url = getRoomUserUrl(table.roomId);
+                          if (url) {
+                            window.open(`${process.env.REACT_APP_API_FE}${url}`);
+                          }
+                        }}
                       />
                       <div
                         className="chat-header-item"
@@ -612,7 +659,15 @@ const ChatBox = () => {
                         {table.chatContent.map((c, index) => {
                           return (
                             <div key={index} className={`${c.senderId === user.id ? "yours" : ""}`}>
-                              <span>{c.content}</span>
+                              {detectURLs(c.content) ? (
+                                <span>
+                                  <a href={detectURLs(c.content)} target="_blank">
+                                    {c.content}
+                                  </a>{" "}
+                                </span>
+                              ) : (
+                                <span>{c.content}</span>
+                              )}
                               <div className="hidden-time">{c.time.toString()}</div>
                             </div>
                           );
