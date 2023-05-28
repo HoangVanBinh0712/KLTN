@@ -432,7 +432,7 @@ const ChatBox = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer `, // Replace with your actual API key
+            Authorization: `Bearer ${process.env.REACT_APP_API_GPT}`, // Replace with your actual API key
           },
         }
       );

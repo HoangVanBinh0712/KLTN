@@ -36,10 +36,6 @@ const SingleRowPost = ({ post, num, resetStatus }) => {
     return `${day}/${month}/${year}`;
   };
 
-  const viewPost = () => {
-    navigate(`/employer/post/${post.id}`);
-  };
-
   const statePost = (status) => {
     let body;
     if (status === "ACTIVE")
@@ -110,9 +106,11 @@ const SingleRowPost = ({ post, num, resetStatus }) => {
         {isOpen && (
           <>
             <div style={{ position: "absolute", width: "100%", zIndex: "5" }}>
-              <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={viewPost}>
-                View Post
-              </div>
+              <Link to={`/post/${post.id}`}>
+                <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
+                  View Post
+                </div>
+              </Link>
               <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
                 <Link to={`/employer/account/post-submitted/${post.id}`} className="href-customized">
                   {" "}
