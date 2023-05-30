@@ -149,7 +149,7 @@ const Dashboard = () => {
 
 
   return (
-    <Box m="20px">
+    <Box m="0 20px 20px 20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="DASHBOARD" subtitle="Welcome to the dashboard" />
@@ -175,7 +175,7 @@ const Dashboard = () => {
             title={listPostThisMonth.length}
             subtitle="Post created is this month"
             progress={getPtvalue(listPostThisMonth.length, listPostLastMonth.length)}
-            increase={`+${getPtvalue(listPostThisMonth.length, countAllPost) * 100}% increase`}
+            increase={`+${(getPtvalue(listPostThisMonth.length, countAllPost) * 100).toFixed(1)}% increase`}
             icon={
               <ArticleIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}

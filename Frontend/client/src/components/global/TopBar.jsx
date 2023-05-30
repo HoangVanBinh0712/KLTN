@@ -32,7 +32,7 @@ const TopBar = () => {
 
   const getListNotification = async () => {
     const res = await getRecentNotice();
-    if (res && res.success) setListNotice(res.data);
+    if (res && res.success) setListNotice(res.data.reverse());
   };
 
   useEffect(() => {

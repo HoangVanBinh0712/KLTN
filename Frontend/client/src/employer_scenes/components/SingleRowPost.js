@@ -106,17 +106,17 @@ const SingleRowPost = ({ post, num, resetStatus }) => {
         {isOpen && (
           <>
             <div style={{ position: "absolute", width: "100%", zIndex: "5" }}>
-              <Link to={`/post/${post.id}`}>
+              <Link to={`/post/${post.id}`} style={{ textDecoration: 'none', color: '#0c62ad' }}>
                 <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
                   View Post
                 </div>
               </Link>
-              <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
-                <Link to={`/employer/account/post-submitted/${post.id}`} className="href-customized">
+              <Link to={`/employer/account/post-submitted/${post.id}`} className="href-customized" style={{ textDecoration: 'none', color: '#0c62ad' }}>
+                <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
                   {" "}
                   Submited
-                </Link>
-              </div>
+                </div>
+              </Link>
               {post.status === "DELETED" ? (
                 <></>
               ) : (

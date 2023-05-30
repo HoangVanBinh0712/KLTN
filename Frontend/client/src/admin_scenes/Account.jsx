@@ -54,10 +54,10 @@ const Team = () => {
   }
 
   useEffect(() => {
-    let key 
-    if(keySearch.length > 0)
-    key =`?email=${keySearch}&limit=100`
-    else key ='?limit=100'
+    let key
+    if (keySearch.length > 0)
+      key = `?email=${keySearch}&limit=100`
+    else key = '?limit=100'
     getAccount(key)
   }, [keySearch])
 
@@ -67,26 +67,37 @@ const Team = () => {
 
   const onChangeStateAccount = async (uId, type) => {
     const status = !type ? "Unactive" : 'Active'
-    const confirm = window.confirm(`Are you sure you want to change user status to ${status}?`);
-    if (confirm) {
-      const res = await setUserActiveByAdmin(uId, type)
-      if (res.success) {
-        swal({
-          title: "Success",
-          icon: "success",
-          text: `Changed account status to ${status} successfully!`,
-          dangerMode: false,
+    swal({
+      title: "Are you sure you want to change this account status?",
+      icon: "warning",
+      text: `This action will be cgange status to ${status ? "Solved" : 'Not resolve'}.`,
+      buttons: {
+        cancel: "No, cancel",
+        confirm: "Yes, proceed"
+      },
+      dangerMode: true
+    }).then(async (isConfirmed) => {
+      if (isConfirmed) {
+        const res = await setUserActiveByAdmin(uId, type)
+        if (res.success) {
+          swal({
+            title: "Success",
+            icon: "success",
+            text: `Changed account status to ${status} successfully!`,
+            dangerMode: false,
+          })
+          const key = keySearch.length > 0 ? `?email=${keySearch}` : ''
+          getAccount(key)
+        }
+        else swal({
+          title: "Error",
+          icon: "warning",
+          text: res.message,
+          dangerMode: true,
         })
-        const key = keySearch.length > 0 ? `?email=${keySearch}` : ''
-        getAccount(key)
       }
-      else swal({
-        title: "Error",
-        icon: "warning",
-        text: res.message,
-        dangerMode: true,
-      })
-    }
+    })
+
   }
 
   // col title table

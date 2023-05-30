@@ -2,6 +2,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import logoIcon from "../../assets/picture-banner/logo.png";
+import WaitingResponeButton from "../../components/WaitingResponeButton";
 import { AuthContext } from "../../contexts/AuthContext";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import swal from "sweetalert";
@@ -28,6 +29,7 @@ const UserPersonalInfo = () => {
   });
   const { email, name, phone, address, cityId, industryId, urlCover, urlAvatar } = userInfo;
   const [isUpdate, setIsUpdate] = useState(false)
+  const [isWaitingRes, setIsWaitingRes] = useState(false)
 
   const [description, setDesc] = useState("");
   const handleDescChange = (newValue) => {
@@ -124,6 +126,7 @@ const UserPersonalInfo = () => {
   };
 
   const onUpdateUserClick = async () => {
+    setIsWaitingRes(true)
     try {
       const infoData = { email, name, phone, address, cityId, industryId, description };
       const reponseData = await updateUserInfo(infoData, avatar, cover);
@@ -149,6 +152,7 @@ const UserPersonalInfo = () => {
         return error.response.data;
       } else return { success: false, message: error.message };
     }
+    setIsWaitingRes(false)
   };
 
   const onCancelClick = () => {
@@ -163,6 +167,7 @@ const UserPersonalInfo = () => {
     }).then((click) => {
       if (click) {
         getUserInfo();
+        setIsUpdate(false)
       }
     });
 
@@ -277,20 +282,25 @@ const UserPersonalInfo = () => {
           </div>
           <div className="group-buttons">
             {isUpdate ? (
-              <div className="button" onClick={onUpdateUserClick}>
-                <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                Confirm
-              </div>
+              <>
+                {isWaitingRes ? (
+                  <WaitingResponeButton />
+                ) : (
+                  <div className="button" onClick={onUpdateUserClick}>
+                    <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                    Confirm
+                  </div>)}
+                <div className="button cancel" onClick={onCancelClick}>
+                  <i className="fa fa-times" aria-hidden="true"></i>
+                  Cancel
+                </div>
+              </>
             ) : (
               <div className="button al-content-btn" onClick={() => setIsUpdate(true)}>
                 <i className="fa fa-file-text-o" aria-hidden="true" ></i>
                 Edit
               </div>
             )}
-            <div className="button cancel" onClick={onCancelClick}>
-              <i className="fa fa-times" aria-hidden="true"></i>
-              Cancel
-            </div>
           </div>
         </div>
       </div>

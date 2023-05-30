@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import cameraIcon from "../../assets/picture-banner/camera.png";
 import SingleAchivement from "./SingleAchivement";
+import WaitingResponeButton from "../../components/WaitingResponeButton";
 import { AuthContext } from "../../contexts/AuthContext";
 import swal from "sweetalert";
 
@@ -9,6 +10,8 @@ const UserAchievement = () => {
   const { getUserAchive, updateUserAchive, createUserAchive, deleteUserAchive } = useContext(AuthContext);
 
   const [dataAchive, setDataAchive] = useState([]);
+  const [isWaitingRes, setIsWaitingRes] = useState(false)
+
 
   const getDataAchive = async () => {
     const responseAchive = await getUserAchive();
@@ -82,6 +85,7 @@ const UserAchievement = () => {
   };
 
   const onupdateUserAchiveClick = async (event) => {
+    setIsWaitingRes(true)
     const infoData = { name, type, url };
     const imageData = image;
     const response = await updateUserAchive(id, infoData, imageData);
@@ -101,28 +105,41 @@ const UserAchievement = () => {
         dangerMode: true,
       })
     }
+    setIsWaitingRes(false)
   };
 
   const createNewAchive = async (event) => {
+    setIsWaitingRes(true)
     const infoData = { name, type, url };
     const imageData = image;
-    const response = await createUserAchive(infoData, imageData);
-    if (response.success) {
-      swal({
-        title: "Success",
-        icon: "success",
-        text: "Created achivement Successfully!",
-        dangerMode: false,
-      })
-      getDataAchive();
-    } else {
+    if (name.length === 0 || type.length === 0 || url === 0) {
       swal({
         title: "Error",
         icon: "warning",
-        text: response.message,
+        text: 'Information cannot be left blank!',
         dangerMode: true,
       })
     }
+    else {
+      const response = await createUserAchive(infoData, imageData);
+      if (response.success) {
+        swal({
+          title: "Success",
+          icon: "success",
+          text: "Created achivement Successfully!",
+          dangerMode: false,
+        })
+        getDataAchive();
+      } else {
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: response.message,
+          dangerMode: true,
+        })
+      }
+    }
+    setIsWaitingRes(false)
   };
 
   const onChildDeleteClick = async (idACh) => {
@@ -253,10 +270,12 @@ const UserAchievement = () => {
             </div>
 
             <div className="group-buttons">
-              <div className="button" onClick={id === "" ? createNewAchive : onupdateUserAchiveClick}>
-                <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                Confirm
-              </div>
+              {isWaitingRes ? (<WaitingResponeButton />) : (
+                <div className="button" onClick={id === "" ? createNewAchive : onupdateUserAchiveClick}>
+                  <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                  Confirm
+                </div>
+              )}
               <div className="button cancel" onClick={onCancelClick}>
                 <i className="fa fa-times" aria-hidden="true"></i>
                 Cancel
