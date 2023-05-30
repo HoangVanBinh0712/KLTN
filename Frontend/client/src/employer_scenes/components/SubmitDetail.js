@@ -64,6 +64,19 @@ const SubmitDetail = () => {
         if (res.success) setPostCurrent(res.data)
     }
 
+    const getAppointmentTime = (date) => {
+        const myDate = new Date(date);
+        const day = ("0" + myDate.getDate()).slice(-2);
+        const month = ("0" + (myDate.getMonth() + 1)).slice(-2);
+        const year = myDate.getFullYear();
+        const hour = myDate.getHours().toString().padStart(2, '0');
+        const min = myDate.getMinutes().toString().padStart(2, '0');
+        const sc = myDate.getSeconds().toString().padStart(2, '0');
+
+
+        return `${year}-${month}-${day} ${hour}:${min}:${sc}`;
+    };
+
     function chuckPosts(arr, len) {
         const chunks = [];
         let i = 0;
@@ -165,18 +178,18 @@ const SubmitDetail = () => {
             startTime: appointmentTime,
         }
         const res = await createAppointment(info)
-        console.log(res)
-        swal({
-            title: "Success",
-            icon: "success",
-            text: "Created Appointment successfully!",
-            dangerMode: false,
-          })
+        if (res.success)
+            swal({
+                title: "Success",
+                icon: "success",
+                text: "Created Appointment successfully!",
+                dangerMode: false,
+            })
         setIsAppointment(false)
     }
 
     const onChangeAppointmentDate = (event) => {
-        setAppointmentTime(event.target.value)
+        setAppointmentTime(getAppointmentTime(event.target.value))
     }
 
     return (<>
@@ -198,9 +211,9 @@ const SubmitDetail = () => {
                             <option> Submited time</option>
                         </select>
                     </div>
-                    <div className='ex-button' style={{ width: "16%", height: "50px" }}>
+                    {/* <div className='ex-button' style={{ width: "16%", height: "50px" }}>
                         <div style={{ marginRight: "20px", justifyContent: "center", display: "flex", width: "100%" }}>Export list</div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="content-wrapper" style={{ height: "580px", padding: "0px", gap: "0" }}>
                     <div className="col-title-listpost" style={{ fontWeight: 500 }}>

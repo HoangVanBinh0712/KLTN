@@ -1,6 +1,7 @@
 import leftArrow from "../../assets/icons/left-arow-icon.png"
 import rightArrow from "../../assets/icons/right-arow-grey-icon.png"
 import SinglePost from "./SinglePostComponent";
+import WaitingResponeButton from "../../components/WaitingResponeButton";
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import swal from "sweetalert";
@@ -14,8 +15,11 @@ const PredictJob = () => {
   const [resumePre, SetResumePredict] = useState([])
   const [listPostPre, setListPostPre] = useState([])
   const [listIndustryPre, setlistIndustryPre] = useState([])
+  const [isWaitingRes, setIsWaitingRes] = useState(false)
 
+  console.log(isWaitingRes)
   const predictCV = async (cvId) => {
+    setIsWaitingRes(true)
     const res = await predictResume(cvId)
     if (res.success) {
       SetResumePredict(res.predictResult)
@@ -34,6 +38,7 @@ const PredictJob = () => {
       text: res.message,
       dangerMode: true,
     })
+    setIsWaitingRes(false)
   }
 
   const getAllResume = async () => {
@@ -114,18 +119,23 @@ const PredictJob = () => {
             <div className="row-flex">
               <select className="select-resume"
                 defaultValue="-1" name="" id=""
-                style={{ padding: "1em" }}
+                style={{ padding: "0.5em" }}
                 onChange={onChangeSelectResume}>
                 {allResume.length === 0 ?
                   (<option value="-1">You have not uploaded any profile yet</option>)
                   : (allResume.map((r, id) => (<option value={r.mediaId} key={id}>{r.name}</option>)))}
 
               </select>
-              <div className="group-buttons">
-                <div className="button" onClick={predictClick}>
-                  <i className="fa fa-list" aria-hidden="true"></i>
-                  Predict
-                </div>
+              <div className="group-buttons" style={{height:'40px', width:'100px'}}>
+                {isWaitingRes ? (
+                  <WaitingResponeButton />
+                ) : (
+                  <div className="button" onClick={predictClick}>
+                    <i className="fa fa-list" aria-hidden="true"></i>
+                    Predict
+                  </div>
+                )}
+
               </div>
             </div>
           </div>
@@ -138,7 +148,7 @@ const PredictJob = () => {
               </div>) : (listIndustryPre.map((r, id) => (
                 <div className="single-result" style={{ width: "32%" }} key={id}>
                   <div className="pipe">
-                    <div className="value text-in-value-bar" style={{ width: `${resumePre[r]}`, color: "red" }}>{r}</div>
+                    <div className="value text-in-value-bar" style={{ width: `${resumePre[r]}`/* , color: "red" */ }}>{r}</div>
                   </div>
                   <div className="value-text">{resumePre[r]}</div>
                 </div>)

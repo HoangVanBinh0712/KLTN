@@ -78,7 +78,7 @@ const UpdateResume = () => {
         dangerMode: false,
         buttons: true,
       }).then(async (click) => {
-        if(click){
+        if (click) {
           const currentResume = {
             mediaId: mediaId,
             isPublic: isPublic,
@@ -117,7 +117,7 @@ const UpdateResume = () => {
       dangerMode: false,
       buttons: true,
     }).then(async (click) => {
-      if(click){
+      if (click) {
         const result = allResume.find(item => item.mediaId == mediaId);
         if (result !== undefined) {
           setMediaId(result.mediaId)
@@ -129,7 +129,8 @@ const UpdateResume = () => {
           setPosition(result.position)
           setMethod(result.method)
         }
-      }})
+      }
+    })
 
   }
 
@@ -145,21 +146,21 @@ const UpdateResume = () => {
         },
       }).then(async (click) => {
         if (click) {
-          const res= await deleteResume(mediaId)
-        if (res.success) {
-          swal({
-            title: "Success",
-            icon: "success",
-            text: "Deleted successfully",
-            dangerMode: false,
+          const res = await deleteResume(mediaId)
+          if (res.success) {
+            swal({
+              title: "Success",
+              icon: "success",
+              text: "Deleted successfully",
+              dangerMode: false,
+            })
+          }
+          else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
           })
-        }
-        else swal({
-          title: "Error",
-          icon: "warning",
-          text: res.message,
-          dangerMode: true,
-        })
         }
       });
     }
@@ -182,6 +183,9 @@ const UpdateResume = () => {
                 : (allResume.map((r, id) => (<option value={r.mediaId} key={id}>{r.name}</option>)))}
 
             </select>
+            <div style={{ display: 'flex', justifyContent: 'end', color: '#0c62ad', marginBottom:'-30px', paddingTop:'5px' }}>
+              <a href=' ' style={{backgroundColor:'none', color:'#0c62ad'}}>View CV</a>
+            </div>
           </div>
           <div className="input-wrapper">
             <div className="label">Name</div>

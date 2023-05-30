@@ -503,13 +503,13 @@ const PostDetails = () => {
                         </div>
                       )}
                       {isFollowed ? (
-                        <div className="button btn-save">
-                          <i className="fa fa-heart" aria-hidden="true" onClick={() => savePostClick(id)}></i>
+                        <div className="button btn-save" aria-hidden="true" onClick={() => savePostClick(id)}>
+                          <i className="fa fa-heart" ></i>
                           UNSAVE
                         </div>
                       ) : (
-                        <div className="button btn-save">
-                          <i className="fa fa-heart-o" aria-hidden="true" onClick={() => savePostClick(id)}></i>
+                        <div className="button btn-save" onClick={() => savePostClick(id)}>
+                          <i className="fa fa-heart-o" aria-hidden="true" ></i>
                           SAVE
                         </div>
                       )}

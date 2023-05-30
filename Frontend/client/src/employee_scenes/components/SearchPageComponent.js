@@ -106,7 +106,7 @@ const SearchPageComponent = () => {
             icon: "warning",
             text: res.message,
             dangerMode: true,
-          })
+        })
     }
 
     function chuckPosts(arr, len) {
@@ -139,10 +139,14 @@ const SearchPageComponent = () => {
 
     }, [searchInfo])
 
+    function padZero(number) {
+        return number.toString().padStart(2, '0');
+    }
+
     function getPastDate(days) {
         const today = new Date();
         const pastDate = new Date(today.getTime() - days * 24 * 60 * 60 * 1000);
-        const formatDate = `${pastDate.getFullYear()}-${pastDate.getMonth()}-${pastDate.getDay()}`
+        const formatDate = `${pastDate.getFullYear()}-${padZero(pastDate.getMonth() + 1)}-${padZero(pastDate.getDate())}`;
         return formatDate;
     }
 
@@ -250,14 +254,14 @@ const SearchPageComponent = () => {
                             icon: "success",
                             text: "The post has been removed from the favorites list.",
                             dangerMode: false,
-                          })
+                        })
                     }
                     else swal({
                         title: "Error",
                         icon: "warning",
                         text: res.message,
                         dangerMode: true,
-                      })
+                    })
                 }
                 else {
                     const res = await followPost(id)
@@ -267,25 +271,25 @@ const SearchPageComponent = () => {
                             icon: "success",
                             text: "The post has been added to the favorites list.",
                             dangerMode: false,
-                          })
+                        })
                     }
                     else swal({
                         title: "Error",
                         icon: "warning",
                         text: res.message,
                         dangerMode: true,
-                      })
+                    })
                 }
             }
         }
     }
 
     const onClickImagePost = (empId) => {
-        window.location.href = `/recruiter/${empId}`
+        navigate(`/recruiter/${empId}`)
     }
 
     const onClickPostTitle = (postId) => {
-        window.location.href = `/post/${postId}`
+        navigate(`/post/${postId}`)
     }
 
     const getTypeJob = (type) => {
@@ -314,7 +318,7 @@ const SearchPageComponent = () => {
                     <img className="avatar"
                         src={p.author.urlAvatar === null ? logoPost : p.author.urlAvatar}
                         alt=""
-                        onClick={() => {onClickImagePost(p.author.id)}} />
+                        onClick={() => { onClickImagePost(p.author.id) }} />
                     <div className="cart-info">
                         <p className="title" onClick={() => onClickPostTitle(p.id)}>{p.title}</p>
                         <div className="cart-description">
@@ -480,7 +484,7 @@ const SearchPageComponent = () => {
                                         alt=""
                                         style={{ borderRadius: '5px', height: '100px', cursor: "pointer" }}
                                         onClick={() => onClickImagePost(postMostView[0].author.id)} />
-                                    <div className="cart-info" style={{width: "100%"}}>
+                                    <div className="cart-info" style={{ width: "100%" }}>
                                         <p className="method">{getTypeJob(postMostView[0].method)}</p>
                                         <div className="cart-description">
                                             Công ty: {' '}{postMostView[0].author.name}
@@ -500,7 +504,7 @@ const SearchPageComponent = () => {
                             </div>
                         ) : (<></>)}
                         {postMostView.length > 1 ? (
-                            <div className="cart-v1" style={{width: "100%"}}> 
+                            <div className="cart-v1" style={{ width: "100%" }}>
                                 <p className="title" style={{ cursor: "pointer" }}
                                     onClick={() => onClickPostTitle(postMostView[1].id)}>
                                     {postMostView[1].title}</p>
@@ -510,7 +514,7 @@ const SearchPageComponent = () => {
                                         alt=""
                                         style={{ borderRadius: '5px', height: '100px', cursor: "pointer" }}
                                         onClick={() => onClickImagePost(postMostView[1].author.id)} />
-                                    <div className="cart-info" style={{width: "100%"}}>
+                                    <div className="cart-info" style={{ width: "100%" }}>
                                         <p className="method">{getTypeJob(postMostView[1].method)}</p>
                                         <div className="cart-description">
                                             Công ty: {' '}{postMostView[1].author.name}
@@ -531,7 +535,7 @@ const SearchPageComponent = () => {
                         ) : (<></>)}
                         {postMostView.length > 2 ? (
                             <div className="cart-v1">
-                                <p className="title" style={{ cursor: "pointer" }} onClick={() => onClickPostTitle(postMostView[2].author.id)}>
+                                <p className="title" style={{ cursor: "pointer" }} onClick={() => onClickPostTitle(postMostView[2].id)}>
                                     {postMostView[2].title}
                                 </p>
                                 <div className="row-flex-horizon align-items-unset">
@@ -539,9 +543,9 @@ const SearchPageComponent = () => {
                                         src={postMostView[2].author.urlAvatar !== null ? postMostView[2].author.urlAvatar : logoPost}
                                         alt=""
                                         style={{ borderRadius: '5px', height: '100px', cursor: "pointer" }}
-                                        onClick={() => onClickImagePost(postMostView[2].id)}
+                                        onClick={() => onClickImagePost(postMostView[2].author.id)}
                                     />
-                                    <div className="cart-info" style={{width: "100%"}}>
+                                    <div className="cart-info" style={{ width: "100%" }}>
                                         <p className="method">{getTypeJob(postMostView[2].method)}</p>
                                         <div className="cart-description">
                                             Công ty: {' '}{postMostView[2].author.name}

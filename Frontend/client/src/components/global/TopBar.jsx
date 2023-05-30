@@ -32,7 +32,7 @@ const TopBar = () => {
 
   const getListNotification = async () => {
     const res = await getRecentNotice();
-    if (res && res.success) setListNotice(res.data);
+    if (res && res.success) setListNotice(res.data.reverse());
   };
 
   useEffect(() => {
@@ -103,7 +103,7 @@ const TopBar = () => {
           </div>
           <div className="option-menu">
             <Link className="option-a-menu" to="/highlight-company">
-              Highligh Company
+              Company
             </Link>
           </div>
           {/* <div className="option-menu" ref={dropTooldownRef}>
@@ -238,12 +238,12 @@ const TopBar = () => {
           </div>
           <div className="option-menu">
             <Link className="option-a-menu" to="/employer/account/job-posting">
-              Your job posting
+              Job Posting
             </Link>
           </div>
           <div className="option-menu">
             <Link className="option-a-menu" to="/employer/account/search-candidates">
-              Search for Candidate
+              Search Candidate
             </Link>
           </div>
           {/* <div className="option-menu" ref={dropTooldownRef}>
@@ -382,7 +382,7 @@ const TopBar = () => {
           </div>
           <div className="option-menu">
             <Link className="option-a-menu" to="/highlight-company">
-              Highligh Company
+              Company
             </Link>
           </div>
           {/* <div className="option-menu">
@@ -397,7 +397,7 @@ const TopBar = () => {
         </div>
         <div className="signipup-homepage ">
           <Link to="/user/register">
-            <div className="login-reg-topbar signup-white">Sign up</div>
+            <div className="login-reg-topbar signup-white">Sign Up</div>
           </Link>
         </div>
       </div>

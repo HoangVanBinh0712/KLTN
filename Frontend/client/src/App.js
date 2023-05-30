@@ -105,6 +105,7 @@ function App() {
         <Route path="/recruiter/:id" element={<EmployerProfile />} />
         <Route path="/highlight-company" element={<HighLightCompany />} />
         <Route path="/admin/login" element={<LoginPageAdmin />} />
+        <Route path="/admin" element={<Navigate to='/admin/login' />} />
 
         {/*EMPLOYEE API */}
         <Route path="/user/account" element={<EmployeeRouteNew component={<EmployeeAccountPage />} />}>
@@ -155,7 +156,6 @@ function App() {
               <Routes>
                 <Route path="/admin/login" element={<Navigate to="/admin/dashboard" />} />
                 <Route path="/" element={<Navigate to="/admin/dashboard" />} />
-                
                 <Route path="/admin/dashboard" element={<Dashboard />} />
                 <Route path="/admin/account" element={<Account />} />
                 <Route path="/admin/post" element={<Post />} />

@@ -1,5 +1,6 @@
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import WaitingResponeButton from "../../components/WaitingResponeButton";
 import { useState, useRef, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import swal from "sweetalert";
@@ -9,6 +10,8 @@ const AddResume = () => {
 
   const [history, setHistory] = useState("");
   const [fileName, setFileName] = useState("");
+  const [isWaitingRes, setIsWaitingRes] = useState(false)
+
   const handleHistoryChange = (newValue) => {
     setHistory(newValue);
   };
@@ -64,8 +67,14 @@ const AddResume = () => {
   const [mess, setMess] = useState("");
 
   const onClickConfirm = async () => {
-    if (name.length === 0 || cV === null) {
+    if (name.length === 0 || cV === null||history.length===0||skill.length===0) {
       setMess("*Required...");
+      swal({
+        title: "Error",
+        icon: "warning",
+        text: 'Information cannot be left blank!',
+        dangerMode: true,
+      })
       setTimeout(() => {
         setMess("");
       }, 5000);
@@ -214,7 +223,7 @@ const AddResume = () => {
               </select>
             </div>
           </div>
-          <small>Give us more details !</small>
+          <small>{mess}</small>
           <div className="text-area-group">
             <div className="label">Your work history</div>
             <ReactQuill value={history} onChange={handleHistoryChange} style={{}} />
@@ -232,15 +241,20 @@ const AddResume = () => {
               Upload file
               <input ref={fileCvInput} id="file-upload" type="file" accept=".pdf" style={{ display: "none" }} onChange={handleChoseFileCv} />
             </div>
-            {fileName ? "Uploaded: " +  fileName : ''}
+            {fileName ? "Uploaded: " + fileName : ''}
           </div>
           <small>Format for PDF only.</small>
 
           <div className="group-buttons">
-            <div className="button" onClick={onClickConfirm}>
-              <i className="fa fa-floppy-o" aria-hidden="true"></i>
-              Confirm
-            </div>
+            {isWaitingRes ? (
+              <WaitingResponeButton />
+            ) : (
+              <div className="button" onClick={onClickConfirm}>
+                <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                Confirm
+              </div>
+            )}
+
             <div className="button cancel" onClick={onClickCancel}>
               <i className="fa fa-times" aria-hidden="true"></i>
               Cancel
