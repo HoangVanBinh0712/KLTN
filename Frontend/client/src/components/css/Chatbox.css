@@ -335,9 +335,13 @@ button {
     background-color: #4e4f50;
     padding: 8px 12px;
     max-width: 70%;
-    color: white;
+    color: white !important;
     word-break: break-word;
 }
+.float-items .chat-room .chat-content .table-chat div span a{
+    color: inherit;
+}
+
 .float-items .chat-room .chat-content .table-chat div span a:visited{
     color: inherit;
 }
