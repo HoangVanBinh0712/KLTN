@@ -349,7 +349,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
       if (recentToken !== undefined) {
-        const response = await axios.put(`${apiUrl}/send-user-verify-code?email=${email}&code=${code}`, {
+        const response = await axios.post(`${apiUrl}/confirm-email?email=${email}&code=${code}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${recentToken}`,
