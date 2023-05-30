@@ -15,6 +15,7 @@ import chartIcon from "../assets/icons/chart-icon.png";
 import questionIcon from "../assets/picture-banner/question.png";
 import pingIcon from "../assets/icons/location-ping.png";
 import addIcon from "../assets/icons/add-icon.png";
+import WaitingResponeButton from "./WaitingResponeButton";
 import { AuthContext } from "../contexts/AuthContext";
 import { PostContext } from "../contexts/PostContext";
 import swal from "sweetalert";
@@ -118,6 +119,8 @@ const PostDetails = () => {
   const [allResume, setAllResume] = useState([]);
   const [dataPost, setDataPost] = useState(data);
   const [isFollowed, setIsFollowed] = useState(false);
+  const [isWaitingRes, setIsWaitingRes] = useState(false)
+
   const getAllResume = async () => {
     const res = await getResume();
     if (res.success) {
@@ -229,6 +232,7 @@ const PostDetails = () => {
   };
 
   const submitCvClick = async () => {
+    setIsWaitingRes(true)
     const info = {
       postId: id,
       mediaId: selectValue,
@@ -248,6 +252,7 @@ const PostDetails = () => {
         setMess("");
       }, 5000);
     }
+    setIsWaitingRes(false)
   };
 
   const deleteCvSubmitedClick = async () => {
@@ -289,7 +294,7 @@ const PostDetails = () => {
   };
   const checkFollow = (id, arr) => {
     return arr.some((post) => post.id == id);
-  
+
   };
 
   const savePostClick = async (id) => {
@@ -616,10 +621,14 @@ const PostDetails = () => {
           <ReactQuill value={coverLetter} onChange={onChangeCoverletter} />
           <p style={{ color: "#ff453a", fontSize: "1em" }}> {mess}</p>
           <div className="group-buttons flex-row" style={{ display: "flex", justifyContent: "end", marginTop: "1.2em", gap: "1em" }}>
-            <div className="button" onClick={() => submitCvClick()}>
-              <i className="fa fa-paper-plane" aria-hidden="true"></i>
-              APPLY
-            </div>
+            {isWaitingRes? (
+              <WaitingResponeButton/>
+            ) : (
+              <div className="button" onClick={() => submitCvClick()} >
+                <i className="fa fa-paper-plane" aria-hidden="true" style={{display:'flex', alignItems:'center'}}></i>
+                APPLY
+              </div>
+            )}
             <div
               className="button btn-close"
               onClick={() => {

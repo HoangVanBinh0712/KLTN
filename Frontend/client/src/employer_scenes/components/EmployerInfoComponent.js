@@ -138,6 +138,7 @@ const EmployerInfo = () => {
           dangerMode: false,
         })
         setUser(responseData.data)
+        setIsUpdate(false)
       }
       else {
         swal({
@@ -155,6 +156,7 @@ const EmployerInfo = () => {
       } else return { success: false, message: error.message };
     }
     setIsWaitingRes(false)
+    setIsUpdate(false)
   }
 
   const onCancelClick = () => {

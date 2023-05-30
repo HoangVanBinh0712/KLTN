@@ -138,6 +138,7 @@ const UserPersonalInfo = () => {
           dangerMode: false,
         })
         setUser(reponseData.data)
+        setIsUpdate(false)
 
       } else {
         swal({
