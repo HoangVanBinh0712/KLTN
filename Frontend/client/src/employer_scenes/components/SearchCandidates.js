@@ -31,6 +31,7 @@ const SearchCandidates = () => {
     const [inputKeyword, setKeyword] = useState('')
     const [selectIndustry, setIndustry] = useState('')
     const [inputCity, setCity] = useState('')
+    const [isSearched, setIsSearched] = useState(false)
     const onChangeInputKeyword = (event) => {
         setKeyword(event.target.value)
     }
@@ -92,7 +93,10 @@ const SearchCandidates = () => {
     useEffect(() => {
         const searchQuery = createSearchPararam(searchInfo)
         getCvSearch(searchQuery)
-
+        if(searchQuery.length>9){
+            setIsSearched(true)
+        }
+        else setIsSearched(false)
     }, [searchInfo])
 
     const onChangeExp = (event) => {
@@ -247,7 +251,12 @@ const SearchCandidates = () => {
                     </div>
 
                 </div>
-                <div className='quantity-number-rusult' style={{width: "98%"}}> Found <p> {listProfileResult.length} </p> jobs matching your request.</div>
+                {isSearched?(
+                    <div className='quantity-number-rusult' style={{width: "98%"}}> Found <p> {listProfileResult.length} </p> candidates matching your request.</div>
+                ):(
+                    <div className='quantity-number-rusult' style={{width: "98%"}}> We have <p> {listProfileResult.length} </p> candidates.</div>
+                )}
+                
                 <div className="search-content" style={{width: "100%"}}>
                     <div className="list-post" style={{ width: '100%' }}>
                         {listProfileResult.length > 0 ? (<>

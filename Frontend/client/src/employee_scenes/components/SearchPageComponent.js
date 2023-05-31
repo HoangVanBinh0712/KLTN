@@ -26,6 +26,8 @@ const SearchPageComponent = () => {
     // single-time read
     const params = Object.fromEntries([...searchParams]);
     const [listPostReult, setListPostResult] = useState([])
+    const [isSearched, setIsSearched] = useState(false)
+
     const navigate = useNavigate();
 
     const [searchInfo, setSearchInfo] = useState({
@@ -93,6 +95,9 @@ const SearchPageComponent = () => {
                 }
             }
         }
+        if (searchQuery.length === 0)
+                        searchQuery += `?limit=100`
+                    else searchQuery += `&limit=100`
         return searchQuery
     }
 
@@ -131,10 +136,19 @@ const SearchPageComponent = () => {
             const searchQuery = createSearchPararam(params)
             getPostSearch(searchQuery)
             setisMounted(false)
+            console.log(searchQuery.length)
+            if(searchQuery.length>10){
+                setIsSearched(true)
+            }
+            else setIsSearched(false)
         }
         else {
             const searchQuery = createSearchPararam(searchInfo)
             getPostSearch(searchQuery)
+            if(searchQuery.length>10){
+                setIsSearched(true)
+            }
+            else setIsSearched(false)
         }
 
     }, [searchInfo])
@@ -451,7 +465,12 @@ const SearchPageComponent = () => {
                     </div>
 
                 </div>
-                <div className='quantity-number-rusult'> Found <p> {listPostReult.length} </p> jobs matching your request.</div>
+                {isSearched?(
+                    <div className='quantity-number-rusult'> Found <p> {listPostReult.length} </p> jobs matching your request.</div>
+                ):(
+                    <div className='quantity-number-rusult' > We have <p> {listPostReult.length} </p> posts.</div>
+                )}
+                
                 <div className="search-content">
                     <div className="list-post">
                         {postInResultBox}

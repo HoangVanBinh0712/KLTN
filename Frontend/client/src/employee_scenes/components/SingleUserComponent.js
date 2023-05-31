@@ -107,7 +107,7 @@ const SingleUser = ({ user, refeshEmp }) => {
     <div className="cart">
       <img className="avatar"
         style={{ height: '100px', width: '100px', padding: '0' }}
-        src={emp.user.avatar ? emp.user.avatar : logoIcon} alt=""
+        src={emp.user.urlAvatar!==null ? emp.user.urlAvatar : logoIcon} alt=""
         onClick={() => onClickEmp(emp.user.id)}
       >
       </img>
