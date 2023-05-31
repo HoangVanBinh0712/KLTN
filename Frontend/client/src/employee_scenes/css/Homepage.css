@@ -408,6 +408,8 @@ body {
     padding: 1em;
 }
 
+.logo-top-emp:hover{cursor: pointer;}
+
 .footer-homepage {
     height: 330px;
     margin-top: 100px;
