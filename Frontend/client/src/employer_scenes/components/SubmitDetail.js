@@ -269,12 +269,8 @@ const SubmitDetail = () => {
                     {' * '}Here is the introduction that the candidate wants to show you.
                 </div>
                 <p style={{ color: '#000', fontSize: '1em', fontWeight: 500 }}> Introduction:</p>
-                <textarea value={predictData.coverLetter}
-                    style={{
-                        padding: '5px 10px', width: '100%', minHeight: '250px', border: "1px solid #6c6c6c",
-                        borderRadius: '3px', color: '#6c6c6c'
-                    }}
-                > </textarea>
+                <div dangerouslySetInnerHTML={{ __html:predictData.coverLetter}}
+                    style={{height:'250px', overflowY:'auto', border:'1px solid #6c6c6c', borderRadius:'3px', padding:'10px'}}></div>
                 <p style={{ color: '#000', fontSize: '1em', fontWeight: 500, paddingTop: '20px' }}>
                     Personality is guessed based on the cover letter:
                 </p>

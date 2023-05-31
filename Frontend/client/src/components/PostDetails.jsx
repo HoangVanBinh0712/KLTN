@@ -568,7 +568,7 @@ const PostDetails = () => {
               </div>
               <div className="item">
                 <div className="icon-wrapper">
-                  <img src={pingIcon} alt="" />
+                  <img src={pingIcon} alt="" height='1.6em' />
                 </div>
                 <div className="item-detail">
                   <h4>Headquarters</h4>
@@ -621,21 +621,28 @@ const PostDetails = () => {
           <ReactQuill value={coverLetter} onChange={onChangeCoverletter} />
           <p style={{ color: "#ff453a", fontSize: "1em" }}> {mess}</p>
           <div className="group-buttons flex-row" style={{ display: "flex", justifyContent: "end", marginTop: "1.2em", gap: "1em" }}>
-            {isWaitingRes? (
-              <WaitingResponeButton/>
-            ) : (
-              <div className="button" onClick={() => submitCvClick()} >
-                <i className="fa fa-paper-plane" aria-hidden="true" style={{display:'flex', alignItems:'center'}}></i>
-                APPLY
+            {allResume.length === 0 ? (
+              <div className="button">
+                <i className="fa fa-file" aria-hidden="true"></i>
+                Add Resume
               </div>
-            )}
+            ) : (<>
+              {isWaitingRes ? (
+                <WaitingResponeButton />
+              ) : (
+                <div className="button" onClick={() => submitCvClick()} >
+                  <i className="fa fa-paper-plane" aria-hidden="true" style={{ display: 'flex', alignItems: 'center' }}></i>
+                  APPLY
+                </div>
+              )}
+            </>)}
             <div
               className="button btn-close"
               onClick={() => {
                 closeFormClick();
               }}
             >
-              <i className="fa fa-times" aria-hidden="true" style={{ height: "25px", width: "auto" }}></i>
+              <i className="fa fa-times" aria-hidden="true" style={{ height: "25px", width: "auto", alignItems:'center', display:'flex' }}></i>
               CLOSE
             </div>
           </div>
