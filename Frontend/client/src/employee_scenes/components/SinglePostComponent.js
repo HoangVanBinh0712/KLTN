@@ -101,7 +101,7 @@ const SinglePost = ({ post }) => {
               <p>{aPost.salary !== null ? aPost.salary : ''}{aPost.currency}</p>
             </div>
             <div className="item">
-              <p>{aPost.location}</p>
+              <p>{aPost.city.name}</p>
             </div>
             <div className="item">
               <p>{getDaysDiff(aPost.createDate)} days ago</p>

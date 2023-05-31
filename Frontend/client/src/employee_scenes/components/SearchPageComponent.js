@@ -344,7 +344,7 @@ const SearchPageComponent = () => {
                                     <p>{p.salary !== null ? p.salary : ''}{p.currency}</p>
                                 </div>
                                 <div className="item">
-                                    <p>{p.location}</p>
+                                    <p>{p.city.name}</p>
                                 </div>
                                 <div className="item">
                                     <p>{getDaysDiff(p.createDate)} days ago</p>
