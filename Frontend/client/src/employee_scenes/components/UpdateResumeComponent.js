@@ -20,6 +20,7 @@ const UpdateResume = () => {
 
   const getAllResume = async () => {
     const res = await getResume()
+    console.log(res.data)
     if (res.success) {
       setAllResume(res.data);
       if (res.data.lenght !== 0) {
@@ -166,7 +167,13 @@ const UpdateResume = () => {
     }
   }
 
+  const getCvUrl = (id) =>{
+    const cvUrl = allResume.find(item=>item.mediaId=id)
+    if(cvUrl===undefined)return '';
+    else return cvUrl.url;
+  }
 
+  console.log(getCvUrl(26))
 
   return (
     <div style={{ width: "80%" }}>
@@ -184,7 +191,7 @@ const UpdateResume = () => {
 
             </select>
             <div style={{ display: 'flex', justifyContent: 'end', color: '#0c62ad', marginBottom:'-30px', paddingTop:'5px' }}>
-              <a href=' ' style={{backgroundColor:'none', color:'#0c62ad'}}>View CV</a>
+              <a href={getCvUrl(mediaId)} target='_blank' style={{backgroundColor:'none', color:'#0c62ad'}}>View CV</a>
             </div>
           </div>
           <div className="input-wrapper">
