@@ -2,6 +2,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import WaitingResponeButton from '../../components/WaitingResponeButton';
 import swal from "sweetalert";
 
 const UpdateResume = () => {
@@ -16,6 +17,7 @@ const UpdateResume = () => {
   const [skillsAndKnowledges, setSkillsAndKnowledges] = useState('')
   const [experience, setExperience] = useState("NONE")
   const [position, setPosition] = useState("Staff")
+  const [isWaitingRes, setIsWaitingRes] = useState(false)
   const [method, setMethod] = useState("FULL_TIME")
 
   const getAllResume = async () => {
@@ -136,6 +138,7 @@ const UpdateResume = () => {
   }
 
   const onClickDelete = async () => {
+    setIsWaitingRes(true)
     if (mediaId !== -1) {
       swal({
         title: "Are you sure you want to cancel?",
@@ -154,6 +157,8 @@ const UpdateResume = () => {
               icon: "success",
               text: "Deleted successfully",
               dangerMode: false,
+            }).then(() => {
+              getAllResume()
             })
           }
           else swal({
@@ -165,15 +170,15 @@ const UpdateResume = () => {
         }
       });
     }
+    setIsWaitingRes(false)
+
   }
 
-  const getCvUrl = (id) =>{
-    const cvUrl = allResume.find(item=>item.mediaId=id)
-    if(cvUrl===undefined)return '';
+  const getCvUrl = (id) => {
+    const cvUrl = allResume.find(item => item.mediaId === id)
+    if (cvUrl === undefined) return '';
     else return cvUrl.url;
   }
-
-  console.log(getCvUrl(26))
 
   return (
     <div style={{ width: "80%" }}>
@@ -190,8 +195,8 @@ const UpdateResume = () => {
                 : (allResume.map((r, id) => (<option value={r.mediaId} key={id}>{r.name}</option>)))}
 
             </select>
-            <div style={{ display: 'flex', justifyContent: 'end', color: '#0c62ad', marginBottom:'-30px', paddingTop:'5px' }}>
-              <a href={getCvUrl(mediaId)} target='_blank' style={{backgroundColor:'none', color:'#0c62ad'}}>View CV</a>
+            <div style={{ display: 'flex', justifyContent: 'end', color: '#0c62ad', marginBottom: '-30px', paddingTop: '5px' }}>
+              <a href={getCvUrl(mediaId)} target='_blank' style={{ backgroundColor: 'none', color: '#0c62ad' }}>View CV</a>
             </div>
           </div>
           <div className="input-wrapper">
@@ -267,10 +272,15 @@ const UpdateResume = () => {
               <i className="fa fa-times" aria-hidden="true"></i>
               Cancel
             </div>
-            <div className="button delete" onClick={onClickDelete}>
-              <i className="fa fa-trash-o" aria-hidden="true"></i>
-              Delete
-            </div>
+            {isWaitingRes ? (
+              <WaitingResponeButton />
+            ) : (
+              <div className="button delete" onClick={onClickDelete}>
+                <i className="fa fa-trash-o" aria-hidden="true"></i>
+                Delete
+              </div>
+            )}
+
           </div>
         </div>
       </div>

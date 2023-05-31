@@ -67,7 +67,8 @@ const AddResume = () => {
   const [mess, setMess] = useState("");
 
   const onClickConfirm = async () => {
-    if (name.length === 0 || cV === null||history.length===0||skill.length===0) {
+    setIsWaitingRes(true)
+    if (name.length === 0 || cV === null || history.length === 0 || skill.length === 0) {
       setMess("*Required...");
       swal({
         title: "Error",
@@ -95,6 +96,15 @@ const AddResume = () => {
           icon: "success",
           text: "Created new CV successfully",
           dangerMode: true,
+        }).then(() => {
+          setHistory("");
+          setSkill("");
+          setName("");
+          setExperience("NONE");
+          setPosition("Staff");
+          setMethod("INTERN");
+          setIsPublic(false);
+          setCV(null);
         });
       } else swal({
         title: "Error",
@@ -103,6 +113,7 @@ const AddResume = () => {
         dangerMode: true,
       });
     }
+    setIsWaitingRes(false)
   };
 
   const onClickCancel = async () => {
