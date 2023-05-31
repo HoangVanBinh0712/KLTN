@@ -218,6 +218,9 @@ const PostDetails = () => {
     } else navigate("/user/login");
   };
 
+  const addCvClick = () => {
+    navigate("/user/account/add-resume");
+  }
   const closeFormClick = () => {
     setSubmitForm(false);
   };
@@ -622,7 +625,7 @@ const PostDetails = () => {
           <p style={{ color: "#ff453a", fontSize: "1em" }}> {mess}</p>
           <div className="group-buttons flex-row" style={{ display: "flex", justifyContent: "end", marginTop: "1.2em", gap: "1em" }}>
             {allResume.length === 0 ? (
-              <div className="button">
+              <div className="button" onClick={()=>addCvClick()}>
                 <i className="fa fa-file" aria-hidden="true"></i>
                 Add Resume
               </div>
