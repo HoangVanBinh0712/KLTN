@@ -172,30 +172,33 @@ const Reports = () => {
         />
         {isOpen && (
           <Box className="dropdown-options"
-            style={{ top: `${40 + (index + 1) * 40}px`, right: '20px' }}>
+            style={{ top: `${40 + (index + 1) * 40}px`, right: '5px' }}>
             <Box
               className="dropdown-option"
               onClick={() => onClick1(report)}
             >
               View Detail
             </Box>
-            <Box
-              className="dropdown-option"
-              onClick={() => swal({
-                title: "Are you sure you want to change this report status?",
-                icon: "warning",
-                text: `This action will be cgange status to ${!report.handle ? "Solved" : 'Not resolve'}.`,
-                buttons: {
-                  cancel: "No, cancel",
-                  confirm: "Yes, proceed"
-                },
-                dangerMode: true
-              }).then((isConfirmed) => {
-                if (isConfirmed) onClick2(report.id, !report.handle)
-              })}
-            >
-              Mark as solved
-            </Box>
+            {report.handle ? (<></>) : (
+              <Box
+                className="dropdown-option"
+                onClick={() => swal({
+                  title: "Are you sure you want to change this report status?",
+                  icon: "warning",
+                  text: `This action will be cgange status to ${!report.handle ? "Solved" : 'Not resolve'}.`,
+                  buttons: {
+                    cancel: "No, cancel",
+                    confirm: "Yes, proceed"
+                  },
+                  dangerMode: true
+                }).then((isConfirmed) => {
+                  if (isConfirmed) onClick2(report.id, !report.handle)
+                })}
+              >
+                Mark as solved
+              </Box>
+            )}
+
           </Box>
         )}
       </Box>
@@ -324,8 +327,8 @@ const Reports = () => {
             borderRadius="4px"
           >
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }} onClick={() => {
-              if (!handle ===true) {
-               
+              if (!handle === true) {
+
                 swal({
                   title: "Are you sure you want to change this report status?",
                   icon: "warning",
@@ -440,7 +443,7 @@ const Reports = () => {
             border: "none",
           },
           "& .MuiDataGrid-cell": {
-           /*  borderBottom: "none", */
+            /*  borderBottom: "none", */
           },
           "& .name-column--cell": {
             color: colors.greenAccent[300],

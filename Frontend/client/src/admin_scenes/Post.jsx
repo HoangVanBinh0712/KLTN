@@ -5,6 +5,7 @@ import Select from '@mui/material/Select';
 import SearchIcon from "@mui/icons-material/Search";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import InputBase from "@mui/material/InputBase";
+import WaitingResponeButton from "./WaitingResponeButton";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../theme";
 import Header from "../components/charts/Header";
@@ -176,79 +177,119 @@ const Post = () => {
     return (`${min}:${hour} ${day}-${month}-${year}`)
   }
 
-  const saveClickAdmin = async (id, type, title) => {
-    swal({
-      title: `${title}`,
-      icon: 'info',
-      text: 'Chose status type',
-      buttons: {
-        option1: {
-          text: 'Active',
-          value: 'option1',
+
+  const StatusPost = ({ id, status, title }) => {
+    const [isWaitingRes, setIsWaitingRes] = useState(false)
+
+    const saveClickAdmin = async (id, type, title) => {
+      swal({
+        title: `${title}`,
+        icon: 'info',
+        text: 'Chose status type',
+        buttons: {
+          option1: {
+            text: 'Active',
+            value: 'option1',
+          },
+          option2: {
+            text: 'Denie',
+            value: 'option2',
+          },
+          cancel: 'Cancel',
         },
-        option2: {
-          text: 'Denie',
-          value: 'option2',
-        },
-        cancel: 'Cancel',
-      },
-    }).then(async (value) => {
-      if (value === 'option1') {
-        if (type === 'ACTIVE')
-          swal({
-            title: "Error",
-            icon: "warning",
-            text: "This post was ACTIVED",
-            dangerMode: true,
-          })
-        else {
-          const res = await acceptPostByAdmin(id)
-          if (res.success) {
+      }).then(async (value) => {
+        setIsWaitingRes(true)
+        if (value === 'option1') {
+          if (type === 'ACTIVE')
             swal({
-              title: "Success",
-              icon: "success",
-              text: "Acceped Successfulley",
-              dangerMode: false,
+              title: "Error",
+              icon: "warning",
+              text: "This post was ACTIVED",
+              dangerMode: true,
             })
-            const query = createSearchPararam(keyWord)
-            getAllPost(query)
+          else {
+            const res = await acceptPostByAdmin(id)
+            if (res.success) {
+              swal({
+                title: "Success",
+                icon: "success",
+                text: "Acceped Successfulley",
+                dangerMode: false,
+              })
+              const query = createSearchPararam(keyWord)
+              getAllPost(query)
+            }
+            else swal({
+              title: "Error",
+              icon: "warning",
+              text: res.message,
+              dangerMode: true,
+            })
           }
-          else swal({
-            title: "Error",
-            icon: "warning",
-            text: res.message,
-            dangerMode: true,
-          })
-        }
-      } else if (value === 'option2') {
-        if (type === 'DELETED_BY_ADMIN')
-          swal({
-            title: "Error",
-            icon: "warning",
-            text: "This post was DENIED",
-            dangerMode: true,
-          })
-        else {
-          const res = await ucacceptPostByAdmin(id)
-          if (res.success) {
+        } else if (value === 'option2') {
+          if (type === 'DELETED_BY_ADMIN')
             swal({
-              title: "Success",
-              icon: "success",
-              text: "Denined Successfulley",
-              dangerMode: false,
+              title: "Error",
+              icon: "warning",
+              text: "This post was DENIED",
+              dangerMode: true,
             })
-            const query = createSearchPararam(keyWord)
-            getAllPost(query)
+          else {
+            const res = await ucacceptPostByAdmin(id)
+            if (res.success) {
+              swal({
+                title: "Success",
+                icon: "success",
+                text: "Denined Successfulley",
+                dangerMode: false,
+              })
+              const query = createSearchPararam(keyWord)
+              getAllPost(query)
+            }
+            else swal({
+              title: "Error",
+              icon: "warning",
+              text: res.message,
+              dangerMode: true,
+            })
           }
-          else swal({
-            title: "Error",
-            icon: "warning",
-            text: res.message,
-            dangerMode: true,
-          })
         }
-      }
-    });
+        setIsWaitingRes(false)
+      });
+    }
+
+    return (
+      <Box
+        width="100%"
+        m="0 auto"
+        p="5px"
+        display="flex"
+        justifyContent="center"
+        backgroundColor={
+          status === "ACTIVE"
+            ? colors.greenAccent[700]
+            : status === "WAIT_FOR_ACCEPT"
+              ? '#f8bc6e'
+              : colors.redAccent[700]
+        }
+        borderRadius="4px"
+      >
+        {isWaitingRes ? (
+          <Typography color={colors.grey[100]} sx={{ ml: "5px" }} >
+            <WaitingResponeButton />
+          </Typography>
+        ) : (
+          <Typography color={colors.grey[100]} sx={{ ml: "5px" }} onClick={() => {
+            if (status !== 'DELETED')
+              saveClickAdmin(id, status, title)
+          }
+          } style={status !== "DELETED" ? { cursor: 'pointer' } : { cursor: 'default' }}>
+            {status === 'ACTIVE' ? 'Active' : status === "WAIT_FOR_ACCEPT" ? 'Pending' : status === "DELETED_BY_ADMIN" ? 'Denied' : "Deleted"}
+          </Typography>
+        )}
+      </Box>
+    );
+
   }
 
   const DropdownBox = ({ onClick1, index, post }) => {
@@ -375,29 +416,7 @@ const Post = () => {
       width: 100,
       renderCell: ({ row: { status, id, title } }) => {
         return (
-          <Box
-            width="100%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              status === "ACTIVE"
-                ? colors.greenAccent[700]
-                : status === "WAIT_FOR_ACCEPT"
-                  ? '#f8bc6e'
-                  : colors.redAccent[700]
-            }
-            borderRadius="4px"
-          >
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }} onClick={() => {
-              if (status !== 'DELETED')
-                saveClickAdmin(id, status, title)
-            }
-            } style={status !== "DELETED" ? { cursor: 'pointer' } : { cursor: 'default' }}>
-              {status === 'ACTIVE' ? 'Active' : status === "WAIT_FOR_ACCEPT" ? 'Pending' : status === "DELETED_BY_ADMIN" ? 'Denied' : "Deleted"}
-            </Typography>
-          </Box>
+          <StatusPost id={id} status={status} title={title}/>
         );
       },
     },

@@ -4,6 +4,7 @@ import { tokens } from "../theme";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import Header from "../components/charts/Header";
+import WaitingResponeButton from "./WaitingResponeButton";
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from "../contexts/AuthContext";
 import swal from "sweetalert";
@@ -65,39 +66,72 @@ const Team = () => {
   const onChangeInputSearch = (event) => setInputValue(event.target.value)
   const onClickSearch = () => setKeySearch(inputValue)
 
-  const onChangeStateAccount = async (uId, type) => {
-    const status = !type ? "Unactive" : 'Active'
-    swal({
-      title: "Are you sure you want to change this account status?",
-      icon: "warning",
-      text: `This action will be cgange status to ${status ? "Solved" : 'Not resolve'}.`,
-      buttons: {
-        cancel: "No, cancel",
-        confirm: "Yes, proceed"
-      },
-      dangerMode: true
-    }).then(async (isConfirmed) => {
-      if (isConfirmed) {
-        const res = await setUserActiveByAdmin(uId, type)
-        if (res.success) {
-          swal({
-            title: "Success",
-            icon: "success",
-            text: `Changed account status to ${status} successfully!`,
-            dangerMode: false,
-          })
-          const key = keySearch.length > 0 ? `?email=${keySearch}` : ''
-          getAccount(key)
-        }
-        else swal({
-          title: "Error",
-          icon: "warning",
-          text: res.message,
-          dangerMode: true,
-        })
-      }
-    })
 
+  const StatusAccount = ({status, id}) => {
+
+    const [isWaitingRes, setIsWaitingRes] = useState(false)
+
+    const onChangeStateAccount = async (uId, type) => {
+      
+      const status = type ? "Unactive" : 'Active'
+      swal({
+        title: "Are you sure you want to change this account status?",
+        icon: "warning",
+        text: `This action will be change status to ${status}.`,
+        buttons: {
+          cancel: "No, cancel",
+          confirm: "Yes, proceed"
+        },
+        dangerMode: true
+      }).then(async (isConfirmed) => {
+        setIsWaitingRes(true)
+        if (isConfirmed) {
+          const res = await setUserActiveByAdmin(uId, !type)
+          if (res.success) {
+            swal({
+              title: "Success",
+              icon: "success",
+              text: `Changed account status to ${status} successfully!`,
+              dangerMode: false,
+            })
+            const key = keySearch.length > 0 ? `?email=${keySearch}&limit=10000` : '?limit=10000'
+            getAccount(key)
+          }
+          else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+          })
+        }
+        setIsWaitingRes(false)
+      })
+      
+    }
+
+    return (
+      <Box
+        width="100%"
+        m="0 auto"
+        p="5px"
+        display="flex"
+        justifyContent="center"
+        backgroundColor={status ? colors.greenAccent[700] : colors.redAccent[700]}
+        borderRadius="4px"
+      >
+        {isWaitingRes ? (
+          <Typography color={colors.grey[100]} sx={{ ml: "5px" }} >
+            <WaitingResponeButton />
+          </Typography>
+        ) : (
+          <Typography color={colors.grey[100]} sx={{ ml: "5px" }} style={{ cursor: 'pointer' }}
+            onClick={async() => onChangeStateAccount(id,status)}>
+            {status ? 'Active' : 'Unactive'}
+          </Typography>
+        )}
+
+      </Box>
+    )
   }
 
   // col title table
@@ -146,20 +180,7 @@ const Team = () => {
       width: 100,
       renderCell: ({ row: { status, id } }) => {
         return (
-          <Box
-            width="100%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={status ? colors.greenAccent[700] : colors.redAccent[700]}
-            borderRadius="4px"
-          >
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }} style={{ cursor: 'pointer' }}
-              onClick={() => onChangeStateAccount(id, !status)}>
-              {status ? 'Active' : 'Unactive'}
-            </Typography>
-          </Box>
+          <StatusAccount id={id} status={status}/>
         );
       },
     },
