@@ -131,15 +131,15 @@ const Reports = () => {
       }
     }
     if (searchQuery.length === 0)
-      searchQuery += `?limit=100`
-    else searchQuery += `&limit=100`
+      searchQuery += `?limit=1000`
+    else searchQuery += `&limit=1000`
     return searchQuery
   }
 
   const getRpList = async (keyword) => {
     try {
       const res = await getReportByAdmin(keyword)
-      if (res.success) setListRp(res.data)
+      if (res.success) setListRp(res.data.reverse())
     }
     catch (error) {
       swal({

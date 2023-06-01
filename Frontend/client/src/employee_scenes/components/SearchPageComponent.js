@@ -106,6 +106,7 @@ const SearchPageComponent = () => {
         ...searchInfo,
         keyword: params.keyword !== undefined ? params.keyword : '',
         cityId: params.cityId !== undefined ? params.cityId : '',
+        industryId: params.industryId !== undefined ? params.industryId : '',
     })
 }
 

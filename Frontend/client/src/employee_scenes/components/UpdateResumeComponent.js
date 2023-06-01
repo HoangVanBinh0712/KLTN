@@ -22,7 +22,6 @@ const UpdateResume = () => {
 
   const getAllResume = async () => {
     const res = await getResume()
-    console.log(res.data)
     if (res.success) {
       setAllResume(res.data);
       if (res.data.lenght !== 0) {

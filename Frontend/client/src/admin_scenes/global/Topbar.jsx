@@ -26,7 +26,6 @@ const Topbar = () => {
     }).then((click) => {
       if (click) {
         logoutSection();
-        window.location.href = "/home"
       }
     });
   };
