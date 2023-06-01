@@ -166,7 +166,7 @@ const AuthContextProvider = ({ children }) => {
         role: null,
       },
     });
-    window.location.href = "/user/login";
+    navigate("/user/login")
   };
 
   // auth user

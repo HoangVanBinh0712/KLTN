@@ -30,7 +30,7 @@ const SingleCandidateProfile = ({ data, openClick }) => {
 
   useEffect(() => {
     const candidateData = {
-      mediaId:data.mediaId,
+      mediaId: data.mediaId,
       url: data.url,
       name: data.name,
       workExperiences: data.workExperiences,
@@ -125,7 +125,7 @@ const SingleCandidateProfile = ({ data, openClick }) => {
         <div className="gr-name-btn-view">
           <div>
             <p className="title" onClick={() => onClickImagePost(candidateInfo.user.id)} style={{ color: "#0c62ad" }}>
-              {candidateInfo.user.name}
+              {candidateInfo.name}
             </p>
           </div>
           <div className="btn-view" onClick={() => onClickProfileBtn(candidateInfo)}>
@@ -135,7 +135,7 @@ const SingleCandidateProfile = ({ data, openClick }) => {
         <div className="cart-description-profile" style={{ cursor: "pointer" }}
           onClick={() => onClickCvTitle(candidateInfo.url, candidateInfo.user.id, candidateInfo.mediaId)}>
           <i className="fa fa-file-text-o" aria-hidden="true" style={{ margin: "0 5px", color: "#0c62ad" }}></i>
-          {candidateInfo.name} - <small style={{ fontSize: "1em", color: "black" }}>Last modified: {getPostDate(candidateInfo.lastModified)}</small>
+          {candidateInfo.user.name} - <small style={{ fontSize: "1em", color: "black" }}>Last modified: {getPostDate(candidateInfo.lastModified)}</small>
         </div>
         <div className="row-flex-horizon flex-wrap">
           <div className="list-item-flex-start">
