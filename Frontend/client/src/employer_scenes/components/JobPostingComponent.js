@@ -24,7 +24,7 @@ const JobPostingComponent = () => {
         if (res.success) {
             setAllEmpPost(res.data)
             setPostDisplay(res.data)
-            const arr = res.data
+            const arr = res.data.reverse()
             const statusGroups = arr.reduce((groups, item) => {
                 const { status } = item;
                 if (!groups[status]) {

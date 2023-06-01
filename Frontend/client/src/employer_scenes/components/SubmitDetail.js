@@ -56,7 +56,7 @@ const SubmitDetail = () => {
 
     const getSubmittion = async () => {
         const res = await getCvSubmited(id)
-        if (res.success) setListSubmiition(res.data)
+        if (res.success) setListSubmiition(res.data.reverse())
     }
 
     const getPostId = async () => {
@@ -200,7 +200,7 @@ const SubmitDetail = () => {
             <div className="free-space" id="free-space" style={{ justifyContent: 'flex-start', paddingTop: '35px', paddingBottom: '2%' }}>
                 <div className='row-title-status'>
                     <div className='title-and-expoet-btn'>
-                        Maketing, sale staff <p>{'('}{listSubmittion.length}{' '}{'submits'}{')'}</p>
+                        {postCurrent.title} <p>{'('}{listSubmittion.length}{' '}{'submits'}{')'}</p>
                     </div>
                     {statePost(postCurrent.status)}
                 </div>
@@ -269,14 +269,18 @@ const SubmitDetail = () => {
                     {' * '}Here is the introduction that the candidate wants to show you.
                 </div>
                 <p style={{ color: '#000', fontSize: '1em', fontWeight: 500 }}> Introduction:</p>
-                <div dangerouslySetInnerHTML={{ __html:predictData.coverLetter}}
-                    style={{height:'250px', overflowY:'auto', border:'1px solid #6c6c6c', borderRadius:'3px', padding:'10px'}}></div>
+                <div dangerouslySetInnerHTML={{ __html: predictData.coverLetter }}
+                    style={{ height: '250px', overflowY: 'auto', border: '1px solid #6c6c6c', borderRadius: '3px', padding: '10px' }}></div>
                 <p style={{ color: '#000', fontSize: '1em', fontWeight: 500, paddingTop: '20px' }}>
                     Personality is guessed based on the cover letter:
                 </p>
                 <div style={{ color: '#0c62ad', padding: '0 10px' }}>
                     {`${predictData.personality}: ${findPersonalityDesc(predictData.personality)}`}
                 </div>
+                {/* <div style={{ color: '#000', fontSize: '1em', fontWeight: 500, paddingTop: '20px', display:'flex' }}>
+                    Percentage that matches your job: 
+                    <p style={{ color: '#0c62ad' }}>{predictData.matchPercent} %</p>
+                </div> */}
                 <div className="group-buttons flex-row"
                     style={{ display: 'flex', justifyContent: 'end', marginTop: '20px', gap: '1em' }}>
 

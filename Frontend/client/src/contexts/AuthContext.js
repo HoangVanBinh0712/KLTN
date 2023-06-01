@@ -1163,6 +1163,23 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const viewProfileJSK = async (userId,mediaId) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.post(`${apiUrl}/employer/profile-search?userId=${userId}&mediaId=${mediaId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      return null;
+    }
+  };
+
   //conxtext data
   const authContextData = {
     loginUser,
@@ -1195,6 +1212,7 @@ const AuthContextProvider = ({ children }) => {
     unFollowEmp,
     getEmpViewCv,
     getUserProfileJSK,
+    viewProfileJSK,
     getEmployerProfile,
     getEmployerService,
     getUserProfileByAnyFilter,

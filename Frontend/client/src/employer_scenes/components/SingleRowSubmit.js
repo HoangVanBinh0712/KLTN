@@ -1,11 +1,16 @@
 import threeDotIcon from '../../assets/icons/3dot-icon.png'
 import { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '../../contexts/AuthContext'
 
 
 export const SingleRowSubmit = ({ submit, num, position, openAppointment, predict }) => {
 
     const [isOpen, setIsOpen] = useState(false)
+    const { viewProfileJSK } = useContext(AuthContext)
 
+
+    const userId = submit.profile.user.id
+    const mediaId = submit.profile.mediaId
     const onMouseEnter = () => {
         setIsOpen(true)
     }
@@ -27,7 +32,8 @@ export const SingleRowSubmit = ({ submit, num, position, openAppointment, predic
         /* window.location.href = `/employer/candidates/${data.profile.user.id}` */
     }
 
-    const viewCV = () => {
+    const viewCV = async () => {
+        viewProfileJSK(userId, mediaId)
         window.open(submit.url, "_blank");
         /* window.location.href = `/employer/candidates/${data.profile.user.id}` */
     }
@@ -42,7 +48,8 @@ export const SingleRowSubmit = ({ submit, num, position, openAppointment, predic
                     {submit.profile.user.name}
                     <i className="fa fa-check-circle-o" aria-hidden="true" style={{ marginLeft: '5px', color: "#0c62ad" }}></i>
                 </div>
-                <div className='name-profile' onClick={viewCV} style={{ cursor: 'pointer' }}>
+                <div className='name-profile'
+                    onClick={() => viewCV()} style={{ cursor: 'pointer' }}>
                     <i className="fa fa-file-text-o" aria-hidden="true" style={{ marginRight: '5px', color: "#0c62ad" }}></i>
                     {submit.profile.name}
                 </div>

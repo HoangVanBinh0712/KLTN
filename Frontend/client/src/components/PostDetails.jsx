@@ -19,6 +19,7 @@ import WaitingResponeButton from "./WaitingResponeButton";
 import { AuthContext } from "../contexts/AuthContext";
 import { PostContext } from "../contexts/PostContext";
 import swal from "sweetalert";
+import eyeIcon from '../assets/icons/eye-icon20px.png'
 
 const PostDetails = () => {
   let { id } = useParams();
@@ -331,8 +332,8 @@ const PostDetails = () => {
   };
 
   const getResumeName = (id) => {
-    const resume = allResume.find((item)=>item.mediaId===Number(id))
-    if (resume!==undefined) return resume.name;
+    const resume = allResume.find((item) => item.mediaId === Number(id))
+    if (resume !== undefined) return resume.name;
     return '';
   }
 
@@ -347,10 +348,14 @@ const PostDetails = () => {
           </a>
           <div className="post-info">
             <p className="title">{dataPost.title}</p>
-            <div className="post-description" onClick={() => ocClickToNTDProfile()} style={{ width: "140px", cursor: "pointer" }}>
+            <div className="post-description" onClick={() => ocClickToNTDProfile()} style={{cursor: "pointer" }}>
               {dataPost.author.name}
             </div>
             <div className="post-deadline-submit">Deadline for submission: {getPostDate(dataPost.expirationDate)}</div>
+            <div className="count-view-post">
+              
+              {dataPost.viewCount}<img src={eyeIcon} alt=""/>
+            </div>
           </div>
           {role !== "ROLE_EMPLOYER" ? (
             <div className="group-buttons">

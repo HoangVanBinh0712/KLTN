@@ -19,7 +19,7 @@ const CandidatesProfile = () => {
     const getallPost = async (keyword) => {
         const res = await getEmpPost(keyword)
         if (res.success) {
-            setPostDisplay(res.data)
+            setPostDisplay(res.data.reverse())
         }
     }
 

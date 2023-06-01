@@ -13,7 +13,7 @@ import swal from "sweetalert";
 
 const SearchCandidates = () => {
 
-    const { getUserProfileByAnyFilter } = useContext(AuthContext)
+    const { getUserProfileByAnyFilter, viewProfileJSK } = useContext(AuthContext)
     const { globalState: { cities, industries } } = useContext(GlobalContext)
     // single-time read
     const [listProfileResult, setListProfileResult] = useState([])
@@ -53,7 +53,7 @@ const SearchCandidates = () => {
     }
 
     const createSearchPararam = (obj) => {
-        let searchQuery = '?limit=32'
+        let searchQuery = '?limit=48'
         for (let prop in obj) {
             if (obj[prop].length > 0) {
                 searchQuery += `&${prop}=${obj[prop]}`
@@ -173,7 +173,8 @@ const SearchCandidates = () => {
 
     const [candidateInfo, setCandidateInfo] = useState(initCandidate)
 
-    const onClickCvTitle = (url) => {
+    const onClickCvTitle = async (url, userId, mediaId) => {
+        viewProfileJSK(userId, mediaId)
         window.open(url, "_blank");
     }
 
@@ -329,7 +330,7 @@ const SearchCandidates = () => {
                         {' * '}Click on profile name to view.
                     </div>
                     <div className="cart-description-profile" style={{ cursor: 'pointer', paddingLeft: '20px' }}
-                        onClick={() => onClickCvTitle(candidateInfo.url)}>
+                        onClick={() => onClickCvTitle(candidateInfo.url,candidateInfo.user.id,candidateInfo.mediaId)}>
                         <i className="fa fa-file-text-o" aria-hidden="true" style={{ margin: '0 5px', color: '#0c62ad' }}></i>
                         {candidateInfo.name}
                     </div>
