@@ -12,7 +12,7 @@ import { AuthContext } from "../contexts/AuthContext";
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);  
-  const { getListPostAdmin, getUserStaAdmin, getListAccount, getCountAllPost } = useContext(AuthContext)
+  const { getListPostAdmin, getUserStaAdmin, getCountAllPost } = useContext(AuthContext)
 
   const dataDefault = [
     {
@@ -103,14 +103,14 @@ const Dashboard = () => {
   }
 
   const getAllPost = async (date) => {
-    const res = await getListPostAdmin(`?startDate=${date}&limit=50`)
+    const res = await getListPostAdmin(`?startDate=${date}&limit=1000`)
     if (res.success) {
-      setListPostThisMonth(res.data)
+      setListPostThisMonth(res.data.reverse())
     }
   }
 
   const getAllPostLastMonth = async (date) => {
-    const res = await getListPostAdmin(`?startDate=${date}&limit=50`)
+    const res = await getListPostAdmin(`?startDate=${date}&limit=1000`)
     if (res.success) {
       setListPostLastMonth(res.data)
     }

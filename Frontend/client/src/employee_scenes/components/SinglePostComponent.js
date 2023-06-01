@@ -7,20 +7,24 @@ import { PostContext } from "../../contexts/PostContext";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 
-const SinglePost = ({ post }) => {
+const SinglePost = ({ post, mediaId }) => {
 
   const { authState: { authloading, role } } = useContext(AuthContext)
   const { postState: { postFollow }, followPost, unfollowPost, } = useContext(PostContext)
+
 
   const aPost = post
   const navigate = useNavigate();
 
   const onClickImagePost = (empId) => {
-    window.location.href = `/recruiter/${empId}`
+    window.open(`/recruiter/${empId}`)
   }
 
   const onClickPostTitle = (postId) => {
-    window.location.href = `/post/${postId}`
+    if (mediaId > 0)
+      window.open(`/post/${postId}?mediaId=${mediaId}`)
+    else
+      window.open(`/post/${postId}`)
   }
 
   function getDaysDiff(date) {
@@ -83,10 +87,10 @@ const SinglePost = ({ post }) => {
 
 
   return (
-    
+
     <div className="cart">
       <img className="avatar"
-      style={{border:'none', padding:'0'}}
+        style={{ border: 'none', padding: '0' }}
         src={aPost.author.urlAvatar === null ? logoPost : aPost.author.urlAvatar}
         alt=""
         onClick={() => { onClickImagePost(aPost.author.id) }} />

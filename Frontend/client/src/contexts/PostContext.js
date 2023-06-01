@@ -46,7 +46,7 @@ const PostContextProvider = ({ children }) => {
     const getHotPost = async () => {
         try {
 
-            const responsePost = await axios.get(`${apiUrl}/post/hot-job?page=1&limit=18`, {
+            const responsePost = await axios.get(`${apiUrl}/post/hot-job?page=1&limit=48`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -69,7 +69,7 @@ const PostContextProvider = ({ children }) => {
     const getMostViewPost = async () => {
         try {
 
-            const responsePost = await axios.get(`${apiUrl}/post/most-view?type=YEAR&page=1&limit=18`, {
+            const responsePost = await axios.get(`${apiUrl}/post/most-view?type=YEAR&page=1&limit=48`, {
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -116,7 +116,7 @@ const PostContextProvider = ({ children }) => {
     const getPredictPost = async (industryId) => {
         try {
             const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
-            const responsePost = await axios.get(`${apiUrl}/user/cvpredict/post?industryId=${industryId}`, {
+            const responsePost = await axios.get(`${apiUrl}/user/cvpredict/post?industryId=${industryId}&limit=48`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${recentToken}`,

@@ -94,7 +94,7 @@ const PredictJob = () => {
   if (listPostPre.length > 0) {
     postInResultBox = (<>
       {allPost[currentPage].map((p, id) => (
-        <SinglePost post={p} key={id} />
+        <SinglePost post={p} key={id} mediaId={currentResumeId}/>
       ))
       }
     </>

@@ -68,14 +68,14 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                             icon: "success",
                             text: "The post has been removed from the favorites list.",
                             dangerMode: false,
-                          })
+                        })
                     }
                     else swal({
                         title: "Error",
                         icon: "warning",
                         text: res.message,
                         dangerMode: true,
-                      })
+                    })
                 }
                 else {
                     const res = await followPost(id)
@@ -85,22 +85,22 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                             icon: "success",
                             text: "The post has been added to the favorites list.",
                             dangerMode: false,
-                          })
-                        
+                        })
+
                     }
                     else swal({
                         title: "Error",
                         icon: "warning",
                         text: res.message,
                         dangerMode: true,
-                      })
+                    })
                 }
             }
         }
     }
 
     const onClickToAllPost = () => {
-        navigate("/posts") ;
+        navigate("/posts");
     }
 
     let postInBox
@@ -112,21 +112,22 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                         <a href={`/recruiter/${p.author.id}`}><img src={p.author.urlAvatar === null ? logoPost : p.author.urlAvatar} className="img-inpost-homepage" alt="logo" /></a>
                     </div>
                     <div className="info-post-homepage">
-                        <div className="post-title-homepage">
-                            <a href={`/post/${p.id}`}>{p.title}</a>
+                        <div style={{width:'100%'}}>
+                            <div className="post-title-homepage">
+                                <a href={`/post/${p.id}`}>{p.title}</a>
+                            </div>
+                            <div className="type-of-work">
+                                {p.method === "FULL_TIME" ? "Full time" : "Part time"}
+                            </div>
+                            <div className="locationg-company-homepage">
+                                {p.location}
+                            </div>
+                        </div>
+                        <div className="follow-post-heart">
                             <div className="heart-icon" style={role !== "ROLE_EMPLOYER" ? { display: 'block' } : { display: 'none' }} onClick={() => heartClick(p.id)}>
                                 {checkFollow(p.id, postFollow) ? (<img className="icon-hear-follow" src={heartIcon} alt="heart icon" />)
                                     : (<img className="icon-hear-follow" src={roundheartIcon} alt="heart icon" />)}
                             </div>
-                        </div>
-                        <div className="type-of-work">
-                            {p.method === "FULL_TIME" ? "Full time" : "Part time"}
-                        </div>
-                        <div className="locationg-company-homepage">
-                            {p.location}
-                        </div>
-                        <div className="follow-post-heart">
-                    
                         </div>
                     </div>
                 </div>
@@ -160,7 +161,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                         Recommended by HBQ AI
                     </div>
                     <div className="post-bx-viewall-ai" >
-                        <div style={{ cursor: 'pointer' }} onClick={()=>{onClickToAllPost()}}>{`View all >>`}</div>
+                        <div style={{ cursor: 'pointer' }} onClick={() => { onClickToAllPost() }}>{`View all >>`}</div>
                     </div>
                 </div>
                 <div className="list-posts-homepage">
@@ -194,7 +195,7 @@ const ListPostsHomepage = ({ title, isHaveAi, listPosts }) => {
                         {title}
                     </div>
                     <div className="post-bx-viewall" >
-                        <div style={{ cursor: 'pointer' }} onClick={()=>{onClickToAllPost()}}>{`View all >>`}</div>
+                        <div style={{ cursor: 'pointer' }} onClick={() => { onClickToAllPost() }}>{`View all >>`}</div>
                     </div>
                 </div>
                 <div className="list-posts-homepage">

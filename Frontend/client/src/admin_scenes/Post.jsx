@@ -68,10 +68,6 @@ const Post = () => {
   const [inputValue, setInputValue] = useState('')
   const [inputUserId, setInputUserId] = useState('')
   const [listService, setListService] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
-  const [typePost, setTypePost] = useState('')
-  const [check1, setCheck1] = useState(false)
-  const [check2, setCheck2] = useState(false)
   const [isViewPostDetails, setIsViewPostDetails] = useState(false)
   const [postChosen, setPostChosen] = useState(postDefault)
 
@@ -146,8 +142,8 @@ const Post = () => {
       }
     }
     if (searchQuery.length === 0)
-      searchQuery += `?limit=100`
-    else searchQuery += `&limit=100`
+      searchQuery += `?limit=10000`
+    else searchQuery += `&limit=10000`
     return searchQuery
   }
 
@@ -180,96 +176,79 @@ const Post = () => {
     return (`${min}:${hour} ${day}-${month}-${year}`)
   }
 
-  const setFormChange = (id, name, status) => {
-    setPostChosen({
-      id: id,
-      name: name,
-      status: status,
-    })
-    setIsOpen(true)
-  }
-
-  const saveClickAdmin = async () => {
-    if (typePost === 'ACTIVE') {
-      if (typePost !== postChosen.status) {
-        const res = await acceptPostByAdmin(postChosen.id)
-        if (res.success) {
+  const saveClickAdmin = async (id, type, title) => {
+    swal({
+      title: `${title}`,
+      icon: 'info',
+      text: 'Chose status type',
+      buttons: {
+        option1: {
+          text: 'Active',
+          value: 'option1',
+        },
+        option2: {
+          text: 'Denie',
+          value: 'option2',
+        },
+        cancel: 'Cancel',
+      },
+    }).then(async (value) => {
+      if (value === 'option1') {
+        if (type === 'ACTIVE')
           swal({
-            title: "Success",
-            icon: "success",
-            text: "Acceped Successfulley",
-            dangerMode: false,
+            title: "Error",
+            icon: "warning",
+            text: "This post was ACTIVED",
+            dangerMode: true,
           })
-          const query = createSearchPararam(keyWord)
-          getAllPost(query)
+        else {
+          const res = await acceptPostByAdmin(id)
+          if (res.success) {
+            swal({
+              title: "Success",
+              icon: "success",
+              text: "Acceped Successfulley",
+              dangerMode: false,
+            })
+            const query = createSearchPararam(keyWord)
+            getAllPost(query)
+          }
+          else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+          })
         }
-        else swal({
-          title: "Error",
-          icon: "warning",
-          text: res.message,
-          dangerMode: true,
-        })
-      }
-      else swal({
-        title: "Error",
-        icon: "warning",
-        text: "This post was actived",
-        dangerMode: true,
-      })
-    }
-    if (typePost === 'DELETED_BY_ADMIN') {
-      if (typePost !== postChosen.status) {
-        const res = await ucacceptPostByAdmin(postChosen.id)
-        if (res.success) {
+      } else if (value === 'option2') {
+        if (type === 'DELETED_BY_ADMIN')
           swal({
-            title: "Success",
-            icon: "success",
-            text: "Denined Successfulley",
-            dangerMode: false,
+            title: "Error",
+            icon: "warning",
+            text: "This post was DENIED",
+            dangerMode: true,
           })
-          const query = createSearchPararam(keyWord)
-          getAllPost(query)
+        else {
+          const res = await ucacceptPostByAdmin(id)
+          if (res.success) {
+            swal({
+              title: "Success",
+              icon: "success",
+              text: "Denined Successfulley",
+              dangerMode: false,
+            })
+            const query = createSearchPararam(keyWord)
+            getAllPost(query)
+          }
+          else swal({
+            title: "Error",
+            icon: "warning",
+            text: res.message,
+            dangerMode: true,
+          })
         }
-        else swal({
-          title: "Error",
-          icon: "warning",
-          text: res.message,
-          dangerMode: true,
-        })
       }
-      else swal({
-        title: "Error",
-        icon: "warning",
-        text: "This post was actived",
-        dangerMode: true,
-      })
-    }
-    setIsOpen(false)
-  }
-
-  const onClickAcceptbtn = () => {
-    if (typePost === 'ACTIVE' && check1 === true) {
-      setCheck1(false)
-      setTypePost('')
-    }
-    else {
-      setTypePost('ACTIVE')
-      setCheck1(true)
-      setCheck2(false)
-    }
-  }
-
-
-  const onClickDeniedbtn = () => {
-    if (typePost === 'DELETED_BY_ADMIN' && check2 === true) {
-      setCheck2(false)
-      setTypePost('')
-    }
-    else {
-      setTypePost('DELETED_BY_ADMIN')
-      setCheck1(false)
-      setCheck2(true)
-    }
+    });
   }
 
   const DropdownBox = ({ onClick1, index, post }) => {
@@ -412,8 +391,8 @@ const Post = () => {
             borderRadius="4px"
           >
             <Typography color={colors.grey[100]} sx={{ ml: "5px" }} onClick={() => {
-              if (status !== "DELETED")
-                setFormChange(id, title, status)
+              if (status !== 'DELETED')
+                saveClickAdmin(id, status, title)
             }
             } style={status !== "DELETED" ? { cursor: 'pointer' } : { cursor: 'default' }}>
               {status === 'ACTIVE' ? 'Active' : status === "WAIT_FOR_ACCEPT" ? 'Pending' : status === "DELETED_BY_ADMIN" ? 'Denied' : "Deleted"}
@@ -561,54 +540,6 @@ const Post = () => {
       >
         <DataGrid /* checkboxSelection */ disableRowSelectionOnClick rows={listPost} columns={columns} />
       </Box>
-      <div className='change-post-status-form' style={isOpen ? { display: 'block' } : { display: 'none' }}>
-        <div className='form-change-state-control'>
-          <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
-            <div style={{ color: "#0c62ad", fontSize: '18px', fontWeight: '500' }}>{`Change post state: ${postChosen.name}`}</div>
-            <div><img src={addIcon} className='close-form-submit' alt='' onClick={() => { setIsOpen(false) }} /></div>
-          </div>
-
-          <div className="gr-btn-status-post">
-            <div className="btn-accept-post-admin" onClick={() => onClickAcceptbtn()}>
-              <div className="name-type-state-admin" >
-                ACCEPT POST
-              </div>
-              <div className="checkbox-state-post-admin">
-                <input
-                  type="checkbox"
-                  value="accept"
-                  checked={check1}
-                />
-              </div>
-            </div>
-
-            <div className="btn-denied-post-admin" onClick={() => onClickDeniedbtn()}>
-              <div className="name-type-state-admin" >
-                DENIE POST
-              </div>
-              <div className="checkbox-state-post-admin">
-                <input
-                  type="checkbox"
-                  value="accept"
-                  checked={check2}
-                />
-              </div>
-            </div>
-
-          </div>
-          <div className="group-buttons flex-row "
-            style={{ display: 'flex', justifyContent: 'end', marginTop: '1.2em', gap: '1em' }}>
-            <div className="button al-content-btn" onClick={() => saveClickAdmin()}>
-              <i className="fa fa-file-text-o" aria-hidden="true" ></i>
-              SAVE
-            </div>
-            <div className="button btn-close al-content-btn" onClick={() => { setIsOpen(false) }}>
-              <i className="fa fa-times" aria-hidden="true" style={{ height: '25px', width: 'auto', marginTop: '10px' }}></i>
-              CLOSE
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Post detail */}
       <div className='change-report-info-form'

@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import TopBar from "./global/TopBar";
 import Footer from "./global/Footer";
 import ReactQuill from "react-quill";
@@ -37,6 +37,9 @@ const PostDetails = () => {
     unfollowPost,
   } = useContext(PostContext);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  // single-time read
+  const params = Object.fromEntries([...searchParams]);
 
   const data = {
     id: 0,
@@ -327,6 +330,12 @@ const PostDetails = () => {
     window.location.href = `/recruiter/${dataPost.author.id}`;
   };
 
+  const getResumeName = (id) => {
+    const resume = allResume.find((item)=>item.mediaId===Number(id))
+    if (resume!==undefined) return resume.name;
+    return '';
+  }
+
   return (
     <>
       <TopBar />
@@ -591,6 +600,7 @@ const PostDetails = () => {
           </div>
         </div>
       </div>
+
       <div className="form-submit-cv" style={isSubmitFormOpen ? { display: "block" } : { display: "none" }}>
         <div className="form-submit-cv-control">
           <div style={{ display: "flex", justifyContent: "space-between", height: "50px" }}>
@@ -606,16 +616,20 @@ const PostDetails = () => {
               />
             </div>
           </div>
-          <select className="select-submit-cv-form" value={selectValue} onChange={handleSelectChange}>
-            <option value="0">Chose one CV for your submition</option>
-            {allResume.length === 0 ? (
-              <option value="-1">You have not uploaded any profile yet</option>
-            ) : (
-              allResume.map((r, id) => (
-                <option value={r.mediaId} key={id}>
-                  {r.name}
-                </option>
-              ))
+          <select className="select-submit-cv-form" value={selectValue} onChange={handleSelectChange} disabled={params.mediaId !== undefined}>
+            {params.mediaId !== undefined ? (<option value={params.mediaId}>{getResumeName(params.mediaId)}</option>) : (
+              <>
+                <option value="0">Chose one CV for your submition</option>
+                {allResume.length === 0 ? (
+                  <option value="-1">You have not uploaded any profile yet</option>
+                ) : (
+                  allResume.map((r, id) => (
+                    <option value={r.mediaId} key={id}>
+                      {r.name}
+                    </option>
+                  ))
+                )}
+              </>
             )}
           </select>
           <div style={{ display: "flex", height: "30px", fontSize: "1em", color: "#6c6c6c" }}>
@@ -625,7 +639,7 @@ const PostDetails = () => {
           <p style={{ color: "#ff453a", fontSize: "1em" }}> {mess}</p>
           <div className="group-buttons flex-row" style={{ display: "flex", justifyContent: "end", marginTop: "1.2em", gap: "1em" }}>
             {allResume.length === 0 ? (
-              <div className="button" onClick={()=>addCvClick()}>
+              <div className="button" onClick={() => addCvClick()}>
                 <i className="fa fa-file" aria-hidden="true"></i>
                 Add Resume
               </div>
@@ -645,7 +659,7 @@ const PostDetails = () => {
                 closeFormClick();
               }}
             >
-              <i className="fa fa-times" aria-hidden="true" style={{ height: "25px", width: "auto", alignItems:'center', display:'flex' }}></i>
+              <i className="fa fa-times" aria-hidden="true" style={{ height: "25px", width: "auto", alignItems: 'center', display: 'flex' }}></i>
               CLOSE
             </div>
           </div>

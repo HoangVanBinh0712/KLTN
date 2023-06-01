@@ -7,7 +7,7 @@ import heartIcon from "../../assets/icons/heart-icon.png";
 import updPic from "../../assets/picture-banner/update-cv.png";
 import logoPost from "../../assets/icons/logo-company.png";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import { PostContext } from "../../contexts/PostContext";
 import { GlobalContext } from "../../contexts/GlobalContext";
@@ -30,6 +30,10 @@ const SearchPageComponent = () => {
   const {
     globalState: { cities, industries },
   } = useContext(GlobalContext);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+    // single-time read
+    const params = Object.fromEntries([...searchParams]);
   /**
    * listPostResult
    * currentPage
@@ -96,7 +100,17 @@ const SearchPageComponent = () => {
       setListPostResult(res.data);
     }
   }
+
+  const setBeginSearchInfo = (params) => {
+    setSearchInfo({
+        ...searchInfo,
+        keyword: params.keyword !== undefined ? params.keyword : '',
+        cityId: params.cityId !== undefined ? params.cityId : '',
+    })
+}
+
   useEffect(() => {
+    setBeginSearchInfo(params)
     getData();
   }, []);
 
@@ -157,9 +171,9 @@ const SearchPageComponent = () => {
 
   const onClickUpdateProfile = () => {
     if (!authloading && role === "ROLE_USER") {
-      window.location.href = "/user/account/add-resume";
+      navigate("/user/account/add-resume")
     } else if (!authloading && role === "ROLE_USER") {
-      window.location.href = "/employer/account";
+      navigate("/employer/account")
     } else {
       navigate("/user/login");
     }
@@ -416,15 +430,6 @@ const SearchPageComponent = () => {
 
         <div className="search-content">
           <div className="list-post">
-            {isSearched ? (
-              <div className="quantity-number-rusult">
-                Found <p> {listPostResult?.data?.length} </p> jobs matching your request.
-              </div>
-            ) : (
-              <div className="quantity-number-rusult">
-                We have <p> {listPostResult?.data?.length} </p> posts.
-              </div>
-            )}
             <div className="row-flex" style={{ justifyContent: "end" }}>
               <div>
                 <label style={{ marginRight: "0.5em", fontSize: "0.8em" }}>Sort by</label>
