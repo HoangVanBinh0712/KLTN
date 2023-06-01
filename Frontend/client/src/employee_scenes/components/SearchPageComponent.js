@@ -449,8 +449,8 @@ const SearchPageComponent = () => {
               <div>
                 <label style={{ marginRight: "0.5em", fontSize: "0.8em" }}>Direction</label>
                 <select className="search-select blue-border-select" onChange={onFormSearchChange} name="sortDescending" value={sortDescending} style={{ borderRadius: "5px", padding: "0.7em" }}>
-                  <option value="false">Ascending</option>
-                  <option value="true">Descending</option>
+                <option value="false">ASC</option>
+                <option value="true">DESC</option>
                 </select>
               </div>
               <div>
