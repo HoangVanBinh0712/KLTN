@@ -442,8 +442,8 @@ const Services = () => {
                   disabled={!isUpdateService}
                   onChange={onChangInputCur}>
                   <option value=''>Chose currency</option>
-                  <option value='BASIC'>USD</option>
-                  <option value='PREMIUM'>VND</option>
+                  <option value='USD'>USD</option>
+                  <option value='VND'>VND</option>
                 </select>
               </div>
             </div>

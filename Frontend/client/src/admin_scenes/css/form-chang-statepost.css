@@ -64,3 +64,25 @@
     padding: 2px;
     cursor: pointer;
 }
+
+.cus-btn-active-admin {
+    background-color: rgb(80, 149, 80);
+    margin-right: 10px;
+}
+
+.cus-btn-unactive-admin {
+    margin-right: 10px;
+    background-color: rgb(247, 90, 90);
+}
+
+.textarea-view-post-details p, b, span, strong, i, ul, li, em {
+    font-family: inherit;
+    font-size: 13px;
+}
+
+#desc-post-report-view {
+    height: 100px;
+    overflow-y: auto;
+    border: 1px solid #cfcfcf;
+    border-radius: 3px;
+}

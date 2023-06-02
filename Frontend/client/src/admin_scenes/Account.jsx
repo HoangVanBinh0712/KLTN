@@ -28,7 +28,7 @@ const Team = () => {
     const min = String(myDate.getMinutes()).padStart(2, '0');
     const hour = String(myDate.getHours()).padStart(2, '0');
 
-    return (`${min}:${hour} ${day}/${month}/${year}`)
+    return (`${hour}:${min} ${day}/${month}/${year}`)
   }
 
 

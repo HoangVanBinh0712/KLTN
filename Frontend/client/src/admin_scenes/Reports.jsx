@@ -172,7 +172,7 @@ const Reports = () => {
         />
         {isOpen && (
           <Box className="dropdown-options"
-            style={{ top: `${40 + (index + 1) * 40}px`, right: '5px' }}>
+            style={{ top: `${40 + (index + 1) * 40}px`, right: '20px' }}>
             <Box
               className="dropdown-option"
               onClick={() => onClick1(report)}
@@ -251,7 +251,7 @@ const Reports = () => {
 
   const onClickSearchIDDate = () => setSearchKey({
     ...searchKey,
-    date: inputDateReport.length > 0 ? getPostDate(inputDateReport, true) : ''
+    date: inputDateReport.length > 0 ? getPostDate(inputDateReport, true) : '',
   })
 
   const columns = [
@@ -400,14 +400,16 @@ const Reports = () => {
             height='56px'
             width='50%'
             marginLeft='10px'
-          >
+          > 
             <InputBase sx={{ ml: 2, flex: 1 }}
-              placeholder="Search by date"
+              placeholder="Since date"
               onChange={onChangInputDate}
               type="date"
               inputProps={{
                 max: getPostDate(maxDate, true),
+                placeholder:"Since date",
               }} />
+              
             <IconButton type="button" sx={{ p: 2 }} onClick={() => onClickSearchIDDate()}>
               <SearchIcon />
             </IconButton>
@@ -472,7 +474,7 @@ const Reports = () => {
             <div style={{ color: "#0c62ad", fontSize: '18px', fontWeight: '500' }}>{`Report ID: ${reportChosen.id}`}</div>
             <div><img src={addIcon} className='close-form-submit' alt=''
               onClick={() => {
-                setIsViewPostDetails(false)
+                setIsViewDetail(false)
               }
               } /></div>
           </div>
@@ -616,24 +618,31 @@ const Reports = () => {
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
                 <div style={{ width: '12%' }}>Description:</div>
-                <textarea value={reportChosen.post.description} disabled
+                <div
+                  dangerouslySetInnerHTML={{ __html: reportChosen.post.description !== undefined ? reportChosen.post.description : "" }}
                   className="textarea-view-post-details"
                   id='desc-post-report-view'
-                  style={{ width: '88%' }}></textarea>
+                  style={{ width: '88%' }}></div>
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
                 <div style={{ width: '12%' }}>Requirement:</div>
-                <textarea value={reportChosen.post.requirement} disabled
+                <div
+                  dangerouslySetInnerHTML={{ __html: reportChosen.post.requirement !== undefined ? reportChosen.post.requirement : "" }}
                   className="textarea-view-post-details"
                   id='desc-post-report-view'
-                  style={{ width: '88%' }}></textarea>
+                  style={{ width: '88%' }}>
+
+                </div>
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
                 <div style={{ width: '12%' }}>Benefit:</div>
-                <textarea value={reportChosen.post.benifit} disabled
+                <div
+                  dangerouslySetInnerHTML={{ __html: reportChosen.post.benifit !== undefined ? reportChosen.post.benifit : "" }}
                   className="textarea-view-post-details"
                   id='desc-post-report-view'
-                  style={{ width: '88%' }}></textarea>
+                  style={{ width: '88%' }}>
+
+                </div>
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
                 <div style={{ width: '12%' }}>

@@ -183,17 +183,19 @@ const Post = () => {
 
     const saveClickAdmin = async (id, type, title) => {
       swal({
-        title: `${title}`,
+        title: `Post: ${title}`,
         icon: 'info',
         text: 'Chose status type',
         buttons: {
           option1: {
             text: 'Active',
             value: 'option1',
+            className: 'cus-btn-active-admin',
           },
           option2: {
             text: 'Denie',
             value: 'option2',
+            className: 'cus-btn-unactive-admin',
           },
           cancel: 'Cancel',
         },
@@ -334,12 +336,13 @@ const Post = () => {
     },
     {
       field: "username",
-      headerName: "Employer",
+      headerName: "Employer ID/Name",
       flex: 1,
       renderCell: ({ row: { author } }) => {
         return (
-          <Box>
-            {author.name}
+          <Box style={{ display: 'flex', alignItems: 'center' }}>
+            <Box style={{ color: colors.greenAccent[700], marginRight: '5px', fontSize: '16px' }}>{`${author.id} /`}</Box>
+            <Box style={{ color: '#fff' }}>{author.name}</Box>
           </Box>
         );
       },
@@ -416,7 +419,7 @@ const Post = () => {
       width: 100,
       renderCell: ({ row: { status, id, title } }) => {
         return (
-          <StatusPost id={id} status={status} title={title}/>
+          <StatusPost id={id} status={status} title={title} />
         );
       },
     },
@@ -596,24 +599,31 @@ const Post = () => {
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
                 <div style={{ width: '12%' }}>Description:</div>
-                <textarea value={postChosen.description} disabled
+                <div
+                  dangerouslySetInnerHTML={{ __html: postChosen.description !== undefined ? postChosen.description : "" }}
                   className="textarea-view-post-details"
                   id='desc-post-report-view'
-                  style={{ width: '88%' }}></textarea>
+                  style={{ width: '88%' }}></div>
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
                 <div style={{ width: '12%' }}>Requirement:</div>
-                <textarea value={postChosen.requirement} disabled
+                <div
+                  dangerouslySetInnerHTML={{ __html: postChosen.requirement !== undefined ? postChosen.requirement : "" }}
                   className="textarea-view-post-details"
                   id='desc-post-report-view'
-                  style={{ width: '88%' }}></textarea>
+                  style={{ width: '88%' }}>
+
+                </div>
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'start' }}>
                 <div style={{ width: '12%' }}>Benefit:</div>
-                <textarea value={postChosen.benifit} disabled
+                <div
+                  dangerouslySetInnerHTML={{ __html: postChosen.benifit !== undefined ? postChosen.benifit : "" }}
                   className="textarea-view-post-details"
                   id='desc-post-report-view'
-                  style={{ width: '88%' }}></textarea>
+                  style={{ width: '88%' }}>
+
+                </div>
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
                 <div style={{ width: '12%' }}>

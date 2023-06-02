@@ -160,8 +160,8 @@
     color: #0c62ad;
     border: 1px solid #0c62ad;
     border-radius: 3px;
-    width: 150px;
     cursor: pointer;
+    padding: 0 5px;
 }
 
 .gr-int-value .input-view-post-details {

@@ -43,7 +43,8 @@ const Revenues = () => {
     createdDate: "2023-05-08 20:21:47",
     paidDate: null,
     note: null,
-    paymentUrl: ""
+    paymentUrl: "",
+    user: null,
   },)
   const [openInfoForm, setInfoForm] = useState(false)
   const [totalRevenue, setTotalRevenue] = useState(0)
@@ -84,15 +85,17 @@ const Revenues = () => {
   const onClickView = (data) => {
     setRevenueChosen({
       id: data.id,
-      name: data.name,
-      description: data.description,
-      type: data.type,
-      price: data.price,
+      post: data.post,
+      service: data.service,
+      duration: data.duration,
+      total: data.total,
       currency: data.currency,
-      postDuration: data.postDuration,
-      active: data.active,
-      canSearchCV: data.canSearchCV,
-      canFilterCVSubmit: data.canFilterCVSubmit,
+      status: data.status,
+      createdDate: data.createdDate,
+      paidDate: data.paidDate,
+      note: data.note,
+      paymentUrl: data.paymentUrl,
+      user: data.user,
     })
     setInfoForm(true)
   }
@@ -111,7 +114,7 @@ const Revenues = () => {
         />
         {isOpen && (
           <Box className="dropdown-options"
-            style={{ top: `${40 + (index + 1) * 40}px`, right: 0 }}>
+            style={{ top: `${40 + (index + 1) * 40}px`, right: '0px' }}>
             <Box
               className="dropdown-option"
               onClick={() => onClick1(service)}
@@ -161,7 +164,7 @@ const Revenues = () => {
       flex: 1,
       renderCell: ({ row: { service } }) => {
         return (
-          <Box style={{overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap'}}>
+          <Box style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {service?.description}
           </Box>
         );
@@ -232,7 +235,7 @@ const Revenues = () => {
       },
 
     },
-    /* {
+    {
       field: "action",
       headerName: "Others",
       headerAlign: 'center',
@@ -246,7 +249,7 @@ const Revenues = () => {
           </>
         );
       },
-    } */
+    }
   ];
 
   return (
@@ -305,7 +308,7 @@ const Revenues = () => {
       </Box>
       <div className='change-service-info-form' style={openInfoForm ? { display: 'block' } : { display: 'none' }}>
         <div className='form-change-service-control'>
-          <div style={{ display: 'flex', justifyContent: 'space-between', height: '50px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', height: '40px' }}>
             <div style={{ color: "#0c62ad", fontSize: '18px', fontWeight: '500' }}>{`Payment ID: ${revenueChosen.id}`}</div>
             <div><img src={addIcon} className='close-form-submit' alt=''
               onClick={() => {
@@ -313,20 +316,77 @@ const Revenues = () => {
               }
               } /></div>
           </div>
+          {revenueChosen.paidDate === null ? (
+            <div style={{ width: '50%', display: 'flex', color: '#f8bc6e' }}>
+              {`Waiting for payment`}
+            </div>
+          ) : (
+            <div style={{ width: '50%', display: 'flex', color: 'rgb(80, 149, 80)' }}>
+              {`Paid at: ${getPostDate(revenueChosen.paidDate, true)}`}
+            </div>
+          )}
+
           <div className="fram-info-report" style={{ marginTop: '5px' }}>
             <div className="gr-int-value">
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
-                <div style={{ width: '12%' }}>Service name:</div>
-                <input value={revenueChosen.title}
+                <div style={{ width: '20%' }}>Service name:</div>
+                <input value={revenueChosen.service.name}
                   disabled className="input-view-post-details"
-                  style={{ width: '38%' }}></input>
-                <div style={{ width: '50%', display: 'flex', justifyContent: 'end', color: '#0c62ad' }}>
-                  {`Created time: ${getPostDate(revenueChosen.createDate, true)}`}
-                </div>
+                  style={{ width: '80%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '20%' }}>Service type:</div>
+                <input value={revenueChosen.service.type}
+                  disabled className="input-view-post-details"
+                  style={{ width: '80%' }}></input>
+              </div>
+              <p style={{ fontSize: '14px', color: '#0c62ad' }}>*Author:</p>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '20%' }}>User name:</div>
+                <input value={revenueChosen.user?.name}
+                  disabled className="input-view-post-details"
+                  style={{ width: '80%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '20%' }}>Email:</div>
+                <input value={revenueChosen.user?.email}
+                  disabled className="input-view-post-details"
+                  style={{ width: '80%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '20%' }}>Phone:</div>
+                <input value={revenueChosen.user?.phone}
+                  disabled className="input-view-post-details"
+                  style={{ width: '80%' }}></input>
+              </div>
+              <p style={{ fontSize: '14px', color: '#0c62ad' }}>*Order information:</p>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '20%' }}>Quantity:</div>
+                <input value={revenueChosen.duration}
+                  disabled className="input-view-post-details"
+                  style={{ width: '80%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '20%' }}>{`Total (${revenueChosen.currency}):`}</div>
+                <input value={revenueChosen.total}
+                  disabled className="input-view-post-details"
+                  style={{ width: '80%' }}></input>
+              </div>
+              <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
+                <div style={{ width: '20%' }}>{`Created date:`}</div>
+                <div style={{ color: '#0c62ad' }}>{getPostDate(revenueChosen.createdDate, true)}</div>
               </div>
             </div>
           </div>
-
+          {revenueChosen.paidDate === null ? (
+            <div style={{ width: '100%', display: 'flex', color: '#f8bc6e', justifyContent:'end' }}>
+              {`Waiting for payment`}
+            </div>
+          ) : (
+            <div style={{ width: '100%', display: 'flex', color: 'rgb(80, 149, 80)', justifyContent:'end' }}>
+              {`Paid at: ${getPostDate(revenueChosen.paidDate, true)}`}
+            </div>
+          )}
           <div className="group-buttons flex-row "
             style={{ display: 'flex', justifyContent: 'end', marginTop: '1.2em', gap: '1em' }}>
             <div className="button btn-close al-content-btn"
