@@ -361,8 +361,8 @@ const Revenues = () => {
               </div>
               <p style={{ fontSize: '14px', color: '#0c62ad' }}>*Order information:</p>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
-                <div style={{ width: '20%' }}>Quantity:</div>
-                <input value={revenueChosen.duration}
+                <div style={{ width: '20%' }}>Duration:</div>
+                <input value={revenueChosen.duration>1?(`${revenueChosen.duration} months`):(`${revenueChosen.duration} month`)}
                   disabled className="input-view-post-details"
                   style={{ width: '80%' }}></input>
               </div>
