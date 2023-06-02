@@ -348,13 +348,13 @@ const PostDetails = () => {
           </a>
           <div className="post-info">
             <p className="title">{dataPost.title}</p>
-            <div className="post-description" onClick={() => ocClickToNTDProfile()} style={{cursor: "pointer" }}>
+            <div className="post-description" onClick={() => ocClickToNTDProfile()} style={{ cursor: "pointer" }}>
               {dataPost.author.name}
             </div>
             <div className="post-deadline-submit">Deadline for submission: {getPostDate(dataPost.expirationDate)}</div>
             <div className="count-view-post">
-              
-              {dataPost.viewCount}<img src={eyeIcon} alt=""/>
+
+              {dataPost.viewCount}<img src={eyeIcon} alt="" />
             </div>
           </div>
           {role !== "ROLE_EMPLOYER" ? (
@@ -402,7 +402,7 @@ const PostDetails = () => {
             <h1 style={{ fontSize: "1.4em" }}>Details</h1>
             <div className="row-space-between">
               <div className="left-group">
-                <h3 style={{ fontWeight: "600" }}>Overal</h3>
+                <h3 style={{ fontWeight: "600" }}>Overall</h3>
                 <div className="row-flex">
                   <div className="item" style={{ backgroundColor: "inherit" }}>
                     <div className="icon-wrapper">
@@ -493,7 +493,7 @@ const PostDetails = () => {
                   <div dangerouslySetInnerHTML={{ __html: dataPost.requirement }} style={{ fontSize: "1em" }}></div>
                 </div>
                 <div className="detail">
-                  <h3 style={{ fontSize: "1.2em" }}>Benifit</h3>
+                  <h3 style={{ fontSize: "1.2em" }}>Benefit</h3>
                   <div dangerouslySetInnerHTML={{ __html: dataPost.benifit }} style={{ fontSize: "1em" }}></div>
                 </div>
                 <div className="detail">
@@ -574,7 +574,7 @@ const PostDetails = () => {
             </h1>
 
             <div className="row-flex flex-column">
-              <div className="item" style={{ width: "24%" }}>
+              <div className="item">
                 <div className="icon-wrapper">
                   <img src={accIcon} alt="" />
                 </div>
@@ -650,7 +650,9 @@ const PostDetails = () => {
               </div>
             ) : (<>
               {isWaitingRes ? (
-                <WaitingResponeButton />
+                <div className="button-waiting">
+                  <WaitingResponeButton />
+                </div>
               ) : (
                 <div className="button" onClick={() => submitCvClick()} >
                   <i className="fa fa-paper-plane" aria-hidden="true" style={{ display: 'flex', alignItems: 'center' }}></i>

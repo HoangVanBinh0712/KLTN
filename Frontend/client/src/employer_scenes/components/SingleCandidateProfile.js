@@ -124,7 +124,7 @@ const SingleCandidateProfile = ({ data, openClick }) => {
       <div className="cart-info">
         <div className="gr-name-btn-view">
           <div>
-            <p className="title" onClick={() => onClickImagePost(candidateInfo.user.id)} style={{ color: "#0c62ad" }}>
+            <p className="title" onClick={() => onClickCvTitle(candidateInfo.url, candidateInfo.user.id, candidateInfo.mediaId)} style={{ color: "#0c62ad" }}>
               {candidateInfo.name}
             </p>
           </div>
@@ -133,7 +133,7 @@ const SingleCandidateProfile = ({ data, openClick }) => {
           </div>
         </div>
         <div className="cart-description-profile" style={{ cursor: "pointer" }}
-          onClick={() => onClickCvTitle(candidateInfo.url, candidateInfo.user.id, candidateInfo.mediaId)}>
+          onClick={() => onClickImagePost(candidateInfo.user.id)}>
           <i className="fa fa-file-text-o" aria-hidden="true" style={{ margin: "0 5px", color: "#0c62ad" }}></i>
           {candidateInfo.user.name} - <small style={{ fontSize: "1em", color: "black" }}>Last modified: {getPostDate(candidateInfo.lastModified)}</small>
         </div>

@@ -155,7 +155,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const logoutSection = () => {
+  const logoutSection = async() => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
     localStorage.removeItem(USER_ROLE);
     dispatch({
@@ -166,7 +166,10 @@ const AuthContextProvider = ({ children }) => {
         role: null,
       },
     });
-    navigate("/user/login")
+    if(authState.role!=="ROLE_ADMIN")
+    navigate('/user/login')
+    else
+    window.location.href="/user/login"
   };
 
   // auth user

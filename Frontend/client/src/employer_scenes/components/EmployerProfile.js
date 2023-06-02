@@ -393,11 +393,11 @@ const EmployerProfile = () => {
                       <img className="copy-icon" src={copyicon} alt="" onClick={() => handleCopyClick()} />
                     </div>
                   </div>
-                  <div style={{ fontFamily: "Arial", fontSize: "22px" }}>Share with:</div>
+                 {/*  <div style={{ fontFamily: "Arial", fontSize: "22px" }}>Share with:</div>
                   <div className="social-media">
                     <img className="media-icon" src={faceIcon} alt="" />
                     <img className="media-icon" src={messIcon} alt="" />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

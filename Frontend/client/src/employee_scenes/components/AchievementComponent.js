@@ -270,7 +270,11 @@ const UserAchievement = () => {
             </div>
 
             <div className="group-buttons">
-              {isWaitingRes ? (<WaitingResponeButton />) : (
+              {isWaitingRes ? (
+                <div className="button-waiting">
+                  <WaitingResponeButton />
+                </div>
+              ) : (
                 <div className="button" onClick={id === "" ? createNewAchive : onupdateUserAchiveClick}>
                   <i className="fa fa-floppy-o" aria-hidden="true"></i>
                   Confirm

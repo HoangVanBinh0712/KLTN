@@ -8,14 +8,15 @@ import { useToast } from "../../../contexts/Toast";
 import axios from "axios";
 import { apiUrl } from "../../../contexts/Constants";
 import { GlobalContext } from "../../../contexts/GlobalContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const Register = () => {
   const { registerUser, registerEmployer } = useContext(AuthContext);
   const {
     globalState: { industries, cities },
   } = useContext(GlobalContext);
-  const { warn, success } = useToast();
+  const navigate = useNavigate()
 
   const [showPassword1, setShowPassword1] = useState(false);
   const onClickShow1 = () => {
@@ -81,8 +82,21 @@ const Register = () => {
       const registerData = await registerUser(registerForm);
       console.log(registerData);
       if (registerData.success === false) {
-        warn(registerData.message);
-      } else success(registerData.message);
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: registerData.message,
+          dangerMode: true,
+        });
+      } else {
+        swal({
+          title: "Successfully!",
+          icon: "success",
+          text: registerData.message,
+        })
+        navigate('/user/login')
+      };
+
     } catch (error) {
       console.log(error);
     }
@@ -102,8 +116,20 @@ const Register = () => {
       const registerData = await registerEmployer(registerForm);
       console.log(registerData);
       if (registerData.success === false) {
-        warn(registerData.message);
-      } else success(registerData.message);
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: registerData.message,
+          dangerMode: true,
+        });
+      } else {
+        swal({
+          title: "Successfully!",
+          icon: "success",
+          text: registerData.message,
+        })
+        navigate('/user/login')
+      };
     } catch (error) {
       console.log(error);
     }
@@ -130,7 +156,12 @@ const Register = () => {
           setMess("");
         }, 5000);
       } else if (!checkPassword.success) {
-        warn(checkPassword.message);
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: checkPassword.message,
+          dangerMode: true,
+        });
       } else {
         employeeReg();
       }
@@ -142,11 +173,26 @@ const Register = () => {
           setMess("");
         }, 5000);
       } else if (choseIndustry === 0) {
-        warn("You must choose one industry.");
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: "You must choose one industry.",
+          dangerMode: true,
+        });
       } else if (choseCity === 0) {
-        warn("You must choose one city.");
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: "You must choose one city.",
+          dangerMode: true,
+        });
       } else if (!checkPassword.success) {
-        warn(checkPassword.message);
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: checkPassword.message,
+          dangerMode: true,
+        })
       } else {
         employerReg();
       }

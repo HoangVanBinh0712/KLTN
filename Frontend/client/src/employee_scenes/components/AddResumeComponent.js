@@ -258,7 +258,9 @@ const AddResume = () => {
 
           <div className="group-buttons">
             {isWaitingRes ? (
-              <WaitingResponeButton />
+              <div className="button-waiting">
+                <WaitingResponeButton />
+              </div>
             ) : (
               <div className="button" onClick={onClickConfirm}>
                 <i className="fa fa-floppy-o" aria-hidden="true"></i>

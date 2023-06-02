@@ -11,7 +11,7 @@ import { GlobalContext } from "../../contexts/GlobalContext";
 const PredictJob = () => {
 
   const { getResume, predictResume, } = useContext(AuthContext)
-  const { globalState:{industries} } = useContext(GlobalContext)
+  const { globalState: { industries } } = useContext(GlobalContext)
 
   const [allResume, setAllResume] = useState([])
   const [currentResumeId, setCurrentResumeId] = useState(-1)
@@ -143,7 +143,9 @@ const PredictJob = () => {
               </select>
               <div className="group-buttons" style={{ height: '40px', width: '100px' }}>
                 {isWaitingRes ? (
-                  <WaitingResponeButton />
+                  <div className="button-waiting">
+                    <WaitingResponeButton />
+                  </div>
                 ) : (
                   <div className="button" onClick={predictClick}>
                     <i className="fa fa-list" aria-hidden="true"></i>
@@ -162,7 +164,7 @@ const PredictJob = () => {
                 {allResume.length === 0 ? (<a className="link-to-upload-nohave" href="/user/account/add-resume" style={{ textDecoration: 'none', color: "#0c62ad" }}>UpLoad Now</a>) : ("")}
               </div>) : (listIndustryPre.map((r, id) => (
                 <div className="single-result" style={{ width: "32%" }} key={id}>
-                  <div className="pipe" onClick={()=>toPageSearch(r)} style={{cursor:'pointer'}}>
+                  <div className="pipe" onClick={() => toPageSearch(r)} style={{ cursor: 'pointer' }}>
                     <div className="value text-in-value-bar" style={{ width: `${resumePre[r]}`/* , color: "red" */ }}>{r}</div>
                   </div>
                   <div className="value-text">{resumePre[r]}</div>

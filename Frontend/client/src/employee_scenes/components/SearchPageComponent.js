@@ -32,8 +32,8 @@ const SearchPageComponent = () => {
   } = useContext(GlobalContext);
 
   const [searchParams, setSearchParams] = useSearchParams();
-    // single-time read
-    const params = Object.fromEntries([...searchParams]);
+  // single-time read
+  const params = Object.fromEntries([...searchParams]);
   /**
    * listPostResult
    * currentPage
@@ -103,12 +103,12 @@ const SearchPageComponent = () => {
 
   const setBeginSearchInfo = (params) => {
     setSearchInfo({
-        ...searchInfo,
-        keyword: params.keyword !== undefined ? params.keyword : '',
-        cityId: params.cityId !== undefined ? params.cityId : '',
-        industryId: params.industryId !== undefined ? params.industryId : '',
+      ...searchInfo,
+      keyword: params.keyword !== undefined ? params.keyword : '',
+      cityId: params.cityId !== undefined ? params.cityId : '',
+      industryId: params.industryId !== undefined ? params.industryId : '',
     })
-}
+  }
 
   useEffect(() => {
     setBeginSearchInfo(params)
@@ -119,7 +119,8 @@ const SearchPageComponent = () => {
     //Filter here
     const searchQuery = createSearchParam(searchInfo);
     getPostSearch(searchQuery);
-  }, [searchInfo.page, searchInfo.limit, searchInfo.sortBy, searchInfo.sortDescending]);
+  }, [searchInfo.page, searchInfo.limit, searchInfo.sortBy, searchInfo.sortDescending, searchInfo.minSalary, searchInfo.method,
+  searchInfo.position,searchInfo.experience, searchInfo.gender, searchInfo.startDate]);
 
   const onClickSearch = () => {
     const searchQuery = createSearchParam(searchInfo);
@@ -259,6 +260,41 @@ const SearchPageComponent = () => {
     return `${day}/${month}/${year}`;
   };
 
+  const removeVietnameseAccents = (str) => {
+    const map = {
+      'à': 'a', 'á': 'a', 'ả': 'a', 'ã': 'a', 'ạ': 'a',
+      'ă': 'a', 'ằ': 'a', 'ắ': 'a', 'ẳ': 'a', 'ẵ': 'a', 'ặ': 'a',
+      'â': 'a', 'ầ': 'a', 'ấ': 'a', 'ẩ': 'a', 'ẫ': 'a', 'ậ': 'a',
+      'đ': 'd',
+      'è': 'e', 'é': 'e', 'ẻ': 'e', 'ẽ': 'e', 'ẹ': 'e',
+      'ê': 'e', 'ề': 'e', 'ế': 'e', 'ể': 'e', 'ễ': 'e', 'ệ': 'e',
+      'ì': 'i', 'í': 'i', 'ỉ': 'i', 'ĩ': 'i', 'ị': 'i',
+      'ò': 'o', 'ó': 'o', 'ỏ': 'o', 'õ': 'o', 'ọ': 'o',
+      'ô': 'o', 'ồ': 'o', 'ố': 'o', 'ổ': 'o', 'ỗ': 'o', 'ộ': 'o',
+      'ơ': 'o', 'ờ': 'o', 'ớ': 'o', 'ở': 'o', 'ỡ': 'o', 'ợ': 'o',
+      'ù': 'u', 'ú': 'u', 'ủ': 'u', 'ũ': 'u', 'ụ': 'u',
+      'ư': 'u', 'ừ': 'u', 'ứ': 'u', 'ử': 'u', 'ữ': 'u', 'ự': 'u',
+      'ỳ': 'y', 'ý': 'y', 'ỷ': 'y', 'ỹ': 'y', 'ỵ': 'y',
+      'À': 'A', 'Á': 'A', 'Ả': 'A', 'Ã': 'A', 'Ạ': 'A',
+      'Ă': 'A', 'Ằ': 'A', 'Ắ': 'A', 'Ẳ': 'A', 'Ẵ': 'A', 'Ặ': 'A',
+      'Â': 'A', 'Ầ': 'A', 'Ấ': 'A', 'Ẩ': 'A', 'Ẫ': 'A', 'Ậ': 'A',
+      'Đ': 'D',
+      'È': 'E', 'É': 'E', 'Ẻ': 'E', 'Ẽ': 'E', 'Ẹ': 'E',
+      'Ê': 'E', 'Ề': 'E', 'Ế': 'E', 'Ể': 'E', 'Ễ': 'E', 'Ệ': 'E',
+      'Ì': 'I', 'Í': 'I', 'Ỉ': 'I', 'Ĩ': 'I', 'Ị': 'I',
+      'Ò': 'O', 'Ó': 'O', 'Ỏ': 'O', 'Õ': 'O', 'Ọ': 'O',
+      'Ô': 'O', 'Ồ': 'O', 'Ố': 'O', 'Ổ': 'O', 'Ỗ': 'O', 'Ộ': 'O',
+      'Ơ': 'O', 'Ờ': 'O', 'Ớ': 'O', 'Ở': 'O', 'Ỡ': 'O', 'Ợ': 'O',
+      'Ù': 'U', 'Ú': 'U', 'Ủ': 'U', 'Ũ': 'U', 'Ụ': 'U',
+      'Ư': 'U', 'Ừ': 'U', 'Ứ': 'U', 'Ử': 'U', 'Ữ': 'U', 'Ự': 'U',
+      'Ỳ': 'Y', 'Ý': 'Y', 'Ỷ': 'Y', 'Ỹ': 'Y', 'Ỵ': 'Y'
+    };
+
+    return str.replace(/[^A-Za-z0-9]/g, function (x) {
+      return map[x] || x;
+    });
+  }
+
   return (
     <>
       <TopBar />
@@ -280,7 +316,7 @@ const SearchPageComponent = () => {
               <option value="">All areas</option>
               {cities.map((c) => (
                 <option key={c.id} value={c.id}>
-                  {c.name}
+                  {removeVietnameseAccents(c.name)}
                 </option>
               ))}
             </select>
@@ -428,7 +464,7 @@ const SearchPageComponent = () => {
             </p>
           </div>
         </div>
-
+        {/* <div className='quantity-number-rusult'> Found <p> {listPostResult.data?.length} </p> jobs matching your request.</div> */}
         <div className="search-content">
           <div className="list-post">
             <div className="row-flex" style={{ justifyContent: "end" }}>
@@ -449,8 +485,8 @@ const SearchPageComponent = () => {
               <div>
                 <label style={{ marginRight: "0.5em", fontSize: "0.8em" }}>Direction</label>
                 <select className="search-select blue-border-select" onChange={onFormSearchChange} name="sortDescending" value={sortDescending} style={{ borderRadius: "5px", padding: "0.7em" }}>
-                <option value="false">ASC</option>
-                <option value="true">DESC</option>
+                  <option value="false">ASC</option>
+                  <option value="true">DESC</option>
                 </select>
               </div>
               <div>

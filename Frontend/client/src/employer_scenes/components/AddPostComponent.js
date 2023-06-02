@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { AuthContext } from "../../contexts/AuthContext";
 import { PostContext } from "../../contexts/PostContext";
+import WaitingResponeButton from "../../components/WaitingResponeButton";
 import swal from "sweetalert";
 
 const AddPostComponent = () => {
@@ -10,6 +11,8 @@ const AddPostComponent = () => {
   const { authState: { user }, } = useContext(AuthContext);
   const { createPost } = useContext(PostContext)
   const [mess, setMess] = useState('')
+  const [isWaitingRes, setIsWaitingRes] = useState(false)
+
 
   const today = new Date();
   const tomorrow = new Date(today);
@@ -102,6 +105,7 @@ const AddPostComponent = () => {
   }
 
   const onSaveClick = async () => {
+    setIsWaitingRes(true)
     const postInfo = {
       title: title,
       description: description,
@@ -155,6 +159,7 @@ const AddPostComponent = () => {
         setMess("")
       }, 5000)
     }
+    setIsWaitingRes(false)
   }
 
   const onCancelClick = () => {
@@ -332,7 +337,7 @@ const AddPostComponent = () => {
               </div>
               <div className="input-wrapper" style={{ width: '100%' }}>
                 <div className="label">Salary</div>
-                <input type="number" name="title" value={salary} disabled={currency==="AGREEMENT"}
+                <input type="number" name="title" value={salary} disabled={currency === "AGREEMENT"}
                   id="inp-add-post-page"
                   onChange={onChangeSalary}
                 ></input>
@@ -347,7 +352,7 @@ const AddPostComponent = () => {
                   style={{}}
                 />
               </div>
-              <div className="select" style={{ width: '100%' }}>
+              <div className="select" style={{ width: '100%', marginBottom:'10px' }}>
                 <div className="label">Position</div>
                 <select name="position" id="inp-add-post-page" onChange={onChangePosition}>
                   <option value="Staff" selected={position === 'Staff'}>Staff</option>
@@ -358,7 +363,7 @@ const AddPostComponent = () => {
                   <option value="Branch_Manager" selected={position === 'Branch_Manager'}>Branch manager</option>
                 </select>
               </div>
-              <div className="select" style={{ width: '100%' }} >
+              <div className="select" style={{ width: '100%',  marginBottom:'10px' }} >
                 <div className="label">Experience</div>
                 <select name="industry" id="inp-add-post-page" onChange={onChangeExp}>
                   <option value="NONE" selected={experience === 'NONE'}>None</option>
@@ -371,7 +376,7 @@ const AddPostComponent = () => {
                   <option value="ABOVE_FIVE_YEAR" selected={experience === 'ABOVE_FIVE_YEAR'}>Above five year</option>
                 </select>
               </div>
-              <div className="input-wrapper" style={{ width: '100%' }}>
+              <div className="input-wrapper" style={{ width: '100%',  marginBottom:'10px' }}>
                 <div className="label">Recruit</div>
                 <input type="number" name="title" value={recruit}
                   id="inp-add-post-page"
@@ -390,10 +395,16 @@ const AddPostComponent = () => {
           </div>
 
           <div className="group-buttons">
-            <div className="button" onClick={onSaveClick}>
-              <i className="fa fa-floppy-o" aria-hidden="true"></i>
-              Create
-            </div>
+            {isWaitingRes ? (
+              <div className="button-waiting">
+                <WaitingResponeButton />
+              </div>
+            ) : (
+              <div className="button" onClick={onSaveClick}>
+                <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                Create
+              </div>
+            )}
             <div className="button cancel" onClick={onCancelClick}>
               <i className="fa fa-times" aria-hidden="true"></i>
               Cancel

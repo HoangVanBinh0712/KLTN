@@ -295,7 +295,9 @@ const EmployerInfo = () => {
           <div className="group-buttons">
             {isUpdate ? (<>
               {isWaitingRes ? (
+                <div className="button-waiting">
                 <WaitingResponeButton />
+                </div>
               ) : (
                 <div className="button" onClick={onUpdateUserClick}>
                   <i className="fa fa-floppy-o" aria-hidden="true"></i>

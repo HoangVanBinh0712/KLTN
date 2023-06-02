@@ -272,7 +272,9 @@ const UpdateResume = () => {
               Cancel
             </div>
             {isWaitingRes ? (
-              <WaitingResponeButton />
+              <div className="button-waiting">
+                <WaitingResponeButton />
+              </div>
             ) : (
               <div className="button delete" onClick={onClickDelete}>
                 <i className="fa fa-trash-o" aria-hidden="true"></i>
