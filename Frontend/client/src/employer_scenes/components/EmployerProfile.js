@@ -225,7 +225,7 @@ const EmployerProfile = () => {
         <div className="content-wrapper" style={{ display: "block" }}>
           {allPost[currentPage].map((p, id) => (
             <div className="employer-seen-info" style={{ padding: "10px" }} key={id}>
-              <img id="employer-logo" src={logoIcon} alt="" style={{ width: "20%" }} />
+              <img id="employer-logo" src={p.author.urlAvatar} alt="" style={{ width: "20%" }} />
               <div className="info-employee-wrapper">
                 <div id="employer-seen-name" style={{ fontFamily: "Arial", color: "#000" }}>
                   {p.title}
