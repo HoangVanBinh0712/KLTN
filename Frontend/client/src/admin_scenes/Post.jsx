@@ -660,8 +660,7 @@ const Post = () => {
                   disabled className="input-view-post-details"
                   style={{ width: '21%' }}></input>
                 <div style={{ width: '12%', padding: '0 0 0 20px' }}>Expiration:</div>
-                <input value={postChosen.expiration}
-                  type="date"
+                <input value={getPostDate(postChosen.expirationDate)}
                   disabled className="input-view-post-details"
                   style={{ width: '22%' }}></input>
               </div>
