@@ -54,7 +54,7 @@ const LineChart = ({ dataLine , isDashboard = false}) => {
         reverse: false,
       }}
       yFormat=" >-.2f"
-      curve="catmullRom"
+      curve="monotoneX"
       axisTop={null}
       axisRight={null}
       axisBottom={{

@@ -523,7 +523,7 @@ const SearchPageComponent = () => {
                           </p>
                         </div>
                         <div className="item">
-                          <p>{p.city.name}</p>
+                          <p>{removeVietnameseAccents(p.city.name)}</p>
                         </div>
                         <div className="item">
                           <p>{getDaysDiff(p.createDate)} days ago</p>
@@ -571,7 +571,7 @@ const SearchPageComponent = () => {
                   />
                   <div className="cart-info" style={{ width: "100%" }}>
                     <p className="method">{getTypeJob(postMostView[0].method)}</p>
-                    <div className="cart-description">Công ty: {postMostView[0].author.name}</div>
+                    <div className="cart-description">Company: {postMostView[0].author.name}</div>
                     <div className="row-flex-horizon" style={{ gap: "0.8em", alignItems: "center" }}>
                       <div className="item-v1 salary-item">
                         {postMostView[0].salary !== null ? postMostView[0].salary : ""}
@@ -600,7 +600,7 @@ const SearchPageComponent = () => {
                   />
                   <div className="cart-info" style={{ width: "100%" }}>
                     <p className="method">{getTypeJob(postMostView[1].method)}</p>
-                    <div className="cart-description">Công ty: {postMostView[1].author.name}</div>
+                    <div className="cart-description">Company: {postMostView[1].author.name}</div>
                     <div className="row-flex-horizon" style={{ gap: "0.8em", alignItems: "center" }}>
                       <div className="item-v1 salary-item">
                         {postMostView[1].salary !== null ? postMostView[1].salary : ""}
@@ -629,7 +629,7 @@ const SearchPageComponent = () => {
                   />
                   <div className="cart-info" style={{ width: "100%" }}>
                     <p className="method">{getTypeJob(postMostView[2].method)}</p>
-                    <div className="cart-description">Công ty: {postMostView[2].author.name}</div>
+                    <div className="cart-description">Company: {postMostView[2].author.name}</div>
                     <div className="row-flex-horizon" style={{ gap: "0.8em", alignItems: "center" }}>
                       <div className="item-v1 salary-item">
                         {postMostView[2].salary !== null ? postMostView[2].salary : ""}
