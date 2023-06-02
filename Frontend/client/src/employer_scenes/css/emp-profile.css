@@ -440,7 +440,14 @@
     color: #0c62ad;
 }
 
-.area-content p, b, span, strong, i, ul, li, em {
+.area-content > p,
+.area-content > p b,
+.area-content > p span,
+.area-content > p strong,
+.area-content > p i,
+.area-content > p ul,
+.area-content > p li,
+.area-content > p em {
     font-family: inherit;
     font-size: 16px;
 }

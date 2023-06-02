@@ -75,7 +75,14 @@
     background-color: rgb(247, 90, 90);
 }
 
-.textarea-view-post-details p, b, span, strong, i, ul, li, em {
+.textarea-view-post-details > p,
+.textarea-view-post-details > b,
+.textarea-view-post-details > span,
+.textarea-view-post-details > strong,
+.textarea-view-post-details > i,
+.textarea-view-post-details > ul,
+.textarea-view-post-details > li,
+.textarea-view-post-details > em {
     font-family: inherit;
     font-size: 13px;
 }
