@@ -53,6 +53,12 @@ const EmployerProfile = () => {
     else return false;
   };
 
+  const checkPostFollow = (id, arr) => {
+    const index = arr.findIndex((e) => e.id === id);
+    if (index !== -1) return true;
+    else return false;
+  };
+
   const getSetFollow = async () => {
     if (isAuthenticated && role === "ROLE_USER") {
       const res = await getEmpFollow();
@@ -67,7 +73,6 @@ const EmployerProfile = () => {
     if (res.success) {
       setEmployerPost(res.data);
     }
-    console.log(res);
   };
 
   const getEmpInfo = async () => {
@@ -180,7 +185,7 @@ const EmployerProfile = () => {
       navigate('/user/login')
     } else {
       if (role === "ROLE_USER") {
-        if (checkFollow(id, postFollow)) {
+        if (checkPostFollow(id, postFollow)) {
           const res = await unfollowPost(id);
           if (res.success) {
             swal({
@@ -245,7 +250,7 @@ const EmployerProfile = () => {
                 <div className="favorite-info">
                   {isAuthenticated && role === "ROLE_USER" ? (
                     <>
-                      {checkFollow(p.id, postFollow) ? (
+                      {checkPostFollow(p.id, postFollow) ? (
                         <img
                           src={heartBleIcon}
                           alt=""

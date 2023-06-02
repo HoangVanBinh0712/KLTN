@@ -471,11 +471,11 @@ const PostDetails = () => {
                     <i className="fa fa-clone" aria-hidden="true"></i>
                   </div>
                 </div>
-                <p>Share with:</p>
+                {/* <p>Share with:</p>
                 <div className="row-flex justify-start">
                   <img src="https://tse2.mm.bing.net/th?id=OIP.55DCXbXlKDgEBoZhKxpzLAHaHa&pid=Api&P=0" alt="" />
                   <img src="https://clipground.com/images/png-messenger-5.png" alt="" />
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="row-space-between">
