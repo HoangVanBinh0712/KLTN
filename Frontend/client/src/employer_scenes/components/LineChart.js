@@ -48,7 +48,7 @@ export default function Chart({ arr, type, title }) {
       {data.length > 0 ? (
         <div>
           <Title>{title}</Title>
-          <LineChart height={360} width={1200} data={data}
+          <LineChart height={360} width={1000} data={data}
             margin={{ top: 16, right: 16, bottom: 0, left: 24, }}
           >
             <XAxis

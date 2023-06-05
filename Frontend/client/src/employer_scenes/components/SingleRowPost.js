@@ -106,17 +106,34 @@ const SingleRowPost = ({ post, num, resetStatus }) => {
         {isOpen && (
           <>
             <div style={{ position: "absolute", width: "100%", zIndex: "5" }}>
-              <Link to={`/post/${post.id}`} style={{ textDecoration: 'none', color: '#0c62ad' }}>
-                <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
-                  View Post
-                </div>
-              </Link>
-              <Link to={`/employer/account/post-submitted/${post.id}`} className="href-customized" style={{ textDecoration: 'none', color: '#0c62ad' }}>
-                <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
-                  {" "}
-                  Submited
-                </div>
-              </Link>
+              {post.status !== 'ACTIVE' ? (<>
+                <Link to={`/employer/account/add-post?postId=${post.id}`} style={{ textDecoration: 'none', color: '#0c62ad' }}>
+                  <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
+                    View Post
+                  </div>
+                </Link>
+                <Link to={`/employer/account/add-post?postId=${post.id}`} style={{ textDecoration: 'none', color: '#0c62ad' }}>
+                  <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
+                    Update
+                  </div>
+                </Link>
+              </>
+              ) : (
+                <Link to={`/employer/post/${post.id}`} style={{ textDecoration: 'none', color: '#0c62ad' }}>
+                  <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
+                    View Post
+                  </div>
+                </Link>
+              )}
+              {post.status === 'ACTIVE' ? (
+                <Link to={`/employer/account/post-submitted/${post.id}`} className="href-customized" style={{ textDecoration: 'none', color: '#0c62ad' }}>
+                  <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
+                    {" "}
+                    Submited
+                  </div>
+                </Link>
+              ) : (<></>)}
+
               {post.status === "DELETED" ? (
                 <></>
               ) : (

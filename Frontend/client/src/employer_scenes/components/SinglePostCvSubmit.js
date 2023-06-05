@@ -81,16 +81,28 @@ const SinglePostCvSubmit = ({ post, num }) => {
                 </div>
                 {isOpen && (<>
                     <div style={{ position: 'absolute', width: '100%', zIndex: "5" }}>
-                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }} onClick={viewPost}>
-                            View Post</div>
-                        <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
-                          <Link to={`/employer/account/post-submitted/${post.id}`} className="href-customized"> Submited</Link>
-                            
-                            </div>
+                        {post.status !== 'ACTIVE' ? (
+                            <Link to={`/employer/account/add-post?postId=${post.id}`} style={{ textDecoration: 'none', color: '#0c62ad' }}>
+                                <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
+                                    View Post
+                                </div>
+                            </Link>
+                        ) : (
+                            <>
+                                <div className="chose-active chose-update" style={{ marginLeft: "-15px", color: '#0c62ad' }} onClick={viewPost}>
+                                    View Post
+                                </div>
+                                <Link to={`/employer/account/post-submitted/${post.id}`} style={{ textDecoration: 'none', color: '#0c62ad' }}>
+                                    <div className="chose-active chose-update" style={{ marginLeft: "-15px" }}>
+                                        Submited
+                                    </div>
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </>)}
             </div>
-        </div>
+        </div >
     )
 }
 export default SinglePostCvSubmit;

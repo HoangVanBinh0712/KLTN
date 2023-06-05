@@ -66,14 +66,14 @@ const SearchCandidates = () => {
         const res = await getUserProfileByAnyFilter(searchQr)
         if (res.success) {
             setListProfileResult(res.data)
-            setAllPost(chuckPosts(res.data,6))
+            setAllPost(chuckPosts(res.data, 6))
         }
         else swal({
             title: "Error",
             icon: "warning",
             text: res.message,
             dangerMode: true,
-          })
+        })
     }
 
     function chuckPosts(arr, len) {
@@ -87,13 +87,17 @@ const SearchCandidates = () => {
     }
 
 
-    const [allPost, setAllPost]= useState([])
+    const [allPost, setAllPost] = useState([])
     const [currentPage, setCurrentPage] = useState(0)
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+    
+    useEffect(() => {
         const searchQuery = createSearchPararam(searchInfo)
         getCvSearch(searchQuery)
-        if(searchQuery.length>9){
+        if (searchQuery.length > 9) {
             setIsSearched(true)
         }
         else setIsSearched(false)
@@ -189,9 +193,9 @@ const SearchCandidates = () => {
     }
     return (
         <>
-            <div className="search-page" style={{width: "80%"}}>
+            <div className="search-page" style={{ width: "80%" }}>
                 <img className="banner" src={bannerSearch} alt="" />
-                <div className="search-bar" style={{width: "100%"}}>
+                <div className="search-bar" style={{ width: "100%" }}>
                     <div className="row-flex-horizon" style={{ marginBottom: '1em' }}>
                         <input className="search-text" type="text"
                             placeholder="Infomation, position you want ..."
@@ -252,13 +256,13 @@ const SearchCandidates = () => {
                     </div>
 
                 </div>
-                {isSearched?(
-                    <div className='quantity-number-rusult' style={{width: "98%"}}> Found <p> {listProfileResult.length} </p> candidates matching your request.</div>
-                ):(
-                    <div className='quantity-number-rusult' style={{width: "98%"}}> We have <p> {listProfileResult.length} </p> candidates.</div>
+                {isSearched ? (
+                    <div className='quantity-number-rusult' style={{ width: "98%" }}> Found <p> {listProfileResult.length} </p> candidates matching your request.</div>
+                ) : (
+                    <div className='quantity-number-rusult' style={{ width: "98%" }}> We have <p> {listProfileResult.length} </p> candidates.</div>
                 )}
-                
-                <div className="search-content" style={{width: "100%"}}>
+
+                <div className="search-content" style={{ width: "100%" }}>
                     <div className="list-post" style={{ width: '100%' }}>
                         {listProfileResult.length > 0 ? (<>
                             {allPost[currentPage].map((a, id) => (
@@ -285,8 +289,8 @@ const SearchCandidates = () => {
 
                 </div>
             </div>
-            <div className='form-candidate-profile' onClick={(e)=>{
-                if(!document.getElementById('form-info-candidate-control').contains(e.target))
+            <div className='form-candidate-profile' onClick={(e) => {
+                if (!document.getElementById('form-info-candidate-control').contains(e.target))
                     setIsOpenProfile(false)
             }} style={isOpenProfile ? { display: 'block' } : { display: 'none' }}>
                 <div className='form-info-candidate-control' id='form-info-candidate-control'>
@@ -330,7 +334,7 @@ const SearchCandidates = () => {
                         {' * '}Click on profile name to view.
                     </div>
                     <div className="cart-description-profile" style={{ cursor: 'pointer', paddingLeft: '20px' }}
-                        onClick={() => onClickCvTitle(candidateInfo.url,candidateInfo.user.id,candidateInfo.mediaId)}>
+                        onClick={() => onClickCvTitle(candidateInfo.url, candidateInfo.user.id, candidateInfo.mediaId)}>
                         <i className="fa fa-file-text-o" aria-hidden="true" style={{ margin: '0 5px', color: '#0c62ad' }}></i>
                         {candidateInfo.name}
                     </div>

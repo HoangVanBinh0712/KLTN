@@ -1,27 +1,29 @@
 import { useContext, useState, useEffect } from "react";
-import { useParams, useSearchParams, useNavigate } from "react-router-dom";
-import TopBar from "./global/TopBar";
-import Footer from "./global/Footer";
+import { useParams, useSearchParams, useNavigate, Link } from "react-router-dom";
+import TopBar from "../../components/global/TopBar";
+import Footer from "../../components/global/Footer";
 import ReactQuill from "react-quill";
-import "./css/postdetail.css";
+import "../../components/css/postdetail.css";
 
-import logoIcon from "../assets/icons/logo-company.png";
-import salaryIcon from "../assets/icons/money-blue-icon.png";
-import accIcon from "../assets/icons/account-icon.png";
-import workIcon from "../assets/icons/work-blue-icon.png";
-import certIcon from "../assets/icons/certificate-blue-icon.png";
-import genderIcon from "../assets/icons/gender-icon.png";
-import chartIcon from "../assets/icons/chart-icon.png";
-import questionIcon from "../assets/picture-banner/question.png";
-import pingIcon from "../assets/icons/location-ping.png";
-import addIcon from "../assets/icons/add-icon.png";
-import WaitingResponeButton from "./WaitingResponeButton";
-import { AuthContext } from "../contexts/AuthContext";
-import { PostContext } from "../contexts/PostContext";
+import logoIcon from "../../assets/icons/logo-company.png";
+import salaryIcon from "../../assets/icons/money-blue-icon.png";
+import accIcon from "../../assets/icons/account-icon.png";
+import workIcon from "../../assets/icons/work-blue-icon.png";
+import certIcon from "../../assets/icons/certificate-blue-icon.png";
+import genderIcon from "../../assets/icons/gender-icon.png";
+import chartIcon from "../../assets/icons/chart-icon.png";
+import questionIcon from "../../assets/picture-banner/question.png";
+import pingIcon from "../../assets/icons/location-ping.png";
+import addIcon from "../../assets/icons/add-icon.png";
+import WaitingResponeButton from "../../components/WaitingResponeButton";
+import SingleCandidateProfile from './SingleCandidateProfile'
+
+import { AuthContext } from "../../contexts/AuthContext";
+import { PostContext } from "../../contexts/PostContext";
 import swal from "sweetalert";
-import eyeIcon from '../assets/icons/eye-icon20px.png'
+import eyeIcon from '../../assets/icons/eye-icon20px.png'
 
-const PostDetails = () => {
+const PostDetailsEmp = () => {
   let { id } = useParams();
   const {
     authState: { isAuthenticated, role, user },
@@ -30,6 +32,7 @@ const PostDetails = () => {
     submitResume,
     checkSubmitedResume,
     reportPost,
+    getJskProfileByJobId,
   } = useContext(AuthContext);
   const {
     postState: { postFollow },
@@ -124,6 +127,7 @@ const PostDetails = () => {
   const [dataPost, setDataPost] = useState(data);
   const [isFollowed, setIsFollowed] = useState(false);
   const [isWaitingRes, setIsWaitingRes] = useState(false)
+  const [recomCandidates, setRecomCandidates] = useState([])
 
   const getAllResume = async () => {
     const res = await getResume();
@@ -132,12 +136,18 @@ const PostDetails = () => {
     }
   };
 
+  const getRecomCandidate = async () => {
+    const res = await getJskProfileByJobId(id)
+    if (res.success) {
+      setRecomCandidates(res.data);
+    }
+  }
+
   const getDataPost = async () => {
     const res = await getPostById(id);
     if (res.success) {
       setDataPost(res.data);
     }
-    console.log(res)
   };
 
   const checkSubmit = async () => {
@@ -155,6 +165,9 @@ const PostDetails = () => {
       getAllResume();
       checkSubmit();
       setIsFollowed(checkFollow(id, postFollow))
+    }
+    if (isAuthenticated && role === "ROLE_EMPLOYER") {
+      getRecomCandidate()
     }
   }, [user]);
 
@@ -566,42 +579,22 @@ const PostDetails = () => {
               </div>
             </div>
           </div>
+
+
           <div className="content-footer">
             <h1 style={{ fontSize: "1.4em", fontWeight: "600" }}>
-              {dataPost.author.name} information
+              May be you are looking for
               <span>
-                <a href={`/recruiter/${dataPost.author.id}`}>View company {" >>"}</a>
+                <Link to={`/employer/account/search-candidates`}>View more candidates {" >>"}</Link>
               </span>
             </h1>
 
-            <div className="row-flex flex-column">
-              <div className="item">
-                <div className="icon-wrapper">
-                  <img src={accIcon} alt="" />
-                </div>
-                <div className="item-detail">
-                  <h4>Company Size</h4>
-                  <p>100 people</p>
-                </div>
+            <div className="search-content" style={{ width: "100%", boxShadow: 'none' }}>
+              <div className="list-post" style={{ width: '100%' }}>
+                {recomCandidates.length > 0 && recomCandidates.map((r, id) => (
+                  <SingleCandidateProfile data={r} key={id} openClick={'onClickOpenCandiInfo'} />
+                ))}
               </div>
-              <div className="item">
-                <div className="icon-wrapper">
-                  <img src={pingIcon} alt="" height='1.6em' />
-                </div>
-                <div className="item-detail">
-                  <h4>Headquarters</h4>
-                  <p>{dataPost.author.address}</p>
-                </div>
-              </div>
-            </div>
-            <div className="footer-line">
-              <img src={workIcon} alt="" />
-              <h3 style={{ fontSize: "1.2em", fontWeight: 600 }}>Jobs with the company</h3>
-              <span>
-                <a href={`/recruiter/${dataPost.author.id}`} style={{ fontSize: "1.2em", color: "#0c62ad" }}>
-                  View More
-                </a>
-              </span>
             </div>
           </div>
         </div>
@@ -713,4 +706,4 @@ const PostDetails = () => {
   );
 };
 
-export default PostDetails;
+export default PostDetailsEmp;

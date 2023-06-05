@@ -1183,6 +1183,57 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const getJskProfileByJobId = async (postId) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/employer/profile-search/${postId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const getPostByIdByEmp = async (postId) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.get(`${apiUrl}/employer/post/${postId}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const updatePostByIdByEmp = async (postId, info) => {
+    try {
+      const recentToken = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+      if (recentToken !== undefined) {
+        const responsePost = await axios.put(`${apiUrl}/employer/post/${postId}`,info, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${recentToken}`,
+          },
+        });
+        return responsePost.data;
+      } else throw new Error("Unauthorized !");
+    } catch (error) {
+      return null;
+    }
+  };
+
   //conxtext data
   const authContextData = {
     loginUser,
@@ -1222,6 +1273,9 @@ const AuthContextProvider = ({ children }) => {
     reportPost,
     createAppointment,
     getRecentNotice,
+    getJskProfileByJobId,
+    getPostByIdByEmp,
+    updatePostByIdByEmp,
 
     getListAccount,
     getStatiticsOder,

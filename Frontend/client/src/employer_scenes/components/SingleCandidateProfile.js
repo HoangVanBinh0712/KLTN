@@ -170,7 +170,7 @@ const SingleCandidateProfile = ({ data, openClick }) => {
         <div className="cart-description-profile" style={{ cursor: "pointer" }}
           onClick={() => onClickImagePost(candidateInfo.user.id)}>
           <i className="fa fa-file-text-o" aria-hidden="true" style={{ margin: "0 5px", color: "#0c62ad" }}></i>
-          {candidateInfo.user.name} - <small style={{ fontSize: "1em", color: "black" }}>Last modified: {getPostDate(candidateInfo.lastModified)}</small>
+          {candidateInfo.user.name} - <small style={{ fontSize: "1em", color: "black", fontWeight:400 }}>Last modified: {getPostDate(candidateInfo.lastModified)}</small>
         </div>
         <div className="row-flex-horizon flex-wrap">
           <div className="list-item-flex-start">
