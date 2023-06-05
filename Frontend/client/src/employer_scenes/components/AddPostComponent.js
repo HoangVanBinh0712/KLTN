@@ -4,12 +4,16 @@ import "react-quill/dist/quill.snow.css";
 import { AuthContext } from "../../contexts/AuthContext";
 import { PostContext } from "../../contexts/PostContext";
 import WaitingResponeButton from "../../components/WaitingResponeButton";
+import { GlobalContext } from "../../contexts/GlobalContext";
 import swal from "sweetalert";
 
 const AddPostComponent = () => {
 
   const { authState: { user }, } = useContext(AuthContext);
   const { createPost } = useContext(PostContext)
+  const {
+    globalState: { industries },
+  } = useContext(GlobalContext);
   const [mess, setMess] = useState('')
   const [isWaitingRes, setIsWaitingRes] = useState(false)
 
@@ -50,6 +54,7 @@ const AddPostComponent = () => {
   const [currency, setCurrency] = useState(initialPostInfo.currency)
   const [recruit, setRecruit] = useState(initialPostInfo.recruit)
   const [expirationDate, setExpirationDate] = useState(initialPostInfo.expirationDate)
+  const [industry, setIndustry] = useState(initialPostInfo.industry)
 
 
   const handleDescChange = (newValue) => {
@@ -98,6 +103,10 @@ const AddPostComponent = () => {
     setExpirationDate(event.target.value)
   }
 
+  const onChangeIndustry = (event) => {
+    setIndustry(event.target.value)
+  }
+
   const checkPostInfo = (pInfo) => {
     if (pInfo.title.length === 0 || pInfo.description.length === 0 || pInfo.requirement.length === 0 || pInfo.benifit.length === 0)
       return false
@@ -121,7 +130,7 @@ const AddPostComponent = () => {
       location: user !== null ? user.address : '',
       recruit: recruit,
       expirationDate: expirationDate,
-      industry: user !== null ? user.industry.id : 0,
+      industry: industry,
       city: user !== null ? user.city.id : 0,
     }
     if (checkPostInfo(postInfo)) {
@@ -163,23 +172,31 @@ const AddPostComponent = () => {
   }
 
   const onCancelClick = () => {
-    const confirm = window.confirm(
-      "Are you sure you want to cancel, the information you changed will not be saved?"
-    );
-    if (confirm) {
-      setTitle(initialPostInfo.title)
-      setDescription(initialPostInfo.description)
-      setMethod(initialPostInfo.method)
-      setPosition(initialPostInfo.position)
-      setExperience(initialPostInfo.experience)
-      setGender(initialPostInfo.gender)
-      setRequirement(initialPostInfo.requirement)
-      setBenifit(initialPostInfo.benifit)
-      setSalary(initialPostInfo.salary)
-      setCurrency(initialPostInfo.currency)
-      setRecruit(initialPostInfo.recruit)
-      setExpirationDate(initialPostInfo.expirationDate)
-    }
+    swal({
+      title: "Are you sure you want to cancel?",
+      icon: "info",
+      text: "The information you changed will not be saved",
+      buttons: {
+        cancel: "Cancel",
+        confirm: "Yes"
+      },
+    }).then((click) => {
+      if (click) {
+        setTitle(initialPostInfo.title)
+        setDescription(initialPostInfo.description)
+        setMethod(initialPostInfo.method)
+        setPosition(initialPostInfo.position)
+        setExperience(initialPostInfo.experience)
+        setGender(initialPostInfo.gender)
+        setRequirement(initialPostInfo.requirement)
+        setBenifit(initialPostInfo.benifit)
+        setSalary(initialPostInfo.salary)
+        setCurrency(initialPostInfo.currency)
+        setRecruit(initialPostInfo.recruit)
+        setExpirationDate(initialPostInfo.expirationDate)
+        setIndustry(initialPostInfo.industry)
+      }
+    });
   };
 
   let body;
@@ -190,15 +207,30 @@ const AddPostComponent = () => {
       </div>
       <div className="free-space" id="free-space">
         <div className="content-wrapper">
-          <div className="input-wrapper">
-            <div className="label">Title</div>
-            <input type="text" name="title" id="inp-add-post-page" className="coler-placeholder"
-              value={title}
-              placeholder={mess}
-              style={{ width: '48%' }}
-              onChange={onChangeTitle}>
+          <div style={{ display: 'flex' }}>
+            <div className="input-wrapper">
+              <div className="label">Title</div>
+              <input type="text" name="title" id="inp-add-post-page" className="coler-placeholder"
+                value={title}
+                placeholder={mess}
+                style={{ width: '98%' }}
+                onChange={onChangeTitle}>
 
-            </input>
+              </input>
+            </div>
+            <div className="input-wrapper">
+              <div className="label">Industry</div>
+              <select id="inp-add-post-page" className="coler-placeholder" onChange={onChangeIndustry} defaultValue={industry}>
+                <option key={""} value="">
+                  Select Industry
+                </option>
+                {industries.map((i) => (
+                  <option key={i.id} value={i.id}>
+                    {i.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           <div className="text-area-group">
             <div className="label">Description <p style={{ color: '#ff453a' }}>{' '}{mess}</p></div>
@@ -226,6 +258,7 @@ const AddPostComponent = () => {
                     value="FULL_TIME"
                     style={{ width: '15%' }}
                     defaultChecked
+                    checked={method==="FULL_TIME"}
                     onChange={onChangeWokType}
                   />
                   <label htmlFor="type2" style={{ width: '120px', marginLeft: '5px', }}>Full time</label>
@@ -238,6 +271,7 @@ const AddPostComponent = () => {
                     name="type"
                     value="PART_TIME"
                     style={{ width: '15%' }}
+                    checked={method==="PART_TIME"}
                     onChange={onChangeWokType}
                   />
                   <label htmlFor="type1" style={{ width: '120px', marginLeft: '5px', }}>Part time</label>
@@ -250,6 +284,7 @@ const AddPostComponent = () => {
                     name="type"
                     value="INTERN"
                     style={{ width: '15%' }}
+                    checked={method==="INTERN"}
                     onChange={onChangeWokType}
                   />
                   <label htmlFor="type3" style={{ width: '120px', marginLeft: '5px', }}>Intern</label>
@@ -352,7 +387,7 @@ const AddPostComponent = () => {
                   style={{}}
                 />
               </div>
-              <div className="select" style={{ width: '100%', marginBottom:'10px' }}>
+              <div className="select" style={{ width: '100%', marginBottom: '10px' }}>
                 <div className="label">Position</div>
                 <select name="position" id="inp-add-post-page" onChange={onChangePosition}>
                   <option value="Staff" selected={position === 'Staff'}>Staff</option>
@@ -363,7 +398,7 @@ const AddPostComponent = () => {
                   <option value="Branch_Manager" selected={position === 'Branch_Manager'}>Branch manager</option>
                 </select>
               </div>
-              <div className="select" style={{ width: '100%',  marginBottom:'10px' }} >
+              <div className="select" style={{ width: '100%', marginBottom: '10px' }} >
                 <div className="label">Experience</div>
                 <select name="industry" id="inp-add-post-page" onChange={onChangeExp}>
                   <option value="NONE" selected={experience === 'NONE'}>None</option>
@@ -376,7 +411,7 @@ const AddPostComponent = () => {
                   <option value="ABOVE_FIVE_YEAR" selected={experience === 'ABOVE_FIVE_YEAR'}>Above five year</option>
                 </select>
               </div>
-              <div className="input-wrapper" style={{ width: '100%',  marginBottom:'10px' }}>
+              <div className="input-wrapper" style={{ width: '100%', marginBottom: '10px' }}>
                 <div className="label">Recruit</div>
                 <input type="number" name="title" value={recruit}
                   id="inp-add-post-page"
