@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { PostContext } from "../../contexts/PostContext";
 import WaitingResponeButton from "../../components/WaitingResponeButton";
 import { GlobalContext } from "../../contexts/GlobalContext";
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import swal from "sweetalert";
 
 const AddPostComponent = () => {
@@ -19,6 +19,7 @@ const AddPostComponent = () => {
   const [isWaitingRes, setIsWaitingRes] = useState(false)
   const [searchParams, setSearchParams] = useSearchParams();
   const params = Object.fromEntries([...searchParams]);
+  const navigate = useNavigate();
 
   const today = new Date();
   const tomorrow = new Date(today);
@@ -284,6 +285,8 @@ const AddPostComponent = () => {
         setRecruit(initialPostInfo.recruit)
         setExpirationDate(initialPostInfo.expirationDate)
         setIndustry(initialPostInfo.industry)
+        if (isUpdatePost)
+          navigate(-1)
       }
     });
   };
@@ -350,7 +353,7 @@ const AddPostComponent = () => {
                     checked={method === "FULL_TIME"}
                     onChange={onChangeWokType}
                   />
-                  <label htmlFor="type2" style={{ width: '120px', marginLeft: '5px', fontSize:'16px' }}>Full time</label>
+                  <label htmlFor="type2" style={{ width: '120px', marginLeft: '5px', fontSize: '16px' }}>Full time</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -363,7 +366,7 @@ const AddPostComponent = () => {
                     checked={method === "PART_TIME"}
                     onChange={onChangeWokType}
                   />
-                  <label htmlFor="type1" style={{ width: '120px', marginLeft: '5px', fontSize:'16px' }}>Part time</label>
+                  <label htmlFor="type1" style={{ width: '120px', marginLeft: '5px', fontSize: '16px' }}>Part time</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -376,7 +379,7 @@ const AddPostComponent = () => {
                     checked={method === "INTERN"}
                     onChange={onChangeWokType}
                   />
-                  <label htmlFor="type3" style={{ width: '120px', marginLeft: '5px', fontSize:'16px' }}>Intern</label>
+                  <label htmlFor="type3" style={{ width: '120px', marginLeft: '5px', fontSize: '16px' }}>Intern</label>
                 </div>
               </div>
               <b style={{ color: '#0c62ad' }}>Gender</b>
@@ -392,7 +395,7 @@ const AddPostComponent = () => {
                     checked={gender === "MALE"}
                     onChange={onChangegenderType}
                   />
-                  <label htmlFor="gender1" style={{ width: '120px', marginLeft: '5px', fontSize:'16px' }}>Male</label>
+                  <label htmlFor="gender1" style={{ width: '120px', marginLeft: '5px', fontSize: '16px' }}>Male</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -405,7 +408,7 @@ const AddPostComponent = () => {
                     checked={gender === "FEMALE"}
                     onChange={onChangegenderType}
                   />
-                  <label htmlFor="gender2" style={{ width: '120px', marginLeft: '5px', fontSize:'16px' }}>Female</label>
+                  <label htmlFor="gender2" style={{ width: '120px', marginLeft: '5px', fontSize: '16px' }}>Female</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -419,7 +422,7 @@ const AddPostComponent = () => {
                     checked={gender === "NONE"}
                     onChange={onChangegenderType}
                   />
-                  <label htmlFor="gender3" style={{ width: '130px', marginLeft: '5px', fontSize:'16px' }}>No require</label>
+                  <label htmlFor="gender3" style={{ width: '130px', marginLeft: '5px', fontSize: '16px' }}>No require</label>
                 </div>
               </div>
               <b style={{ color: '#0c62ad' }}>Currency</b>
@@ -436,7 +439,7 @@ const AddPostComponent = () => {
                     checked={currency === "VND"}
                     onChange={onChangeCurencyType}
                   />
-                  <label htmlFor="currency1" style={{ width: '120px', marginLeft: '5px', fontSize:'16px' }}>VNĐ</label>
+                  <label htmlFor="currency1" style={{ width: '120px', marginLeft: '5px', fontSize: '16px' }}>VNĐ</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -449,7 +452,7 @@ const AddPostComponent = () => {
                     checked={currency === "USD"}
                     onChange={onChangeCurencyType}
                   />
-                  <label htmlFor="currency2" style={{ width: '120px', marginLeft: '5px', fontSize:'16px' }}>USD</label>
+                  <label htmlFor="currency2" style={{ width: '120px', marginLeft: '5px', fontSize: '16px' }}>USD</label>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', padding: '10px 0' }}>
                   <input
@@ -462,7 +465,7 @@ const AddPostComponent = () => {
                     checked={currency === "AGREEMENT"}
                     onChange={onChangeCurencyType}
                   />
-                  <label htmlFor="currency3" style={{ width: '120px', marginLeft: '5px', fontSize:'16px' }}>Agreement</label>
+                  <label htmlFor="currency3" style={{ width: '120px', marginLeft: '5px', fontSize: '16px' }}>Agreement</label>
                 </div>
               </div>
               <div className="input-wrapper" style={{ width: '100%' }}>
@@ -531,7 +534,7 @@ const AddPostComponent = () => {
               </div>
             ) : (<>
               {isUpdatePost ? (
-                <div className="button" onClick={()=>onUpdatePostClick}>
+                <div className="button" onClick={() => onUpdatePostClick}>
                   <i className="fa fa-floppy-o" aria-hidden="true"></i>
                   Update
                 </div>
