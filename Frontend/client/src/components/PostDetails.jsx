@@ -198,6 +198,7 @@ const PostDetails = () => {
     tempInput.select();
     document.execCommand("copy");
     document.body.removeChild(tempInput);
+    swal({ title: "Success", icon: "success", text: "Copied successfully!" });
   }
 
   const [selectValue, setSelectValue] = useState(0);
