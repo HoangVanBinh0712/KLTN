@@ -220,7 +220,7 @@ const EmployeeProfile = () => {
               </div>
               <div className="info-area" id="achivement-area">
                 <div className="title-include-add">
-                  <p className="area-title">Achivement</p>
+                  <p className="area-title">Achievement</p>
                   <img id="add-button" src={addIcon} alt="" style={{ display: "none" }} />
                 </div>
                 <div className="area-content">

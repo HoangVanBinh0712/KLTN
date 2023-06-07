@@ -16,7 +16,14 @@ const PostSubmitted = () => {
   const predictCV = async (cvId) => {
     const res = await getPostSubmitedByResume(cvId)
     if (res.success) {
-      setListPostSubmited(res.data);
+      setListPostSubmited(res.data.filter((item => item.status === 'ACTIVE')));
+      if (res.data.filter((item => item.status === 'ACTIVE')).length === 0)
+        swal({
+          title: "Error",
+          icon: "warning",
+          text: "*The posts you applied for have expired",
+          dangerMode: true,
+        })
     }
     else {
       setListPostSubmited([]);
@@ -26,7 +33,7 @@ const PostSubmitted = () => {
         text: "*Your profile has not applied for any jobs yet",
         dangerMode: true,
       })
-    } 
+    }
   }
 
   const getAllResume = async () => {
@@ -82,7 +89,7 @@ const PostSubmitted = () => {
   if (listPostSubmited.length > 0) {
     postInResultBox = (<>
       {allPost[currentPage].map((p, id) => (<>
-        {p.status==='ACTIVE'&&<SinglePost post={p} key={id} />}
+        {p.status === 'ACTIVE' && <SinglePost post={p} key={id} />}
       </>
       ))
       }
