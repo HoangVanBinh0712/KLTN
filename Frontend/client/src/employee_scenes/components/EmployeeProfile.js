@@ -21,8 +21,8 @@ import swal from "sweetalert";
 
 const EmployeeProfile = () => {
   let { id } = useParams();
-  const {    authState: { isAuthenticated, role },
-  getUserProfileJSK, getUserProfileByAnyFilter,    openRoomFromProfile,
+  const { authState: { isAuthenticated, role },
+    getUserProfileJSK, getUserProfileByAnyFilter, openRoomFromProfile,
     setOpenRoomFromProfile, } = useContext(AuthContext);
 
   const [jskInfo, setJskInfo] = useState({
@@ -62,7 +62,9 @@ const EmployeeProfile = () => {
   }, []);
 
   const onClickAchiName = (url) => {
-    window.open(url, "_blank");
+    if (url !== null && url !== undefined)
+      window.open(url, "_blank");
+    else  swal({ title: "Information", icon: "info", text: "No preview yet!" });
   };
 
   const getPostDate = (date) => {

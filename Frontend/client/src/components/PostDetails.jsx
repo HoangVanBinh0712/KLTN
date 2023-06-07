@@ -201,7 +201,7 @@ const PostDetails = () => {
     swal({ title: "Success", icon: "success", text: "Copied successfully!" });
   }
 
-  const [selectValue, setSelectValue] = useState(0);
+  const [selectValue, setSelectValue] = useState(params.mediaId !== undefined?params.mediaId:0);
   const [coverLetter, setCoverLetter] = useState("");
   const [reportMessage, setReportMessage] = useState("");
   const [mess, setMess] = useState("");

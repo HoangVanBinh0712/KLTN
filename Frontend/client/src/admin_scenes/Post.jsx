@@ -691,7 +691,7 @@ const Post = () => {
 
               </div>
               <div style={{ display: 'flex', paddingBottom: '10px', alignItems: 'end' }}>
-                <div style={{ width: '12%' }}>Employer Name:</div>
+                <div style={{ width: '12%' }}>Employer:</div>
                 <input value={postChosen.author?.name}
                   disabled className="input-view-post-details"
                   style={{ width: '38%' }}></input>

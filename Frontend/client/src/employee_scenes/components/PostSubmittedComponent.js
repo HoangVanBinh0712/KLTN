@@ -81,8 +81,9 @@ const PostSubmitted = () => {
   let postInResultBox
   if (listPostSubmited.length > 0) {
     postInResultBox = (<>
-      {allPost[currentPage].map((p, id) => (
-        <SinglePost post={p} key={id} />
+      {allPost[currentPage].map((p, id) => (<>
+        {p.status==='ACTIVE'&&<SinglePost post={p} key={id} />}
+      </>
       ))
       }
     </>
