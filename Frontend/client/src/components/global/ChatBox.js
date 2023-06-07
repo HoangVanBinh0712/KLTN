@@ -76,6 +76,7 @@ const ChatBox = () => {
   useEffect(() => {
     listOpenRoomRef.current = listOpenRoom;
     listRoomRef.current = listRoom;
+    if (openRoomFromProfile) functionOpenRoom(openRoomFromProfile);
   }, [listOpenRoom, listRoom]);
 
   useEffect(() => {
@@ -134,7 +135,6 @@ const ChatBox = () => {
           }
         });
       });
-      functionOpenRoom(openRoomFromProfile);
     }
 
     return () => {
@@ -310,6 +310,7 @@ const ChatBox = () => {
 
     //push a room to current room
     //Push recieverId to room
+    if (!room) return;
     const recieverName = getReciever(room).name;
     const url = fetchChatUrl + roomId + "/" + getReciever(room).id + "?page=1&limit=10";
     const chatContent = await loadMessage(url);
@@ -362,6 +363,7 @@ const ChatBox = () => {
     const data = chat_room.data.data;
     setMessengers(data);
     const roomIds = data.map((x) => x.id);
+    if (!roomIds || roomIds.length === 0) return;
     let query = "";
     for (let id of roomIds) {
       query += "roomIds=" + id + "&";
@@ -422,7 +424,7 @@ const ChatBox = () => {
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
-          model: "gpt-3.5-turbo",
+          model: "gpt-3.5-turbo-0301",
           messages: [{ role: "user", content: message }],
           max_tokens: 300, // Adjust the desired response length
           temperature: 0.7, // Adjust the creativity level (higher values = more random)
@@ -432,7 +434,7 @@ const ChatBox = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_API_GPT}`, // Replace with your actual API key
+            Authorization: `Bearer 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`, // Replace with your actual API key
           },
         }
       );

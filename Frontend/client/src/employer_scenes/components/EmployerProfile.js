@@ -182,7 +182,7 @@ const EmployerProfile = () => {
 
   const heartClick = async (id) => {
     if (!isAuthenticated) {
-      navigate('/user/login')
+      navigate("/user/login");
     } else {
       if (role === "ROLE_USER") {
         if (checkPostFollow(id, postFollow)) {
@@ -222,9 +222,9 @@ const EmployerProfile = () => {
     }
   };
 
-  const onClickPostTitle = (id) =>{
-    navigate(`/post/${id}`)
-  }
+  const onClickPostTitle = (id) => {
+    navigate(`/post/${id}`);
+  };
 
   let listEmpPost;
   if (employerPost.length > 0) {
@@ -234,10 +234,9 @@ const EmployerProfile = () => {
         <div className="content-wrapper" style={{ display: "block" }}>
           {allPost[currentPage].map((p, id) => (
             <div className="employer-seen-info" style={{ padding: "10px" }} key={id}>
-              <img id="employer-logo" src={p.author.urlAvatar===null?logoIcon:p.author.urlAvatar} alt="" 
-              style={{ width: "16%", cursor:'default' }} />
+              <img id="employer-logo" src={p.author.urlAvatar === null ? logoIcon : p.author.urlAvatar} alt="" style={{ width: "16%", cursor: "default" }} />
               <div className="info-employee-wrapper">
-                <div id="employer-seen-name" style={{ fontFamily: "Arial", color: "#000" }} onClick={()=>onClickPostTitle(p.id)}>
+                <div id="employer-seen-name" style={{ fontFamily: "Arial", color: "#000" }} onClick={() => onClickPostTitle(p.id)}>
                   {p.title}
                   <img id="tick" src={checkIcon} alt="" />
                 </div>
@@ -340,10 +339,15 @@ const EmployerProfile = () => {
                             const response = await axios.get(`${apiUrl}/chat/single-chat-room/${id}`);
                             if (response) {
                               setOpenRoomFromProfile(response.data.id);
+                              setTimeout(() => {
+                                setOpenRoomFromProfile(null);
+                              }, 3000);
                             }
                           } catch (error) {
                             swal({ text: "we are sory for the inconvinient !", icon: "error", title: "Error" });
                           }
+                        } else {
+                          setOpenRoomFromProfile(null);
                         }
                       }}
                     >
@@ -403,7 +407,7 @@ const EmployerProfile = () => {
                       <img className="copy-icon" src={copyicon} alt="" onClick={() => handleCopyClick()} />
                     </div>
                   </div>
-                 {/*  <div style={{ fontFamily: "Arial", fontSize: "22px" }}>Share with:</div>
+                  {/*  <div style={{ fontFamily: "Arial", fontSize: "22px" }}>Share with:</div>
                   <div className="social-media">
                     <img className="media-icon" src={faceIcon} alt="" />
                     <img className="media-icon" src={messIcon} alt="" />

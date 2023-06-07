@@ -139,10 +139,15 @@ const EmployeeProfile = () => {
                             const response = await axios.get(`${apiUrl}/chat/single-chat-room/${id}`);
                             if (response) {
                               setOpenRoomFromProfile(response.data.id);
+                              setTimeout(() => {
+                                setOpenRoomFromProfile(null);
+                              }, 3000);
                             }
                           } catch (error) {
                             swal({ text: "we are sory for the inconvinient !", icon: "error", title: "Error" });
                           }
+                        }else{
+                          setOpenRoomFromProfile(null)
                         }
                       }}
                     >
