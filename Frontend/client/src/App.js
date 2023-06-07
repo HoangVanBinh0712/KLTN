@@ -9,6 +9,7 @@ import LoginGG from "./components/page/login/LoginWithGG";
 import Register from "./components/page/register/Register";
 import HomePage from "./employee_scenes/HomePage";
 import PostDetails from "./components/PostDetails";
+import PostDetailsEmp from "./employer_scenes/components/PostDetailsEmp";
 import SearchPageComponent from "./employee_scenes/components/SearchPageComponent";
 import ForgotPassword from "./components/page/login/ForgotPassword";
 import EmployerProfile from "./employer_scenes/components/EmployerProfile";
@@ -137,7 +138,7 @@ function App() {
           <Route path="recruitment-statistics" element={<EmployerRouteNew component={<StatiticsPage />} />} />
         </Route>
         <Route path="/employer/home" element={<EmployerRouteNew component={<ServicePage />} />} />
-        <Route path="/employer/post/:id" element={<EmployerRouteNew component={<PostDetails />} />} />
+        <Route path="/employer/post/:id" element={<EmployerRouteNew component={<PostDetailsEmp />} />} />
         <Route path="/employer/candidates/:id" element={<EmployerRouteNew component={<EmployeeProfile />} />} />
 
         <Route path="/*" element={<PageNotFound />} />

@@ -147,6 +147,8 @@ const JobPostingComponent = () => {
       method: "",
       position: "",
       status: "",
+      sortBy: 8,
+      sortDescending: true,
     });
   };
   const onFormSearchChange = (e) => {
@@ -284,7 +286,7 @@ const JobPostingComponent = () => {
                *         &nbsp;&nbsp;&nbsp;&nbsp; 4: by number of recruit <br>
                *         &nbsp;&nbsp;&nbsp;&nbsp; 8: by number of viewcount <br>
                * */}
-              <select  name="sortBy" onChange={onFormSearchChange} value={sortBy}>
+              <select name="sortBy" onChange={onFormSearchChange} value={sortBy}>
                 <option value="1">Newest</option>
                 <option value="2">Salary</option>
                 <option value="8">View</option>

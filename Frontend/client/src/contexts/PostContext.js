@@ -161,6 +161,7 @@ const PostContextProvider = ({ children }) => {
 
                 },
             })
+            console.log(responsePost)
             if (responsePost.data.success) {
                 return responsePost.data
             }

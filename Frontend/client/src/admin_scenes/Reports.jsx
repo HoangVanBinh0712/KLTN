@@ -266,6 +266,12 @@ const Reports = () => {
       field: "reportContent",
       headerName: "Report content",
       flex: 2,
+      renderCell: ({ row: { reportContent } }) => {
+        return (
+          <Box dangerouslySetInnerHTML={{ __html: reportContent }} style={{whiteSpace:'nowrap', overflow:"hidden", textOverflow:'ellipsis'}}>
+          </Box>
+        );
+      },
     },
     {
       field: "name",
