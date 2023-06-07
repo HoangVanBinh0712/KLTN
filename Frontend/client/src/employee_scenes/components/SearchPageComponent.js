@@ -95,7 +95,10 @@ const SearchPageComponent = () => {
       });
   };
   async function getData() {
-    const res = await axios.get(`${apiUrl}/post?page=${page}&limit=${limit}`);
+    let searchQr = ''
+    if(params.keyword !== undefined) searchQr+=`keyword=${params.keyword}&`
+    if(params.cityId !== undefined) searchQr+=`cityId=${params.cityId}&`
+    const res = await axios.get(`${apiUrl}/post?${searchQr}page=${page}&limit=${limit}`);
     if (res.data.success) {
       setListPostResult(res.data);
     }

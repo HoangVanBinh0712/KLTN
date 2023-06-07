@@ -80,7 +80,12 @@ const PurchaseHistory = () => {
             setListServiceDisplay(listServicesNotPaid)
         }
     }
+    const abc = (currentPage)=>{
+        if(!allPost[currentPage])return false
+        else if(allPost[currentPage].length ===0) return false
+        return true
 
+    }
     return (
         <div style={{ width: "80%" }}>
             <div className="component-title">
@@ -129,7 +134,7 @@ const PurchaseHistory = () => {
                     </div>
                 </div>
                 <div className="content-wrapper" style={{ height: "780px", padding: "0px", gap: "0", boxShadow:'none', borderBottom:'1px solid #cfcfcf' }}>
-                    {listAllServices.length === 0 ? (
+                    { abc(currentPage) === false ? (
                         <div style={{ display: "flex", justifyContent: "center" }}> You have not made any transactions yet!</div>)
                         : (allPost[currentPage].map((o, id) => (
                             <SinglePurchareRow order={o} key={id} />))

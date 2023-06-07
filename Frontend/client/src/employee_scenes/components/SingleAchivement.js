@@ -13,8 +13,8 @@ const SingleAchivement = ({ achive, onUpdateClick, onDeleteClick }) => {
 
   return (
     <div className="achivement-item">
-      <div className="image-url">
-        <img src={achive.imageUrl === null ? certificateIcon : achive.imageUrl} alt=" " />
+      <div className="image-url" style={{marginRight:'10px'}}>
+        <img src={achive.imageUrl === null ? certificateIcon : achive.imageUrl} alt=" " style={{width:'100%', height:'auto'}} />
       </div>
       <div className="achive-info">
         <div className="inffo-achive name-achive">{achive.name}</div>

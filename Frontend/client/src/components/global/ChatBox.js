@@ -434,7 +434,7 @@ const ChatBox = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer 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`, // Replace with your actual API key
+            Authorization: `Bearer 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`, // Replace with your actual API key
           },
         }
       );
